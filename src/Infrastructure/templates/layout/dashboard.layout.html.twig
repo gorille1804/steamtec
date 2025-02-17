@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Steamtech{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">  
+    <link rel="stylesheet" href="{{ asset('assets/plugins/jquery/jquery-ui.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/plugins/jquery/jquery-ui.theme.min.css') }}"/>
+    <link rel="stylesheet" href="{{asset('assets/css/security.css')}}">
+    {% block stylesheets %}{% endblock %}</head>
+<body>
+
+     <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <h4 class="text-center py-4">Admin Dashboard</h4>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                Machines
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                Utilisateurs
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                Déconnexion
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Content Area -->
+            <main role="main" class="col-md-9 ms-sm-auto col-lg-10 px-4">
+                <h2 class="mt-4">{% block header_title %}Tableau de bord{% endblock %}</h2>
+
+                <section>
+                    {% block content %}
+                    <!-- Contenu spécifique de chaque page sera injecté ici -->
+                    {% endblock %}
+                </section>
+            </main>
+        </div>
+    </div>
+    <script src="{{ asset('assets/plugins/bootstrap/js/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jquery/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jquery/jquery-ui.min.js') }}"></script>
+    {% block javascripts %}{% endblock %}
+</body>
+</html>

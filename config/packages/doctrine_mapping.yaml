@@ -9,3 +9,10 @@ doctrine:
                         dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/User'
                         prefix: 'Domain\User\Data\Model'
                         alias: User
+
+                    Machine:
+                        type: xml
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/Machine'
+                        prefix: 'Domain\Machine\Data\Model'
+                        alias: Machine

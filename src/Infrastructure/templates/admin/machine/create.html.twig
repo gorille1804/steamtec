@@ -1,0 +1,43 @@
+{% extends 'layout/dashboard.layout.html.twig' %}
+
+{% block title %}Créer une machine{% endblock %}
+
+{% block content %}
+    <h3>Ajouter une nouvelle machine</h3>
+
+    {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.numeroIdentification) }}
+            {{ form_widget(form.numeroIdentification, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.nom) }}
+            {{ form_widget(form.nom, { 'class': 'form-control' }) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.marque) }}
+            {{ form_widget(form.marque, { 'class': 'form-control' }) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.typeMateriel) }}
+            {{ form_widget(form.typeMateriel, { 'class': 'form-control'} ) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.tempUsage) }}
+            {{ form_widget(form.tempUsage, { 'class': 'form-control'} ) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.seuilEntretien) }}
+            {{ form_widget(form.seuilEntretien, { 'class': 'form-control'} ) }}
+        </div>
+
+        <div class="form-group mt-3">
+            <button type="submit" class="btn btn-primary">Créer</button>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}
