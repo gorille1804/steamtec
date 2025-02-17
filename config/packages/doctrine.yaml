@@ -1,3 +1,5 @@
+imports:
+    - { resource: doctrine_mapping.yaml }
 doctrine:
     dbal:
         url: '%env(resolve:DATABASE_URL)%'
@@ -10,23 +12,18 @@ doctrine:
         use_savepoints: true
     orm:
         auto_generate_proxy_classes: true
+        default_entity_manager: default
         enable_lazy_ghost_objects: true
-        report_fields_where_declared: true
-        validate_xml_mapping: true
-        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
-        identity_generation_preferences:
-            Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
-        auto_mapping: true
-        mappings:
-            App:
-                type: attribute
-                is_bundle: false
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
-                alias: App
         controller_resolver:
-            auto_mapping: false
-
+            auto_mapping: true
+        entity_managers:
+            default:
+                connection: default
+                report_fields_where_declared: true
+                validate_xml_mapping: true
+                naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+                auto_mapping: true
+                
 when@test:
     doctrine:
         dbal:

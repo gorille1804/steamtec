@@ -1,6 +1,8 @@
 twig:
     file_name_pattern: '*.twig'
-
+    paths:
+        '%kernel.project_dir%/src/Infrastructure/templates': ~
+        
 when@test:
     twig:
         strict_variables: true

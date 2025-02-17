@@ -1,0 +1,11 @@
+doctrine:
+    orm:
+        entity_managers:
+            default:
+                mappings:
+                    User:
+                        type: xml
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/User'
+                        prefix: 'Domain\User\Data\Model'
+                        alias: User
