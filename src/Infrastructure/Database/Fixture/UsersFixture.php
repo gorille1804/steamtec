@@ -5,6 +5,7 @@ namespace Infrastructure\Database\Fixture;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Domain\User\Data\Model\User;
+use Domain\User\Data\ObjectValue\UserId;
 use Domain\User\Gateway\PasswordHasherInterface;
 use Faker\Factory;
 
@@ -20,9 +21,13 @@ class UsersFixture extends Fixture
         for ($i=0; $i <= 5; $i++) { 
 
             $user = new User(
-                $i,	
+                UserId::make(),
                 $faker->email(),
-                ['ROLE_USER'],
+                ['ROLE_ADMIN'],
+                $faker->firstName(),
+                $faker->lastName(),
+                $faker->phoneNumber(),
+                $faker->company(),
                 '',
                 new \DateTimeImmutable(),
             );            

@@ -37,6 +37,26 @@ class SymfonyUserAdapter implements UserInterface, PasswordAuthenticatedUserInte
         return $this->user->getEmail();
     }
 
+    public function getFirstname(): string
+    {
+        return $this->user->getFirstname();
+    }
+
+    public function getLastname(): string
+    {
+        return $this->user->getLastname();
+    }
+
+    public function getPhone(): string
+    {
+        return $this->user->getPhone();
+    }
+
+    public function getSocity(): string
+    {
+        return $this->user->getSocity();
+    }
+
     
     public function eraseCredentials(): void {}
 }

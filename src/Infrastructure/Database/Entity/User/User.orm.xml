@@ -5,12 +5,14 @@
                   https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
                   
     <entity name="Domain\User\Data\Model\User" table="users">
-        <id name="id" type="integer">
-            <generator strategy="AUTO"/>
-        </id>
+       <id name="id" type="userId" column="id" />
         <field name="email" type="string" length="180" unique="true" />
         <field name="roles" type="json" />
-        <field name="password" type="string" />
+        <field name="firstname" type="string" />
+        <field name="lastname" type="string" />
+        <field name="phone" type="string" />
+        <field name="socity" type="string" />
+        <field name="password" type="string" nullable="true" />
         <field name="createdAt" type="datetime" />
         <field name="updatedAt" type="datetime" nullable="true" />
     </entity>
