@@ -17,7 +17,7 @@ services:
             - '../src/Infrastructure/Database/Entity/'
 
     Infrastructure\Controller\:
-        resource: '../src/Infrastructure/Controller/'
+        resource: '../src/Infrastructure/Controller/**/*'
         tags: ['controller.service_arguments']
         
     Infrastructure\Symfony\Security\:
