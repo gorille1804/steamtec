@@ -13,7 +13,9 @@ class AuthenticationController extends AbstractController
     
     #[Route('/login', name: 'app_security')]
     public function index(){
-        dd("tonga ato");
+        return $this->render('security/login.html.twig');
     }
+
+    
 
 }
