@@ -29,7 +29,9 @@ security:
     access_control:
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/logout, roles: PUBLIC_ACCESS }
-        - { path: ^/, roles: ROLE_USER }
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/dashboard, roles: ROLE_USER }
+        - { path: ^/dashboard, roles: ROLE_ADMIN }
 
 when@test:
     security:

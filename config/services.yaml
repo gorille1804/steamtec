@@ -35,7 +35,8 @@ services:
         class: Infrastructure\Symfony\Security\SymfonyAuthenticationManager
         arguments:
             $userAuthenticator: '@Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface'
-            $authenticator: '@Infrastructure\Symfony\Security\FormLoginAuthenticator' 
+            $authenticator: '@Infrastructure\Symfony\Security\FormLoginAuthenticator'
+     
     
     Infrastructure\Database\Fixture\UsersFixture:
         tags: ['doctrine.fixture.orm']

@@ -5,6 +5,7 @@ namespace Infrastructure\Database\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Domain\User\Data\Model\User;
+use Domain\User\Data\ObjectValue\UserId;
 use Domain\User\Gateway\UserInterface;
 use Domain\User\Gateway\UserRepositoryInterface;
 class UserRepository extends ServiceEntityRepository implements UserRepositoryInterface
@@ -25,8 +26,26 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
         return $this->findOneBy(['email' => $email]);
     }
 
-    public function findByid(int $id): ?UserInterface
+    public function findByid(UserId $id): ?UserInterface
     {
         return $this->findOneBy(['id' => $id]);   
+    }
+
+    public function save(User $user): User
+    {
+        $em = $this->getEntityManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $user;
+    }
+
+    public function update(User $user): User
+    {
+        $em = $this->getEntityManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $user;
     }
 }

@@ -10,6 +10,8 @@ doctrine:
 
         profiling_collect_backtrace: '%kernel.debug%'
         use_savepoints: true
+        types:
+            userId: Infrastructure\Database\FieldType\UserIdType
     orm:
         auto_generate_proxy_classes: true
         default_entity_manager: default
