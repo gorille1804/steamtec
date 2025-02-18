@@ -2,10 +2,12 @@
 
 namespace Infrastructure\Controller\Profile;
 
+use Domain\User\Data\Enum\RoleEnum;
 use Domain\User\Factory\UserFactory;
 use Domain\User\UseCase\UpdateUserUseCaseInterface;
 use Infrastructure\Form\Profile\ProfileFormType ;
 use Infrastructure\Symfony\Security\SymfonyUserAdapter;
+use Infrastructure\Symfony\Services\MultiplyRolesExpression;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,7 +20,7 @@ class ProfileController extends AbstractController
       private readonly  UpdateUserUseCaseInterface $useCase
     ){}
     #[Route('/profile', name: 'app_profile')]
-    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted(new MultiplyRolesExpression(RoleEnum::ADMIN, RoleEnum::USER))]
     public function index(Request $request)
     {
         /** @var SymfonyUserAdapter $user */
