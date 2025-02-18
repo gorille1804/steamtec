@@ -9,9 +9,7 @@ use Domain\User\Data\ObjectValue\UserId;
 
 class UserFactory
 {
-    public  static function make(
-        CreateUserRequest $request, 
-    ): User	
+    public  static function make(CreateUserRequest $request): User	
     {
         return new User(
             UserId::make(),
@@ -32,7 +30,7 @@ class UserFactory
         $user->lastname = $request->lastname;
         $user->phone = $request->phone;
         $user->socity = $request->socity;
-
+        $user->updatedAt = new \DateTimeImmutable();
         return $user;
     }
 
