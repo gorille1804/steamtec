@@ -2,14 +2,14 @@
 
 namespace Domain\Machine\Data\Contract;
 
-use Domain\User\Data\ObjectValue\UserId;
+use Domain\User\Data\Model\User;
 
 class CreateMachineRequest
 {
     public string $numeroIdentification;
     public string $nom;
     public string $marque;
-    public ?int $tempUsage=null;
+    public ?int $tempUsage = null;
     public int $seuilMaintenance;
-    public ?UserId $userId=null;
+    public ?User $user = null;
 }

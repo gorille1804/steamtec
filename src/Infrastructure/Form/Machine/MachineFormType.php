@@ -38,7 +38,7 @@ class MachineFormType extends AbstractType
                 'label' => 'Seuil de maintenance (heures)',
                 'attr' => ['placeholder' => 'Seuil de maintenance en heures'],
             ])
-            ->add('userId', EntityType::class, [
+            ->add('user', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'firstname',
                 'choice_value'=>'id',
