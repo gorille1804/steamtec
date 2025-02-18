@@ -17,8 +17,8 @@ class CreateMachineUseCase implements CreateMachineUseCaseInterface
 
     public function __invoke(CreateMachineRequest $request): Machine
     {
-        dd($request);
-        // $machine = MachineFactory::make($request);	
+
+        $machine = MachineFactory::make($request);	
         return $this->repository->save($machine);
     }   
 }

@@ -16,7 +16,7 @@ class MachineFactory
      * @param CreateMachineRequest $request
      * @return Machine
      */
-    public static function make(CreateMachineRequest $request, User $user): Machine
+    public static function make(CreateMachineRequest $request): Machine
     {
         // Créer une nouvelle machine avec un nouvel ID généré
         return new Machine(
@@ -26,7 +26,7 @@ class MachineFactory
             $request->marque,
             $request->tempUsage,
             $request->seuilMaintenance,
-            $user,
+            $request->user,
             new \DateTimeImmutable(),
             null
         );
