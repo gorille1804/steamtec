@@ -60,15 +60,17 @@
                                     <td>
                                         <div class="d-flex gap-2">
                                             <a
-                                               href=""
+                                               href="{{ path('app_update_machine', {'id': machine.id}) }}"
                                                class="btn btn-primary btn-sm" 
                                                title="Modifier">
                                                 <i class="mdi mdi-pencil"></i>
                                             </a>
                                             
                                             <button type="button" 
-                                                    class="btn btn-danger btn-sm delete-user-btn" 
+                                                    class="btn btn-danger btn-sm delete-machine-btn" 
                                                     title="Supprimer"
+                                                    data-machine-id="{{ machine.id }}"
+                                                    data-machine-name="{{ machine.nom}}"
                                             >
                                                 <i class="mdi mdi-delete"></i>
                                             </button>
@@ -93,13 +95,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Êtes-vous sûr de vouloir supprimer l'utilisateur <span id="userName"></span> ?</p>
+                    <p>Êtes-vous sûr de vouloir supprimer la machine <span id="machineName"></span> ?</p>
                     <p class="text-danger">Cette action est irréversible.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                     <form id="deleteForm" method="POST" action="" style="display: inline;">
-                        <input type="hidden" name="_token" id="csrfToken" value="">
                         <button type="submit" class="btn btn-danger">Supprimer</button>
                     </form>
                 </div>
@@ -109,16 +110,14 @@
 {% endblock %}
 
 {% block script %}
-    {# <script type="text/javascript">
+    <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof jQuery !== 'undefined') {
-                $('.delete-user-btn').click(function() {
-                    var userId = $(this).data('user-id');
-                    var userName = $(this).data('user-name');
-                    var csrfToken = $(this).data('csrf-token');
-                    $('#userName').text(userName);
-                    $('#deleteForm').attr('action', "{{path('app_users_delete', {'userId': 'USERID'})}}".replace('USERID', userId));
-                    $('#csrfToken').val(csrfToken);
+                $('.delete-machine-btn').click(function() {
+                    var machineId = $(this).data('machine-id');
+                    var machineName = $(this).data('machine-name');
+                    $('#machineName').text(machineName);
+                    $('#deleteForm').attr('action', "{{path('app_delete_machine', {'machineId': 'MACHINEID'})}}".replace('MACHINEID', machineId));
                     $('#deleteConfirmationModal').modal('show');
                 });
                 $('.btn-secondary').click(function() {
@@ -128,5 +127,5 @@
                 console.error('jQuery is not loaded!');
             }
         });
-    </script> #}
+    </script>
 {% endblock %}

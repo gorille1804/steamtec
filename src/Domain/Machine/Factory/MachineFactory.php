@@ -5,8 +5,7 @@ namespace Domain\Machine\Factory;
 use Domain\Machine\Data\Contract\CreateMachineRequest;
 use Domain\Machine\Data\Model\Machine;
 use Domain\Machine\Data\ObjectValue\MachineId;
-use Domain\User\Data\Model\User;
-// use Domain\Machine\Data\Contract\UpdateMachineRequest;
+use Domain\Machine\Data\Contract\UpdateMachineRequest;
 
 class MachineFactory
 {
@@ -31,5 +30,29 @@ class MachineFactory
             null
         );
     }
+    public static function update(Machine $machine, UpdateMachineRequest $request): Machine
+    {
+        $machine->numeroIdentification = $request->numeroIdentification;
+        $machine->nom = $request->nom;
+        $machine->marque = $request->marque;
+        $machine->tempUsage = $request->tempUsage;
+        $machine->seuilMaintenance = $request->seuilMaintenance;
+        $machine->user = $request->user;
+        $machine->updatedAt = new \DateTimeImmutable();
+        return $machine;
+    }
 
+    public static function makeFromMachine(Machine $machine): UpdateMachineRequest
+    {
+      
+        $formRequest = new UpdateMachineRequest();
+        $formRequest->numeroIdentification = $machine->numeroIdentification;
+        $formRequest->nom = $machine->nom;
+        $formRequest->marque = $machine->marque;
+        $formRequest->tempUsage = $machine->tempUsage;
+        $formRequest->seuilMaintenance = $machine->seuilMaintenance;
+        $formRequest->user=$machine->user;
+        return $formRequest;	
+
+    }	
    }

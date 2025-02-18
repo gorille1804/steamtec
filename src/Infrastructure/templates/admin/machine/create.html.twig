@@ -10,7 +10,7 @@
                         <div> <h4 class="card-title card-title-dash">{{ is_edit ? 'Modifier' : 'Nouvel' }} utilisateur</h4>
                         </div>
                         <div>
-                            <a href="" class="btn btn-secondary btn-md mb-0 me-0">
+                            <a href="{{path('app_machines')}}" class="btn btn-secondary btn-md mb-0 me-0">
                                 <i class="mdi mdi-arrow-left"></i> Retour
                             </a>
                         </div>
@@ -89,4 +89,33 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block script %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const submitButton = form.querySelector('button[type="submit"]');
+    const isEdit = submitButton.getAttribute('data-edit') === 'true';
+
+    if (isEdit) { 
+        submitButton.addEventListener('click', function(event) {
+            event.preventDefault(); 
+            Swal.fire({
+                title: 'Êtes-vous sûr ?',
+                text: 'Vous allez modifier cette machine.',
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonText: 'Oui, modifier!',
+                cancelButtonText: 'Non, annuler',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    }
+});
+</script>
+
 {% endblock %}

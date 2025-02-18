@@ -6,6 +6,9 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Domain\Machine\Data\Model\Machine;
 use Domain\Machine\Gateway\MachineRepositoryInterface;
+use Domain\Machine\Gateway\MachineInterface;
+use Domain\Machine\Data\ObjectValue\MachineId;
+
 class MachineRepository extends ServiceEntityRepository implements MachineRepositoryInterface
 {
     public function __construct(
@@ -25,10 +28,10 @@ class MachineRepository extends ServiceEntityRepository implements MachineReposi
     //     return $this->findOneBy(['email' => $email]);
     // }
 
-    // public function findByid(MachineId $id): ?MachineInterface
-    // {
-    //     return $this->findOneBy(['id' => $id]);   
-    // }
+    public function findByid(MachineId $id): ?MachineInterface
+    {
+        return $this->findOneBy(['id' => $id]);   
+    }
 
     public function save(Machine $machine): Machine
     {
@@ -39,12 +42,11 @@ class MachineRepository extends ServiceEntityRepository implements MachineReposi
         return $machine;
     }
 
-    // public function update(Machine $Machine): Machine
-    // {
-    //     $em = $this->getEntityManager();
-    //     $em->persist($Machine);
-    //     $em->flush();
+    public function delete(Machine $machine): void
+    {
+        $em = $this->getEntityManager();
+        $em->remove($machine);
+        $em->flush();
 
-    //     return $Machine;
-    // }
+    }
 }

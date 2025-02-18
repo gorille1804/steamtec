@@ -3,9 +3,11 @@
 namespace Domain\Machine\Data\Model;
 
 use Domain\Machine\Data\ObjectValue\MachineId;
+use Domain\Machine\Gateway\MachineInterface;
 use Domain\User\Data\Model\User;
 
-class Machine
+
+class Machine implements MachineInterface
 {
     public function __construct(
         public MachineId $id,

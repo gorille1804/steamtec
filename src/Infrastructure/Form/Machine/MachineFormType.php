@@ -48,7 +48,11 @@ class MachineFormType extends AbstractType
             ])
             ->add('save', SubmitType::class, [
                 'label' => $isEdit ? 'Mettre à jour' : 'Créer',
-                'attr' => ['class' => 'btn btn-primary'],
+                'attr' => [
+                    'class' => 'btn btn-primary',
+                    'data-edit' => $isEdit ? 'true' : 'false'
+            ],
+                
             ]);
     }
     public function configureOptions(OptionsResolver $resolver)

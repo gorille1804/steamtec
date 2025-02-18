@@ -3,8 +3,9 @@
 namespace Domain\Machine\Gateway;
 
 use Domain\Machine\Data\ObjectValue\MachineId;
+use Domain\User\Gateway\UserInterface;
 
-interface UserInterface
+interface MachineInterface
 {
     public function getId(): MachineId;
     public function getNumeroIdentification(): string;
