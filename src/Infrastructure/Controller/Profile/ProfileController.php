@@ -32,10 +32,14 @@ class ProfileController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $this->useCase->__invoke($user->getUser()->getId(), $formRequest);
+
+            $this->addFlash('success', 'Profil mis à jour');	
+            return $this->redirectToRoute('app_profile');
         }
         
         return $this->render('admin/profile/index.html.twig',[
             'form' => $form->createView(),
+            'errors'=>$form->getErrors()
         ]);
     }
 }
