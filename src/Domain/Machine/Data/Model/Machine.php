@@ -1,12 +1,14 @@
 <?php
 
 namespace Domain\Machine\Data\Model;
+
+use Domain\Machine\Data\ObjectValue\MachineId;
 use Domain\User\Data\Model\User;
 
 class Machine
 {
     public function __construct(
-        public ?int $id,
+        public MachineId $id,
         public string $numeroIdentification,
         public string $nom,
         public string $marque,
