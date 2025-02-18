@@ -14,10 +14,11 @@ class MachineRepository extends ServiceEntityRepository implements MachineReposi
     {
         parent::__construct($registry, Machine::class);
     }
-    // public function getAll(): array
-    // {
-    //     return $this->findAll();
-    // }
+    
+    public function getAll(): array
+    {
+        return $this->findAll();
+    }
 
     // public function findByEmail(string $email): ?MachineInterface
     // {
