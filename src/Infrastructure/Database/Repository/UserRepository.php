@@ -48,4 +48,12 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
 
         return $user;
     }
+
+    public function delete(User $user): void
+    {
+        $em = $this->getEntityManager();
+        $em->remove($user);
+        $em->flush();
+
+    }
 }
