@@ -1,43 +1,50 @@
-{# {% extends 'layout/dashboard.layout.html.twig' %}
+{% extends 'layout/dashboard.layout.html.twig' %}
 
 {% block title %}Créer une machine{% endblock %}
 
 {% block content %}
     <h3>Ajouter une nouvelle machine</h3>
+        {{ form_start(form) }}
+            <div class="mb-3">
+                {{ form_label(form.numeroIdentification) }}
+                {{ form_widget(form.numeroIdentification, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.numeroIdentification) }}
+            </div>
 
-    {{ form_start(form) }}
-        <div class="form-group">
-            {{ form_label(form.numeroIdentification) }}
-            {{ form_widget(form.numeroIdentification, { 'attr': {'class': 'form-control'} }) }}
-        </div>
+            <div class="mb-3">
+                {{ form_label(form.nom) }}
+                {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.nom) }}
+            </div>
 
-        <div class="form-group">
-            {{ form_label(form.nom) }}
-            {{ form_widget(form.nom, { 'class': 'form-control' }) }}
-        </div>
+            <div class="mb-3">
+                {{ form_label(form.marque) }}
+                {{ form_widget(form.marque, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.marque) }}
+            </div>
 
-        <div class="form-group">
-            {{ form_label(form.marque) }}
-            {{ form_widget(form.marque, { 'class': 'form-control' }) }}
-        </div>
+            <div class="mb-3">
+                {{ form_label(form.tempUsage) }}
+                {{ form_widget(form.tempUsage, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.tempUsage) }}
+            </div>
 
-        <div class="form-group">
-            {{ form_label(form.typeMateriel) }}
-            {{ form_widget(form.typeMateriel, { 'class': 'form-control'} ) }}
-        </div>
+            <div class="mb-3">
+                {{ form_label(form.seuilMaintenance) }}
+                {{ form_widget(form.seuilMaintenance, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.seuilMaintenance) }}
+            </div>
 
-        <div class="form-group">
-            {{ form_label(form.tempUsage) }}
-            {{ form_widget(form.tempUsage, { 'class': 'form-control'} ) }}
-        </div>
+            <div class="mb-3">
+                {{ form_label(form.user) }}
+                {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.user) }}
+            </div>
 
-        <div class="form-group">
-            {{ form_label(form.seuilEntretien) }}
-            {{ form_widget(form.seuilEntretien, { 'class': 'form-control'} ) }}
-        </div>
-
-        <div class="form-group mt-3">
-            <button type="submit" class="btn btn-primary">Créer</button>
-        </div>
-    {{ form_end(form) }}
-{% endblock %} #}
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{{ path('dashboard') }}" class="btn btn-secondary">Retour</a>
+                <button type="submit" class="btn btn-primary">Créer</button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
