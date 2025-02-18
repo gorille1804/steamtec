@@ -3,10 +3,9 @@
 namespace Domain\Machine\Data\Model;
 
 use Domain\Machine\Data\ObjectValue\MachineId;
-use Domain\Machine\Gateway\UserInterface;
 use Domain\User\Data\Model\User;
 
-class Machine implements UserInterface
+class Machine
 {
     public function __construct(
         public MachineId $id,
@@ -49,7 +48,7 @@ class Machine implements UserInterface
         return $this->seuilMaintenance;
     }
 
-    public function getUser(): ?UserInterface
+    public function getUser(): ?User
     {
         return $this->user;
     }

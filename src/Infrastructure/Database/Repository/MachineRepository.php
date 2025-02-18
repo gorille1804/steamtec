@@ -5,8 +5,6 @@ namespace Infrastructure\Database\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Domain\Machine\Data\Model\Machine;
-use Domain\Machine\Data\ObjectValue\MachineId;
-use Domain\Machine\Gateway\MachineInterface;
 use Domain\Machine\Gateway\MachineRepositoryInterface;
 class MachineRepository extends ServiceEntityRepository implements MachineRepositoryInterface
 {
