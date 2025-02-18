@@ -16,6 +16,7 @@ class MachineFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $isEdit = $options['is_edit'] ?? false;
         $builder
             ->add('numeroIdentification', TextType::class, [
                 'label' => 'Numéro d\'identification',
@@ -46,7 +47,7 @@ class MachineFormType extends AbstractType
                 'required' => false,
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Enregistrer la machine',
+                'label' => $isEdit ? 'Mettre à jour' : 'Créer',
                 'attr' => ['class' => 'btn btn-primary'],
             ]);
     }
@@ -54,6 +55,8 @@ class MachineFormType extends AbstractType
     {
         $resolver->setDefaults([
            'data_class' => CreateMachineRequest::class,
+           'is_edit' => false,
         ]);
+        $resolver->setAllowedTypes('is_edit', 'bool');
     }
 }

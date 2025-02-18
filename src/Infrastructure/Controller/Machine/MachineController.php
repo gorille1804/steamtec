@@ -22,7 +22,10 @@ class MachineController extends AbstractController
     #[IsGranted(new MultiplyRolesExpression(RoleEnum::ADMIN, RoleEnum::USER))]
     public function create(Request $request)
     {
-        $form=$this->createForm(MachineFormType::class, new CreateMachineRequest());
+        $form=$this->createForm(MachineFormType::class, new CreateMachineRequest(), [
+            'data_class' => CreateMachineRequest::class,
+            'is_edit' => false
+        ]);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $data = $form->getData();
@@ -33,6 +36,7 @@ class MachineController extends AbstractController
 
         return $this->render('admin/Machine/create.html.twig',[
             'form' => $form->createView(),
+            'is_edit' => false,
         ]);
     }
 }

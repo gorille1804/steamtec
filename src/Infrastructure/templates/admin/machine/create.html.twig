@@ -1,45 +1,92 @@
-{% extends 'layout/app.layout.html.twig' %}
-
-{% block title %}Créer une machine{% endblock %}
+{% extends "layout/app.layout.html.twig" %}
+{% block title %}{{ is_edit ? 'Modifier' : 'Nouvel' }} machine{% endblock %}
 
 {% block content %}
-    <h3>Ajouter une nouvelle machine</h3>
-        {{ form_start(form) }}
-            <div class="mb-3">
-                {{ form_label(form.numeroIdentification) }}
-                {{ form_widget(form.numeroIdentification, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.numeroIdentification) }}
-            </div>
+    <div class="row flex-grow">
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card card-rounded">
+                <div class="card-body">
+                    <div class="d-sm-flex justify-content-between align-items-start">
+                        <div> <h4 class="card-title card-title-dash">{{ is_edit ? 'Modifier' : 'Nouvel' }} utilisateur</h4>
+                        </div>
+                        <div>
+                            <a href="" class="btn btn-secondary btn-md mb-0 me-0">
+                                <i class="mdi mdi-arrow-left"></i> Retour
+                            </a>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        {{ form_start(form) }}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form_label(form.numeroIdentification, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.numeroIdentification, {'attr': {'class': 'form-control'}}) }}
+                                {% if form_errors(form.numeroIdentification) %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form_errors(form.numeroIdentification) }}
+                                    </div>
+                                {% endif %}
+                            </div>
 
-            <div class="mb-3">
-                {{ form_label(form.nom) }}
-                {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.nom) }}
-            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form_label(form.nom, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                                {% if form_errors(form.nom) %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form_errors(form.nom) }}
+                                    </div>
+                                {% endif %}
+                            </div>
 
-            <div class="mb-3">
-                {{ form_label(form.marque) }}
-                {{ form_widget(form.marque, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.marque) }}
-            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form_label(form.marque, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.marque, {'attr': {'class': 'form-control'}}) }}
+                                {% if form_errors(form.marque) %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form_errors(form.marque) }}
+                                    </div>
+                                {% endif %}
+                            </div>
 
-            <div class="mb-3">
-                {{ form_label(form.tempUsage) }}
-                {{ form_widget(form.tempUsage, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.tempUsage) }}
-            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form_label(form.tempUsage, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.tempUsage, {'attr': {'class': 'form-control'}}) }}
+                                {% if form_errors(form.tempUsage) %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form_errors(form.tempUsage) }}
+                                    </div>
+                                {% endif %}
+                            </div>
 
-            <div class="mb-3">
-                {{ form_label(form.seuilMaintenance) }}
-                {{ form_widget(form.seuilMaintenance, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.seuilMaintenance) }}
-            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form_label(form.seuilMaintenance, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.seuilMaintenance, {'attr': {'class': 'form-control'}}) }}
+                                {% if form_errors(form.seuilMaintenance) %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form_errors(form.seuilMaintenance) }}
+                                    </div>
+                                {% endif %}
+                            </div>
 
-            <div class="mb-3">
-                {{ form_label(form.user) }}
-                {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.user) }}
+                            <div class="col-md-6 mb-3">
+                                {{ form_label(form.user, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
+                                {% if form_errors(form.user) %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form_errors(form.user) }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                <div class="d-flex justify-content-end gap-2">
+                                    {{ form_widget(form.save) }}
+                                </div>
+                            </div>
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
             </div>
-        {{ form_end(form) }}
+        </div>
     </div>
 {% endblock %}
