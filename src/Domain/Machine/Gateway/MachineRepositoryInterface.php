@@ -3,8 +3,6 @@
 namespace Domain\Machine\Gateway;
 
 use Domain\Machine\Data\Model\Machine;
-use Domain\Machine\Data\ObjectValue\MachineId;
-use Domain\Machine\Gateway\MachineInterface;
 
 interface MachineRepositoryInterface
 {

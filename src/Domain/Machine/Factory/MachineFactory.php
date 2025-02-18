@@ -5,6 +5,7 @@ namespace Domain\Machine\Factory;
 use Domain\Machine\Data\Contract\CreateMachineRequest;
 use Domain\Machine\Data\Model\Machine;
 use Domain\Machine\Data\ObjectValue\MachineId;
+use Domain\User\Data\Model\User;
 // use Domain\Machine\Data\Contract\UpdateMachineRequest;
 
 class MachineFactory
@@ -15,7 +16,7 @@ class MachineFactory
      * @param CreateMachineRequest $request
      * @return Machine
      */
-    public static function make(CreateMachineRequest $request): Machine
+    public static function make(CreateMachineRequest $request, User $user): Machine
     {
         // Créer une nouvelle machine avec un nouvel ID généré
         return new Machine(
@@ -25,7 +26,7 @@ class MachineFactory
             $request->marque,
             $request->tempUsage,
             $request->seuilMaintenance,
-            $request->userId,
+            $user,
             new \DateTimeImmutable(),
             null
         );
