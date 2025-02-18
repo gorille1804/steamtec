@@ -1,11 +1,12 @@
 <?php
 
-namespace Infrastructure\Controller;
+namespace Infrastructure\Controller\User;
 
 use Domain\User\UseCase\FindAllUserUseCaseInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+#[Route('/dashboard')]
 class UserController extends AbstractController
 {
 
@@ -13,11 +14,12 @@ class UserController extends AbstractController
       private readonly  FindAllUserUseCaseInterface $findAllUserUseCase
     ){}
 
-    #[Route('/user', name: 'app_user')]
+    #[Route('/users', name: 'app_users')]
+    #[IsGranted('ROLE_ADMIN')]
     public function index()
     {
         $users = $this->findAllUserUseCase->__invoke();
-        return $this->render('client/index.html.twig', [
+        return $this->render('admin/user/index.html.twig', [
             'users' => $users
         ]);
     }

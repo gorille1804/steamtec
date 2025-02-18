@@ -1,13 +1,13 @@
 <?php
-
 namespace Infrastructure\Form\Profile; 
 
 use Domain\User\Data\Contract\UpdateUserRequest;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType; // Correct TextType import
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class ProfileFormType extends AbstractType
 {
@@ -21,6 +21,9 @@ class ProfileFormType extends AbstractType
                 ],
                 'label_attr' => [
                     'class' => 'form-label',
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'Le prénom ne peut pas être vide']),
                 ]
             ])
             ->add('lastname', TextType::class, [
@@ -31,6 +34,9 @@ class ProfileFormType extends AbstractType
                 ],
                 'label_attr' => [
                     'class' => 'form-label',
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'Le nom ne peut pas être vide']),
                 ]
             ])
             ->add('phone', TextType::class, [
@@ -40,6 +46,13 @@ class ProfileFormType extends AbstractType
                 ],
                 'label_attr' => [
                     'class' => 'form-label',
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'Le téléphone ne peut pas être vide']),
+                    new Assert\Regex([
+                        'pattern' => '/^[0-9\-\+\s\(\)]+$/',
+                        'message' => 'Numéro de téléphone invalide'
+                    ])
                 ]
             ])
             ->add('socity', TextType::class, [
@@ -49,13 +62,17 @@ class ProfileFormType extends AbstractType
                 ],
                 'label_attr' => [
                     'class' => 'form-label',
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'La société ne peut pas être vide']),
                 ]
-            ]) ->add('update', SubmitType::class, [
-                'label' => 'update',
+            ])
+            ->add('update', SubmitType::class, [
+                'label' => 'Mettre à jour',
                 'attr'  => [
                     'class' => 'btn btn-primary w-100 mb-3',
                 ],
-            ]);;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
