@@ -3,6 +3,7 @@
 namespace Infrastructure\Symfony\Security;
 
 use Domain\User\Data\Model\User;
+use Domain\User\Data\ObjectValue\UserId;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -15,6 +16,11 @@ class SymfonyUserAdapter implements UserInterface, PasswordAuthenticatedUserInte
     public function getUser(): User
     {
         return $this->user;
+    }
+
+    public function getId():UserId
+    {
+        return $this->user->getId();
     }
 
     public function getUserIdentifier(): string
@@ -56,6 +62,7 @@ class SymfonyUserAdapter implements UserInterface, PasswordAuthenticatedUserInte
     {
         return $this->user->getSocity();
     }
+    
 
     
     public function eraseCredentials(): void {}

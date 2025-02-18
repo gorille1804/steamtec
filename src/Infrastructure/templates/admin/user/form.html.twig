@@ -1,0 +1,73 @@
+{% for message in app.flashes('error') %}
+    <div class="alert alert-danger">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{{ form_start(form) }}
+    <div class="row">
+       {% if not is_edit %}
+        <div class="col-md-6 mb-3">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email) }}
+            {% if form_errors(form.email) %}
+                <div class="invalid-feedback d-block">
+                    {{ form_errors(form.email) }}
+                </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        <div class="col-md-6 mb-3">
+            {{ form_label(form.firstname) }}
+            {{ form_widget(form.firstname) }}
+            {% if form_errors(form.firstname) %}
+                <div class="invalid-feedback d-block">
+                    {{ form_errors(form.firstname) }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-md-6 mb-3">
+            {{ form_label(form.lastname) }}
+            {{ form_widget(form.lastname) }}
+            {% if form_errors(form.lastname) %}
+                <div class="invalid-feedback d-block">
+                    {{ form_errors(form.lastname) }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-md-{{is_edit ? '12':'6' }} mb-3">
+            {{ form_label(form.phone) }}
+            {{ form_widget(form.phone) }}
+            {% if form_errors(form.phone) %}
+                <div class="invalid-feedback d-block">
+                    {{ form_errors(form.phone) }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-md-12 mb-3">
+            {{ form_label(form.socity) }}
+            {{ form_widget(form.socity) }}
+            {% if form_errors(form.socity) %}
+                <div class="invalid-feedback d-block">
+                    {{ form_errors(form.socity) }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-md-12 mb-3">
+            {{ form_label(form.roles) }}
+            <div class="role-checkboxes">
+                {{ form_widget(form.roles) }}
+            </div>
+            {% if form_errors(form.roles) %}
+                <div class="invalid-feedback d-block">
+                    {{ form_errors(form.roles) }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-12">
+            <div class="d-flex justify-content-end gap-2">
+                {{ form_widget(form.save) }}
+            </div>
+        </div>
+    </div>
+{{ form_end(form) }}

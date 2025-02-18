@@ -8,4 +8,5 @@ class UpdateUserRequest
     public string $lastname;
     public string $phone;
     public string $socity;
+    public array $roles;
 }

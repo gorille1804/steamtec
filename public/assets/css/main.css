@@ -1,0 +1,13 @@
+.role-checkboxes {
+    margin-top: 0.5rem;
+}
+
+.role-checkboxes div {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.role-checkboxes label {
+    margin-bottom: 0;
+}
