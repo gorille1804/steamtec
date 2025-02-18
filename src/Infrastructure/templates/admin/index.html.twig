@@ -1,0 +1,37 @@
+{% extends 'layout/dashboard.layout.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="admin-dashboard">
+        <h2>Bienvenue, Administrateur</h2>
+        <p>Gérez les ressources et utilisateurs depuis cette interface.</p>
+
+        <div class="admin-cards">
+            <div class="card">
+                <h3>📊 Statistiques</h3>
+                <p>Consultez les dernières statistiques d'utilisation.</p>
+                <a href="#">Voir plus</a>
+            </div>
+            <div class="card">
+                <h3>👥 Utilisateurs</h3>
+                <p>Gérez les comptes utilisateurs.</p>
+                <a href="#">Voir plus</a>
+            </div>
+            <div class="card">
+                <h3>🖥️ Machines</h3>
+                <p>Gérez les machines enregistrées.</p>
+                <a href="#">Voir plus</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- Ajout des scripts nécessaires à l'admin -->
+{% endblock %}

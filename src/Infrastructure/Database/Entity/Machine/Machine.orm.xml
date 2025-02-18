@@ -1,0 +1,23 @@
+<!-- config/doctrine/Machine.orm.xml -->
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+                  
+    <entity name="Domain\Machine\Data\Model\Machine" table="machine">
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="numeroIdentification" type="string" length="255" unique="true"/>
+        <field name="nom" type="string" length="255"/>
+        <field name="marque" type="string" length="255"/>
+        <field name="tempUsage" type="integer" nullable="true"/>
+        <field name="seuilMaintenance" type="integer"/>
+        <!-- Association avec User -->
+        <many-to-one field="user" target-entity="Domain\User\Data\Model\User">
+            <join-column name="user_id" referenced-column-name="id" nullable="true"/>
+        </many-to-one>
+        <field name="createdAt" type="datetime" /> 
+        <field name="updatedAt" type="datetime" nullable="true" />
+    </entity>
+</doctrine-mapping>
