@@ -68,7 +68,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/users/update/{userId}', name:'app_users_update', methods:['GET', 'POST'])]
+    #[Route('/users/{userId}/edit', name:'app_users_update', methods:['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function update(Request $request, string $userId): Response
     {
@@ -98,7 +98,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/users/delete/{userId}', name:'app_users_delete', methods:['GET', 'POST'])]
+    #[Route('/users/{userId}/delete', name:'app_users_delete', methods:['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, string $userId): Response
     {

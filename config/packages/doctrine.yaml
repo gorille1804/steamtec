@@ -13,6 +13,8 @@ doctrine:
         types:
             userId: Infrastructure\Database\FieldType\UserIdType
             machineId: Infrastructure\Database\FieldType\MachineIdType
+            chantierId: Infrastructure\Database\FieldType\ChantierIdType
+            chantierMachineId: Infrastructure\Database\FieldType\ChantierMachineIdType
     orm:
         auto_generate_proxy_classes: true
         default_entity_manager: default

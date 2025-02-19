@@ -52,22 +52,19 @@
                                     <td>
                                       {{user.phone}}  
                                     </td>
-                                    <td>
-                                        <div class="d-flex gap-2">
-                                            <a
-                                               href="{{path('app_users_update', {'userId':user.id})}}"
-                                               class="btn btn-primary btn-sm" 
-                                               title="Modifier">
-                                                <i class="mdi mdi-pencil"></i>
+                                    
+                                    <td class="py-1">
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <a href="{{path('app_users_update', {'userId':user.id})}}" class="btn btn-warning btn-sm" type="button">
+                                               <i class="mdi mdi-pencil"></i>
                                             </a>
-                                            
                                             <button type="button" 
-                                                    class="btn btn-danger btn-sm delete-user-btn" 
-                                                    title="Supprimer"
-                                                    {% if app.user.id == user.id %}disabled{% endif %}
-                                                    data-user-id="{{ user.id }}"
-                                                    data-user-name="{{ user.firstname ~ ' ' ~ user.lastname }}"
-                                                    data-csrf-token="{{ csrf_token('delete' ~ user.id) }}">
+                                                class="btn btn-danger btn-sm delete-user-btn" 
+                                                title="Supprimer"
+                                                {% if app.user.id == user.id %}disabled{% endif %}
+                                                data-user-id="{{ user.id }}"
+                                                data-user-name="{{ user.firstname ~ ' ' ~ user.lastname }}"
+                                                data-csrf-token="{{ csrf_token('delete' ~ user.id) }}">
                                                 <i class="mdi mdi-delete"></i>
                                             </button>
                                         </div>

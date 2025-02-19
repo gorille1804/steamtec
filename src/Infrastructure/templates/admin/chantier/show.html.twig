@@ -1,0 +1,135 @@
+{% extends "layout/app.layout.html.twig" %}
+{% block content %}
+    <div class="row flex-grow">
+        <div class="col-md-12">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card card-rounded">
+                <div class="card-body">
+                    <div class="d-sm-flex justify-content-between align-items-start">
+                        <div>
+                            <h2 class="card-title card-title-dash">Détails du Chantier</h2>
+                        </div>
+                        <div>
+                            <a href="{{ path('app_chantiers') }}" class="btn btn-secondary btn-sm text-white mb-0 me-0">
+                                <i class="mdi mdi-arrow-left"></i> Retour à la liste
+                            </a>
+                            <a href="{{ path('app_chantier_edit', {'chantier': chantier.id}) }}" class="btn btn-warning btn-sm text-white mb-0 me-0">
+                                <i class="mdi mdi-pencil"></i> Modifier
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title-dash">Informations Générales</h4>
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless">
+                                                <tbody>
+                                                    <tr>
+                                                        <th style="width: 30%">Nom:</th>
+                                                        <td>{{ chantier.name }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                         <th style="width: 30%; vertical-align: top;">Description:</th>
+                                                        <td>
+                                                            <div class="description-wrapper">
+                                                                {{ chantier.description }}
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Heures:</th>
+                                                        <td>{{ chantier.hours }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Créé le:</th>
+                                                        <td>{{ chantier.createdAt|date('d-m-Y:H:m') }}</td>
+                                                    </tr>
+                                                     <tr>
+                                                        <th>Modifier le:</th>
+                                                        <td>{{ chantier.updatedAt|date('d-m-Y:H:m') }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title-dash">Machines Assignées</h4>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nom</th>
+                                                        <th>Marque</th>
+                                                        <th>Numéro d'identification</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for machine in chantier.chantierMachines %}
+                                                        <tr>
+                                                            <td>{{ machine.machine.nom }}</td>
+                                                            <td>{{ machine.machine.marque }}</td>
+                                                            <td>{{ machine.machine.numeroIdentification }}</td>
+                                                            <td>
+                                                                <a href="" 
+                                                                   class="btn btn-primary btn-sm">
+                                                                    <i class="mdi mdi-eye"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Additional Details Section -->
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title-dash">Historique des Activités</h4>
+                                        <div class="timeline">
+                                            {% if chantier.activities is defined and chantier.activities|length > 0 %}
+                                                {% for activity in chantier.activities %}
+                                                    <div class="timeline-item">
+                                                        <div class="timeline-date">
+                                                            {{ activity.date|date('d-m-Y') }}
+                                                        </div>
+                                                        <div class="timeline-content">
+                                                            {{ activity.description }}
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            {% else %}
+                                                <p class="text-muted">Aucune activité enregistrée</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

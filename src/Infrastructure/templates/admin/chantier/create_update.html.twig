@@ -1,0 +1,41 @@
+{% extends "layout/app.layout.html.twig" %}
+{% block title %}} chantier{% endblock %}
+
+{% block content %}
+    <div class="row flex-grow">
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card card-rounded">
+                <div class="card-body">
+                    <div class="d-sm-flex justify-content-between align-items-start">
+                        <div>
+                            <h4 class="card-title card-title-dash">{{is_edit ? 'Modification' : 'Nouvel'}} chantier</h4>
+                        </div>
+                        <div>
+                            <a href="{{ path('app_chantiers') }}" class="btn btn-primary btn-sm mb-0 me-0">
+                                <i class="mdi mdi-arrow-left"></i> Retour
+                            </a>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                         {% include "admin/chantier/form.html.twig" with {'form': form, 'is_edit':is_edit} %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+         $(document).ready(function() {
+            $('.select2').select2({
+                theme: 'bootstrap4',
+                width: '100%',
+                language: {
+                    noResults: function() {
+                        return "Aucune machine trouvée";
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}
