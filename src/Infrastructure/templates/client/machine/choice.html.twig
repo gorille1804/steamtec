@@ -1,0 +1,16 @@
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            {{ form_widget(form.machine, {'attr': {'class': 'form-control'}}) }}
+                {% if form_errors(form.machine) %}
+                    <div class="invalid-feedback d-block">
+                        {{ form_errors(form.machine) }}
+                    </div>
+                {% endif %}
+        </div>
+
+        <div class="col-md-6 mb-3">
+            {{ form_widget(form.save) }}
+        </div>
+    </div>                                                 
+{{ form_end(form) }}
