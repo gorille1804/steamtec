@@ -1,12 +1,16 @@
 <?php
 
 namespace Domain\Machine\Data\Model;
+
+use Domain\Machine\Data\ObjectValue\MachineId;
+use Domain\Machine\Gateway\MachineInterface;
 use Domain\User\Data\Model\User;
 
-class Machine
+
+class Machine implements MachineInterface
 {
     public function __construct(
-        public ?int $id,
+        public MachineId $id,
         public string $numeroIdentification,
         public string $nom,
         public string $marque,
@@ -16,5 +20,39 @@ class Machine
         public \DateTimeInterface $createdAt,
         public ?\DateTimeInterface $updatedAt = null,
     ) {}
+    public function getId(): MachineId
+    {
+        return $this->id;
+    }
+
+    public function getNumeroIdentification(): string
+    {
+        return $this->numeroIdentification;
+    }
+
+    public function getNom(): string
+    {
+        return $this->nom;
+    }
+
+    public function getMarque(): string
+    {
+        return $this->marque;
+    }
+
+    public function getTempUsage(): ?int
+    {
+        return $this->tempUsage;
+    }
+
+    public function getSeuilMaintenance(): int
+    {
+        return $this->seuilMaintenance;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
 
 }

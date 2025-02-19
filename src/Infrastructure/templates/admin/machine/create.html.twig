@@ -1,43 +1,121 @@
-{% extends 'layout/dashboard.layout.html.twig' %}
-
-{% block title %}Créer une machine{% endblock %}
+{% extends "layout/app.layout.html.twig" %}
+{% block title %}{{ is_edit ? 'Modifier' : 'Nouvel' }} machine{% endblock %}
 
 {% block content %}
-    <h3>Ajouter une nouvelle machine</h3>
+    <div class="row flex-grow">
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card card-rounded">
+                <div class="card-body">
+                    <div class="d-sm-flex justify-content-between align-items-start">
+                        <div> <h4 class="card-title card-title-dash">{{ is_edit ? 'Modifier' : 'Nouvel' }} utilisateur</h4>
+                        </div>
+                        <div>
+                            <a href="{{path('app_machines')}}" class="btn btn-secondary btn-md mb-0 me-0">
+                                <i class="mdi mdi-arrow-left"></i> Retour
+                            </a>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        {{ form_start(form) }}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form_label(form.numeroIdentification, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.numeroIdentification, {'attr': {'class': 'form-control'}}) }}
+                                {% if form_errors(form.numeroIdentification) %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form_errors(form.numeroIdentification) }}
+                                    </div>
+                                {% endif %}
+                            </div>
 
-    {{ form_start(form) }}
-        <div class="form-group">
-            {{ form_label(form.numeroIdentification) }}
-            {{ form_widget(form.numeroIdentification, { 'attr': {'class': 'form-control'} }) }}
-        </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form_label(form.nom, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                                {% if form_errors(form.nom) %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form_errors(form.nom) }}
+                                    </div>
+                                {% endif %}
+                            </div>
 
-        <div class="form-group">
-            {{ form_label(form.nom) }}
-            {{ form_widget(form.nom, { 'class': 'form-control' }) }}
-        </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form_label(form.marque, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.marque, {'attr': {'class': 'form-control'}}) }}
+                                {% if form_errors(form.marque) %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form_errors(form.marque) }}
+                                    </div>
+                                {% endif %}
+                            </div>
 
-        <div class="form-group">
-            {{ form_label(form.marque) }}
-            {{ form_widget(form.marque, { 'class': 'form-control' }) }}
-        </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form_label(form.tempUsage, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.tempUsage, {'attr': {'class': 'form-control'}}) }}
+                                {% if form_errors(form.tempUsage) %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form_errors(form.tempUsage) }}
+                                    </div>
+                                {% endif %}
+                            </div>
 
-        <div class="form-group">
-            {{ form_label(form.typeMateriel) }}
-            {{ form_widget(form.typeMateriel, { 'class': 'form-control'} ) }}
-        </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form_label(form.seuilMaintenance, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.seuilMaintenance, {'attr': {'class': 'form-control'}}) }}
+                                {% if form_errors(form.seuilMaintenance) %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form_errors(form.seuilMaintenance) }}
+                                    </div>
+                                {% endif %}
+                            </div>
 
-        <div class="form-group">
-            {{ form_label(form.tempUsage) }}
-            {{ form_widget(form.tempUsage, { 'class': 'form-control'} ) }}
+                            <div class="col-md-6 mb-3">
+                                {{ form_label(form.user, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
+                                {% if form_errors(form.user) %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form_errors(form.user) }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                <div class="d-flex justify-content-end gap-2">
+                                    {{ form_widget(form.save) }}
+                                </div>
+                            </div>
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+{% endblock %}
 
-        <div class="form-group">
-            {{ form_label(form.seuilEntretien) }}
-            {{ form_widget(form.seuilEntretien, { 'class': 'form-control'} ) }}
-        </div>
+{% block script %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const submitButton = form.querySelector('button[type="submit"]');
+    const isEdit = submitButton.getAttribute('data-edit') === 'true';
 
-        <div class="form-group mt-3">
-            <button type="submit" class="btn btn-primary">Créer</button>
-        </div>
-    {{ form_end(form) }}
+    if (isEdit) { 
+        submitButton.addEventListener('click', function(event) {
+            event.preventDefault(); 
+            Swal.fire({
+                title: 'Êtes-vous sûr ?',
+                text: 'Vous allez modifier cette machine.',
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonText: 'Oui, modifier!',
+                cancelButtonText: 'Non, annuler',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    }
+});
+</script>
+
 {% endblock %}
