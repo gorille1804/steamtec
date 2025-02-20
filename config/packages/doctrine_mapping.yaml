@@ -27,3 +27,9 @@ doctrine:
                         dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/ChantierMachine'
                         prefix: 'Domain\Chantier\Data\Model\ChantierMachine'
                         alias: ChantierMachine
+                    ParcMachine:
+                        type: xml
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/ParcMachine'
+                        prefix: 'Domain\ParcMachine\Data\Model'
+                        alias: ChantierMachine
