@@ -4,10 +4,11 @@ namespace Domain\ParcMachine\Data\Model;
 
 use Domain\Machine\Data\Model\Machine;
 use Domain\ParcMachine\Data\ObjectValue\ParcMachineId;
+use Domain\ParcMachine\Gateway\ParcMachineInterface;
 use Domain\User\Data\Model\User;
 
 
-class ParcMachine
+class ParcMachine implements ParcMachineInterface
 {
     public function __construct(
         public ParcMachineId $id,
