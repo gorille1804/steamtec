@@ -7,6 +7,7 @@ use Infrastructure\Form\Security\AuthenticationFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\SecurityRequestAttributes;
 
 class AuthenticationController extends AbstractController
 {
@@ -18,21 +19,31 @@ class AuthenticationController extends AbstractController
     #[Route('/login', name: 'app_security', methods: ['GET', 'POST'])]
     public function index(Request $request)
     {
-        $form = $this->createForm(AuthenticationFormType::class);
+        $error = $request->getSession()->get('auth_error');
+        if ($error) {
+            $this->addFlash('error', $error);
+            $request->getSession()->remove('auth_error');
+        }
+
+
+       $form = $this->createForm(AuthenticationFormType::class);
         $form->handleRequest($request);
-        
+      
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $result = $this->useCase->__invoke($form->getData(), $request);
-                return $result ?? $this->redirectToRoute('app_home');
-            } catch (\Exception $e) {
+                $this->useCase->__invoke($form->getData(), $request);
+                return $this->redirectToRoute('app_home');
+            } catch (\throwable $e) {
                 $this->addFlash('error', $e->getMessage());
+            } catch (\Throwable $e) {
+                $this->addFlash('error', 'An unexpected error occurred. Please try again.');
             }
         }
         
         return $this->render('security/login.html.twig', [
             'form' => $form->createView(),
-            'error' => $form->getErrors()
+            'errors' => $form->getErrors(),
+            'last_username' => $request->getSession()->get(SecurityRequestAttributes::LAST_USERNAME)
         ]);
     }
 

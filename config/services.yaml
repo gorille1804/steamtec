@@ -4,6 +4,7 @@ parameters:
     secretKey: '%env(APP_SECRET)%'
     algorithm: '%env(APP_ALGORITHM)%'
     noReplyEmail: '%env(NO_REPLY_EMAIL)%'
+    mailerService: '%env(MAILER_SERVICE)%'
 
 services:
     _defaults:
@@ -16,8 +17,12 @@ services:
             $secretKey: '%secretKey%'
             $algorithm: '%algorithm%'
             $noReplyEmail: '%noReplyEmail%'
+            $mailerService: '%mailerService%'
 
-
+    Infrastructure\Symfony\Services\Email\DefaultEmailSender:
+        arguments:
+            $mailer: '@Symfony\Component\Mailer\MailerInterface'
+            $twig: '@Twig\Environment'
     Domain\:
         resource: '../src/Domain/'
         exclude:
@@ -51,8 +56,11 @@ services:
         arguments:
             $userAuthenticator: '@Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface'
             $authenticator: '@Infrastructure\Symfony\Security\FormLoginAuthenticator'
+    
      
-    #Domain\User\Service\TokenServiceInterface: '@Infrastructure\Symfony\Services\Jwt\JWTTokenService'
+    Infrastructure\Symfony\Services\Email\EmailSenderInterface: '@Infrastructure\Symfony\Services\Email\DefaultEmailSender'
+
+    
 
     Infrastructure\Database\Fixture\UsersFixture:
         tags: ['doctrine.fixture.orm']

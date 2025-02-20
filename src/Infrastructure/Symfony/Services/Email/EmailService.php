@@ -6,10 +6,8 @@ class EmailService implements EmailServiceInterface
 {
     private EmailSenderInterface $emailSender;
 
-    public function __construct(
-        EmailSenderFactory $emailSenderFactory
-    ) {
-        $this->emailSender = $emailSenderFactory->createEmailSender();
+    public function __construct(EmailSenderInterface $emailSender) {
+        $this->emailSender = $emailSender;
     }
 
     public function sendEmail(

@@ -71,7 +71,6 @@ class ChantierController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function update(Request $request, Chantier $chantier)
     {
-
         $chantier = $this->findChantierByIdUseCase->__invoke($chantier->id);
         $updatehantierRequest = new UpdateChantierRequest(); 
         $updateRequest = UpdateChantierFactory::makeRequest($chantier, $updatehantierRequest);
