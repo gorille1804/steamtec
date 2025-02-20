@@ -8,6 +8,7 @@ use Domain\Machine\Data\Model\Machine;
 use Domain\Machine\Gateway\MachineRepositoryInterface;
 use Domain\Machine\Gateway\MachineInterface;
 use Domain\Machine\Data\ObjectValue\MachineId;
+use Domain\User\Data\Model\User;
 
 class MachineRepository extends ServiceEntityRepository implements MachineRepositoryInterface
 {
@@ -23,10 +24,18 @@ class MachineRepository extends ServiceEntityRepository implements MachineReposi
         return $this->findAll();
     }
 
-    // public function findByEmail(string $email): ?MachineInterface
-    // {
-    //     return $this->findOneBy(['email' => $email]);
-    // }
+    public function findAllByUser(User $user): array
+    {
+        if ($user === null) {
+             return $this->createQueryBuilder('m')
+                ->leftJoin('m.user', 'u') 
+                ->where('u.id IS NULL')
+                ->getQuery()
+                ->getResult();
+        }
+        return $this->findBy(['user' => $user]);
+    }
+    
 
     public function findByid(MachineId $id): ?MachineInterface
     {

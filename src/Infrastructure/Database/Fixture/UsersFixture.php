@@ -36,6 +36,26 @@ class UsersFixture extends Fixture
             $manager->persist($user);
         }
 
+
+
+        for ($i=0; $i <= 5; $i++) { 
+
+            $user = new User(
+                UserId::make(),
+                $faker->email(),
+                ['ROLE_USER'],
+                $faker->firstName(),
+                $faker->lastName(),
+                $faker->phoneNumber(),
+                $faker->company(),
+                '',
+                new \DateTimeImmutable(),
+            );            
+            $password = $this->hasher->hashPassword('123456');
+            $user->password = $password;
+            $manager->persist($user);
+        }
+
         $manager->flush();
     }
 }

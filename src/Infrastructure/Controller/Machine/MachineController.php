@@ -65,7 +65,7 @@ class MachineController extends AbstractController
         ]);
     }
 
-    #[Route('/machine/update/{id}', name:'app_update_machine', methods:['GET', 'POST'])]
+    #[Route('/machine/{id}/edit', name:'app_update_machine', methods:['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function update(Request $request, string $id): Response
     {
@@ -95,7 +95,7 @@ class MachineController extends AbstractController
         ]);
     }
 
-    #[Route('/machine/delete/{machineId}', name:'app_delete_machine', methods:['GET', 'POST'])]
+    #[Route('/machine/{machineId}/delete', name:'app_delete_machine', methods:['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function delete(string $machineId): Response
     {

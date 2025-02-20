@@ -55,4 +55,9 @@ class Machine implements MachineInterface
         return $this->user;
     }
 
+    public function setUser(?User $user):void
+    {
+        $this->user=$user;
+    }
+
 }
