@@ -63,8 +63,7 @@ class UserMachineController extends AbstractController
         ]);
     }
 
-
-    #[Route('/user_machines/delete/{machineId}', name: 'app_delete_user_machine')]
+    #[Route('/user_machines/{machineId}/delete', name: 'app_delete_user_machine')]
     #[IsGranted('ROLE_USER')]
     public function deleteUserMachine(string $machineId): Response
     {
