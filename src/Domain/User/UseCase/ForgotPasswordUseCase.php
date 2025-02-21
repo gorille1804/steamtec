@@ -21,16 +21,15 @@ class ForgotPasswordUseCase implements ForgotPasswordUseCaseInterface
 
     public function __invoke(ForgotPasswordRequest $request): void
     {
-        try {
+        
             $user = $this->repository->findByEmail($request->email);
             if(!$user) {
-                throw new UserNotFonudException('User not found');
+                throw new UserNotFonudException('Utilisateur non trouvé');
             }
 
             $token = $this->tokenService->generateToken($user->getId()->getValue(), 60);
+
             $resetLink = sprintf('%s/reset-password/%s', $this->appUrl, $token);
-
-
             $this->emailService->sendEmail(
                 'email/reset_password.html.twig',
                 [
@@ -41,9 +40,5 @@ class ForgotPasswordUseCase implements ForgotPasswordUseCaseInterface
                 $this->noReplyEmail,
                 [$user->getEmail()]
             );
-        } catch (\Exception $e) {
-            error_log("Error sending password reset email: " . $e->getMessage());
-            throw $e;
-        }
     }
 }

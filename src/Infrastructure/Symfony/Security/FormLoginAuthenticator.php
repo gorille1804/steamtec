@@ -11,7 +11,8 @@ use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
-
+use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
+use Symfony\Component\Security\Http\SecurityRequestAttributes;
 class FormLoginAuthenticator extends AbstractAuthenticator
 {
     public function __construct(
@@ -29,6 +30,10 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         $email = $data['email'] ?? '';
         $password = $data['password'] ?? '';
 
+        if (empty($email) || empty($password)) {
+            throw new CustomUserMessageAuthenticationException('Email and password cannot be empty.');
+        }
+
         return new Passport(
             new UserBadge($email),
             new PasswordCredentials($password)
@@ -42,6 +47,15 @@ class FormLoginAuthenticator extends AbstractAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
+        if ($exception instanceof CustomUserMessageAuthenticationException) {
+            $errorMessage = $exception->getMessage();
+        } else {
+            $errorMessage = 'Invalide email ou mot de passe';
+        }
+
+        $request->getSession()->set(SecurityRequestAttributes::AUTHENTICATION_ERROR, $exception);
+        $request->getSession()->set('auth_error', $errorMessage);
+
         return new RedirectResponse(
             $this->urlGenerator->generate('app_security')
         );

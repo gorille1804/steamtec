@@ -17,7 +17,7 @@ class ForgotPasswordController extends AbstractController
 
     #[Route('/forgot-password', name: 'app_forgot_password')]
     public function index(Request $request)
-    {
+    {    
         //remove flash message if existe
         $session = $request->getSession();
         $session->remove('error');
@@ -30,6 +30,7 @@ class ForgotPasswordController extends AbstractController
          try {
             $this->useCase->__invoke($form->getData());
             $this->addFlash('success', 'Un email de confirmation vous a ete envoye');
+            return $this->redirectToRoute('app_forgot_password');	
          } catch (\Throwable $th) {
             $this->addFlash('error', $th->getMessage());
          }

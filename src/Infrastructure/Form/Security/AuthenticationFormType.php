@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class AuthenticationFormType extends AbstractType
 {
@@ -16,7 +17,11 @@ class AuthenticationFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label'      => 'User Email',
+                'label'       => 'User Email',
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'Email address is required']),
+                    new Assert\Email(['message' => 'Please enter a valid email address']),
+                ],
                 'attr'       => [
                     'class'       => 'form-control',
                     'placeholder' => 'username@email.com',
@@ -26,7 +31,14 @@ class AuthenticationFormType extends AbstractType
                 ],
             ])
             ->add('password', PasswordType::class, [
-                'label'      => 'Password',
+                'label'       => 'Password',
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'Password is required']),
+                    new Assert\Length([
+                        'min' => 8,
+                        'minMessage' => 'Password must be at least {{ limit }} characters long',
+                    ]),
+                ],
                 'attr'       => [
                     'class'       => 'form-control',
                     'placeholder' => '••••••••',
