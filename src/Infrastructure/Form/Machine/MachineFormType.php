@@ -8,9 +8,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType; // Correct TextType imp
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Domain\User\Data\Model\User;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
 
 class MachineFormType extends AbstractType
 {
@@ -30,21 +30,20 @@ class MachineFormType extends AbstractType
                 'label' => 'Marque',
                 'attr' => ['placeholder' => 'Entrez la marque de la machine'],
             ])
-            ->add('tempUsage', IntegerType::class, [
-                'label' => 'Temps d\'utilisation (heures)',
-                'required' => false,
-                'attr' => ['placeholder' => 'Durée d\'utilisation en heures'],
-            ])
             ->add('seuilMaintenance', IntegerType::class, [
                 'label' => 'Seuil de maintenance (heures)',
                 'attr' => ['placeholder' => 'Seuil de maintenance en heures'],
             ])
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'firstname',
-                'choice_value'=>'id',
-                'placeholder' => 'Sélectionner un utilisateur (optionnel)',
-                'required' => false,
+            ->add('ficheTechnique', FileType::class, [
+                'label' => 'Upload File',
+                'required' => true,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '5M',
+                        'mimeTypes' => ['image/jpeg', 'image/png', 'application/pdf'],
+                        'mimeTypesMessage' => 'Veuillez uploader un fichier valide (JPG, PNG, PDF)',
+                    ])
+                ],
             ])
             ->add('save', SubmitType::class, [
                 'label' => $isEdit ? 'Mettre à jour' : 'Créer',

@@ -17,6 +17,8 @@ use Domain\Machine\Factory\MachineFactory;
 use Domain\Machine\Data\Contract\UpdateMachineRequest;
 use Domain\Machine\UseCase\DeleteMachineUseCase;
 use Domain\Machine\UseCase\UpdateMachineUseCaseInterface;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 #[Route('/dashboard')]
 class MachineController extends AbstractController
@@ -107,5 +109,33 @@ class MachineController extends AbstractController
         }
 
         return $this->redirectToRoute('app_machines');
+    }
+
+    #[Route('/machine/{machineId}/download', name: 'app_download_machine_fiche_technique', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function download(string $machineId): ?Response
+    {
+        try {
+            $machine = $this->findByIdUseCase->__invoke(new MachineId($machineId));
+
+            if (!$machine->ficheTechnique) {
+                $this->addFlash('info', 'Aucune fiche technique disponible.');
+                return $this->redirectToRoute('app_machines'); 
+            }
+            $file = MachineFactory::getFilecontent($machine->ficheTechnique);
+            if (!$file) {
+                $this->addFlash('info', 'Le fichier n\'existe pas.');
+                return $this->redirectToRoute('app_machines'); 
+            }
+            $response = new BinaryFileResponse($file->getRealPath());
+            $response->setContentDisposition(
+                ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+                'Fiche_' . $machine->nom . '.' . $file->guessExtension()
+            );
+            return $response;
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Erreur lors du téléchargement de la fiche technique.');
+            return $this->redirectToRoute('app_machines'); 
+        }
     }
 }
