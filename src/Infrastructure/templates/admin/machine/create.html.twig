@@ -49,16 +49,6 @@
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                {{ form_label(form.tempUsage, null, {'label_attr': {'class': 'form-label'}}) }}
-                                {{ form_widget(form.tempUsage, {'attr': {'class': 'form-control'}}) }}
-                                {% if form_errors(form.tempUsage) %}
-                                    <div class="invalid-feedback d-block">
-                                        {{ form_errors(form.tempUsage) }}
-                                    </div>
-                                {% endif %}
-                            </div>
-
-                            <div class="col-md-6 mb-3">
                                 {{ form_label(form.seuilMaintenance, null, {'label_attr': {'class': 'form-label'}}) }}
                                 {{ form_widget(form.seuilMaintenance, {'attr': {'class': 'form-control'}}) }}
                                 {% if form_errors(form.seuilMaintenance) %}
@@ -69,11 +59,11 @@
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                {{ form_label(form.user, null, {'label_attr': {'class': 'form-label'}}) }}
-                                {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
-                                {% if form_errors(form.user) %}
+                                {{ form_label(form.ficheTechnique, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.ficheTechnique, {'attr': {'class': 'form-control'}}) }}
+                                {% if form_errors(form.ficheTechnique) %}
                                     <div class="invalid-feedback d-block">
-                                        {{ form_errors(form.user) }}
+                                        {{ form_errors(form.ficheTechnique) }}
                                     </div>
                                 {% endif %}
                             </div>

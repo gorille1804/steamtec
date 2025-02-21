@@ -4,8 +4,6 @@ namespace Domain\Machine\Data\Model;
 
 use Domain\Machine\Data\ObjectValue\MachineId;
 use Domain\Machine\Gateway\MachineInterface;
-use Domain\User\Data\Model\User;
-
 
 class Machine implements MachineInterface
 {
@@ -14,9 +12,8 @@ class Machine implements MachineInterface
         public string $numeroIdentification,
         public string $nom,
         public string $marque,
-        public ?int $tempUsage,
         public int $seuilMaintenance,
-        public ?User $user = null,
+        public ?string $ficheTechnique,
         public \DateTimeInterface $createdAt,
         public ?\DateTimeInterface $updatedAt = null,
     ) {}
@@ -40,24 +37,14 @@ class Machine implements MachineInterface
         return $this->marque;
     }
 
-    public function getTempUsage(): ?int
-    {
-        return $this->tempUsage;
-    }
-
     public function getSeuilMaintenance(): int
     {
         return $this->seuilMaintenance;
     }
 
-    public function getUser(): ?User
+    public function getFicheTechnique(): ?string
     {
-        return $this->user;
-    }
-
-    public function setUser(?User $user):void
-    {
-        $this->user=$user;
+        return $this->ficheTechnique;
     }
 
 }

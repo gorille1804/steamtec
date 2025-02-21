@@ -4,11 +4,14 @@
 {% block content %}
     <div class="row flex-grow">
         <div class="col-md-12">
-            {% for message in app.flashes('success') %}
-                <div class="alert alert-success">
-                    {{ message }}
-                </div>
+            {% for type, messages in {'success': 'alert-success', 'info': 'alert-primary', 'error': 'alert-danger'} %}
+                {% for message in app.flashes(type) %}
+                    <div class="alert {{ messages }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
             {% endfor %}
+
         </div>
         <div class="col-12 grid-margin stretch-card">
             <div class="card card-rounded">
@@ -30,9 +33,7 @@
                                     <th>Numéro d'identification</th>
                                     <th>Nom</th>
                                     <th>Marque</th>
-                                    <th>Temp d'usage</th>
                                     <th>Seuil de maintenance</th>
-                                    <th>Utilisateur</th>
                                     <th>actions</th>
                                 </tr>
                             </thead>
@@ -49,13 +50,7 @@
                                       {{machine.marque}}  
                                     </td>
                                     <td>
-                                      {{machine.tempUsage}}  
-                                    </td>
-                                    <td>
                                       {{machine.seuilMaintenance}}  
-                                    </td>
-                                    <td>
-                                        {{ machine.user is not null ? machine.user.firstname ~ ' ' ~ machine.user.lastname : "Pas d'utilisateur" }}
                                     </td>
                                     <td>
                                         <div class="d-flex gap-2">
@@ -65,7 +60,12 @@
                                                title="Modifier">
                                                 <i class="mdi mdi-pencil"></i>
                                             </a>
-                                            
+                                            <a
+                                               href="{{ path('app_download_machine_fiche_technique', {'machineId': machine.id}) }}"
+                                               class="btn btn-dark btn-sm" 
+                                               title="Telecharger le fiche technique">
+                                                <i class="mdi mdi-download"></i>
+                                            </a>
                                             <button type="button" 
                                                     class="btn btn-danger btn-sm delete-machine-btn" 
                                                     title="Supprimer"

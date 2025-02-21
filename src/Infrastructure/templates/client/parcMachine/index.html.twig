@@ -4,10 +4,12 @@
 {% block content %}
     <div class="row flex-grow">
         <div class="col-md-12">
-            {% for message in app.flashes('success') %}
-                <div class="alert alert-success">
-                    {{ message }}
-                </div>
+            {% for type, messages in {'success': 'alert-success', 'info': 'alert-primary', 'error': 'alert-danger'} %}
+                {% for message in app.flashes(type) %}
+                    <div class="alert {{ messages }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
             {% endfor %}
         </div>
         <div class="col-12 grid-margin stretch-card">
@@ -43,7 +45,6 @@
                                     <th>Numéro d'identification</th>
                                     <th>Nom</th>
                                     <th>Marque</th>
-                                    <th>Temp d'usage</th>
                                     <th>Seuil de maintenance</th>
                                     <th>actions</th>
                                 </tr>
@@ -61,13 +62,10 @@
                                       {{parcMachine.machine.marque}}  
                                     </td>
                                     <td>
-                                       {{parcMachine.machine.tempUsage}}
-                                    </td>
-                                    <td>
                                       {{parcMachine.machine.seuilMaintenance}}  
                                     </td>
                                     <td>
-                                        <div class="d-flex gap-2">                                            
+                                        <div class="d-flex gap-2">                                          
                                             <button type="button" 
                                                     class="btn btn-danger btn-sm delete-machine-btn" 
                                                     title="Supprimer"
