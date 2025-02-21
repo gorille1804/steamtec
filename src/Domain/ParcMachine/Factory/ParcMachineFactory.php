@@ -5,6 +5,7 @@ namespace Domain\ParcMachine\Factory;
 use Domain\ParcMachine\Data\Contract\CreateParcMachineRequest;
 use Domain\ParcMachine\Data\Model\ParcMachine;
 use Domain\ParcMachine\Data\ObjectValue\ParcMachineId;
+use Domain\User\Data\Model\User;
 
 class ParcMachineFactory
 {
@@ -26,4 +27,14 @@ class ParcMachineFactory
             null
         );
     }
+
+    public static function makeRequest(User $user): CreateParcMachineRequest
+{
+    $request = new CreateParcMachineRequest();
+    $request->user = $user;
+    $request->tempUsage = 0;
+
+    return $request;
+}
+
 }

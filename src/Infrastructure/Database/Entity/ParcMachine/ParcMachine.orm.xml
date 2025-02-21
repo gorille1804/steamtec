@@ -5,10 +5,10 @@
     <entity name="Domain\ParcMachine\Data\Model\ParcMachine" table="parc_machine">
         <id name="id" type="parcMachineId" column="id"/>
         <many-to-one field="user" target-entity="Domain\User\Data\Model\User">
-            <join-column name="user_id" referenced-column-name="id" nullable="true" />
+            <join-column name="user_id" referenced-column-name="id" nullable="false" />
         </many-to-one>
         <many-to-one field="machine" target-entity="Domain\Machine\Data\Model\Machine">
-            <join-column name="machine_id" referenced-column-name="id" nullable="true"/>
+            <join-column name="machine_id" referenced-column-name="id" nullable="false"/>
         </many-to-one>
         <field name="tempUsage" type="integer" nullable="true"/>  
         <field name="createdAt" type="datetime" /> 

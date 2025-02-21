@@ -10,6 +10,6 @@ interface ParcMachineInterface
 {
     public function getId(): ParcMachineId;
     public function getTempUsage(): ?int;
-    public function getMachine(): ?MachineInterface;
-    public function getUser(): ?UserInterface;
+    public function getMachine(): MachineInterface;
+    public function getUser(): UserInterface;
 }

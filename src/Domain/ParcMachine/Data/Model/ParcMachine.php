@@ -12,8 +12,8 @@ class ParcMachine implements ParcMachineInterface
 {
     public function __construct(
         public ParcMachineId $id,
-        public ?Machine $machine = null,
-        public ?User $user = null,
+        public Machine $machine,
+        public User $user,
         public ?int $tempUsage,
         public \DateTimeInterface $createdAt,
         public ?\DateTimeInterface $updatedAt = null,
@@ -28,17 +28,17 @@ class ParcMachine implements ParcMachineInterface
         return $this->tempUsage;
     }
 
-    public function getUser(): ?User
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    public function getMachine(): ?Machine
+    public function getMachine(): Machine
     {
         return $this->machine;
     }
 
-    public function setUser(?User $user):void
+    public function setUser(User $user):void
     {
         $this->user=$user;
     }

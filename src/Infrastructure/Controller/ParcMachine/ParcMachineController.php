@@ -2,8 +2,8 @@
 
 namespace Infrastructure\Controller\ParcMachine;
 
-use Domain\ParcMachine\Data\Contract\CreateParcMachineRequest;
 use Domain\ParcMachine\Data\ObjectValue\ParcMachineId;
+use Domain\ParcMachine\Factory\ParcMachineFactory;
 use Domain\ParcMachine\UseCase\CreateParcMachineUseCaseInterface;
 use Domain\ParcMachine\UseCase\FindAllParcMachineByUserUseCaseInterface;
 use Infrastructure\Form\ParcMachine\ParcMachineFormType ;
@@ -32,12 +32,10 @@ class ParcMachineController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function index(Request $request): Response
     {
-       // $ParcMachines = $this->findAllUseCase->__invoke();   
+       /* @var SymfonyUserAdapter $user  */  
         $user = $this->getUser(); 
-        $users = $this->findUserByIdUseCase->__invoke(new UserId($user->getId()));
-        $parcMachineRequest = new CreateParcMachineRequest();
-        $parcMachineRequest->user = $users;
-        $parcMachineRequest->tempUsage = 0; 
+        $user= $user->getUser();
+        $parcMachineRequest = ParcMachineFactory::makeRequest($user);
         $form=$this->createForm(ParcMachineFormType::class, $parcMachineRequest);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
@@ -50,7 +48,7 @@ class ParcMachineController extends AbstractController
                 $this->addFlash('error', 'Erreur lors de la création de ParcMachine');
             }
         }
-        $parcMachines = $this->findAllByUserUseCase->__invoke($users);
+        $parcMachines = $this->findAllByUserUseCase->__invoke($user);
         // dd($parcMachines);
         return $this->render('client/parcMachine/index.html.twig', [
             'parcMachines' => $parcMachines,
