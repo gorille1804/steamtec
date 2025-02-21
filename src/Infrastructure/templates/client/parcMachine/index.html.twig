@@ -1,0 +1,134 @@
+{% extends "layout/app.layout.html.twig" %}
+{% block title %} Machines {% endblock %}
+
+{% block content %}
+    <div class="row flex-grow">
+        <div class="col-md-12">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card card-rounded">
+                <div class="card-body">
+                    <div class="d-sm-flex">
+                        <div>
+                            <h2 class="card-title card-title-dash">Selectionner une Machine</h2>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                       {% include "client/parcMachine/choice.html.twig" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card card-rounded">
+                <div class="card-body">
+                    <div class="d-sm-flex justify-content-between align-items-start">
+                        <div>
+                            <h2 class="card-title card-title-dash">Machines</h2>
+                        </div>
+                        <div>
+                            <input type="text" class="form-control" id="tableFilter" placeholder="Filtrer par texte..." />
+                        </div>
+
+                    </div>
+                    <div class="table-responsive mt-1">
+                        <table class="table select-table" id="myTable">
+                            <thead>
+                                <tr>
+                                    <th>Numéro d'identification</th>
+                                    <th>Nom</th>
+                                    <th>Marque</th>
+                                    <th>Temp d'usage</th>
+                                    <th>Seuil de maintenance</th>
+                                    <th>actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for parcMachine in parcMachines %} 
+                                <tr>
+                                    <td>
+                                        {{parcMachine.machine.numeroIdentification}}
+                                    </td>
+                                    <td>
+                                       {{parcMachine.machine.nom}}
+                                    </td>
+                                    <td>
+                                      {{parcMachine.machine.marque}}  
+                                    </td>
+                                    <td>
+                                       {{parcMachine.machine.tempUsage}}
+                                    </td>
+                                    <td>
+                                      {{parcMachine.machine.seuilMaintenance}}  
+                                    </td>
+                                    <td>
+                                        <div class="d-flex gap-2">                                            
+                                            <button type="button" 
+                                                    class="btn btn-danger btn-sm delete-machine-btn" 
+                                                    title="Supprimer"
+                                                    data-parcmachine-id="{{ parcMachine.id }}"
+                                                    data-machine-name="{{ parcMachine.machine.nom}}"
+                                            >
+                                                <i class="mdi mdi-delete"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirmation de suppression</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Êtes-vous sûr de vouloir supprimer la machine <span id="machineName"></span> ?</p>
+                    <p class="text-danger">Cette action est irréversible.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <form id="deleteForm" method="POST" action="" style="display: inline;">
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+ <script>
+    document.addEventListener('DOMContentLoaded', function() {
+            // Code pour la suppression d'une machine
+        if (typeof jQuery !== 'undefined') {
+            $('.delete-machine-btn').click(function() {
+                var parcMachineId = $(this).data('parcmachine-id');  // Récupère l'ID de la machine
+                var machineName = $(this).data('machine-name');  
+                $('#machineName').text(machineName);  // Affiche le nom de la machine dans la modal
+                $('#deleteForm').attr('action', "{{ path('app_delete_user_parc_machine', {'parcMachineId': 'PARCMACHINEID'}) }}".replace('PARCMACHINEID', parcMachineId));  // Remplace 'PARCMACHINEID' par l'ID réel
+                $('#deleteConfirmationModal').modal('show');  // Affiche la modal de confirmation
+            });            
+            $('.btn-secondary').click(function() {
+                $('#deleteConfirmationModal').modal('hide');
+            });
+        } else {
+            console.error('jQuery is not loaded!');
+        }
+    });
+    </script>
+    <script src="{{ asset('assets/js/filtreAndTriMachineTable.js') }}"></script>
+{% endblock %}
