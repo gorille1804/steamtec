@@ -1,4 +1,5 @@
 {% extends "layout/app.layout.html.twig" %}
+{% block title %} Chantiers {% endblock %}
 {% block content %}
 <div class="row flex-grow">
     <div class="col-md-12">
@@ -28,7 +29,6 @@
                                 <th>Nom</th>
                                 <th>description</th>
                                 <th>Machines</th>
-                                <th>Heure</th>
                                 <th>Créé le</th>
                                 <th>actions</th>
                             </tr>
@@ -44,14 +44,12 @@
                                     </td>
                                     <td class="py-1">
                                     {% for machine in chantier.chantierMachines %}
+                                        {% set machine = machine.parcMachine.machine %}
                                             <span class="badge badge-opacity-primary mb-1" >
-                                                {{ machine.machine.nom ~ ' | ' ~ machine.machine.numeroIdentification  }}
+                                                {{ machine.nom ~ ' | ' ~ machine.numeroIdentification  }}
                                             </span>
                                             <br>
                                     {% endfor %}
-                                    </td>
-                                    <td class="py-1">
-                                        {{ chantier.hours }}
                                     </td>
                                     <td class="py-1">
                                         {{ chantier.createdAt|date('d-m-Y') }}

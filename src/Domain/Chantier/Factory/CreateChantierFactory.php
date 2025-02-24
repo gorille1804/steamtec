@@ -16,7 +16,6 @@ class CreateChantierFactory
             $request->name,
             $request->description,
             $user,
-            $request->hours,
             new \DateTimeImmutable(),
             null
         );

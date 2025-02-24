@@ -22,8 +22,8 @@ class CreateChantierUseCase implements CreateChantierUseCaseInterface
         $chantier = CreateChantierFactory::make($request, $user);
         $chantier =  $this->repository->save($chantier);
 
-        foreach ($request->machines as $machine) {
-            $chantierMachineRequest = CreateChantierMachineFactory::makeRequest($machine, $chantier);
+        foreach ($request->parcMachines as $parc) {
+            $chantierMachineRequest = CreateChantierMachineFactory::makeRequest($parc, $chantier);
             $this->createChantierMachineUseCase->__invoke($chantierMachineRequest);
         }
 

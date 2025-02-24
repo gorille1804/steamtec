@@ -35,6 +35,7 @@ class ChantierController extends AbstractController
     public function index()
     {
         $chantiers = $this->findaAllChantierUseCase->__invoke();
+
         return $this->render('admin/chantier/index.html.twig', [
             'chantiers' => $chantiers
         ]);
@@ -45,9 +46,14 @@ class ChantierController extends AbstractController
     public function create(Request $request)
     {
         $createChantierRequest = new CreateChantierRequest();
+       
+        /** @var SymfonyUserAdapter $user */
+        $user = $this->getUser();
+
         $form = $this->createForm(ChantierFormType::class, $createChantierRequest, [
             'is_edit' => false,
             'data_class' => CreateChantierRequest::class,
+            'user' => $user->getUser()
         ]);
 
         $form->handleRequest($request);
@@ -71,6 +77,9 @@ class ChantierController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function update(Request $request, Chantier $chantier)
     {
+         /** @var SymfonyUserAdapter $user */
+         $user = $this->getUser();
+
         $chantier = $this->findChantierByIdUseCase->__invoke($chantier->id);
         $updatehantierRequest = new UpdateChantierRequest(); 
         $updateRequest = UpdateChantierFactory::makeRequest($chantier, $updatehantierRequest);
@@ -78,6 +87,7 @@ class ChantierController extends AbstractController
         $form = $this->createForm(ChantierFormType::class, $updateRequest, [
             'is_edit' => true,
             'data_class' => UpdateChantierRequest::class,
+            'user' => $user->getUser()
         ]);
 
         $form->handleRequest($request);

@@ -2,9 +2,11 @@
 
 namespace Infrastructure\Form\Chantier;
 
-use Domain\Chantier\Data\Contract\CreateChantierRequest;
+
 use Domain\Machine\Data\Model\Machine;
 use Domain\User\Data\Model\User;
+use Domain\ParcMachine\Gateway\ParcMachineRepositoryInterface;
+use Domain\ParcMachine\Data\Model\ParcMachine;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -17,9 +19,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class ChantierFormType extends AbstractType
 {
+    public function __construct(
+        private readonly ParcMachineRepositoryInterface $repository
+    ){}
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $isEdit = $options['is_edit'] ?? false;
+        $user = $options['user'];	
+
+        $parcMachines = $this->repository->findAllByUser($user);
 
         $builder
             ->add('name', TextType::class, [
@@ -51,35 +59,22 @@ class ChantierFormType extends AbstractType
                     new Assert\NotBlank(['message' => 'La description ne peut pas être vide']),
                 ]
             ])
-            ->add('hours', NumberType::class, [
-                'label' => 'Heures estimées',
-                'required' => false,
-                'attr' => [
-                    'class' => 'form-control',
-                ],
-                'label_attr' => [
-                    'class' => 'form-label',
-                ],
-                'constraints' => [
-                    new Assert\PositiveOrZero(['message' => 'Le nombre d\'heures doit être positif ou nul']),
-                ]
-            ])
-            ->add('machines', EntityType::class, [
-                'class' => Machine::class,
-                'choice_label' => function ($machine) {
-                    return $machine->nom . ' (' . $machine->numeroIdentification . ')';
-                },
+            ->add('parcMachines', EntityType::class, [
+                'class' =>ParcMachine::class,
+                'choices' => $parcMachines,
+                'choice_label' => function (ParcMachine $parcMachine) {
+                        $machine = $parcMachine->getMachine();
+                        return $machine->nom . ' (' . $machine->numeroIdentification . ')';
+                    },
                 'multiple' => true,
                 'expanded' => false,
                 'label' => 'Machines',
                 'attr' => [
-                    'class' => 'form-control select2', 
+                    'class' => 'form-control select2',
                     'data-placeholder' => 'Sélectionnez les machines',
-                    'style' => 'width: 100%' 
+                    'style' => 'width: 100%'
                 ],
-                'label_attr' => [
-                    'class' => 'form-label',
-                ],
+                'label_attr' => ['class' => 'form-label'],
                 'constraints' => [
                     new Assert\Count([
                         'min' => 1,
@@ -100,8 +95,10 @@ class ChantierFormType extends AbstractType
         $resolver->setDefaults([
             'data_class' => null,
             'is_edit' => false,
+            'user'=> null
         ]);
 
         $resolver->setAllowedTypes('is_edit', 'bool');
+        $resolver->setAllowedTypes('user', User::class);
     }
 }

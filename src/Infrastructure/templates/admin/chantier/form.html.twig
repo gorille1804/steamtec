@@ -1,6 +1,6 @@
  {{ form_start(form) }}
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="form-group">
                 {{ form_label(form.name) }}
                 {{ form_widget(form.name) }}
@@ -8,17 +8,6 @@
                 {% if form_errors(form.name) %}
                     <div class="invalid-feedback d-block">
                         {{ form_errors(form.name) }}
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                {{ form_label(form.hours) }}
-                {{ form_widget(form.hours) }}
-                {% if form_errors(form.hours) %}
-                    <div class="invalid-feedback d-block">
-                        {{ form_errors(form.hours) }}
                     </div>
                 {% endif %}
             </div>
@@ -36,9 +25,9 @@
     </div>
 
     <div class="form-group">
-        {{ form_label(form.machines) }}
-        {{ form_widget(form.machines) }}
-        {{ form_errors(form.machines) }}
+        {{ form_label(form.parcMachines) }}
+        {{ form_widget(form.parcMachines) }}
+        {{ form_errors(form.parcMachines) }}
         <small class="form-text text-muted">
             Sélectionnez une ou plusieurs machines pour ce chantier
         </small>

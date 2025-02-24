@@ -47,10 +47,6 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <th>Heures:</th>
-                                                        <td>{{ chantier.hours }}</td>
-                                                    </tr>
-                                                    <tr>
                                                         <th>Créé le:</th>
                                                         <td>{{ chantier.createdAt|date('d-m-Y:H:m') }}</td>
                                                     </tr>
@@ -80,11 +76,12 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {% for machine in chantier.chantierMachines %}
+                                                    {% for parc in chantier.chantierMachines %}
+                                                    {% set machine = parc.parcMachine.machine %}
                                                         <tr>
-                                                            <td>{{ machine.machine.nom }}</td>
-                                                            <td>{{ machine.machine.marque }}</td>
-                                                            <td>{{ machine.machine.numeroIdentification }}</td>
+                                                            <td>{{ machine.nom }}</td>
+                                                            <td>{{ machine.marque }}</td>
+                                                            <td>{{ machine.numeroIdentification }}</td>
                                                             <td>
                                                                 <a href="" 
                                                                    class="btn btn-primary btn-sm">

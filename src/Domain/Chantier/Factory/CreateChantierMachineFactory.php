@@ -7,6 +7,8 @@ use Domain\Chantier\Data\Model\ChantierMachine\ChantierMachine;
 use Domain\Chantier\Data\ObjectValue\ChantierMachineId;
 use Domain\Machine\Data\Model\Machine;
 use Domain\Chantier\Data\Model\Chantier\Chantier;
+use Domain\ParcMachine\Data\Model\ParcMachine;
+
 class CreateChantierMachineFactory
 {
     public static function make(CreateChantierMachineRequest $request): ChantierMachine
@@ -14,14 +16,14 @@ class CreateChantierMachineFactory
        return new ChantierMachine(
            ChantierMachineId::make(),
            $request->chantier,
-           $request->machine,
+           $request->parcMachine,
        );
     }
 
-    public static function makeRequest(Machine $machine, Chantier $chantier): CreateChantierMachineRequest
+    public static function makeRequest(ParcMachine $parcMachine, Chantier $chantier): CreateChantierMachineRequest
     {
         $request = new CreateChantierMachineRequest();
-        $request->machine = $machine;
+        $request->parcMachine = $parcMachine;
         $request->chantier = $chantier;
 
         return $request;

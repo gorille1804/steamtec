@@ -8,7 +8,6 @@
         <id name="id" type="chantierId" column="id" />
         <field name="name" type="string" length="180" unique="true" />
         <field name="description" type="text"/>
-        <field name="hours" type="integer"/>
          <many-to-one field="user" target-entity="Domain\User\Data\Model\User">
             <join-column name="user_id" referenced-column-name="id"/>
         </many-to-one>   
