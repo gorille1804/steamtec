@@ -32,7 +32,7 @@ class AuthenticationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->useCase->__invoke($form->getData(), $request);
-                return $this->redirectToRoute('app_home');
+                return $this->redirectToRoute('app_dashboard');
             } catch (\throwable $e) {
                 $this->addFlash('error', $e->getMessage());
             } catch (\Throwable $e) {
