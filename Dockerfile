@@ -31,12 +31,17 @@ COPY . .
 RUN composer install --optimize-autoloader
 RUN composer dump-autoload --optimize
 
+#Lancer la migration
+RUN php bin/console doctrine:migrations:migrate --no-interaction
+
 # Donner les permissions avant le cache:clear
 RUN chown -R www-data:www-data var/
+RUN chmod -R 777 var/cache var/log
 
 # Configuration du mode prod et des permissions
-ENV APP_ENV=prod
-ENV APP_DEBUG=0
+ENV APP_ENV=dev
+ENV APP_DEBUG=1
+
 
 # Démarrage d'Apache avec les logs visibles
 CMD ["apache2-foreground"]
