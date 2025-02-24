@@ -1,5 +1,5 @@
 {% extends "layout/app.layout.html.twig" %}
-{% block title %}} chantier{% endblock %}
+{% block title %}{{is_edit ? 'Modification' : 'Nouvel'}} chantier{% endblock %}
 
 {% block content %}
     <div class="row flex-grow">

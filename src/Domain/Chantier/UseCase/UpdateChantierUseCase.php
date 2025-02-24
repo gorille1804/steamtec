@@ -19,24 +19,24 @@ class UpdateChantierUseCase implements UpdateChantierUseCaseInterface
 
     public function __invoke(UpdateChantierRequest $request, Chantier $chantier): Chantier
     {
-        $newMachineIds = array_map(function($machine) {
-            return $machine->id; 
-        }, $request->machines->toArray());
+        $newMachineIds = array_map(function($parc) {
+            return $parc->id; 
+        }, $request->parcMachines->toArray());
     
         $existingMachineIds = array_map(function($chantierMachine) {
-            return $chantierMachine->machine->id;
+            return $chantierMachine->parcMachine->id;
         }, $chantier->chantierMachines->toArray());
     
 
         $machinesToRemove = array_filter(
             $chantier->chantierMachines->toArray(),
             function($chantierMachine) use ($newMachineIds) {
-                return !in_array($chantierMachine->machine->id, $newMachineIds);
+                return !in_array($chantierMachine->parcMachine->id, $newMachineIds);
             }
         );
 
         $machinesToAdd = array_filter(
-            $request->machines->toArray(),
+            $request->parcMachines->toArray(),
             function($machine) use ($existingMachineIds) {
                 return !in_array($machine->id, $existingMachineIds);
             }

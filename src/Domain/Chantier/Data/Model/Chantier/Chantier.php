@@ -16,7 +16,6 @@ class Chantier
         public string $name,
         public string $description,
         public User $user,
-        public ?int $hours,
         public \DateTimeInterface $createdAt,
         public ?\DateTimeInterface $updatedAt
     ) {

@@ -13,7 +13,6 @@ class UpdateChantierFactory
     {
         $chantier->name = $request->name;
         $chantier->description = $request->description;
-        $chantier->hours = $request->hours;
         $chantier->updatedAt = new \DateTimeImmutable();
 
         return $chantier;
@@ -22,15 +21,14 @@ class UpdateChantierFactory
 
     public static function makeRequest(Chantier $chantier, UpdateChantierRequest $request): UpdateChantierRequest
     {
-        $machines = [];
-        foreach ($chantier->chantierMachines as $chantierMachine) {      
-            $machines[] = $chantierMachine->machine;
+        $parc = [];
+        foreach ($chantier->chantierMachines as $chantierMachine) {  
+            $parc[] =$chantierMachine->parcMachine;
         }
 
         $request->name = $chantier->name;
         $request->description = $chantier->description;
-        $request->hours = $chantier->hours;
-        $request->machines = new ArrayCollection($machines);
+        $request->parcMachines = new ArrayCollection($parc);
         
         return $request;
     }

@@ -8,5 +8,5 @@ class UpdateChantierRequest
     public string $name;
     public string $description;
     public ?int $hours;
-    public ArrayCollection $machines;
+    public ArrayCollection $parcMachines;
 }

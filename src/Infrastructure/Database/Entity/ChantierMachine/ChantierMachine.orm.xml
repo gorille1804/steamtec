@@ -6,8 +6,8 @@
                   
     <entity name="Domain\Chantier\Data\Model\ChantierMachine\ChantierMachine" table="chantier_machines">
         <id name="id" type="chantierMachineId" column="id" />
-         <many-to-one field="machine" target-entity="Domain\Machine\Data\Model\Machine">
-            <join-column name="machine_id" referenced-column-name="id"/>
+         <many-to-one field="parcMachine" target-entity="Domain\ParcMachine\Data\Model\ParcMachine">
+            <join-column name="parc_machine_id" referenced-column-name="id"/>
         </many-to-one> 
          <many-to-one field="chantier" target-entity="Domain\Chantier\Data\Model\Chantier\Chantier" inversed-by="chantierMachines">
             <join-column name="chantier_id" referenced-column-name="id"/>
