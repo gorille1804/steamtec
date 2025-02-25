@@ -61,7 +61,7 @@ class MachineController extends AbstractController
             }
         }
 
-        return $this->render('admin/Machine/create.html.twig',[
+        return $this->render('admin/machine/create.html.twig',[
             'form' => $form->createView(),
             'is_edit' => false,
         ]);
