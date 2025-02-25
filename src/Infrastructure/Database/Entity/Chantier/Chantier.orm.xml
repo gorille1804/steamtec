@@ -14,5 +14,6 @@
         <field name="createdAt" type="datetime" />
         <field name="updatedAt" type="datetime" nullable="true" />
         <one-to-many field="chantierMachines" target-entity="Domain\Chantier\Data\Model\ChantierMachine\ChantierMachine" mapped-by="chantier" />
+        <one-to-many field="machineLogs" target-entity="Domain\MachineLog\Data\Model\MachineLog" mapped-by="chantier" />
     </entity>
 </doctrine-mapping>

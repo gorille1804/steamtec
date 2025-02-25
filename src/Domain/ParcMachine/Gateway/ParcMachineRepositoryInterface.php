@@ -11,4 +11,5 @@ Interface ParcMachineRepositoryInterface
     public function findAllByUser(User $user):array;
     public function findById(ParcMachineId $id):?ParcMachine;
     public function delete(ParcMachine $parcMachine):void;
+    public function update(ParcMachine $parcMachine):ParcMachine;
 }

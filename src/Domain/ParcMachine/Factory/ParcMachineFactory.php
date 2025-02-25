@@ -29,12 +29,19 @@ class ParcMachineFactory
     }
 
     public static function makeRequest(User $user): CreateParcMachineRequest
-{
-    $request = new CreateParcMachineRequest();
-    $request->user = $user;
-    $request->tempUsage = 0;
+    {
+        $request = new CreateParcMachineRequest();
+        $request->user = $user;
+        $request->tempUsage = 0;
 
-    return $request;
-}
+        return $request;
+    }
+
+    public static function updateDuration(ParcMachine $parcMachine, int $duration): ParcMachine
+    {
+        $parcMachine->tempUsage = $parcMachine->tempUsage + $duration;
+        $parcMachine->updatedAt = new \DateTimeImmutable();
+        return $parcMachine;
+    }
 
 }

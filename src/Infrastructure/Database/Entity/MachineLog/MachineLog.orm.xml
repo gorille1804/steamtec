@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Domain\MachineLog\Data\Model\MachineLog" table="machine_logs">
+        <id name="machineLogId" type="machineLogId" column="id"/>
+        <many-to-one field="parcMachine" target-entity="Domain\ParcMachine\Data\Model\ParcMachine">
+            <join-column name="parc_machine_id" referenced-column-name="id" nullable="false"/>
+        </many-to-one>
+        <many-to-one field="chantier" target-entity="Domain\Chantier\Data\Model\Chantier\Chantier" inversed-by="machineLogs">
+            <join-column name="chantier_id" referenced-column-name="id" nullable="false"/>
+        </many-to-one>
+        <field name="duration" type="integer" nullable="false"/>
+        <field name="logDate" type="datetime" column="log_date" nullable="false"/>
+        <field name="createdAt" type="datetime" column="created_at" nullable="false"/>
+        <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+    </entity>
+</doctrine-mapping>

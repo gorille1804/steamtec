@@ -11,7 +11,10 @@ use Domain\Chantier\UseCase\DeleteChantierUseCaseInterface;
 use Domain\Chantier\UseCase\FindAllChantierUseCaseInterface;
 use Domain\Chantier\UseCase\FindChantierByIdUseCaseInterface;
 use Domain\Chantier\UseCase\UpdateChantierUseCaseInterface;
+use Domain\MachineLog\Data\Contract\CreateMachineLogRequest;
+use Domain\MachineLog\UseCase\CreateMachineLogUseCaseInterface;
 use Infrastructure\Form\Chantier\ChantierFormType;
+use Infrastructure\Form\MachineLog\MachineLogFormType;
 use Infrastructure\Symfony\Security\SymfonyUserAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +30,8 @@ class ChantierController extends AbstractController
         private readonly CreateChantierUseCaseInterface $createChantierUseCase,
         private readonly FindChantierByIdUseCaseInterface $findChantierByIdUseCase,
         private readonly UpdateChantierUseCaseInterface $updateChantierUseCase,
-        private readonly DeleteChantierUseCaseInterface $deleteChantierUseCase
+        private readonly DeleteChantierUseCaseInterface $deleteChantierUseCase,
+        private readonly CreateMachineLogUseCaseInterface $CreateMachineLogUseCase
     ){}
 
     #[Route('/chantiers', name: 'app_chantiers', methods: ['GET'])]
@@ -105,13 +109,31 @@ class ChantierController extends AbstractController
         ]);
     }
 
-    #[Route('/chantiers/{chantier}/show', name: 'app_chantier_show', methods: ['GET'])]
+    #[Route('/chantiers/{chantier}/show', name: 'app_chantier_show', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
-    public function show(Chantier $chantier)
+    public function show(Request $request, Chantier $chantier)
     {
         $chantier = $this->findChantierByIdUseCase->__invoke($chantier->id);
+        $parcMachinesChantier = [];
+        foreach ($chantier->chantierMachines as $chantierMachine) {
+            $parcMachinesChantier[] = $chantierMachine->parcMachine;
+        }
+        $machineLogRequest = new CreateMachineLogRequest();
+        $machineLogForm = $this->createForm(MachineLogFormType::class, $machineLogRequest, [
+            'parcMachines' => $parcMachinesChantier
+        ]);
+    
+        $machineLogForm->handleRequest($request);
+    
+        if ($machineLogForm->isSubmitted() && $machineLogForm->isValid()) {
+            $this->CreateMachineLogUseCase->__invoke($machineLogForm->getData(), $chantier);
+            $this->addFlash('success', 'Ajout logs fait avec success');
+            return $this->redirectToRoute('app_chantier_show', ['chantier'=>$chantier->id]);
+        }
+    
         return $this->render('admin/chantier/show.html.twig', [
-            'chantier' => $chantier
+            'chantier' => $chantier,
+            'machineLogForm' => $machineLogForm->createView()
         ]);
     }
 

@@ -50,4 +50,13 @@ class ParcMachineRepository extends ServiceEntityRepository implements ParcMachi
         $em->flush();
 
     }
+
+    public function update(ParcMachine $parcMachine): ParcMachine
+    {
+        $em = $this->getEntityManager();
+        $em->persist($parcMachine);
+        $em->flush();
+
+        return $parcMachine;
+    }
 }
