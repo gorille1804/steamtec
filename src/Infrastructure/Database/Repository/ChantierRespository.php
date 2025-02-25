@@ -30,8 +30,10 @@ class ChantierRespository extends ServiceEntityRepository implements ChantierRep
     public function findById(ChantierId $id): ?Chantier
     {
         return $this->createQueryBuilder('c')
-                    ->select('c, cm')
+                    ->select('c, cm, ml')
                     ->leftJoin('c.chantierMachines', 'cm')
+                    ->where('c.id = :id')
+                    ->leftJoin('c.machineLogs', 'ml')
                     ->where('c.id = :id')
                     ->setParameter('id', $id)
                     ->getQuery()

@@ -10,6 +10,7 @@ use Domain\User\Data\Model\User;
 class Chantier
 {
     public Collection $chantierMachines;
+    public Collection $machineLogs;
 
     public function __construct(
         public readonly ChantierId $id,
@@ -21,6 +22,7 @@ class Chantier
     ) {
 
         $this->chantierMachines = new ArrayCollection();
+        $this->machineLogs = new ArrayCollection();
     }
 
 
