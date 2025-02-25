@@ -20,12 +20,12 @@ final class Version20250221133226 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE machine ADD fiche_technique VARCHAR(255) DEFAULT NULL, DROP file_content');
+        $this->addSql('ALTER TABLE machine ADD fiche_technique VARCHAR(255) DEFAULT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE machine ADD file_content LONGBLOB DEFAULT NULL, DROP fiche_technique');
+        $this->addSql('ALTER TABLE machine ADD file_content LONGBLOB DEFAULT NULL');
     }
 }
