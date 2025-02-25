@@ -13,7 +13,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Domain\User\UseCase\FindUserByIdUseCaseInterface;
-use Domain\User\Data\ObjectValue\UserId;
 use Domain\ParcMachine\UseCase\FindParcMachineByIdUseCaseInterface;
 use Domain\ParcMachine\UseCase\DeleteParcMachineUseCaseInterface;
 
