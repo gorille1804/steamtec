@@ -49,7 +49,7 @@ class ParcMachineController extends AbstractController
         }
         $parcMachines = $this->findAllByUserUseCase->__invoke($user);
         // dd($parcMachines);
-        return $this->render('client/parcMachine/index.html.twig', [
+        return $this->render('admin/parcMachine/index.html.twig', [
             'parcMachines' => $parcMachines,
             'form' => $form->createView(),
             'is_edit' => false
