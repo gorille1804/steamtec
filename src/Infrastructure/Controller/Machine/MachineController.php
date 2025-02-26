@@ -54,7 +54,7 @@ class MachineController extends AbstractController
             try {
                 $data = $form->getData();
                 $this->useCase->__invoke($data);
-                $this->addFlash('success', 'Machine créé avec succès');
+                $this->addFlash('success', 'Machine créée avec succès');
                 return $this->redirectToRoute('app_machines');
             } catch (\Exception $e) {
                 $this->addFlash('error', 'Erreur lors de la création de Machine');
@@ -103,7 +103,7 @@ class MachineController extends AbstractController
     {
         try {
             $this->deleteUseCase->__invoke(new MachineId($machineId));
-            $this->addFlash('success', 'Machine supprimé avec succès');
+            $this->addFlash('success', 'Machine supprimée avec succès');
         } catch (\Exception $e) {
             $this->addFlash('error', 'Erreur lors de la suppression de la machine');
         }

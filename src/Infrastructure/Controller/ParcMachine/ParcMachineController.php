@@ -41,7 +41,7 @@ class ParcMachineController extends AbstractController
             try {
                 $data = $form->getData();
                 $this->createUseCase->__invoke($data);
-                $this->addFlash('success', 'ParcMachine créé avec succès');
+                $this->addFlash('success', 'Machine ajoutée dans le parc');
                 return $this->redirectToRoute('app_parc_machines');
             } catch (\Exception $e) {
                 $this->addFlash('error', 'Erreur lors de la création de ParcMachine');
