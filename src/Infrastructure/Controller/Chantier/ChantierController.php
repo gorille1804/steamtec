@@ -67,7 +67,7 @@ class ChantierController extends AbstractController
             $user = $this->getUser();
             $this->createChantierUseCase->__invoke($createChantierRequest, $user->getUser());
 
-            $this->addFlash('success', 'Chantier cree');
+            $this->addFlash('success', 'Nouveau chantier créé');
             return $this->redirectToRoute('app_chantiers');
         }
         return $this->render('admin/chantier/create_update.html.twig', [
@@ -127,7 +127,7 @@ class ChantierController extends AbstractController
     
         if ($machineLogForm->isSubmitted() && $machineLogForm->isValid()) {
             $this->CreateMachineLogUseCase->__invoke($machineLogForm->getData(), $chantier);
-            $this->addFlash('success', 'Ajout logs fait avec success');
+            $this->addFlash('success', 'Activité(s) enregistrée(s)');
             return $this->redirectToRoute('app_chantier_show', ['chantier'=>$chantier->id]);
         }
     
