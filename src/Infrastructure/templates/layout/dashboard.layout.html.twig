@@ -22,14 +22,28 @@
   </head>
   <body class="with-welcome-text">
     <div class="container-scroller">
-     
+      <!-- partial:partials/_navbar.html -->
+      <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
+        {% include "layout/partials/admin/_navbar.html.twig" %}
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            {% include "layout/partials/admin/_sidebar.html.twig" %}
+        </nav>
+        <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
             {% block content %}{% endblock %}
           </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
         </div>
       </div>
     </div>
+    <!-- plugins:js -->
+    
     <script src="{{ asset('assets/plugins/jquery/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/js/vendor.bundle.base.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
