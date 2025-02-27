@@ -25,17 +25,17 @@ class ParcMachineFormType extends AbstractType
         
         $builder 
             ->add('machine', EntityType::class, [
-                'label' => 'Machine',
+                'label' => 'parc_machines.form.machine.label',
                 'class' => Machine::class,
                 'choice_label' => function ($machine) {
                     return $machine->nom . ' (' . $machine->numeroIdentification . ')';
                 },
                 'choice_value'=>'id',
-                'placeholder' => 'Sélectionner un machine',
+                'placeholder' => 'parc_machines.form.machine.placeholder',
                 'required' => true,
             ])
             ->add('save', SubmitType::class, [
-                'label' =>'Ajout dans mon parc',
+                'label' =>'parc_machines.form.submit',
                 'attr' => [
                     'class' => 'btn btn-primary',
             ],
