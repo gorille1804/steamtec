@@ -6,14 +6,14 @@
           </div>
           <div>
             <a class="navbar-brand brand-logo" href="index.html">
-              <h2 class="text-bold">Steamtech</h2>
+              <h2 class="text-bold">{{'navbars.app_title'|trans}}</h2>
             </a>
           </div>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-top">
           <ul class="navbar-nav">
             <li class="nav-item fw-semibold d-none d-lg-block ms-0">
-              <h1 class="welcome-text">Bonjour, <span class="text-black fw-bold">{{app.user.firstname}}</span></h1>
+              <h1 class="welcome-text">{{ 'navbars.hello'|trans }} <span class="text-black fw-bold">{{app.user.firstname}}</span></h1>
             </li>
           </ul>
           <ul class="navbar-nav ms-auto">
@@ -31,8 +31,8 @@
                   <p class="mb-1 mt-3 fw-semibold">{{ app.user.firstname ~ " " ~ app.user.lastname }}</p>
                   <p class="fw-light text-muted mb-0">{{ app.user.email }}</p>
                 </div>
-                <a  href="{{path('app_profile')}}" class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> Mon Profil</a>
-                <a href="{{ path('app_logout') }}" class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i> Se déconnecter</a>
+                <a  href="{{path('app_profile')}}" class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> {{'navbars.my_profil'|trans}}</a>
+                <a href="{{ path('app_logout') }}" class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i> {{'navbars.sign_out'|trans}}</a>
               </div>
             </li>
           </ul>

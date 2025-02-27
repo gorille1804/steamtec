@@ -1,0 +1,38 @@
+navbars:
+    app_title: "Steamtech"
+    hello: "Bonjour"
+    sign_out: "Se déconnecter"
+    my_profil: "Mon profil"
+    trap.enter: "Appuyez sur Entrée"
+    trap.escape: "Appuyez sur Échap"
+
+form:
+    button:
+        delete: "Supprimer"
+        cancel: "Annuler"
+
+parc_machines:
+    index:
+        title: "Machines"
+        select_machine: "Sélectionnez une machine"
+        list_machine: "Liste de machines"
+        num_id: "Numéro d'identification"
+        name: "Nom"
+        brand: "Marque"
+        maintenance_threshold: "Seuil de maintenance"
+        actions: "Actions"
+        suppr_confirm_title: "Confirmation de suppression"
+        suppr_confirm_text: "Êtes-vous sûr de vouloir supprimer la machine"
+        suppr_confirm_message: "Cette action est irréversible."
+
+    form:
+        machine:
+            label: "Machine"
+            placeholder: "Sélectionner un machine"
+        submit: "Ajout dans mon parc"
+
+    message:
+        create_succes: "Machine ajoutée dans le parc"
+        create_error: "Erreur lors d'ajout de machine dans le parc"
+        delete_succes: "Machine supprimé avec succès"
+        delete_error: "Erreur lors de la suppression de la machine"

@@ -15,6 +15,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Domain\User\UseCase\FindUserByIdUseCaseInterface;
 use Domain\ParcMachine\UseCase\FindParcMachineByIdUseCaseInterface;
 use Domain\ParcMachine\UseCase\DeleteParcMachineUseCaseInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/dashboard')]
 class ParcMachineController extends AbstractController
@@ -25,6 +26,7 @@ class ParcMachineController extends AbstractController
         private readonly FindAllParcMachineByUserUseCaseInterface $findAllByUserUseCase,
         private readonly FindParcMachineByIdUseCaseInterface $findParcMachineByIdUseCase,
         private readonly DeleteParcMachineUseCaseInterface $deleteParcMachineUseCase,
+        private readonly TranslatorInterface $translator,
     ){}
 
     #[Route('/parcMachines', name: 'app_parc_machines')]
@@ -41,10 +43,10 @@ class ParcMachineController extends AbstractController
             try {
                 $data = $form->getData();
                 $this->createUseCase->__invoke($data);
-                $this->addFlash('success', 'Machine ajoutée dans le parc');
+                $this->addFlash('success', $this->translator->trans('parc_machines.message.create_succes'));
                 return $this->redirectToRoute('app_parc_machines');
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Erreur lors de la création de ParcMachine');
+                $this->addFlash('error', $this->translator->trans("parc_machines.message.create_error"));
             }
         }
         $parcMachines = $this->findAllByUserUseCase->__invoke($user);
@@ -64,9 +66,9 @@ class ParcMachineController extends AbstractController
         try {
             $machine = $this->findParcMachineByIdUseCase->__invoke(new ParcMachineId($parcMachineId));
             $this->deleteParcMachineUseCase->__invoke($machine);
-            $this->addFlash('success', 'Machine supprimé avec succès');
+            $this->addFlash('success', $this->translator->trans('parc_machines.message.delete_succes'));
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur lors de la suppression de la machine');
+            $this->addFlash('error', $this->translator->trans('parc_machines.message.delete_error'));
         }
 
         return $this->redirectToRoute('app_parc_machines');

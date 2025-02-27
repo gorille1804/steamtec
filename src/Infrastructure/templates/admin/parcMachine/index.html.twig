@@ -1,5 +1,5 @@
 {% extends "layout/dashboard.layout.html.twig" %}
-{% block title %} Machines {% endblock %}
+{% block title %} {{'parc_machines.index.title'|trans}} {% endblock %}
 
 {% block content %}
     <div class="row flex-grow">
@@ -17,7 +17,7 @@
                 <div class="card-body">
                     <div class="d-sm-flex">
                         <div>
-                            <h2 class="card-title card-title-dash">Sélectionnez une machine</h2>
+                            <h2 class="card-title card-title-dash">{{'parc_machines.index.select_machine'|trans}}</h2>
                         </div>
                     </div>
                     <div class="mt-4">
@@ -31,7 +31,7 @@
                 <div class="card-body">
                     <div class="d-sm-flex justify-content-between align-items-start">
                         <div>
-                            <h2 class="card-title card-title-dash">Machines</h2>
+                            <h2 class="card-title card-title-dash">{{'parc_machines.index.list_machine'|trans}}</h2>
                         </div>
                         <div>
                             <input type="text" class="form-control" id="tableFilter" placeholder="Filtrer par texte..." />
@@ -42,11 +42,11 @@
                         <table class="table select-table" id="myTable">
                             <thead>
                                 <tr>
-                                    <th>Numéro d'identification</th>
-                                    <th>Nom</th>
-                                    <th>Marque</th>
-                                    <th>Seuil de maintenance</th>
-                                    <th>actions</th>
+                                    <th>{{'parc_machines.index.num_id'|trans}}</th>
+                                    <th>{{'parc_machines.index.name'|trans}}</th></th>
+                                    <th>{{'parc_machines.index.brand'|trans}}</th></th>
+                                    <th>{{'parc_machines.index.maintenance_threshold'|trans}}</th></th>
+                                    <th>{{'parc_machines.index.actions'|trans}}</th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -91,17 +91,17 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirmation de suppression</h5>
+                    <h5 class="modal-title" id="deleteConfirmationModalLabel">{{'parc_machines.index.suppr_confirm_title'|trans}}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Êtes-vous sûr de vouloir supprimer la machine <span id="machineName"></span> ?</p>
-                    <p class="text-danger">Cette action est irréversible.</p>
+                    <p>{{'parc_machines.index.suppr_confirm_text'|trans}} <span id="machineName"></span> ?</p>
+                    <p class="text-danger">{{'parc_machines.index.suppr_confirm_message'|trans}}</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'form.button.cancel'|trans}}</button>
                     <form id="deleteForm" method="POST" action="" style="display: inline;">
-                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                        <button type="submit" class="btn btn-danger">{{'form.button.delete'|trans}}</button>
                     </form>
                 </div>
             </div>
