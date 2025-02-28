@@ -46,19 +46,26 @@ services:
 
     Domain\User\Gateway\PasswordHasherInterface:
         alias: Infrastructure\Symfony\Security\SymfonyPasswordHasher
-
     Infrastructure\Symfony\Security\SymfonyPasswordHasher:
         arguments: 
             $symfonyPasswordHasher: '@Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface'
-
     Domain\User\Gateway\AuthenticationManagerInterface:
         class: Infrastructure\Symfony\Security\SymfonyAuthenticationManager
         arguments:
             $userAuthenticator: '@Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface'
             $authenticator: '@Infrastructure\Symfony\Security\FormLoginAuthenticator'
-    
-     
     Infrastructure\Symfony\Services\Email\EmailSenderInterface: '@Infrastructure\Symfony\Services\Email\DefaultEmailSender'
+    Infrastructure\Symfony\Services\File\SymfonyFileStorageService:
+        arguments:
+            $uploadDir: '%kernel.project_dir%/public/uploads'
+            $publicDir: '/uploads'
+    Domain\Shared\Service\File\FileStorageServiceInterface:
+        alias: Infrastructure\Symfony\Services\File\SymfonyFileStorageService
+    Domain\Document\Service\DocumentDownloaderInterface:
+        class: Infrastructure\Symfony\Services\Document\SymfonyDocumentDownloader
+    Domain\Document\Service\DocumentDeleteInterface:
+        class: Infrastructure\Symfony\Services\Document\SymfonyDocumentDownloader
+    
 
     
 

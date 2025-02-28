@@ -2,6 +2,7 @@
 
 namespace Domain\Machine\UseCase;
 
+use Domain\Document\Data\Model\Document;
 use Domain\Machine\Data\Contract\CreateMachineRequest;
 use Domain\Machine\Data\Model\Machine;
 use Domain\Machine\Gateway\MachineRepositoryInterface;
@@ -15,10 +16,9 @@ class CreateMachineUseCase implements CreateMachineUseCaseInterface
         private readonly UserRepositoryInterface $userRepository
     ){}
 
-    public function __invoke(CreateMachineRequest $request): Machine
+    public function __invoke(CreateMachineRequest $request, Document $document): Machine
     {
-
-        $machine = MachineFactory::make($request);	
+        $machine = MachineFactory::make($request, $document);	
         return $this->repository->save($machine);
     }   
 }

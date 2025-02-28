@@ -1,0 +1,40 @@
+<div class="existing-file mt-2">
+    {% set extension = filename|split('.')|last|lower %}
+    {% set badge_class = 'badge rounded-pill d-inline-flex align-items-center py-2 px-3 fs-6' %}
+    {% if extension == 'pdf' %}
+        <span class="{{ badge_class }} bg-danger text-white">
+            <i class="mdi mdi-file-pdf-box me-3"></i>
+            <span>{{ filename }}</span>
+        </span>
+    {% elseif extension in ['doc', 'docx'] %}
+        <span class="{{ badge_class }} bg-primary text-white">
+            <i class="mdi mdi-file-word me-3"></i>
+            <span>{{ filename }}</span>
+        </span>
+    {% elseif extension in ['xls', 'xlsx'] %}
+        <span class="{{ badge_class }} bg-success text-white">
+            <i class="mdi mdi-file-excel me-3"></i>
+            <span>{{ filename }}</span>
+        </span>
+    {% elseif extension in ['ppt', 'pptx'] %}
+        <span class="{{ badge_class }} bg-warning text-white">
+            <i class="mdi mdi-file-powerpoint me-3"></i>
+            <span>{{ filename }}</span>
+        </span>
+    {% elseif extension in ['jpg', 'jpeg', 'png', 'gif', 'svg'] %}
+        <span class="{{ badge_class }} bg-info text-white">
+            <i class="mdi mdi-file-image me-3"></i>
+            <span>{{ filename }}</span>
+        </span>
+    {% elseif extension in ['zip', 'rar', '7z'] %}
+        <span class="{{ badge_class }} bg-secondary text-white">
+            <i class="mdi mdi-zip-box me-3"></i>
+            <span>{{ filename }}</span>
+        </span>
+    {% else %}
+        <span class="{{ badge_class }} bg-dark text-white">
+            <i class="mdi mdi-file-document-outline me-3"></i>
+            <span>{{ filename }}</span>
+        </span>
+    {% endif %}
+</div>

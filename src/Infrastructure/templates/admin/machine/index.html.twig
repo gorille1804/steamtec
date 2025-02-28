@@ -55,13 +55,13 @@
                                     <td>
                                         <div class="d-flex gap-2">
                                             <a
-                                               href="{{ path('app_update_machine', {'id': machine.id}) }}"
+                                               href="{{ path('app_update_machine', {'machine': machine.id}) }}"
                                                class="btn btn-primary btn-sm" 
                                                title="Modifier">
                                                 <i class="mdi mdi-pencil"></i>
                                             </a>
                                             <a
-                                               href="{{ path('app_download_machine_fiche_technique', {'machineId': machine.id}) }}"
+                                               href="{{ path('app_download_machine_fiche_technique', {'machine': machine.id}) }}"
                                                class="btn btn-dark btn-sm" 
                                                title="Telecharger le fiche technique">
                                                 <i class="mdi mdi-download"></i>
@@ -117,7 +117,7 @@
                     var machineId = $(this).data('machine-id');
                     var machineName = $(this).data('machine-name');
                     $('#machineName').text(machineName);
-                    $('#deleteForm').attr('action', "{{path('app_delete_machine', {'machineId': 'MACHINEID'})}}".replace('MACHINEID', machineId));
+                    $('#deleteForm').attr('action', "{{path('app_delete_machine', {'machine': 'MACHINEID'})}}".replace('MACHINEID', machineId));
                     $('#deleteConfirmationModal').modal('show');
                 });
                 $('.btn-secondary').click(function() {

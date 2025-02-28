@@ -2,6 +2,7 @@
 
 namespace Domain\Machine\Gateway;
 
+use Domain\Document\Data\Model\Document;
 use Domain\Machine\Data\ObjectValue\MachineId;
 
 interface MachineInterface
@@ -11,5 +12,5 @@ interface MachineInterface
     public function getNom(): string;
     public function getMarque(): string;
     public function getSeuilMaintenance(): int;
-    public function getFicheTechnique(): ?string;
+    public function getFicheTechnique(): ?Document;
 }

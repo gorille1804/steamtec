@@ -2,6 +2,7 @@
 
 namespace Domain\Machine\Data\Model;
 
+use Domain\Document\Data\Model\Document;
 use Domain\Machine\Data\ObjectValue\MachineId;
 use Domain\Machine\Gateway\MachineInterface;
 
@@ -13,7 +14,7 @@ class Machine implements MachineInterface
         public string $nom,
         public string $marque,
         public int $seuilMaintenance,
-        public ?string $ficheTechnique,
+        public Document $ficheTechnique,
         public \DateTimeInterface $createdAt,
         public ?\DateTimeInterface $updatedAt = null,
     ) {}
@@ -42,7 +43,7 @@ class Machine implements MachineInterface
         return $this->seuilMaintenance;
     }
 
-    public function getFicheTechnique(): ?string
+    public function getFicheTechnique(): ?Document
     {
         return $this->ficheTechnique;
     }

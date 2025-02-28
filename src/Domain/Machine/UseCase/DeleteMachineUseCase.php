@@ -1,6 +1,7 @@
 <?php
 namespace Domain\Machine\UseCase;
 
+use Domain\Document\UseCase\DeleteDocumentUseCaseInterface;
 use Domain\Machine\Data\Model\Machine;
 use Domain\Machine\Data\ObjectValue\MachineId;
 use Domain\Machine\Exception\MachineNotFoundException;
@@ -11,7 +12,8 @@ use Domain\Machine\Gateway\MachineRepositoryInterface;
 class DeleteMachineUseCase implements DeleteMachineUseCaseInterface
 {
     public function __construct(
-        private readonly MachineRepositoryInterface $repository
+        private readonly MachineRepositoryInterface $repository,
+        private readonly DeleteDocumentUseCaseInterface $deleteDocumentUseCase
     ){}
 
     public function __invoke(MachineId $machineId): void
@@ -20,9 +22,11 @@ class DeleteMachineUseCase implements DeleteMachineUseCaseInterface
         if(!$machine){
             throw new MachineNotFoundException('Machine not found');
         }
-        if($machine->ficheTechnique){
-            MachineFactory::deleteFile($machine->ficheTechnique);
-        }
+        
         $this->repository->delete($machine);
+        
+        if($machine->ficheTechnique){
+            $this->deleteDocumentUseCase->__invoke($machine->ficheTechnique);
+        }
     }
 }
