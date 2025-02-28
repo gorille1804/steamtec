@@ -16,7 +16,7 @@ class SecurityUser implements SymfonyUserInterface, PasswordAuthenticatedUserInt
         return $this->user->getRoles();
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->user->getPassword();
     }

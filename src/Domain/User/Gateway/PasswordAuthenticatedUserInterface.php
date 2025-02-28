@@ -4,5 +4,5 @@ namespace Domain\User\Gateway;
 
 interface PasswordAuthenticatedUserInterface
 {
-    public function getPassword(): string;
+    public function getPassword(): ?string;
 }

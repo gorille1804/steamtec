@@ -24,7 +24,7 @@ class ResetPasswordController extends AbstractController
             try {
                 $this->useCase->__invoke($form->getData(), $token);	
                 $this->addFlash('success', 'Votre mot de passe a ete mis a jour');
-                return $this->redirectToRoute('app_login');
+                return $this->redirectToRoute('app_security');
             } catch (\Throwable $th) {
                 $this->addFlash('error', $th->getMessage());
             }

@@ -18,7 +18,7 @@
                             <h2 class="card-title card-title-dash">Utilisateurs</h2>
                         </div>
                         <div>
-                            <a  href="{{path('app_users_create')}}" class="btn btn-primary btn-md text-white mb-0 me-0" type="button">
+                            <a href="{{path('app_users_create')}}" class="btn btn-primary btn-md text-white mb-0 me-0" type="button">
                                 <i class="mdi mdi-account-plus"></i> Ajouter un nouveau client
                             </a>
                         </div>
@@ -55,16 +55,23 @@
                                     
                                     <td class="py-1">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="{{path('app_users_update', {'userId':user.id})}}" class="btn btn-warning btn-sm" type="button">
+                                            <a href="{{path('app_users_update', {'userId':user.id})}}" class="btn btn-warning btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Modifier">
                                                <i class="mdi mdi-pencil"></i>
                                             </a>
+                                            {% if not user.password %}
+                                                <a href="{{path('app_users_reset_password', {'user':user.id})}}" class="btn btn-primary btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Renvoyer l'email de creation mot de passe">
+                                                <i class="mdi mdi-email"></i>
+                                                </a>
+                                            {% endif %}
                                             <button type="button" 
                                                 class="btn btn-danger btn-sm delete-user-btn" 
-                                                title="Supprimer"
+                                                data-bs-toggle="tooltip"
+                                                data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer"
                                                 {% if app.user.id == user.id %}disabled{% endif %}
                                                 data-user-id="{{ user.id }}"
                                                 data-user-name="{{ user.firstname ~ ' ' ~ user.lastname }}"
                                                 data-csrf-token="{{ csrf_token('delete' ~ user.id) }}">
+                                                
                                                 <i class="mdi mdi-delete"></i>
                                             </button>
                                         </div>
@@ -74,12 +81,14 @@
                             </tbody>
                         </table>
                     </div>
+                    {% if maxPages is defined and maxPages > 1 %}
+                        {% include "components/shared/_pagination.html.twig" with { 'maxPages': maxPages, 'path':'app_users' } %}
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Delete Confirmation Modal -->
     <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -118,6 +127,10 @@
                 });
                 $('.btn-secondary').click(function() {
                     $('#deleteConfirmationModal').modal('hide');
+                });
+                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+                var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl)
                 });
             } else {
                 console.error('jQuery is not loaded!');

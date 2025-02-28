@@ -4,6 +4,7 @@ namespace Infrastructure\Controller\User;
 
 use Domain\User\Data\Contract\CreateUserRequest;
 use Domain\User\Data\Contract\UpdateUserRequest;
+use Domain\User\Data\Model\User;
 use Domain\User\Data\ObjectValue\UserId;
 use Domain\User\Factory\UserFactory;
 use Domain\User\UseCase\CreateUserUseCaseInterface;
@@ -11,6 +12,7 @@ use Domain\User\UseCase\DeleteUserUseCaseInterface;
 use Domain\User\UseCase\UpdateUserUseCaseInterface;
 use Domain\User\UseCase\FindAllUserUseCaseInterface;
 use Domain\User\UseCase\FindUserByIdUseCaseInterface;
+use Domain\User\UseCase\SendCreatePasswordEmailUseCaseInterface;
 use Infrastructure\Form\User\UserFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,16 +28,26 @@ class UserController extends AbstractController
         private readonly FindUserByIdUseCaseInterface $findUserByIdUseCase,
         private readonly CreateUserUseCaseInterface $createUserUseCase,
         private readonly UpdateUserUseCaseInterface $updateUserUseCase,
-        private readonly DeleteUserUseCaseInterface $deleteUseCase
+        private readonly DeleteUserUseCaseInterface $deleteUseCase,
+        private readonly SendCreatePasswordEmailUseCaseInterface $sendCreatePasswordEmailUseCase
     ){}
 
     #[Route('/users', name: 'app_users')]
     #[IsGranted('ROLE_ADMIN')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $users = $this->findAllUserUseCase->__invoke();
+        $page = $request->query->getInt('page', 1);
+        $limit = 10;
+
+        $users = $this->findAllUserUseCase->__invoke($page, $limit);
+        $totalUsers = $this->findAllUserUseCase->getTotalUsers();
+        $maxPages = ceil($totalUsers / $limit);
+
         return $this->render('admin/user/index.html.twig', [
-            'users' => $users
+            'users' => $users,
+            'currentPage' => $page,
+            'maxPages' => $maxPages,
+            'limit' => $limit
         ]);
     }
 
@@ -115,6 +127,19 @@ class UserController extends AbstractController
             $this->addFlash('error', 'Erreur lors de la suppression de l\'utilisateur');
         }
 
+        return $this->redirectToRoute('app_users');
+    }
+
+    #[Route('/users/{user}/create-password', name:'app_users_reset_password', methods:['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function resetPassword(User $user): Response
+    {
+        try {
+            $this->sendCreatePasswordEmailUseCase->__invoke($user, 'email/security/create_password.html.twig');
+            $this->addFlash('success', 'Email de Creation  de mot de passe envoyé avec succès');
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Erreur lors de l\'envoi de l\'email deCreation de mot de passe');
+        }
         return $this->redirectToRoute('app_users');
     }
 }

@@ -23,12 +23,11 @@ class UpdateMachineUseCase implements UpdateMachineUseCaseInterface
         if(!$machine){
             throw new MachineNotFoundException('Machine not found');
         }
-        //dd($document->id);
         $ficheTechnique = $machine->getFicheTechnique();	
         $machine = MachineFactory::update($machine, $request, $document ?? $ficheTechnique);
         $machine =  $this->repository->save($machine);
        
-        if($ficheTechnique->id !== $document->id){
+        if($document && $ficheTechnique->id !== $document->id){
            $this->deleteDocumentUseCase->__invoke($ficheTechnique);
         }
 

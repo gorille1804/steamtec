@@ -8,6 +8,7 @@ use Domain\User\Data\ObjectValue\UserId;
 interface UserRepositoryInterface
 {
     public function getAll(): array;
+    public function getTotalUsers(): int;
     public function findByEmail(string $email): ?UserInterface;
     public function findByid(UserId $id): ?UserInterface;
     public function save(User $user): User;

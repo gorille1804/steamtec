@@ -23,6 +23,9 @@ class AuthenticationUseCase implements AuthenticationUseCaseInterface
             throw new InvalidCredentialsException("Invalid credentials");
         }
 
+        if(!$user->getPassword()){
+            throw new InvalidCredentialsException("Invalid credentials");
+        }
         return $this->authManager->authenticate($user, $context);
     }
 }
