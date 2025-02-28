@@ -11,6 +11,8 @@
         <field name="marque" type="string" length="255"/>
         <field name="seuilMaintenance" type="integer"/>
         <field name="createdAt" type="datetime" /> 
-        <field name="ficheTechnique" type="string" length="255" nullable="true"/>
+        <many-to-one field="ficheTechnique" target-entity="Domain\Document\Data\Model\Document">
+            <join-column name="ficheTechnique" referenced-column-name="id"/>
+        </many-to-one>
     </entity>
 </doctrine-mapping>

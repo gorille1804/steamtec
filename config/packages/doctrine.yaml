@@ -17,6 +17,7 @@ doctrine:
             chantierMachineId: Infrastructure\Database\FieldType\ChantierMachineIdType
             parcMachineId: Infrastructure\Database\FieldType\ParcMachineIdType
             machineLogId: Infrastructure\Database\FieldType\MachineLogIdType
+            documentId: Infrastructure\Database\FieldType\DocumentIdType
     orm:
         auto_generate_proxy_classes: true
         default_entity_manager: default

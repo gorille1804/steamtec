@@ -3,6 +3,7 @@
 namespace Infrastructure\Form\Machine;
 
 use Domain\Machine\Data\Contract\CreateMachineRequest;
+use Infrastructure\Symfony\Form\Type\FileInterfaceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType; // Correct TextType import
 use Symfony\Component\Form\FormBuilderInterface;
@@ -34,16 +35,9 @@ class MachineFormType extends AbstractType
                 'label' => 'Seuil de maintenance (heures)',
                 'attr' => ['placeholder' => 'Seuil de maintenance en heures'],
             ])
-            ->add('ficheTechnique', FileType::class, [
+            ->add('ficheTechnique', FileInterfaceType::class, [
                 'label' => 'Upload File',
-                'required' => true,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '5M',
-                        'mimeTypes' => ['image/jpeg', 'image/png', 'application/pdf'],
-                        'mimeTypesMessage' => 'Veuillez uploader un fichier valide (JPG, PNG, PDF)',
-                    ])
-                ],
+                'required' => true
             ])
             ->add('save', SubmitType::class, [
                 'label' => $isEdit ? 'Mettre à jour' : 'Créer',
@@ -57,7 +51,7 @@ class MachineFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-           'data_class' => CreateMachineRequest::class,
+           'data_class' => null,
            'is_edit' => false,
         ]);
         $resolver->setAllowedTypes('is_edit', 'bool');
