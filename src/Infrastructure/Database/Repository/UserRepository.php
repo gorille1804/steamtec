@@ -16,10 +16,25 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
     {
         parent::__construct($registry, User::class);
     }
-    public function getAll(): array
+    public function getAll(int $page = 1, int $limit = 10): array
     {
-        return $this->findAll();
+        $offset = ($page - 1) * $limit;
+        
+        return $this->createQueryBuilder('u')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
     }
+
+    public function getTotalUsers(): int
+    {
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+    
 
     public function findByEmail(string $email): ?UserInterface
     {

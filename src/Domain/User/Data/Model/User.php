@@ -21,7 +21,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         public ?\DateTimeInterface $updatedAt = null,
     ) {}
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
