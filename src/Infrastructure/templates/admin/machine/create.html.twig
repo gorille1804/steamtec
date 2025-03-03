@@ -1,5 +1,5 @@
 {% extends "layout/dashboard.layout.html.twig" %}
-{% block title %}{{ is_edit ? 'Modifier' : 'Nouvel' }} machine{% endblock %}
+{% block title %}{{is_edit ? 'machines.form.title.update'|trans : 'machines.form.title.create'|trans}}  {{'machines.form.title.title'|trans}}{% endblock %}
 
 {% block content %}
     <div class="row flex-grow">
@@ -7,11 +7,11 @@
             <div class="card card-rounded">
                 <div class="card-body">
                     <div class="d-sm-flex justify-content-between align-items-start">
-                        <div> <h4 class="card-title card-title-dash">{{ is_edit ? 'Modifier' : 'Nouvel' }} utilisateur</h4>
-                        </div>
+                    <div>  <h4 class="card-title card-title-dash">{{is_edit ? 'machines.form.title.update'|trans : 'machines.form.title.create'|trans}}  {{'machines.form.title.title'|trans}}</h4>
+                    </div>
                         <div>
                             <a href="{{path('app_machines')}}" class="btn btn-secondary btn-md mb-0 me-0">
-                                <i class="mdi mdi-arrow-left"></i> Retour
+                                <i class="mdi mdi-arrow-left"></i>{{'machines.form.submit.cancel'|trans}}
                             </a>
                         </div>
                     </div>
@@ -97,12 +97,12 @@
         submitButton.addEventListener('click', function(event) {
             event.preventDefault(); 
             Swal.fire({
-                title: 'Êtes-vous sûr ?',
-                text: 'Vous allez modifier cette machine.',
+                title: '{{ 'machines.form.update_swal.title'|trans }}',
+                text: '{{ 'machines.form.update_swal.text'|trans }}',
                 icon: 'info',
                 showCancelButton: true,
-                confirmButtonText: 'Oui, modifier!',
-                cancelButtonText: 'Non, annuler',
+                confirmButtonText: '{{ 'machines.form.update_swal.confirmButtonText'|trans }}',
+                cancelButtonText: '{{ 'machines.form.update_swal.cancelButtonText'|trans }}',
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit();

@@ -11,14 +11,13 @@ use Domain\Machine\UseCase\FindMachineByIdUseCaseInterface;
 use Infrastructure\Form\Machine\MachineFormType ;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Domain\Machine\Data\ObjectValue\MachineId;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Domain\Machine\Factory\MachineFactory;
 use Domain\Machine\Data\Contract\UpdateMachineRequest;
 use Domain\Machine\Data\Model\Machine;
-use Domain\Machine\UseCase\DeleteMachineUseCase;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Domain\Machine\UseCase\DeleteMachineUseCaseInterface;
 use Domain\Machine\UseCase\UpdateMachineUseCaseInterface;
 
@@ -33,7 +32,8 @@ class MachineController extends AbstractController
         private readonly DeleteMachineUseCaseInterface $deleteUseCase,
         private readonly UploadDocumentUseCaseInterface $uploadFileUseCase,
         private readonly UploadDocumentUseCaseInterface $uploadDocumentUseCase,
-        private readonly DownloadDocumentUseCaseInterface $downloadDocumentUseCase
+        private readonly DownloadDocumentUseCaseInterface $downloadDocumentUseCase,
+        private readonly TranslatorInterface $translator,
     ){}
 
     #[Route('/machines', name: 'app_machines')]
@@ -63,10 +63,10 @@ class MachineController extends AbstractController
                 $data = $form->getData();
                 $document = $this->uploadFileUseCase->__invoke($data->ficheTechnique);
                 $this->useCase->__invoke($data, $document);
-                $this->addFlash('success', 'Machine créé avec succès');
+                $this->addFlash('success', $this->translator->trans('machines.messages.create_succes'));
                 return $this->redirectToRoute('app_machines');
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Erreur lors de la création de Machine');
+                $this->addFlash('error', $this->translator->trans('machines.messages.create_error'));
             }
         }
 
@@ -97,10 +97,10 @@ class MachineController extends AbstractController
                     $document = $this->uploadDocumentUseCase->__invoke($data->ficheTechnique);
                 }
                 $this->updateUseCase->__invoke($machine->id, $updateMachineRequest, $document);
-                $this->addFlash('success', 'Machine mis à jour avec succès');
+                $this->addFlash('success', $this->translator->trans('machines.messages.update_succes'));
                 return $this->redirectToRoute('app_machines');
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Erreur lors de la mise à jour de la machine');
+                $this->addFlash('error', $this->translator->trans('machines.messages.update_error'));
             }
         }
 
@@ -117,9 +117,9 @@ class MachineController extends AbstractController
     {
         try {
             $this->deleteUseCase->__invoke($machine->id);
-            $this->addFlash('success', 'Machine supprimé avec succès');
+            $this->addFlash('success', $this->translator->trans('machines.messages.delete_succes'));
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur lors de la suppression de la machine');
+            $this->addFlash('error', $this->translator->trans('machines.messages.delete_error'));
         }
 
         return $this->redirectToRoute('app_machines');
@@ -130,7 +130,7 @@ class MachineController extends AbstractController
     public function download(Machine $machine)
     {
         if(!$machine->ficheTechnique){
-            $this->addFlash('error', 'Aucun fichier trouvé');
+            $this->addFlash('error', $this->translator->trans('machines.messages.error_download'));
             return $this->redirectToRoute('app_machines');
         }
         $this->downloadDocumentUseCase->__invoke($machine->ficheTechnique);

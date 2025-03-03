@@ -1,5 +1,5 @@
 {% extends "layout/dashboard.layout.html.twig" %}
-{% block title %} Utilisateurs {% endblock %}
+{% block title %} {{'machines.index.title'|trans}} {% endblock %}
 
 {% block content %}
     <div class="row flex-grow">
@@ -18,11 +18,11 @@
                 <div class="card-body">
                     <div class="d-sm-flex justify-content-between align-items-start">
                         <div>
-                            <h2 class="card-title card-title-dash">Machines</h2>
+                            <h2 class="card-title card-title-dash">{{'machines.index.title'|trans}}</h2>
                         </div>
                         <div>
                             <a  href="{{path('app_create_machine')}}" class="btn btn-primary btn-md text-white mb-0 me-0" type="button">
-                                <i class="mdi mdi-account-plus"></i> Ajouter une nouvelle machine
+                                <i class="mdi mdi-account-plus"></i> {{'machines.index.btn_create_new'|trans}}
                             </a>
                         </div>
                     </div>
@@ -30,11 +30,11 @@
                         <table class="table select-table">
                             <thead>
                                 <tr>
-                                    <th>Numéro d'identification</th>
-                                    <th>Nom</th>
-                                    <th>Marque</th>
-                                    <th>Seuil de maintenance</th>
-                                    <th>actions</th>
+                                    <th>{{'machines.index.num_id'|trans}}</th>
+                                    <th>{{'machines.index.name'|trans}}</th>
+                                    <th>{{'machines.index.brand'|trans}}</th>
+                                    <th>{{'machines.index.seuil_maintenance'|trans}}</th>
+                                    <th>{{'machines.index.action'|trans}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,18 +57,18 @@
                                             <a
                                                href="{{ path('app_update_machine', {'machine': machine.id}) }}"
                                                class="btn btn-primary btn-sm" 
-                                               title="Modifier">
+                                               title='{{'machines.index.action_update_title'|trans}}'>
                                                 <i class="mdi mdi-pencil"></i>
                                             </a>
                                             <a
                                                href="{{ path('app_download_machine_fiche_technique', {'machine': machine.id}) }}"
                                                class="btn btn-dark btn-sm" 
-                                               title="Telecharger le fiche technique">
+                                               title='{{'machines.index.action_download_title'|trans}}'>
                                                 <i class="mdi mdi-download"></i>
                                             </a>
                                             <button type="button" 
                                                     class="btn btn-danger btn-sm delete-machine-btn" 
-                                                    title="Supprimer"
+                                                    title='{{'machines.index.action_delete_title'|trans}}'
                                                     data-machine-id="{{ machine.id }}"
                                                     data-machine-name="{{ machine.nom}}"
                                             >
@@ -87,26 +87,7 @@
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirmation de suppression</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Êtes-vous sûr de vouloir supprimer la machine <span id="machineName"></span> ?</p>
-                    <p class="text-danger">Cette action est irréversible.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                    <form id="deleteForm" method="POST" action="" style="display: inline;">
-                        <button type="submit" class="btn btn-danger">Supprimer</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+{% include "components/_modal.html.twig" with {'context': 'machines.index.contexte'|trans} %}
 {% endblock %}
 
 {% block script %}
@@ -116,7 +97,7 @@
                 $('.delete-machine-btn').click(function() {
                     var machineId = $(this).data('machine-id');
                     var machineName = $(this).data('machine-name');
-                    $('#machineName').text(machineName);
+                    $('#name').text(machineName);
                     $('#deleteForm').attr('action', "{{path('app_delete_machine', {'machine': 'MACHINEID'})}}".replace('MACHINEID', machineId));
                     $('#deleteConfirmationModal').modal('show');
                 });
