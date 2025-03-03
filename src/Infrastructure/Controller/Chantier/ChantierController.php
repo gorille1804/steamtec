@@ -20,6 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/dashboard')]
 class ChantierController extends AbstractController
@@ -31,7 +32,8 @@ class ChantierController extends AbstractController
         private readonly FindChantierByIdUseCaseInterface $findChantierByIdUseCase,
         private readonly UpdateChantierUseCaseInterface $updateChantierUseCase,
         private readonly DeleteChantierUseCaseInterface $deleteChantierUseCase,
-        private readonly CreateMachineLogUseCaseInterface $CreateMachineLogUseCase
+        private readonly CreateMachineLogUseCaseInterface $CreateMachineLogUseCase,
+        private readonly TranslatorInterface $translator,
     ){}
 
     #[Route('/chantiers', name: 'app_chantiers', methods: ['GET'])]
@@ -67,7 +69,7 @@ class ChantierController extends AbstractController
             $user = $this->getUser();
             $this->createChantierUseCase->__invoke($createChantierRequest, $user->getUser());
 
-            $this->addFlash('success', 'Nouveau chantier créé');
+            $this->addFlash('success', $this->translator->trans('chantiers.messages.create_succes'));
             return $this->redirectToRoute('app_chantiers');
         }
         return $this->render('admin/chantier/create_update.html.twig', [
@@ -98,7 +100,7 @@ class ChantierController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()) {
             $this->updateChantierUseCase->__invoke($updateRequest, $chantier);
-            $this->addFlash('success', 'Chantier modifie');
+            $this->addFlash('success', $this->translator->trans('chantiers.messages.update_succes'));
             return $this->redirectToRoute('app_chantiers');
         }
 
@@ -127,7 +129,7 @@ class ChantierController extends AbstractController
     
         if ($machineLogForm->isSubmitted() && $machineLogForm->isValid()) {
             $this->CreateMachineLogUseCase->__invoke($machineLogForm->getData(), $chantier);
-            $this->addFlash('success', 'Activité(s) enregistrée(s)');
+            $this->addFlash('success', $this->translator->trans('chantiers.messages.create_journal_succes'));
             return $this->redirectToRoute('app_chantier_show', ['chantier'=>$chantier->id]);
         }
     
@@ -143,15 +145,15 @@ class ChantierController extends AbstractController
     {
         $submittedToken = $request->request->get('_token');
         if (!$this->isCsrfTokenValid('delete' . $chantier->id, $submittedToken)) {
-            $this->addFlash('error', 'Token CSRF invalide.');
+            $this->addFlash('error', $this->translator->trans('chantiers.messages.error_token'));
             return $this->redirectToRoute('app_chantiers');
         }
 
         try {
             $this->deleteChantierUseCase->__invoke($chantier);
-            $this->addFlash('success', 'Chantier supprimé avec succès');
+            $this->addFlash('success', $this->translator->trans('chantiers.messages.delete_succes'));
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur lors de la suppression de la chantier');
+            $this->addFlash('error', $this->translator->trans('chantiers.messages.delete_error'));
         }
 
         return $this->redirectToRoute('app_chantiers');

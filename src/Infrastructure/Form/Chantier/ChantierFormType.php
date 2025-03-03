@@ -31,7 +31,7 @@ class ChantierFormType extends AbstractType
 
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nom du chantier',
+                'label' => 'chantiers.form.name.label',
                 'attr' => [
                     'class' => 'form-control',
                 ],
@@ -47,7 +47,7 @@ class ChantierFormType extends AbstractType
                 ]
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Description',
+                'label' => 'chantiers.form.description.label',
                 'attr' => [
                     'class' => 'form-control',
                     'rows' => 10
@@ -68,7 +68,7 @@ class ChantierFormType extends AbstractType
                     },
                 'multiple' => true,
                 'expanded' => false,
-                'label' => 'Machines',
+                'label' => 'chantiers.form.machine.label',
                 'attr' => [
                     'class' => 'form-control select2',
                     'data-placeholder' => 'Sélectionnez les machines',
@@ -83,7 +83,7 @@ class ChantierFormType extends AbstractType
                 ]
             ])
             ->add('save', SubmitType::class, [
-                'label' => $isEdit ? 'Mettre à jour' : 'Créer',
+                'label' => $isEdit ? 'chantiers.form.submit.update' : 'chantiers.form.submit.create',
                 'attr' => [
                     'class' => 'btn btn-primary w-100 mb-3',
                 ],

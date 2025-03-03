@@ -1,5 +1,5 @@
 {% extends "layout/dashboard.layout.html.twig" %}
-{% block title %} chantier {{chantier.name}}{% endblock %}
+{% block title %} {{'chantiers.shows.title'|trans}} {{chantier.name}}{% endblock %}
 {% block content %}
     <div class="row flex-grow">
         <div class="col-md-12">
@@ -14,14 +14,14 @@
                 <div class="card-body">
                     <div class="d-sm-flex justify-content-between align-items-start">
                         <div>
-                            <h2 class="card-title card-title-dash">Détails du Chantier</h2>
+                            <h2 class="card-title card-title-dash">{{'chantiers.shows.title'|trans}}</h2>
                         </div>
                         <div>
                             <a href="{{ path('app_chantiers') }}" class="btn btn-secondary btn-sm text-white mb-0 me-0">
-                                <i class="mdi mdi-arrow-left"></i> Retour à la liste
+                                <i class="mdi mdi-arrow-left"></i> {{'chantiers.shows.list_redirection'|trans}}
                             </a>
                             <a href="{{ path('app_chantier_edit', {'chantier': chantier.id}) }}" class="btn btn-warning btn-sm text-white mb-0 me-0">
-                                <i class="mdi mdi-pencil"></i> Modifier
+                                <i class="mdi mdi-pencil"></i> {{'chantiers.shows.btn_update'|trans}}
                             </a>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                             <div class="col-md-6">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title-dash">Informations Générales</h4>
+                                        <h4 class="card-title-dash">{{'chantiers.shows.informations.title'|trans}}</h4>
                                         <div class="table-responsive">
                                             <table class="table table-borderless">
                                                 <tbody>
@@ -40,7 +40,7 @@
                                                         <td>{{ chantier.name }}</td>
                                                     </tr>
                                                     <tr>
-                                                         <th style="width: 30%; vertical-align: top;">Description:</th>
+                                                         <th style="width: 30%; vertical-align: top;">{{'chantiers.shows.informations.description'|trans}}</th>
                                                         <td>
                                                             <div class="description-wrapper">
                                                                 {{ chantier.description }}
@@ -48,11 +48,11 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <th>Créé le:</th>
+                                                        <th>{{'chantiers.shows.informations.creation'|trans}}</th>
                                                         <td>{{ chantier.createdAt|date('d-m-Y:H:m') }}</td>
                                                     </tr>
                                                      <tr>
-                                                        <th>Modifier le:</th>
+                                                        <th>{{'chantiers.shows.informations.modification'|trans}}</th>
                                                         <td>{{ chantier.updatedAt|date('d-m-Y:H:m') }}</td>
                                                     </tr>
                                                 </tbody>
@@ -65,14 +65,14 @@
                             <div class="col-md-6">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title-dash">Machines Assignées</h4>
+                                        <h4 class="card-title-dash">{{'chantiers.shows.machines.title'|trans}}</h4>
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <thead>
                                                     <tr>
-                                                        <th>Nom</th>
-                                                        <th>Marque</th>
-                                                        <th>Numéro d'identification</th>
+                                                        <th>{{'chantiers.shows.machines.name'|trans}}</th>
+                                                        <th>{{'chantiers.shows.machines.brand'|trans}}</th>
+                                                        <th>{{'chantiers.shows.machines.num_id'|trans}}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -97,18 +97,18 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between">
-                                            <h4 class="card-title-dash">Historique des Activités</h4>
+                                            <h4 class="card-title-dash">{{'chantiers.shows.histories.title'|trans}}</h4>
                                             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#logMachineModal">
-                                                <i class="mdi mdi-plus"></i> Ajouter un journal
+                                                <i class="mdi mdi-plus"></i> {{'chantiers.shows.histories.new_journal'|trans}}
                                             </button>
                                         </div>
                                         <table class="table table-striped mt-3">
                                             <thead>
                                                 <tr>
-                                                    <th>Date</th>
-                                                    <th>Machine</th>
-                                                    <th>Durée</th>
-                                                    <th>Créé le</th>
+                                                    <th>{{'chantiers.shows.histories.date'|trans}}</th>
+                                                    <th>{{'chantiers.shows.histories.machine'|trans}}</th>
+                                                    <th>{{'chantiers.shows.histories.duration'|trans}}</th>
+                                                    <th>{{'chantiers.shows.histories.creation'|trans}}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -123,7 +123,7 @@
                                                     {% endfor %}
                                                 {% else %}
                                                     <tr>
-                                                        <td colspan="4" class="text-muted text-center">Aucune activité enregistrée</td>
+                                                        <td colspan="4" class="text-muted text-center">{{'chantiers.shows.histories.empty'|trans}}</td>
                                                     </tr>
                                                 {% endif %}
                                             </tbody>
@@ -136,7 +136,7 @@
                             <div class="modal-dialog modal-md">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="logMachineModalLabel">Ajouter un journal d'utilisation</h5>
+                                        <h5 class="modal-title" id="logMachineModalLabel">{{'chantiers.shows.modals.title'|trans}}</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
@@ -147,8 +147,8 @@
                                             <table class="table">
                                                 <thead>
                                                     <tr>
-                                                        <th>Machine</th>
-                                                        <th>Durée (heures)</th>
+                                                        <th>{{'chantiers.shows.modals.machine'|trans}}</th>
+                                                        <th>{{'chantiers.shows.modals.duration'|trans}}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>

@@ -20,27 +20,27 @@ class MachineFormType extends AbstractType
         $isEdit = $options['is_edit'] ?? false;
         $builder
             ->add('numeroIdentification', TextType::class, [
-                'label' => 'Numéro d\'identification',
-                'attr' => ['placeholder' => 'Entrez le numéro d\'identification'],
+                'label' => 'machines.form.num_id.label',
+                'attr' => ['placeholder' => 'machines.form.num_id.placeholder'],
             ])
             ->add('nom', TextType::class, [
-                'label' => 'Nom de la machine',
-                'attr' => ['placeholder' => 'Entrez le nom de la machine'],
+                'label' => 'machines.form.name.label',
+                'attr' => ['placeholder' => 'machines.form.name.placeholder'],
             ])
             ->add('marque', TextType::class, [
-                'label' => 'Marque',
-                'attr' => ['placeholder' => 'Entrez la marque de la machine'],
+                'label' => 'machines.form.brand.label',
+                'attr' => ['placeholder' => 'machines.form.brand.placeholder'],
             ])
             ->add('seuilMaintenance', IntegerType::class, [
-                'label' => 'Seuil de maintenance (heures)',
-                'attr' => ['placeholder' => 'Seuil de maintenance en heures'],
+                'label' => 'machines.form.seuil_maintenance.label',
+                'attr' => ['placeholder' => 'machines.form.seuil_maintenance.placeholder'],
             ])
             ->add('ficheTechnique', FileInterfaceType::class, [
-                'label' => 'Upload File',
+                'label' => 'machines.form.file.label',
                 'required' => true
             ])
             ->add('save', SubmitType::class, [
-                'label' => $isEdit ? 'Mettre à jour' : 'Créer',
+                'label' => $isEdit ? 'machines.form.submit.update' : 'machines.form.submit.create',
                 'attr' => [
                     'class' => 'btn btn-primary',
                     'data-edit' => $isEdit ? 'true' : 'false'

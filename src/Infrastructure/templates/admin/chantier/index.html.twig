@@ -1,5 +1,5 @@
 {% extends "layout/dashboard.layout.html.twig" %}
-{% block title %} Chantiers {% endblock %}
+{% block title %} {{'chantiers.index.title'|trans}} {% endblock %}
 {% block content %}
 <div class="row flex-grow">
     <div class="col-md-12">
@@ -14,11 +14,11 @@
             <div class="card-body">
                 <div class="d-sm-flex justify-content-between align-items-start">
                     <div>
-                        <h2 class="card-title card-title-dash">Chantiers</h2>
+                        <h2 class="card-title card-title-dash">{{'chantiers.index.list_chantiers'|trans}}</h2>
                     </div>
                     <div>
                         <a  href="{{path('app_chantier_create')}}" class="btn btn-primary btn-md text-white mb-0 me-0" type="button">
-                            <i class="mdi mdi-account-plus"></i> Ajouter un nouveau chantier
+                            <i class="mdi mdi-account-plus"></i> {{'chantiers.index.btn_create_new'|trans}}
                         </a>
                     </div>
                 </div>
@@ -26,11 +26,11 @@
                     <table class="table select-table">
                         <thead>
                             <tr>
-                                <th>Nom</th>
-                                <th>description</th>
-                                <th>Machines</th>
-                                <th>Créé le</th>
-                                <th>actions</th>
+                                <th>{{'chantiers.index.name'|trans}}</th>
+                                <th>{{'chantiers.index.description'|trans}}</th>
+                                <th>{{'chantiers.index.machine'|trans}}</th>
+                                <th>{{'chantiers.index.date_creation'|trans}}</th>
+                                <th>{{'chantiers.index.actions'|trans}}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -82,7 +82,7 @@
     </div>
 </div>
 <!-- Delete Confirmation Modal -->
-{% include "components/_modal.html.twig" with {'context':'Le chantier'} %}
+{% include "components/_modal.html.twig" with {'context': 'chantiers.index.contexte'|trans} %}
 {% endblock %}
 {% block script %}
     <script type="text/javascript">
