@@ -123,4 +123,80 @@ chantiers:
                     label: "Durée (heures)"   
                     duration_validation: "La durée doit être positive"
                 save: "Enregistrer"
-                
+
+              
+users:
+    index:
+        title: "Utilisateurs"
+        contexte: "l'utilisateur"
+        list: "Utilisateurs"
+        btn_create_new: "Ajouter un nouveau client"
+        client: "Client"
+        mail: "Email"
+        society: "Société"
+        phone: "Téléphone"
+        action: "Actions"
+  
+    form:
+        email:
+            label: "Email"
+            empty: "L'email ne peut pas être vide"
+            validation: "L'email n'est pas valide"
+        firstname:
+            label: "Prénom"
+            empty: "Le prénom ne peut pas être vide"
+        lastname:
+            label: "Nom"
+            empty: "Le nom ne peut pas être vide"
+        phone:
+            label: "Téléphone"
+            empty: "Le téléphone ne peut pas être vide"
+            validation: "Numéro de téléphone invalide"
+        socity:
+            label: "Société"
+            empty: "La société ne peut pas être vide"
+        role:
+            label: "Rôles"
+            empty: "Au moins un rôle doit être sélectionné"
+            choice:
+                user: "Utilisateur"
+                admin: "Administrateur"
+        submit:
+            create: "créér"
+            update: "Mettre à jour"
+            cancel: "Retour"
+        title:
+            update: "Modification"
+            create: "Nouveau"
+            title: "utilisateur"
+
+    reset_passwords:
+        title: "Réinitialisation de votre mot de passe"
+        hello: "Bonjour"
+        text: "Vous avez demandé la réinitialisation de votre mot de passe. Cliquez sur le bouton ci-dessous pour choisir un nouveau mot de passe :"
+        link: "Réinitialiser mon mot de passe"
+        duration: "Ce lien expirera dans 1 heures."
+        info: "Si vous n'avez pas demandé cette réinitialisation, ignorez cet e-mail."
+        thanks: "Merci,"
+        reaction: "L'équipe LOL"
+    
+    create_passwords:
+        title: "Création de votre mot de passe"
+        hello: "Bonjour"
+        text: "Votre compte a été créé. Cliquez sur le bouton ci-dessous pour définir votre mot de passe :"
+        link: "Créer mon mot de passe"
+        duration: "Ce lien expirera dans 1 heures."
+        info: "Si vous n'avez pas demandé la création de ce compte, veuillez ignorer cet e-mail."
+        thanks: "Merci,"
+        reaction: "L'équipe LOL"
+
+    messages:
+        create_succes: "Utilisateur créé avec succès"
+        create_error: "Erreur lors de la création de l'utilisateur"
+        update_succes: "Utilisateur mis à jour avec succès"
+        update_error: "Erreur lors de la mise à jour de l'utilisateur"
+        delete_succes: "Utilisateur supprimé avec succès"
+        delete_error: "Erreur lors de la suppression de l'utilisateur"
+        error_token: "Token CSRF invalide."
+        reset_password_succes: "Email de Creation  de mot de passe envoyé avec succès"
+        reset_password_error: "Erreur lors de l'envoi de l'email deCreation de mot de passe"

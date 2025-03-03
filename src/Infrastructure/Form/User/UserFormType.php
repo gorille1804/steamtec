@@ -22,7 +22,7 @@ class UserFormType extends AbstractType
         // Only add email field for creation
         if (!$isEdit) {
             $builder->add('email', EmailType::class, [
-                'label' => 'Email',
+                'label' => 'users.form.email.label',
                 'attr' => [
                     'class' => 'form-control',
                 ],
@@ -30,15 +30,15 @@ class UserFormType extends AbstractType
                     'class' => 'form-label',
                 ],
                 'constraints' => [
-                    new Assert\NotBlank(['message' => 'L\'email ne peut pas être vide']),
-                    new Assert\Email(['message' => 'L\'email n\'est pas valide']),
+                    new Assert\NotBlank(['message' => 'users.form.email.empty']),
+                    new Assert\Email(['message' => 'users.form.email.validation']),
                 ]
             ]);
         }
 
         $builder
             ->add('firstname', TextType::class, [
-                'label' => 'Prénom',
+                'label' => 'users.form.firstname.label',
                 'attr' => [
                     'class' => 'form-control',
                 ],
@@ -46,11 +46,11 @@ class UserFormType extends AbstractType
                     'class' => 'form-label',
                 ],
                 'constraints' => [
-                    new Assert\NotBlank(['message' => 'Le prénom ne peut pas être vide']),
+                    new Assert\NotBlank(['message' => 'users.form.firstname.empty']),
                 ]
             ])
             ->add('lastname', TextType::class, [
-                'label' => 'Nom',
+                'label' => 'users.form.lastname.label',
                 'attr' => [
                     'class' => 'form-control',
                 ],
@@ -58,11 +58,11 @@ class UserFormType extends AbstractType
                     'class' => 'form-label',
                 ],
                 'constraints' => [
-                    new Assert\NotBlank(['message' => 'Le nom ne peut pas être vide']),
+                    new Assert\NotBlank(['message' => 'users.form.lastname.empty']),
                 ]
             ])
             ->add('phone', TextType::class, [
-                'label' => 'Téléphone',
+                'label' => 'users.form.phone.label',
                 'attr' => [
                     'class' => 'form-control',
                 ],
@@ -70,15 +70,15 @@ class UserFormType extends AbstractType
                     'class' => 'form-label',
                 ],
                 'constraints' => [
-                    new Assert\NotBlank(['message' => 'Le téléphone ne peut pas être vide']),
+                    new Assert\NotBlank(['message' => 'users.form.phone.empty']),
                     new Assert\Regex([
                         'pattern' => '/^[0-9\-\+\s\(\)]+$/',
-                        'message' => 'Numéro de téléphone invalide'
+                        'message' => 'users.form.phone.validation'
                     ])
                 ]
             ])
             ->add('socity', TextType::class, [
-                'label' => 'Société',
+                'label' => 'users.form.socity.label',
                 'attr' => [
                     'class' => 'form-control',
                 ],
@@ -86,14 +86,14 @@ class UserFormType extends AbstractType
                     'class' => 'form-label',
                 ],
                 'constraints' => [
-                    new Assert\NotBlank(['message' => 'La société ne peut pas être vide']),
+                    new Assert\NotBlank(['message' => 'users.form.socity.empty']),
                 ]
             ])
             ->add('roles', ChoiceType::class, [
-                'label' => 'Rôles',
+                'label' => 'users.form.role.label',
                 'choices' => [
-                    'Utilisateur' => RoleEnum::USER->value,
-                    'Administrateur' => RoleEnum::ADMIN->value,
+                    'users.form.role.choice.user' => RoleEnum::USER->value,
+                    'users.form.role.choice.admin' => RoleEnum::ADMIN->value,
                 ],
                 'multiple' => true,
                 'expanded' => true,
@@ -107,11 +107,11 @@ class UserFormType extends AbstractType
                     return ['class' => 'form-check-input'];
                 },
                 'constraints' => [
-                    new Assert\NotBlank(['message' => 'Au moins un rôle doit être sélectionné']),
+                    new Assert\NotBlank(['message' => 'users.form.role.empty']),
                 ]
             ])
             ->add('save', SubmitType::class, [
-                'label' => $isEdit ? 'Mettre à jour' : 'Créer',
+                'label' => $isEdit ? 'users.form.submit.update' : 'users.form.submit.create',
                 'attr' => [
                     'class' => 'btn btn-primary w-100 mb-3',
                 ],

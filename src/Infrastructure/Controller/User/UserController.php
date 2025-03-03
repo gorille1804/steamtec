@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/dashboard')]
 class UserController extends AbstractController
@@ -29,7 +30,8 @@ class UserController extends AbstractController
         private readonly CreateUserUseCaseInterface $createUserUseCase,
         private readonly UpdateUserUseCaseInterface $updateUserUseCase,
         private readonly DeleteUserUseCaseInterface $deleteUseCase,
-        private readonly SendCreatePasswordEmailUseCaseInterface $sendCreatePasswordEmailUseCase
+        private readonly SendCreatePasswordEmailUseCaseInterface $sendCreatePasswordEmailUseCase,
+        private readonly TranslatorInterface $translator,
     ){}
 
     #[Route('/users', name: 'app_users')]
@@ -67,10 +69,10 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->createUserUseCase->__invoke($createUserRequest);
-                $this->addFlash('success', 'Utilisateur créé avec succès');
+                $this->addFlash('success', $this->translator->trans('users.messages.create_succes'));
                 return $this->redirectToRoute('app_users');
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Erreur lors de la création de l\'utilisateur');
+                $this->addFlash('error', $this->translator->trans('users.messages.create_error'));
             }
         }
 
@@ -96,10 +98,10 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->updateUserUseCase->__invoke(new UserId($userId), $updateUserRequest);
-                $this->addFlash('success', 'Utilisateur mis à jour avec succès');
+                $this->addFlash('success', $this->translator->trans('users.messages.update_succes'));
                 return $this->redirectToRoute('app_users');
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Erreur lors de la mise à jour de l\'utilisateur');
+                $this->addFlash('error', $this->translator->trans('users.messages.update_error'));
             }
         }
 
@@ -116,15 +118,15 @@ class UserController extends AbstractController
     {
         $submittedToken = $request->request->get('_token');
         if (!$this->isCsrfTokenValid('delete' . $userId, $submittedToken)) {
-            $this->addFlash('error', 'Token CSRF invalide.');
+            $this->addFlash('error', $this->translator->trans('users.messages.error_token'));
             return $this->redirectToRoute('app_users');
         }
 
         try {
             $this->deleteUseCase->__invoke(new UserId($userId));
-            $this->addFlash('success', 'Utilisateur supprimé avec succès');
+            $this->addFlash('success', $this->translator->trans('users.messages.update_succes'));
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur lors de la suppression de l\'utilisateur');
+            $this->addFlash('error',  $this->translator->trans('users.messages.update_error'));
         }
 
         return $this->redirectToRoute('app_users');
@@ -136,9 +138,9 @@ class UserController extends AbstractController
     {
         try {
             $this->sendCreatePasswordEmailUseCase->__invoke($user, 'email/security/create_password.html.twig');
-            $this->addFlash('success', 'Email de Creation  de mot de passe envoyé avec succès');
+            $this->addFlash('success',  $this->translator->trans('users.messages.reset_password_succes'));
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur lors de l\'envoi de l\'email deCreation de mot de passe');
+            $this->addFlash('error', $this->translator->trans('users.messages.reset_password_error'));
         }
         return $this->redirectToRoute('app_users');
     }
