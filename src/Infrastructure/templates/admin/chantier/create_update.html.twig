@@ -1,5 +1,5 @@
 {% extends "layout/dashboard.layout.html.twig" %}
-{% block title %}{{is_edit ? 'Modification' : 'Nouveau'}} chantier{% endblock %}
+{% block title %}{{is_edit ? 'chantiers.form.title.update'|trans : 'chantiers.form.title.create'|trans}} {{'chantiers.form.title.title'|trans}}{% endblock %}
 
 {% block content %}
     <div class="row flex-grow">
@@ -8,11 +8,11 @@
                 <div class="card-body">
                     <div class="d-sm-flex justify-content-between align-items-start">
                         <div>
-                            <h4 class="card-title card-title-dash">{{is_edit ? 'Modification' : 'Nouveau'}} chantier</h4>
+                            <h4 class="card-title card-title-dash">{{is_edit ? 'chantiers.form.title.update'|trans : 'chantiers.form.title.create'|trans}}  {{'chantiers.form.title.title'|trans}}</h4>
                         </div>
                         <div>
                             <a href="{{ path('app_chantiers') }}" class="btn btn-primary btn-sm mb-0 me-0">
-                                <i class="mdi mdi-arrow-left"></i> Retour
+                                <i class="mdi mdi-arrow-left"></i> {{'chantiers.form.submit.cancel'|trans}}
                             </a>
                         </div>
                     </div>

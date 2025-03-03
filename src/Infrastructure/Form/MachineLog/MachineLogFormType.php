@@ -33,7 +33,7 @@ class MachineLogFormType extends AbstractType
             'label' => false,
         ])
         ->add('logDate', DateType::class, [
-            'label' => 'Date du journal',
+            'label' => 'chantiers.shows.modals.forms.log_date.label',
             'widget' => 'single_text',
             'html5' => true,
             'attr' => [
@@ -43,16 +43,16 @@ class MachineLogFormType extends AbstractType
                 'class' => 'form-label',
             ],
             'constraints' => [
-                new Assert\NotBlank(['message' => 'La date ne peut pas être vide']),
+                new Assert\NotBlank(['message' => 'chantiers.shows.modals.forms.log_date.empty']),
                 new Assert\LessThanOrEqual([
                     'value' => 'now',
-                    'message' => 'La date ne peut pas être dans le futur'
+                    'message' => 'chantiers.shows.modals.forms.log_date.date_futur_validation'
                 ]),
             ],
             'data' => new \DateTime()
         ])
         ->add('save', SubmitType::class, [
-            'label' => 'Enregistrer',
+            'label' => 'chantiers.shows.modals.forms.save',
             'attr' => [
                 'class' => 'btn btn-primary w-100 mb-3',
             ],

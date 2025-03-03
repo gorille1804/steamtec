@@ -22,16 +22,16 @@ class MachineLogEntryType extends AbstractType
                     $machine = $parcMachine->getMachine();
                     return $machine->nom . ' (' . $machine->numeroIdentification . ')';
                 },
-                'label' => 'Machine',
+                'label' => 'chantiers.shows.modals.forms.parc_machine.label',
                 'required' => true,
             ])
             ->add('duration', NumberType::class, [
-                'label' => 'Durée (heures)',
+                'label' => 'chantiers.shows.modals.forms.duration.label',
                 'required' => true,
                 'constraints' => [
                     new Assert\GreaterThan([
                         'value' => 0,
-                        'message' => 'La durée doit être positive'
+                        'message' => 'chantiers.shows.modals.forms.duration.duration_validation'
                     ]),
                 ],
             ]);

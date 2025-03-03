@@ -6,6 +6,13 @@ navbars:
     trap.enter: "Appuyez sur Entrée"
     trap.escape: "Appuyez sur Échap"
 
+components:
+    modal:
+        suppr_confirm_title: "Confirmation de suppression"
+        suppr_confirm_text: "Êtes-vous sûr de vouloir supprimer "
+        suppr_confirm_message: "Cette action est irréversible."
+
+
 form:
     button:
         delete: "Supprimer"
@@ -36,3 +43,84 @@ parc_machines:
         create_error: "Erreur lors d'ajout de machine dans le parc"
         delete_succes: "Machine supprimé avec succès"
         delete_error: "Erreur lors de la suppression de la machine"
+
+
+chantiers:
+    index:
+        title: "Chantiers"
+        contexte: "le chantier"
+        list_chantiers: "Chantiers"
+        btn_create_new: "Ajouter un nouveau chantier"
+        name: "Nom"
+        description: "Description"
+        machine: "Machines"
+        date_creation: "Créé le"
+        actions: "Actions"
+  
+    form:
+        name:
+            label: "Nom du chantier"
+            placeholder: "Nom du chantier"
+        description:
+            label: "Description"
+            placeholder: "Description"
+        machine:
+            label: "Machines"
+            placeholder: "Sélectionner un machine"
+            instruction: "Sélectionnez une ou plusieurs machines pour ce chantier"
+        submit:
+            create: "créér"
+            update: "Mettre à jour"
+            cancel: "Retour"
+        title:
+            update: "Modification"
+            create: "Nouveau"
+            title: "chantier"
+
+    messages:
+        create_succes: "Nouveau chantier créé"
+        update_succes: "Chantier modifié"
+        delete_succes: "Chantier supprimé avec succès"
+        delete_error: "Erreur lors de la suppression de la chantier"
+        create_journal_succes: "Activité(s) enregistrée(s)"
+        error_token: "Token CSRF invalide."
+
+    shows:
+        title: "Détails chantier"
+        list_redirection: "Retour à la liste"
+        btn_update: "Modifier"
+        informations:
+            title: "Informations Générales"
+            name: "Nom:"
+            description: "Description:"
+            creation: "Créé le:"
+            modification: "Modifier le:"
+        machines:
+            title: "Machines Assignées"
+            name: "Nom"
+            brand: "Marque"
+            num_id: "Numéro d'identification"
+        histories:
+            title: "Historique des Activités"
+            new_journal: "Ajouter un journal"
+            date: "Date"
+            machine: "Machine"
+            duration: "Durée"
+            creation: "Créé le"
+            empty: "Aucune activité enregistrée"
+        modals:
+            title: "Ajouter un journal d'utilisation"
+            machine: "Machine"
+            duration: "Durée (heures)"
+            forms:
+                log_date:
+                    label: "Date du journal"
+                    empty: "La date ne peut pas être vide"
+                    date_futur_validation: "La date ne peut pas être dans le futur"
+                parc_machine:
+                    label: "Machine"
+                duration:
+                    label: "Durée (heures)"   
+                    duration_validation: "La durée doit être positive"
+                save: "Enregistrer"
+                
