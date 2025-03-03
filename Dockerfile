@@ -27,6 +27,12 @@ WORKDIR /var/www/html
 # Copie des fichiers de l'application
 COPY . .
 
+# Ajouter l'utilisateur www-data si nécessaire
+RUN chown -R www-data:www-data .
+#RUN useradd -r -u 33 -g www-data www-data
+# Passer à l'utilisateur www-data
+USER www-data
+
 # Installation des dépendances et génération de l'autoload
 RUN composer install --optimize-autoloader
 RUN composer dump-autoload --optimize
@@ -35,7 +41,7 @@ RUN composer dump-autoload --optimize
 RUN php bin/console doctrine:migrations:migrate --no-interaction
 
 # Donner les permissions avant le cache:clear
-RUN chown -R www-data:www-data var/
+
 RUN chmod -R 777 var/cache var/log
 
 # Configuration du mode prod et des permissions
