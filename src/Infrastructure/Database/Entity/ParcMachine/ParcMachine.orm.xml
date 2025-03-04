@@ -10,8 +10,8 @@
         <many-to-one field="machine" target-entity="Domain\Machine\Data\Model\Machine">
             <join-column name="machine_id" referenced-column-name="id" nullable="false"/>
         </many-to-one>
+        <field name="currentHourUse" type="integer" nullable="false"/>  
         <field name="tempUsage" type="integer" nullable="true"/>  
-        <field name="currentHourUse" type="integer" nullable="true"/>  
         <field name="createdAt" type="datetime" /> 
         <field name="updatedAt" type="datetime" nullable="true" />
     </entity>

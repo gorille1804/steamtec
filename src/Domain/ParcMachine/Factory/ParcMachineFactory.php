@@ -22,8 +22,8 @@ class ParcMachineFactory
             ParcMachineId::make(), // ID généré
             $request->machine,
             $request->user,
-            $request->tempUsage,
             0,
+            $request->tempUsage,
             new \DateTimeImmutable(),
             null
         );
