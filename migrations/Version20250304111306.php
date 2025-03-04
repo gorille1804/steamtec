@@ -26,6 +26,6 @@ final class Version20250304111306 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE parc_machine CHANGE current_hour_use current_hour_use INT DEFAULT 0');
+        $this->addSql('ALTER TABLE parc_machine CHANGE current_hour_use current_hour_use INT DEFAULT NULL');
     }
 }
