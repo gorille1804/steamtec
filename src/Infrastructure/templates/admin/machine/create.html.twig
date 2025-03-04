@@ -68,7 +68,7 @@
                                     </div>
                                 {% endif %}
                                 {% if machine is defined and  machine.ficheTechnique %}
-                                    {% include "components/machine/_file_render.html.twig" with {filename: machine.ficheTechnique.name} %}
+                                    {% include "components/machine/_file_render.html.twig" with {filename: machine.ficheTechnique.name, document:machine.ficheTechnique} %}
                                 {% endif %}
                             </div>
                             <div class="col-12">

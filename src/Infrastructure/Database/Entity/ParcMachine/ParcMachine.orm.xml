@@ -11,6 +11,7 @@
             <join-column name="machine_id" referenced-column-name="id" nullable="false"/>
         </many-to-one>
         <field name="tempUsage" type="integer" nullable="true"/>  
+        <field name="currentHourUse" type="integer" nullable="true"/>  
         <field name="createdAt" type="datetime" /> 
         <field name="updatedAt" type="datetime" nullable="true" />
     </entity>

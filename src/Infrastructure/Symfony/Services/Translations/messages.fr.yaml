@@ -100,6 +100,7 @@ chantiers:
             name: "Nom"
             brand: "Marque"
             num_id: "Numéro d'identification"
+            ficheTechnique: "Fiche technique"
         histories:
             title: "Historique des Activités"
             new_journal: "Ajouter un journal"

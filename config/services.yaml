@@ -5,6 +5,7 @@ parameters:
     algorithm: '%env(APP_ALGORITHM)%'
     noReplyEmail: '%env(NO_REPLY_EMAIL)%'
     mailerService: '%env(MAILER_SERVICE)%'
+    publicDirectory: '%kernel.project_dir%/public'
 
 services:
     _defaults:
@@ -18,6 +19,7 @@ services:
             $algorithm: '%algorithm%'
             $noReplyEmail: '%noReplyEmail%'
             $mailerService: '%mailerService%'
+            $publicDirectory: '%publicDirectory%'
 
     Infrastructure\Symfony\Services\Email\DefaultEmailSender:
         arguments:

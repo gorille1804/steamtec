@@ -23,6 +23,7 @@ class ParcMachineFactory
             $request->machine,
             $request->user,
             $request->tempUsage,
+            0,
             new \DateTimeImmutable(),
             null
         );
@@ -40,8 +41,22 @@ class ParcMachineFactory
     public static function updateDuration(ParcMachine $parcMachine, int $duration): ParcMachine
     {
         $parcMachine->tempUsage = $parcMachine->tempUsage + $duration;
+        $parcMachine->currentHourUse = self::calculateCurentHourUse($parcMachine, $duration);
         $parcMachine->updatedAt = new \DateTimeImmutable();
         return $parcMachine;
+    }
+
+    private static function calculateCurentHourUse(ParcMachine $parcMachine, int $duration): int
+    {
+        $machine = $parcMachine->machine;
+        $maxUse = $machine->seuilMaintenance;
+
+        $currentHourUse = $parcMachine->currentHourUse + $duration;
+        if( $currentHourUse > $maxUse ){
+            $currentHourUse = $currentHourUse - $maxUse;
+        }
+
+        return $currentHourUse;
     }
 
 }
