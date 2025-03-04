@@ -16,26 +16,26 @@ class FaqFormType extends AbstractType
     {
         $builder
             ->add('question', TextType::class, [
-                'label' => 'Question',
+                'label' => 'FAQs.form.question.label',
                 'required' => true,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a question',
+                        'message' => 'FAQs.form.question.empty',
                     ]),
                 ],
             ])
             ->add('answer', TextareaType::class, [
-                'label' => 'Answer',
+                'label' => 'FAQs.form.answer.label',
                 'required' => true,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter an answer',
+                        'message' => 'FAQs.form.answer.empty',
                     ]),
                 ],
             ]);
         if ($options['is_edit']) {
             $builder->add('isActive', CheckboxType::class, [
-                'label' => 'Active',
+                'label' => 'FAQs.form.active.label',
                 'required' => false,
             ]);
         }

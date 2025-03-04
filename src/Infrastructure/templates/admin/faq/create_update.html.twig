@@ -1,6 +1,6 @@
 {# templates/admin/faq/create_update.html.twig #}
 {% extends "layout/dashboard.layout.html.twig" %}
-{% block title %}{{ is_edit ? 'Modifier' : 'Nouvelle' }} FAQ{% endblock %}
+{% block title %}{{ is_edit ? 'FAQs.form.title.update'|trans : 'FAQs.form.title.create'|trans }} {{'FAQs.form.title.title'|trans}}{% endblock %}
 
 {% block content %}
     <div class="row flex-grow">
@@ -9,11 +9,11 @@
                 <div class="card-body">
                     <div class="d-sm-flex justify-content-between align-items-start">
                         <div>
-                            <h4 class="card-title card-title-dash">{{ is_edit ? 'Modifier' : 'Nouvelle' }} FAQ</h4>
+                            <h4 class="card-title card-title-dash">{{ is_edit ? 'FAQs.form.title.update'|trans : 'FAQs.form.title.create'|trans }} {{'FAQs.form.title.title'|trans}}</h4>
                         </div>
                         <div>
                             <a href="{{ path('app_faqs') }}" class="btn btn-secondary btn-md mb-0 me-0">
-                                <i class="mdi mdi-arrow-left"></i> Retour
+                                <i class="mdi mdi-arrow-left"></i> {{'FAQs.form.submit.return'|trans}}
                             </a>
                         </div>
                     </div>
