@@ -6,6 +6,11 @@ navbars:
     trap.enter: "Appuyez sur Entrée"
     trap.escape: "Appuyez sur Échap"
 
+footers:
+    app_name: "Steamtech application"
+    app_copyright: "Copyright © 2025. All rights reserved."
+    app_reaction: "lol."
+
 components:
     modal:
         suppr_confirm_title: "Confirmation de suppression"
@@ -36,7 +41,7 @@ parc_machines:
         machine:
             label: "Machine"
             placeholder: "Sélectionner un machine"
-        submit: "Ajout dans mon parc"
+        submit: "Ajouter dans mon parc"
 
     message:
         create_succes: "Machine ajoutée dans le parc"
@@ -255,3 +260,69 @@ machines:
         delete_succes: "Machine supprimé avec succès"
         delete_error: "Erreur lors de la suppression de la machine"
         error_download: "Aucun fichier trouvé."
+
+profils:
+    index:
+        title: "Profile"
+
+    form:
+        firstname: 
+            label: "Prénom"
+            empty: "Le prénom ne peut pas être vide"
+        lastname:
+            label: "Nom"
+            empty: "Le nom ne peut pas être vide"
+        phone:
+            label: "Téléphone"
+            empty: "Le téléphone ne peut pas être vide"
+            validation: "Numéro de téléphone invalide"
+        socity:
+            label: "Société"
+            empty: "La société ne peut pas être vide"
+        submit:
+            update: "Mettre à jour"
+
+    messages:
+        update_succes: "Profil mis à jour"
+
+
+FAQs:
+    index:
+        title: "FAQs"
+        title_h2: "Questions fréquentes"
+        btn_create_new : "Ajouter une nouvel question"
+        question: "Question"
+        answer: "Reponse"
+        action: "Actions"
+        contexte: "cette FAQ:"
+        action_update_title: "Modifier"
+        action_delete_title: "Supprimer"
+        action_active_title: "Activer"
+        action_desactive_title: "Desactiver"
+
+    form:
+        question:
+            label: "Question"
+            empty: "Entrez la question s'il vous plaits"
+        answer:
+            label: "Reponse"
+            empty: "Entrez la reponse s'il vous plaits"
+        active:
+            label: "Activer"
+        submit:
+            create: "Créer"
+            update: "Mettre à jour"
+            cancel: "Annuler"
+            return: "Retour"
+        title:
+            update: "Modification"
+            create: "Nouvel"
+            title: "Question Fréquente"
+
+    messages:
+        create_succes: "Question fréquente ajoutée"
+        create_error: "Erreur lors de la création de la Question fréquente"
+        update_succes: "Question fréquente mise à jour avec succès"
+        update_error: "Erreur lors de la mise à jour de la Question fréquente"
+        delete_succes: "Question fréquente supprimée"
+        delete_error: "Erreur lors de la suppression de la Question fréquente"

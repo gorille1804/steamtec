@@ -1,5 +1,5 @@
 {% extends 'layout/dashboard.layout.html.twig' %}
-{% block title %}FAQs{% endblock %}
+{% block title %}{{'FAQs.index.title'|trans}}{% endblock %}
 
 {% block content %}
     <div class="row flex-grow">
@@ -15,11 +15,11 @@
                 <div class="card-body">
                     <div class="d-sm-flex justify-content-between align-items-start">
                         <div>
-                            <h2 class="card-title card-title-dash">Frequently Asked Questions</h2>
+                            <h2 class="card-title card-title-dash">{{'FAQs.index.title_h2'|trans}}</h2>
                         </div>
                         <div>
                             <a href="{{path('app_faqs_create')}}" class="btn btn-primary btn-md text-white mb-0 me-0" type="button">
-                                <i class="mdi mdi-plus"></i> Add FAQ
+                                <i class="mdi mdi-plus"></i> {{'FAQs.index.btn_create_new'|trans}}
                             </a>
                         </div>
                     </div>
@@ -33,9 +33,9 @@
                             <table class="table select-table">
                                 <thead>
                                     <tr>
-                                        <th>Question</th>
-                                        <th>Answer</th>
-                                        <th>Actions</th>
+                                        <th>{{'FAQs.index.question'|trans}}</th>
+                                        <th>{{'FAQs.index.answer'|trans}}</th>
+                                        <th>{{'FAQs.index.action'|trans}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -49,7 +49,7 @@
                                         </td>
                                         <td class="py-1">
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a href="{{path('app_faqs_update', {'faq':faq.id})}}" class="btn btn-warning btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Modifier">
+                                                <a href="{{path('app_faqs_update', {'faq':faq.id})}}" class="btn btn-warning btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="{{'FAQs.index.action_update_title'|trans}}">
                                                     <i class="mdi mdi-pencil"></i>
                                                 </a>
                                                 <a href="{{ path('app_faqs_update_status', {'faq':faq.id}) }}" 
@@ -57,7 +57,7 @@
                                                     type="button" 
                                                     data-bs-toggle="tooltip" 
                                                     data-bs-placement="top" 
-                                                    title="{{faq.isActive ? 'Desactiver' : 'Activer'}}">
+                                                    title="{{faq.isActive ? 'FAQs.index.action_desactive_title'|trans : 'FAQs.index.action_active_title'|trans}}">
                                                     <i class="mdi mdi-toggle-switch"></i>  
                                                 </a>
 </a>
@@ -65,7 +65,7 @@
                                                 <button type="button" 
                                                     class="btn btn-danger btn-sm delete-faq-btn" 
                                                     data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" title="Supprimer"
+                                                    data-bs-placement="top" title="{{'FAQs.index.action_delete_title'|trans}}"
                                                     data-faq-id="{{ faq.id }}"
                                                     data-faq-question="{{ faq.question }}"
                                                     data-csrf-token="{{ csrf_token('delete' ~ faq.id) }}">
@@ -87,27 +87,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirmation de suppression</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Êtes-vous sûr de vouloir supprimer cette FAQ: <span id="faqQuestion"></span> ?</p>
-                    <p class="text-danger">Cette action est irréversible.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                    <form id="deleteForm" method="POST" action="" style="display: inline;">
-                        <input type="hidden" name="_token" id="csrfToken" value="">
-                        <button type="submit" class="btn btn-danger">Supprimer</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+   <!-- Delete Confirmation Modal -->
+{% include "components/_modal.html.twig" with {'context': 'FAQs.index.contexte'|trans} %}
 {% endblock %}
 
 {% block script %}
@@ -118,7 +99,7 @@
                     var faqId = $(this).data('faq-id');
                     var faqQuestion = $(this).data('faq-question');
                     var csrfToken = $(this).data('csrf-token');
-                    $('#faqQuestion').text(faqQuestion);
+                    $('#name').text(faqQuestion);
                     $('#deleteForm').attr('action', "{{path('app_faqs_delete', {'faq': 'FAQID'})}}".replace('FAQID', faqId));
                     $('#csrfToken').val(csrfToken);
                     $('#deleteConfirmationModal').modal('show');

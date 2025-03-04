@@ -100,7 +100,7 @@
                     var userId = $(this).data('user-id');
                     var userName = $(this).data('user-name');
                     var csrfToken = $(this).data('csrf-token');
-                    $('#userName').text(userName);
+                    $('#name').text(userName);
                     $('#deleteForm').attr('action', "{{path('app_users_delete', {'userId': 'USERID'})}}".replace('USERID', userId));
                     $('#csrfToken').val(csrfToken);
                     $('#deleteConfirmationModal').modal('show');

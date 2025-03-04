@@ -15,7 +15,7 @@ class ProfileFormType extends AbstractType
     {
         $builder
             ->add('firstname', TextType::class, [
-                'label' => 'Prénom',
+                'label' => 'profils.form.firstname.label',
                 'attr' => [
                     'class' => 'form-control',
                 ],
@@ -23,11 +23,11 @@ class ProfileFormType extends AbstractType
                     'class' => 'form-label',
                 ],
                 'constraints' => [
-                    new Assert\NotBlank(['message' => 'Le prénom ne peut pas être vide']),
+                    new Assert\NotBlank(['message' => 'profils.form.firstname.empty']),
                 ]
             ])
             ->add('lastname', TextType::class, [
-                'label' => 'Nom',
+                'label' => 'profils.form.lastname.label',
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Nom',
@@ -36,11 +36,11 @@ class ProfileFormType extends AbstractType
                     'class' => 'form-label',
                 ],
                 'constraints' => [
-                    new Assert\NotBlank(['message' => 'Le nom ne peut pas être vide']),
+                    new Assert\NotBlank(['message' => 'profils.form.lastname.empty']),
                 ]
             ])
             ->add('phone', TextType::class, [
-                'label' => 'Téléphone',
+                'label' => 'profils.form.phone.label',
                 'attr' => [
                     'class' => 'form-control',
                 ],
@@ -48,15 +48,15 @@ class ProfileFormType extends AbstractType
                     'class' => 'form-label',
                 ],
                 'constraints' => [
-                    new Assert\NotBlank(['message' => 'Le téléphone ne peut pas être vide']),
+                    new Assert\NotBlank(['message' => 'profils.form.phone.empty']),
                     new Assert\Regex([
                         'pattern' => '/^[0-9\-\+\s\(\)]+$/',
-                        'message' => 'Numéro de téléphone invalide'
+                        'message' => 'profils.form.phone.validation'
                     ])
                 ]
             ])
             ->add('socity', TextType::class, [
-                'label' => 'Société',
+                'label' => 'profils.form.socity.label',
                 'attr' => [
                     'class' => 'form-control',
                 ],
@@ -64,11 +64,11 @@ class ProfileFormType extends AbstractType
                     'class' => 'form-label',
                 ],
                 'constraints' => [
-                    new Assert\NotBlank(['message' => 'La société ne peut pas être vide']),
+                    new Assert\NotBlank(['message' => 'profils.form.socity.empty']),
                 ]
             ])
             ->add('update', SubmitType::class, [
-                'label' => 'Mettre à jour',
+                'label' => 'profils.form.submit.update',
                 'attr'  => [
                     'class' => 'btn btn-primary w-100 mb-3',
                 ],

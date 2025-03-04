@@ -12,12 +12,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/dashboard')]
 class ProfileController extends AbstractController
 {
     public function __construct(
-      private readonly  UpdateUserUseCaseInterface $useCase
+        private readonly TranslatorInterface $translator,
+        private readonly  UpdateUserUseCaseInterface $useCase,
     ){}
     #[Route('/profile', name: 'app_profile')]
     #[IsGranted(new MultiplyRolesExpression(RoleEnum::ADMIN, RoleEnum::USER))]
@@ -33,7 +35,7 @@ class ProfileController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $this->useCase->__invoke($user->getUser()->getId(), $formRequest);
 
-            $this->addFlash('success', 'Profil mis à jour');	
+            $this->addFlash('success', $this->translator->trans('profils.messages.update_succes'));
             return $this->redirectToRoute('app_profile');
         }
         

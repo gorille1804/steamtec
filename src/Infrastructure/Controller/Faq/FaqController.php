@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/dashboard')]
 class FaqController extends AbstractController
@@ -25,6 +26,7 @@ class FaqController extends AbstractController
         private readonly CreateFaqUseCaseInterface $createFaqUseCase,
         private readonly UpdateFaqUseCaseInterface $updateFaqUseCase,
         private readonly DeleteFaqUseCaseInterface $deleteFaqUseCase,
+        private readonly TranslatorInterface $translator,
     ) {}
 
     #[Route('/faqs', name: 'app_faqs', methods: ['GET'])]
@@ -57,10 +59,10 @@ class FaqController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->createFaqUseCase->__invoke($createFaqRequest);
-                $this->addFlash('success', 'FAQ créée avec succès');
+                $this->addFlash('success', $this->translator->trans('FAQs.messages.create_succes'));
                 return $this->redirectToRoute('app_faqs');
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Erreur lors de la création de la FAQ');
+                $this->addFlash('error', $this->translator->trans('FAQs.messages.create_error'));
             }
         }
       
@@ -85,10 +87,10 @@ class FaqController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->updateFaqUseCase->__invoke($faq->id, $updateFaqRequest);
-                $this->addFlash('success', 'FAQ mise à jour avec succès');
+                $this->addFlash('success', $this->translator->trans('FAQs.messages.update_succes'));
                 return $this->redirectToRoute('app_faqs');
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Erreur lors de la mise à jour de la FAQ');
+                $this->addFlash('error', $this->translator->trans('FAQs.messages.update_error'));
             }
         }
 
@@ -106,9 +108,9 @@ class FaqController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$faq->id, $request->request->get('_token'))) {
             try {
                 $this->deleteFaqUseCase->__invoke($faq);
-                $this->addFlash('success', 'FAQ supprimée avec succès');
+                $this->addFlash('success', $this->translator->trans('FAQs.messages.delete_succes'));
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Erreur lors de la suppression de la FAQ');
+                $this->addFlash('error', $this->translator->trans('FAQs.messages.delete_error'));
             }
         }
         
@@ -121,9 +123,9 @@ class FaqController extends AbstractController
     {
         try {
             $this->updateFaqUseCase->updateStatus($faq);
-            $this->addFlash('success', 'FAQ mise à jour avec succès');
+            $this->addFlash('success', $this->translator->trans('FAQs.messages.update_succes'));
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur lors de la mise à jour de la FAQ');
+            $this->addFlash('error', $this->translator->trans('FAQs.messages.update_error'));
         }
 
         return $this->redirectToRoute('app_faqs');
