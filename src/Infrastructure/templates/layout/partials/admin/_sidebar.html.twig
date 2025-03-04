@@ -21,6 +21,12 @@
             <span class="menu-title">Machines</span>
         </a>
     </li>
+     <li class="nav-item">
+        <a class="nav-link" href="{{path('app_faqs')}}" aria-expanded="false" aria-controls="form-elements">
+            <i class="menu-icon mdi mdi-text"></i>
+            <span class="menu-title">FAQ</span>
+        </a>
+    </li>
     {% endif %}
     
     {% if is_granted('ROLE_USER') %}
