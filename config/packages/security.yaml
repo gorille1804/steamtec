@@ -33,6 +33,7 @@ security:
         - { path: ^/forgot-password, roles: PUBLIC_ACCESS }
         - { path: ^/reset-password, roles: PUBLIC_ACCESS }
         - { path: ^/dashboard, roles: [ROLE_USER, ROLE_ADMIN] }
+        - { path: ^/document, roles: [ROLE_USER, ROLE_ADMIN] }
 
 when@test:
     security:

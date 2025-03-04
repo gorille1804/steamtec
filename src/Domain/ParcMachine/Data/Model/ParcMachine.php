@@ -15,6 +15,7 @@ class ParcMachine implements ParcMachineInterface
         public Machine $machine,
         public User $user,
         public ?int $tempUsage,
+        public ?int $currentHourUse = 0,
         public \DateTimeInterface $createdAt,
         public ?\DateTimeInterface $updatedAt = null,
     ) {}
