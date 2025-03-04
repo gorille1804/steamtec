@@ -18,6 +18,7 @@ doctrine:
             parcMachineId: Infrastructure\Database\FieldType\ParcMachineIdType
             machineLogId: Infrastructure\Database\FieldType\MachineLogIdType
             documentId: Infrastructure\Database\FieldType\DocumentIdType
+            faqId: Infrastructure\Database\FieldType\FaqIdType
     orm:
         auto_generate_proxy_classes: true
         default_entity_manager: default

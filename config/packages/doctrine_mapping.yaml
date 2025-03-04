@@ -45,3 +45,9 @@ doctrine:
                         dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/Document'
                         prefix: 'Domain\Document\Data\Model'
                         alias: Document
+                    faq:
+                        type: xml
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/Faq'
+                        prefix: 'Domain\Faq\Data\Model'
+                        alias: faq
