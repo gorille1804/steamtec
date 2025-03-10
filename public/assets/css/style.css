@@ -35403,9 +35403,15 @@ body.with-welcome-text {
   margin: 0;
   padding: 0;
 }
+.content-wrapper-dashboard{
+  background: #F4F5F7;
+  margin: 0;
+  padding-left: 20px;
+}
 
 .with-welcome-text .main-panel {
   width: 100%;
+  background: #F4F5F7;
 }
 
 header .bg-light {
@@ -36228,4 +36234,7 @@ section h3 {
   line-height: 24px;
   text-align: center;
 
+}
+.deco-none{
+  text-decoration: none;
 }

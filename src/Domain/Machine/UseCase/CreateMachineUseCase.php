@@ -16,7 +16,7 @@ class CreateMachineUseCase implements CreateMachineUseCaseInterface
         private readonly UserRepositoryInterface $userRepository
     ){}
 
-    public function __invoke(CreateMachineRequest $request, Document $document): Machine
+    public function __invoke(CreateMachineRequest $request, Document $document = null): Machine
     {
         $machine = MachineFactory::make($request, $document);	
         return $this->repository->save($machine);

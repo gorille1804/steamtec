@@ -15,6 +15,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Domain\User\UseCase\FindUserByIdUseCaseInterface;
 use Domain\ParcMachine\UseCase\FindParcMachineByIdUseCaseInterface;
 use Domain\ParcMachine\UseCase\DeleteParcMachineUseCaseInterface;
+use Infrastructure\Symfony\Security\SymfonyUserAdapter;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/dashboard')]
@@ -33,7 +34,7 @@ class ParcMachineController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function index(Request $request): Response
     {
-       /* @var SymfonyUserAdapter $user  */  
+        /** @var SymfonyUserAdapter $user */
         $user = $this->getUser(); 
         $user= $user->getUser();
         $parcMachineRequest = ParcMachineFactory::makeRequest($user);
@@ -50,7 +51,6 @@ class ParcMachineController extends AbstractController
             }
         }
         $parcMachines = $this->findAllByUserUseCase->__invoke($user);
-        // dd($parcMachines);
         return $this->render('admin/parcMachine/index.html.twig', [
             'parcMachines' => $parcMachines,
             'form' => $form->createView(),

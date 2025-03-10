@@ -37,7 +37,7 @@ class MachineFormType extends AbstractType
             ])
             ->add('ficheTechnique', FileInterfaceType::class, [
                 'label' => 'machines.form.file.label',
-                'required' => true
+                'required' => false
             ])
             ->add('save', SubmitType::class, [
                 'label' => $isEdit ? 'machines.form.submit.update' : 'machines.form.submit.create',

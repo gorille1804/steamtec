@@ -71,4 +71,17 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
         $em->flush();
 
     }
+
+    public function getAllUsersRegistrationData(): array
+    {
+        $result = $this->createQueryBuilder('u')
+            ->select('DATE_FORMAT(u.createdAt, \'%Y-%m-%d\') as date', 'COUNT(u.id) as userCount')
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->getQuery()
+            ->getResult();
+        
+        return $result;
+    }
+    
 }

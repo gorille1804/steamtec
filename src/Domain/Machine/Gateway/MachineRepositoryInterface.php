@@ -11,8 +11,9 @@ interface MachineRepositoryInterface
 {
     public function findById(MachineId $id): ?MachineInterface;
     public function save(Machine $machine): Machine;
-    public function getAll():array;
+    public function getAll(int $page, int $limit):array;
     public function delete(Machine $machine): void;
     public function findAllByUser(User $user):array;
-    // public function findByNumeroIdentification(string $numeroIdentification): ?MachineInterface;
+    public function getTotalMachines(): int;
+    public function getAllMachinesRegistrationData(): array;
 }

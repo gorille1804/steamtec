@@ -38,6 +38,7 @@ class MachineLogFormType extends AbstractType
             'html5' => true,
             'attr' => [
                 'class' => 'form-control',
+                'max' => (new \DateTime())->format('Y-m-d')
             ],
             'label_attr' => [
                 'class' => 'form-label',

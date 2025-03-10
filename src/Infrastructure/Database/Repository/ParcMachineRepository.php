@@ -8,6 +8,7 @@ use Domain\ParcMachine\Data\Model\ParcMachine;
 use Domain\ParcMachine\Gateway\ParcMachineRepositoryInterface;
 use Domain\ParcMachine\Data\ObjectValue\ParcMachineId;
 use Domain\User\Data\Model\User;
+use Domain\User\Data\ObjectValue\UserId;
 
 class ParcMachineRepository extends ServiceEntityRepository implements ParcMachineRepositoryInterface
 {
@@ -22,6 +23,18 @@ class ParcMachineRepository extends ServiceEntityRepository implements ParcMachi
     {
         return $this->findAll();
     }
+
+    public function getTotalCount(UserId $userId): int
+    {
+        return $this->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->leftJoin('p.user', 'u')
+            ->where('u.id = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+    
 
     public function findAllByUser(User $user): array
     {
@@ -59,4 +72,21 @@ class ParcMachineRepository extends ServiceEntityRepository implements ParcMachi
 
         return $parcMachine;
     }
+
+    public function getUsersParcRegistrationData(UserId $userId): array
+    {
+        $result = $this->createQueryBuilder('p')
+            ->select('DATE_FORMAT(p.createdAt, \'%Y-%m-%d\') as date', 'COUNT(p.id) as parcCount')
+            ->leftJoin('p.user', 'u')
+            ->where('u.id = :userId')
+            ->setParameter('userId', $userId)
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->getQuery()
+            ->getResult();
+        
+        return $result;
+    }
+
+
 }

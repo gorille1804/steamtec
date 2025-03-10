@@ -17,7 +17,7 @@ class MachineFactory
      * @param CreateMachineRequest $request
      * @return Machine
      */
-    public static function make(CreateMachineRequest $request, Document $document): Machine
+    public static function make(CreateMachineRequest $request, Document $document = null): Machine
     {
         return new Machine(
             MachineId::make(), // ID généré

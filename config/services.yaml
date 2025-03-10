@@ -73,4 +73,6 @@ services:
 
     Infrastructure\Database\Fixture\UsersFixture:
         tags: ['doctrine.fixture.orm']
+    Infrastructure\Database\Fixture\MachinesFixture:
+        tags: ['doctrine.fixture.orm']
         
