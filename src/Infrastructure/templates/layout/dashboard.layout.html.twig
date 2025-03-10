@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Steamtech |{% block title %}{% endblock %}  </title>
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
     <link rel="stylesheet" href="{{asset('assets/plugins/feather/feather.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/feather/feather.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/mdi/css/materialdesignicons.min.css') }}">
@@ -19,6 +20,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/js/select.dataTables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+    {% block stylesheets %}
+      {{ encore_entry_link_tags('app') }}
+    {% endblock %}
   </head>
   <body class="with-welcome-text">
     <div class="container-scroller">
@@ -58,6 +62,8 @@
     <script src="{{ asset('assets/js/jquery.cookie.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
     <script src="{{ asset('assets/js/sweetalert2@11.js') }}"></script>
-    {% block script %}{% endblock %}
+    {% block script %}
+             {{ encore_entry_script_tags('app') }}
+    {% endblock %}
   </body>
 </html>
