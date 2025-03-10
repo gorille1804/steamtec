@@ -19,9 +19,23 @@ class MachineRepository extends ServiceEntityRepository implements MachineReposi
         parent::__construct($registry, Machine::class);
     }
     
-    public function getAll(): array
+    public function getAll(int $page = 1, int $limit = 10): array
     {
-        return $this->findAll();
+        $offset = ($page - 1) * $limit;
+        
+        return $this->createQueryBuilder('m')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getTotalMachines(): int
+    {
+        return $this->createQueryBuilder('m')
+            ->select('COUNT(m.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
     public function findAllByUser(User $user): array
@@ -57,5 +71,17 @@ class MachineRepository extends ServiceEntityRepository implements MachineReposi
         $em->remove($machine);
         $em->flush();
 
+    }
+
+    public function getAllMachinesRegistrationData(): array
+    {
+        $result = $this->createQueryBuilder('m')
+            ->select('DATE_FORMAT(m.createdAt, \'%Y-%m-%d\') as date', 'COUNT(m.id) as machineCount')
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->getQuery()
+            ->getResult();
+        
+        return $result;
     }
 }

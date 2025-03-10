@@ -14,7 +14,7 @@ class Machine implements MachineInterface
         public string $nom,
         public string $marque,
         public int $seuilMaintenance,
-        public Document $ficheTechnique,
+        public ?Document $ficheTechnique,
         public \DateTimeInterface $createdAt,
         public ?\DateTimeInterface $updatedAt = null,
     ) {}

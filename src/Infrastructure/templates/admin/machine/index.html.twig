@@ -52,20 +52,22 @@
                                     <td>
                                       {{machine.seuilMaintenance}}  
                                     </td>
-                                    <td>
-                                        <div class="d-flex gap-2">
+                                     <td class="py-1">
+                                        <div class="btn-group" role="group">
                                             <a
                                                href="{{ path('app_update_machine', {'machine': machine.id}) }}"
-                                               class="btn btn-primary btn-sm" 
+                                               class="btn btn-warning btn-sm" 
                                                title='{{'machines.index.action_update_title'|trans}}'>
                                                 <i class="mdi mdi-pencil"></i>
                                             </a>
-                                            <a
-                                               href="{{ path('app_download_machine_fiche_technique', {'machine': machine.id}) }}"
-                                               class="btn btn-dark btn-sm" 
-                                               title='{{'machines.index.action_download_title'|trans}}'>
-                                                <i class="mdi mdi-download"></i>
-                                            </a>
+                                            {% if machine.ficheTechnique is not null %}
+                                                <a
+                                                href="{{ path('app_download_machine_fiche_technique', {'machine': machine.id}) }}"
+                                                class="btn btn-dark btn-sm" 
+                                                title='{{'machines.index.action_download_title'|trans}}'>
+                                                    <i class="mdi mdi-download"></i>
+                                                </a>
+                                            {% endif %}
                                             <button type="button" 
                                                     class="btn btn-danger btn-sm delete-machine-btn" 
                                                     title='{{'machines.index.action_delete_title'|trans}}'
@@ -81,6 +83,9 @@
                             </tbody>
                         </table>
                     </div>
+                    {% if maxPages is defined and maxPages > 1 %}
+                        {% include "components/shared/_pagination.html.twig" with { 'maxPages': maxPages, 'path':'app_machines' } %}
+                    {% endif %}
                 </div>
             </div>
         </div>

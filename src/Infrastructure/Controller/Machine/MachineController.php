@@ -38,11 +38,19 @@ class MachineController extends AbstractController
 
     #[Route('/machines', name: 'app_machines')]
     #[IsGranted('ROLE_ADMIN')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $machines = $this->findAllUseCase->__invoke();
+        $page = $request->query->getInt('page', 1);
+        $limit = 10;
+        $machines = $this->findAllUseCase->__invoke($page, $limit);
+        $totalMachine = $this->findAllUseCase->getTotalMachines();
+        $maxPages = ceil($totalMachine / $limit);
+
         return $this->render('admin/machine/index.html.twig', [
             'machines' => $machines,
+            'currentPage' => $page,
+            'maxPages' => $maxPages,
+            'limit' => $limit
         ]);
     }
 
@@ -61,7 +69,10 @@ class MachineController extends AbstractController
             try {
                 /** @var CreateMachineRequest $data */
                 $data = $form->getData();
-                $document = $this->uploadFileUseCase->__invoke($data->ficheTechnique);
+                $document = null;
+                if($data->ficheTechnique){
+                    $document = $this->uploadFileUseCase->__invoke($data->ficheTechnique);
+                }
                 $this->useCase->__invoke($data, $document);
                 $this->addFlash('success', $this->translator->trans('machines.messages.create_succes'));
                 return $this->redirectToRoute('app_machines');
