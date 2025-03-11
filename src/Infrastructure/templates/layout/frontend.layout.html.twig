@@ -28,12 +28,17 @@
   </head>
   <body class="with-welcome-text">
     <div class="container-scroller">
-     
+        {% block header %}
+          {% include "layout/partials/client/_navbar.html.twig" %}
+        {% endblock %}
         <div class="main-panel">
           <div class="content-wrapper">
             {% block content %}{% endblock %}
           </div>
         </div>
+        {% block footer %}
+          {% include "layout/partials/client/_footer.html.twig" %}
+        {% endblock %}
       </div>
     </div>
     <script src="{{ asset('assets/plugins/jquery/jquery-3.6.0.min.js') }}"></script>
