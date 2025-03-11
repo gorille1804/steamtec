@@ -35403,7 +35403,8 @@ body.with-welcome-text {
   margin: 0;
   padding: 0;
 }
-.content-wrapper-dashboard{
+
+.content-wrapper-dashboard {
   background: #F4F5F7;
   margin: 0;
   padding-left: 20px;
@@ -35857,7 +35858,10 @@ section h3 {
   border-radius: 24px;
   background: #fff;
 }
-.content_decouvrir_gamme .item a{text-decoration:none;}
+
+.content_decouvrir_gamme .item a {
+  text-decoration: none;
+}
 
 .content_decouvrir_gamme {
   background-color: #F5F6FB;
@@ -36235,6 +36239,81 @@ section h3 {
   text-align: center;
 
 }
-.deco-none{
+
+.deco-none {
+  text-decoration: none;
+}
+
+/*page login*/
+.content_page_login {
+  width: 100%;
+  margin: 0;
+  padding: 80px 0;
+  background: url('../images/fond_login.webp') no-repeat center center;
+  background-size: cover;
+  height: 100%;
+}
+
+.content_page_login .login-form {
+  border-radius: 16px;
+  padding: 60px;
+  background: #FFFFFF;
+  margin: 0 auto;
+}
+
+.content_page_login .login-form h2 {
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 130%;
+  text-align: center;
+  color: #000000;
+}
+
+.content_page_login .login-form .mt-2 {
+  margin-bottom: 24px;
+}
+
+.content_page_login .login-form .mt-2 label {
+  font-family: "Roboto";
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  color: #000000;
+}
+.content_page_login .login-form .mt-2 input[type="email"],.content_page_login .login-form .mt-2 input[type="password"] {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 48px;
+  background:#FFFFFF;
+  border-top: 1px solid #D9D9D9;
+}
+.content_page_login .login-form button[type="submit"]{
+padding-top: 12px;
+padding-right: 24px;
+padding-bottom: 12px;
+padding-left: 24px;
+border-radius: 100px;
+background: #60B454;
+border: 1px solid #60B454;
+font-family: "Roboto";
+font-weight: 400;
+font-size: 16px;
+line-height: 150%;
+color: #FFFFFF;
+}
+.content_page_login .login-form #authentication_form_login{
+  width:auto!important;
+  margin: 0 auto;
+  display:block;
+}
+.content_page_login .login-form .lien_password{
+font-family: "Roboto";
+line-height: 140%;
+letter-spacing: 0%;
+text-decoration: underline;
+color:#636074;
+}
+.content_page_login .login-form .lien_password:hover{
   text-decoration: none;
 }
