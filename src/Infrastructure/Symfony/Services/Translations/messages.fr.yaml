@@ -185,6 +185,18 @@ users:
         info: "Si vous n'avez pas demandé cette réinitialisation, ignorez cet e-mail."
         thanks: "Merci,"
         reaction: "L'équipe LOL"
+        instruction: "Veuillez saisir votre adresse e-mail pour réinitialiser votre mot de passe."
+        form:
+            instruction: "Veuillez entrer votre nouveau mot de passe."
+            password:
+                label: "Nouveau mot de passe"
+                placeholder: "Entrez votre nouveau mot de passe"
+            password_confirmation:
+                label: "Confirmer le mot de passe"
+                placeholder: "Confirmez votre nouveau mot de passe"
+            submit:
+                update: "Changer le mot de passe"
+                cancel: "Retour à la connexion"
     
     create_passwords:
         title: "Création de votre mot de passe"
@@ -218,6 +230,7 @@ users:
         reset_password_succes: "Email de Creation  de mot de passe envoyé avec succès"
         reset_password_error: "Erreur lors de l'envoi de l'email deCreation de mot de passe"
         send_mail_succes: "Un email de confirmation a été envoye"
+        update_password_succes: "Votre mot de passe a ete mis a jour"
 
 
 machines:

@@ -1,4 +1,4 @@
-users:
+users:           
     form:
         email:
             empty: "L'email ne peut pas être vide"
@@ -15,6 +15,16 @@ users:
         role:
             empty: "Au moins un rôle doit être sélectionné"
         
+    reset_passwords:
+        form:
+            password:
+                empty: "Veuillez entrer un mot de passe"
+                validation: "Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial (@$!%*?&)"
+                min: "Votre mot de passe doit contenir au moins {{ limit }} caractères"
+            password_confirmation:
+                empty: "Veuillez confirmer votre mot de passe"
+                not_equals: "La confirmation du mot de passe ne correspond pas"
+  
 profils:
     form:
         firstname: 

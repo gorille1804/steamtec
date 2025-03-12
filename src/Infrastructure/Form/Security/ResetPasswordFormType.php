@@ -18,45 +18,45 @@ class ResetPasswordFormType extends AbstractType
     {
         $builder
             ->add('password', PasswordType::class, [
-                'label' => 'Nouveau mot de passe',
+                'label' => 'users.reset_passwords.form.password.label',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Entrez votre nouveau mot de passe',
+                    'placeholder' => 'users.reset_passwords.form.password.placeholder',
                 ],
                 'label_attr' => [
                     'class' => 'form-label',
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez entrer un mot de passe',
+                        'message' => 'users.reset_passwords.form.password.empty',
                     ]),
                     new Length([
                         'min' => 8,
-                        'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
+                        'minMessage' => 'users.reset_passwords.form.password.min',
                         'max' => 4096,
                     ]),
                     new Regex([
                         'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/',
-                        'message' => 'Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial (@$!%*?&)',
+                        'message' => 'users.reset_passwords.form.password.validation',
                     ]),
                 ],
             ])
             ->add('password_confirmation', PasswordType::class, [
-                'label' => 'Confirmer le mot de passe',
+                'label' => 'users.reset_passwords.form.password_confirmation.label',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Confirmez votre nouveau mot de passe',
+                    'placeholder' => 'users.reset_passwords.form.password_confirmation.placeholder',
                 ],
                 'label_attr' => [
                     'class' => 'form-label',
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez confirmer votre mot de passe',
+                        'message' => 'users.reset_passwords.form.password_confirmation.empty',
                     ]),
                     new EqualTo([
                         'propertyPath' => 'parent.all[password].data',
-                        'message' => 'La confirmation du mot de passe ne correspond pas',
+                        'message' => 'users.reset_passwords.form.password_confirmation.not_equals',
                     ]),
                 ],
             ]);
