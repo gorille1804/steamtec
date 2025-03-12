@@ -1,0 +1,35 @@
+users:
+    form:
+        email:
+            empty: "L'email ne peut pas être vide"
+            validation: "L'email n'est pas valide"
+        firstname:
+            empty: "Le prénom ne peut pas être vide"
+        lastname:
+            empty: "Le nom ne peut pas être vide"
+        phone:
+            empty: "Le téléphone ne peut pas être vide"
+            validation: "Numéro de téléphone invalide"
+        socity:
+            empty: "La société ne peut pas être vide"
+        role:
+            empty: "Au moins un rôle doit être sélectionné"
+        
+profils:
+    form:
+        firstname: 
+            empty: "Le prénom ne peut pas être vide"
+        lastname:
+            empty: "Le nom ne peut pas être vide"
+        phone:
+            empty: "Le téléphone ne peut pas être vide"
+            validation: "Numéro de téléphone invalide"
+        socity:
+            empty: "La société ne peut pas être vide"
+
+FAQs:
+    form:
+        question:
+            empty: "Entrez la question s'il vous plaits"
+        answer:
+            empty: "Entrez la reponse s'il vous plaits"
