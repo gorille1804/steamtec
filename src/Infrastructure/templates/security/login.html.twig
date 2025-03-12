@@ -8,7 +8,7 @@
 <div class="content_page_login">
     <div class="container">
     <div class="col-md-6 login-form">
-        <h2 class="mb-4">Connectez-nous à votre espace personnel</h2>
+        <h2 class="mb-4">{{'users.login.title'|trans}}</h2>
         {% for flash in app.flashes('error') %}
             <div class="alert alert-danger">
                 {{ flash }}
@@ -40,7 +40,7 @@
             </div>
             {{ form_row(form.login) }}
              <div class="mt-2 mb-3 d-flex justify-content-center">
-                <a href="{{ path('app_forgot_password') }}" class="lien_password">Forgot Password?</a>
+                <a href="{{ path('app_forgot_password') }}" class="lien_password">{{'users.login.form.submit.forgot_password'|trans}}</a>
             </div>
         {{ form_end(form) }}
     </div>

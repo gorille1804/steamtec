@@ -24,6 +24,15 @@ users:
             password_confirmation:
                 empty: "Veuillez confirmer votre mot de passe"
                 not_equals: "La confirmation du mot de passe ne correspond pas"
+    login:
+        form:
+            email:
+                empty: "Veuillez entrer un adresse email"
+                validation: "Veuillez entrer une adresse e-mail valide"   
+            password:
+                empty: "Veuillez entrer un mot de passe"
+                min: "Votre mot de passe doit contenir au moins {{ limit }} caractères"
+
   
 profils:
     form:

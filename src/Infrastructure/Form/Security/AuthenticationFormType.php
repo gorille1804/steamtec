@@ -17,26 +17,26 @@ class AuthenticationFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label'       => 'User Email',
+                'label'       => 'users.login.form.email.label',
                 'constraints' => [
-                    new Assert\NotBlank(['message' => 'Email address is required']),
-                    new Assert\Email(['message' => 'Please enter a valid email address']),
+                    new Assert\NotBlank(['message' => 'users.login.form.email.empty']),
+                    new Assert\Email(['message' => 'users.login.form.email.validation']),
                 ],
                 'attr'       => [
                     'class'       => 'form-control',
-                    'placeholder' => 'username@email.com',
+                    'placeholder' => 'users.login.form.email.placeholder',
                 ],
                 'label_attr' => [
                     'class' => 'form-label',
                 ],
             ])
             ->add('password', PasswordType::class, [
-                'label'       => 'Password',
+                'label'       => 'users.login.form.password.label',
                 'constraints' => [
-                    new Assert\NotBlank(['message' => 'Password is required']),
+                    new Assert\NotBlank(['message' => 'users.login.form.password.empty']),
                     new Assert\Length([
                         'min' => 8,
-                        'minMessage' => 'Password must be at least {{ limit }} characters long',
+                        'minMessage' => 'users.login.form.password.min',
                     ]),
                 ],
                 'attr'       => [
@@ -48,7 +48,7 @@ class AuthenticationFormType extends AbstractType
                 ],
             ])
             ->add('login', SubmitType::class, [
-                'label' => 'Login',
+                'label' => 'users.login.form.submit.login',
                 'attr'  => [
                     'class' => 'btn btn-primary w-100 mb-3',
                 ],

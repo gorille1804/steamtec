@@ -218,7 +218,19 @@ users:
             submit:
                 update: "Réinitialiser le mot de passe"
                 cancel: "Retour à la connexion"
-
+    login:
+        title: "Connectez-nous à votre espace personnel"
+        instruction: "Veuillez saisir votre adresse e-mail pour réinitialiser votre mot de passe."
+        form:
+            email:
+                label: "Email utilisateur"
+                placeholder: "nomutilisateur@email.com"
+            password:
+                label: "Mot de passe"
+            submit:
+                login: "Se connecter"
+                forgot_password: "Mots de passe oublié?"
+   
     messages:
         create_succes: "Utilisateur créé avec succès"
         create_error: "Erreur lors de la création de l'utilisateur"
@@ -231,6 +243,7 @@ users:
         reset_password_error: "Erreur lors de l'envoi de l'email deCreation de mot de passe"
         send_mail_succes: "Un email de confirmation a été envoye"
         update_password_succes: "Votre mot de passe a ete mis a jour"
+        login_error: "Une erreur inattendue s'est produite. Veuillez réessayer"
 
 
 machines:
