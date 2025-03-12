@@ -196,6 +196,17 @@ users:
         thanks: "Merci,"
         reaction: "L'équipe LOL"
 
+    forgot_password:
+        title: "Mots de passe oublier?"
+        instruction: "Veuillez saisir votre adresse e-mail pour réinitialiser votre mot de passe."
+        form:
+            email:
+                label: "Email utilisateur"
+                placeholder: "nomutilisateur@email.com"
+            submit:
+                update: "Réinitialiser le mot de passe"
+                cancel: "Retour à la connexion"
+
     messages:
         create_succes: "Utilisateur créé avec succès"
         create_error: "Erreur lors de la création de l'utilisateur"
@@ -206,6 +217,7 @@ users:
         error_token: "Token CSRF invalide."
         reset_password_succes: "Email de Creation  de mot de passe envoyé avec succès"
         reset_password_error: "Erreur lors de l'envoi de l'email deCreation de mot de passe"
+        send_mail_succes: "Un email de confirmation a été envoye"
 
 
 machines:
