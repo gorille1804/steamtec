@@ -118,7 +118,7 @@
 /*-------------------------------------------------------------------*/
 /* === SCSS Compass Functions === */
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
-@import url("http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900");
 
 @-moz-keyframes flash {
   0% {
@@ -36270,18 +36270,18 @@ section h3 {
   color: #000000;
 }
 
-.content_page_login .login-form .mt-2 {
-  margin-bottom: 24px;
+.content_page_login .login-form .mt-2,.content_page_login .login-form .mb-3,.content_page_login .login-form .alert{
+  margin-bottom: 24px!important;
 }
 
-.content_page_login .login-form .mt-2 label {
+.content_page_login .login-form label {
   font-family: "Roboto";
   font-weight: 500;
   font-size: 16px;
   line-height: 150%;
   color: #000000;
 }
-.content_page_login .login-form .mt-2 input[type="email"],.content_page_login .login-form .mt-2 input[type="password"] {
+.content_page_login .login-form input[type="email"],.content_page_login .login-form input[type="password"] {
   padding-top: 20px;
   padding-bottom: 20px;
   border-radius: 48px;
@@ -36302,7 +36302,7 @@ font-size: 16px;
 line-height: 150%;
 color: #FFFFFF;
 }
-.content_page_login .login-form #authentication_form_login{
+.content_page_login .login-form button[type="submit"]{
   width:auto!important;
   margin: 0 auto;
   display:block;
