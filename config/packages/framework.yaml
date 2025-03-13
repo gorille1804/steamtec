@@ -1,14 +1,10 @@
 # config/packages/framework.yaml
 framework:
     secret: '%env(APP_SECRET)%'
-    session:
-        cookie_secure: true
-        cookie_samesite: lax
-        handler_id: session.handler.native_file
-        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
-        # Remove storage_id and use storage_factory_id only if needed
-        name: app_session
-        cookie_lifetime: 3600
+    session: true
+    csrf_protection:
+        enabled: false
+
 
 when@test:
     framework:
