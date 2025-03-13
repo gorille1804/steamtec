@@ -8,12 +8,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AuthenticationController extends AbstractController
 {
     public function __construct(
         private readonly AuthenticationUseCaseInterface $useCase,
-        private readonly LogoutUseCaseInterface $logoutUseCase
+        private readonly TranslatorInterface $translator,
+        private readonly LogoutUseCaseInterface $logoutUseCase,
     ){}
     
     #[Route('/login', name: 'app_security', methods: ['GET', 'POST'])]
@@ -36,7 +38,7 @@ class AuthenticationController extends AbstractController
             } catch (\throwable $e) {
                 $this->addFlash('error', $e->getMessage());
             } catch (\Throwable $e) {
-                $this->addFlash('error', 'An unexpected error occurred. Please try again.');
+                $this->addFlash('error', $this->translator->trans('users.messages.login_error'));
             }
         }
         

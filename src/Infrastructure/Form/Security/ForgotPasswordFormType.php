@@ -13,10 +13,10 @@ class ForgotPasswordFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label'      => 'User Email',
+                'label'      => 'users.forgot_password.form.email.label',
                 'attr'       => [
                     'class'       => 'form-control',
-                    'placeholder' => 'username@email.com',
+                    'placeholder' => 'users.forgot_password.form.email.placeholder',
                 ],
                 'label_attr' => [
                     'class' => 'form-label',

@@ -1,24 +1,43 @@
 const CACHE_NAME = "steamtech";
 const appUrl = self.location.origin; // Récupère automatiquement l'URL de l'application
 
-const urlsToCache = [
-    "/",
-    "/manifest.json",
-    "/build/app.css",
-    "/build/app.js",
-    "assets/icons/icon-192x192.png",
-    "assets/icons/icon-512x512.png",
-    "assets/screenshots/screenshot-1.png",
-    "assets/screenshots/screenshot-2.png"
-];
+// Récupérer le manifeste
+async function getManifest() {
+    const response = await fetch('/build/manifest.json');
+    return await response.json();
+}
 
+// Fonction pour ajouter dynamiquement les fichiers au cache
+async function cacheFiles() {
+    const manifest = await getManifest();
+    const urlsToCache = [
+        "/",
+        "/manifest.json",
+        `${manifest["build/app.js"]}`,
+        `${manifest["build/app.css"]}`,
+        `${manifest["build/runtime.js"]}`,
+        `${manifest["build/service-worker.js"]}`,
+        "assets/images/logo.png",
+        "assets/images/logo.svg",
+        "assets/icons/icon-192x192.png",
+        "assets/icons/icon-512x512.png",
+        "assets/screenshots/screenshot-1.png",
+        "assets/screenshots/screenshot-2.png"
+    ];
+
+    return urlsToCache;
+}
 // Installation du Service Worker et mise en cache
 self.addEventListener("install", (event) => {
-    console.log("Service Worker installé");
+    console.log("Service Worker Service Worker est en train d'être installé...");
     self.skipWaiting();
     event.waitUntil(
-        caches.open(CACHE_NAME).then((cache) => {
-            return cache.addAll(urlsToCache);
+        cacheFiles().then((urlsToCache) => {
+            return caches.open(CACHE_NAME).then((cache) => {
+                return cache.addAll(urlsToCache).then(() => {
+                    console.log('Tous les fichiers ont été ajoutés au cache');
+                });
+            });
         })
     );
 });

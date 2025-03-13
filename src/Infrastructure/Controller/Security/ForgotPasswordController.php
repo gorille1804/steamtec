@@ -7,12 +7,14 @@ use Infrastructure\Form\Security\ForgotPasswordFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ForgotPasswordController extends AbstractController
 {
 
     public function __construct(
-        private readonly ForgotPasswordUseCaseInterface $useCase
+        private readonly ForgotPasswordUseCaseInterface $useCase,
+        private readonly TranslatorInterface $translator,
     ){}
 
     #[Route('/forgot-password', name: 'app_forgot_password')]
@@ -29,7 +31,7 @@ class ForgotPasswordController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
          try {
             $this->useCase->__invoke($form->getData());
-            $this->addFlash('success', 'Un email de confirmation vous a ete envoye');
+            $this->addFlash('success', $this->translator->trans('users.messages.send_mail_succes'));
             return $this->redirectToRoute('app_forgot_password');	
          } catch (\Throwable $th) {
             $this->addFlash('error', $th->getMessage());
