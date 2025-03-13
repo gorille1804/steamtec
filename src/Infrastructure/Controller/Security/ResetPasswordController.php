@@ -26,7 +26,7 @@ class ResetPasswordController extends AbstractController
             try {
                 $this->useCase->__invoke($form->getData(), $token);	
                 $this->addFlash('success',$this->translator->trans('users.messages.update_password_succes'));
-                return $this->redirectToRoute('app_security');
+                return $this->redirectToRoute('app_security', ['_'=>time()]);
             } catch (\Throwable $th) {
                 $this->addFlash('error', $th->getMessage());
             }
