@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Steamtech | {% block title %}{% endblock %}  </title>
-    <link rel="manifest" href="{{ asset('manifest.json') }}">
     <link rel="stylesheet" href="{{asset('assets/plugins/feather/feather.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/feather/feather.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/mdi/css/materialdesignicons.min.css') }}">
@@ -22,9 +21,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/owl.theme.default.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
-    {% block stylesheets %}
-      {{ encore_entry_link_tags('app') }}
-    {% endblock %}
   </head>
   <body class="with-welcome-text">
     <div class="container-scroller">
@@ -76,8 +72,6 @@
                     }
                 })
      </script>
-    {% block script %}
-      {{ encore_entry_script_tags('app') }}
-    {% endblock %}
+    {% block script %}{% endblock %}
   </body>
 </html>
