@@ -1,17 +1,21 @@
-# see https://symfony.com/doc/current/reference/configuration/framework.html
+# config/packages/framework.yaml
 framework:
     secret: '%env(APP_SECRET)%'
-
-    # Note that the session will be started ONLY if you read or write from it.
-    session: 
-        cookie_secure: auto
-        cookie_samesite: lax
-
-    #esi: true
-    #fragments: true
+    session:
+        cookie_secure: true         # Required for HTTPS
+        cookie_samesite: lax         # Modern security default
+        handler_id: session.handler.native_file
+        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+        # Add these for better session consistency
+        storage_id: session.storage.native
+        name: app_session
+        cookie_lifetime: 3600        # 1 hour session lifetime
 
 when@test:
     framework:
         test: true
         session:
             storage_factory_id: session.storage.factory.mock_file
+            # Add test-specific session configuration
+            handler_id: session.handler.mock_file
+            save_path: '%kernel.project_dir%/var/sessions/test'
