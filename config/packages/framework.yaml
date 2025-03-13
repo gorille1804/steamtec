@@ -2,20 +2,18 @@
 framework:
     secret: '%env(APP_SECRET)%'
     session:
-        cookie_secure: true         # Required for HTTPS
-        cookie_samesite: lax         # Modern security default
+        cookie_secure: true
+        cookie_samesite: lax
         handler_id: session.handler.native_file
         save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
-        # Add these for better session consistency
-        storage_id: session.storage.native
+        # Remove storage_id and use storage_factory_id only if needed
         name: app_session
-        cookie_lifetime: 3600        # 1 hour session lifetime
+        cookie_lifetime: 3600
 
 when@test:
     framework:
         test: true
         session:
             storage_factory_id: session.storage.factory.mock_file
-            # Add test-specific session configuration
             handler_id: session.handler.mock_file
             save_path: '%kernel.project_dir%/var/sessions/test'
