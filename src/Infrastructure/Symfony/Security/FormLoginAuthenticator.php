@@ -57,7 +57,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         $request->getSession()->set('auth_error', $errorMessage);
 
         return new RedirectResponse(
-            $this->urlGenerator->generate('app_security', ['_' => time()])
+            $this->urlGenerator->generate('app_security')
         );
     }
 }
