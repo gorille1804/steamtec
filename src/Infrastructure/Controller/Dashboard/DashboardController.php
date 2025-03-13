@@ -22,7 +22,6 @@ class DashboardController extends AbstractController
     ){}
 
     #[Route('/dashboard', name: 'app_dashboard', methods: ['GET'])]
-    
     #[IsGranted(New MultiplyRolesExpression(RoleEnum::ADMIN, RoleEnum::USER))]
     public function index()
     {

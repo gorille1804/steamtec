@@ -67,7 +67,9 @@ services:
         class: Infrastructure\Symfony\Services\Document\SymfonyDocumentDownloader
     Domain\Document\Service\DocumentDeleteInterface:
         class: Infrastructure\Symfony\Services\Document\SymfonyDocumentDownloader
-    
+    Infrastructure\Event\RedirectAuthenticatedUserListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }   
 
     
 
