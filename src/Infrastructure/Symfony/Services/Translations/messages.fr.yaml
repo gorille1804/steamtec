@@ -188,6 +188,13 @@ users:
         instruction: "Veuillez saisir votre adresse e-mail pour réinitialiser votre mot de passe."
         form:
             instruction: "Veuillez entrer votre nouveau mot de passe."
+            suggestion: |
+                Pour renforcer la sécurité de votre compte, nous vous recommandons d'utiliser un mot de passe fort contenant :
+                Au moins 8 caractères
+                Une combinaison de majuscules et minuscules
+                Au moins un chiffre (0-9)
+                Au moins un caractère spécial (!@#$%^&*...)
+                Exemple : M0n!SuperPwd@2024
             password:
                 label: "Nouveau mot de passe"
                 placeholder: "Entrez votre nouveau mot de passe"
@@ -201,12 +208,12 @@ users:
     create_passwords:
         title: "Création de votre mot de passe"
         hello: "Bonjour"
-        text: "Votre compte a été créé. Cliquez sur le bouton ci-dessous pour définir votre mot de passe :"
+        text: "Votre compte a bien été créé. Pour sécuriser votre accès, veuillez définir votre mot de passe en cliquant sur le bouton ci-dessous :"
         link: "Créer mon mot de passe"
-        duration: "Ce lien expirera dans 1 heures."
-        info: "Si vous n'avez pas demandé la création de ce compte, veuillez ignorer cet e-mail."
-        thanks: "Merci,"
-        reaction: "L'équipe LOL"
+        duration: "Notez que ce lien expirera dans 1 heure."
+        info: "Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet e-mail en toute sécurité."
+        thanks: "Merci de votre confiance,"
+        reaction: "L'équipe Entech"
 
     forgot_password:
         title: "Mots de passe oublier?"

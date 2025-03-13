@@ -32,9 +32,10 @@ class ForgotPasswordController extends AbstractController
          try {
             $this->useCase->__invoke($form->getData());
             $this->addFlash('success', $this->translator->trans('users.messages.send_mail_succes'));
-            return $this->redirectToRoute('app_forgot_password');	
          } catch (\Throwable $th) {
             $this->addFlash('error', $th->getMessage());
+         }finally{
+            return $this->redirectToRoute('app_forgot_password', ['_' => time()]);
          }
         }
         return $this->render('security/forgot_password.html.twig',[
