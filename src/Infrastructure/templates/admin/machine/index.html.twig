@@ -60,9 +60,12 @@
                                                title='{{'machines.index.action_update_title'|trans}}'>
                                                 <i class="mdi mdi-pencil"></i>
                                             </a>
-                                            {% if machine.ficheTechnique is not null %}
+                                            {% if machine.ficheTechnique is defined and
+                                                  machine.ficheTechnique is not null and
+                                                  machine.ficheTechnique.id is not null 
+                                            %}
                                                 <a
-                                                href="{{ path('app_ download_machine_fiche_technique', {'machine': machine.id}) }}"
+                                                href="{{ path('document_download', {'document': machine.ficheTechnique.id}) }}"
                                                 class="btn btn-dark btn-sm" 
                                                 title='{{'machines.index.action_download_title'|trans}}'>
                                                     <i class="mdi mdi-download"></i>
