@@ -226,7 +226,7 @@ users:
                 update: "Réinitialiser le mot de passe"
                 cancel: "Retour à la connexion"
     login:
-        title: "Connectez-nous à votre espace personnel"
+        title: "Connectez-vous à votre espace personnel"
         instruction: "Veuillez saisir votre adresse e-mail pour réinitialiser votre mot de passe."
         form:
             email:
