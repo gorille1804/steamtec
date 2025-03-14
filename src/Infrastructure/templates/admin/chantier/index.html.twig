@@ -67,7 +67,7 @@
                                                 title="Supprimer"
                                                 data-chantier-id="{{ chantier.id }}"
                                                 data-chantier-name="{{ chantier.name}}"
-                                                data-csrf-token="{{ csrf_token('delete' ~ chantier.id) }}">
+                                            >
                                                 <i class="mdi mdi-delete"></i>
                                             </button>
                                         </div>
@@ -77,6 +77,9 @@
                         </tbody>
                     </table>
                 </div>
+                {% if maxPages is defined and maxPages > 1 %}
+                    {% include "components/shared/_pagination.html.twig" with { 'maxPages': maxPages, 'path':'app_chantiers' } %}
+                {% endif %}
             </div>
         </div>
     </div>
@@ -91,10 +94,8 @@
                 $('.delete-chantier-btn').click(function() {
                     var chantierId = $(this).data('chantier-id');
                     var name = $(this).data('chantier-name');
-                    var csrfToken = $(this).data('csrf-token');
                     $('#name').text(name);
                     $('#deleteForm').attr('action', "{{path('app_chantier_delete', {'chantier': 'CHATIERID'})}}".replace('CHATIERID', chantierId));
-                    $('#csrfToken').val(csrfToken);
                     $('#deleteConfirmationModal').modal('show');
                 });
                 $('.btn-secondary').click(function() {

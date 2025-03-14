@@ -73,7 +73,9 @@
                                                         <th>{{'chantiers.shows.machines.name'|trans}}</th>
                                                         <th>{{'chantiers.shows.machines.brand'|trans}}</th>
                                                         <th>{{'chantiers.shows.machines.num_id'|trans}}</th>
-                                                        <th>{{'chantiers.shows.machines.ficheTechnique'|trans}}</th>
+                                                        {% if machine.ficheTechnique is defined and machine.ficheTechnique is not null and machine.ficheTechnique.id is not null %}
+                                                            <th>{{'chantiers.shows.machines.ficheTechnique'|trans}}</th>
+                                                        {% endif %}
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -83,7 +85,7 @@
                                                             <td>{{ machine.nom }}</td>
                                                             <td>{{ machine.marque }}</td>
                                                             <td>{{ machine.numeroIdentification }}</td>
-                                                            {% if machine.ficheTechnique is defined  %}
+                                                            {% if machine.ficheTechnique is defined and machine.ficheTechnique is not null and machine.ficheTechnique.id is not null %}
                                                             <td colspan="2">
                                                                 <a href="{{path('document_download',{'document':machine.ficheTechnique.id})}}" class="btn btn-dark btn-sm text-white mb-0 me-0">
                                                                     <i class="mdi mdi-download"></i>

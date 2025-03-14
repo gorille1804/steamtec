@@ -7,6 +7,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Domain\Chantier\Gateway\ChantierRepositoryInterface;
 use Domain\Chantier\Data\Model\Chantier\Chantier;
 use Domain\Chantier\Data\ObjectValue\ChantierId;
+use Domain\User\Data\ObjectValue\UserId;
 
 class ChantierRespository extends ServiceEntityRepository implements ChantierRepositoryInterface
 {
@@ -27,6 +28,14 @@ class ChantierRespository extends ServiceEntityRepository implements ChantierRep
                     ->getResult();
     }
 
+    public function getTotalChantiers(): int
+    {
+        return $this->createQueryBuilder('c')
+                    ->select('COUNT(c.id)')
+                    ->getQuery()
+                    ->getSingleScalarResult();
+    }
+    
     public function findById(ChantierId $id): ?Chantier
     {
         return $this->createQueryBuilder('c')
@@ -38,6 +47,21 @@ class ChantierRespository extends ServiceEntityRepository implements ChantierRep
                     ->setParameter('id', $id)
                     ->getQuery()
                     ->getOneOrNullResult();
+    }
+
+    public function findByUser(int $page = 1, int $limit = 10, UserId $userId): array
+    {
+        $offset = ($page - 1) * $limit;
+        return $this->createQueryBuilder('c')
+            ->select('c, cm, u')
+            ->leftJoin('c.chantierMachines', 'cm')
+            ->leftJoin('c.user', 'u')
+            ->where('u.id = :userId')
+            ->setParameter('userId', $userId)
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
     }
 
     public function findByCriteria(array $criteria): array

@@ -68,7 +68,7 @@
                                                     data-bs-placement="top" title="{{'FAQs.index.action_delete_title'|trans}}"
                                                     data-faq-id="{{ faq.id }}"
                                                     data-faq-question="{{ faq.question }}"
-                                                    data-csrf-token="{{ csrf_token('delete' ~ faq.id) }}">
+                                                >
                                                     <i class="mdi mdi-delete"></i>
                                                 </button>
                                             </div>
@@ -98,10 +98,8 @@
                 $('.delete-faq-btn').click(function() {
                     var faqId = $(this).data('faq-id');
                     var faqQuestion = $(this).data('faq-question');
-                    var csrfToken = $(this).data('csrf-token');
                     $('#name').text(faqQuestion);
                     $('#deleteForm').attr('action', "{{path('app_faqs_delete', {'faq': 'FAQID'})}}".replace('FAQID', faqId));
-                    $('#csrfToken').val(csrfToken);
                     $('#deleteConfirmationModal').modal('show');
                 });
                 $('.btn-secondary').click(function() {

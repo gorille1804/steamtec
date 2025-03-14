@@ -112,18 +112,12 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/users/{userId}/delete', name:'app_users_delete', methods:['GET', 'POST'])]
+    #[Route('/users/{user}/delete', name:'app_users_delete', methods:['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
-    public function delete(Request $request, string $userId): Response
+    public function delete(Request $request, User $user): Response
     {
-        $submittedToken = $request->request->get('_token');
-        if (!$this->isCsrfTokenValid('delete' . $userId, $submittedToken)) {
-            $this->addFlash('error', $this->translator->trans('users.messages.error_token'));
-            return $this->redirectToRoute('app_users');
-        }
-
         try {
-            $this->deleteUseCase->__invoke(new UserId($userId));
+            $this->deleteUseCase->__invoke($user->id);
             $this->addFlash('success', $this->translator->trans('users.messages.update_succes'));
         } catch (\Exception $e) {
             $this->addFlash('error',  $this->translator->trans('users.messages.update_error'));

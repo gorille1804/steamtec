@@ -12,4 +12,9 @@ class FindAllChantierUseCase implements FindAllChantierUseCaseInterface
     {
         return $this->repository->getAll();
     }
+
+    public function getTotal():int
+    {
+        return $this->repository->getTotalChantiers();
+    }
 }
