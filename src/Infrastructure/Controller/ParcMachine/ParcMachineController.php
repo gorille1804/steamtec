@@ -2,7 +2,7 @@
 
 namespace Infrastructure\Controller\ParcMachine;
 
-use Domain\ParcMachine\Data\ObjectValue\ParcMachineId;
+use Domain\ParcMachine\Data\Model\ParcMachine;
 use Domain\ParcMachine\Factory\ParcMachineFactory;
 use Domain\ParcMachine\UseCase\CreateParcMachineUseCaseInterface;
 use Domain\ParcMachine\UseCase\FindAllParcMachineByUserUseCaseInterface;
@@ -12,8 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Domain\User\UseCase\FindUserByIdUseCaseInterface;
-use Domain\ParcMachine\UseCase\FindParcMachineByIdUseCaseInterface;
 use Domain\ParcMachine\UseCase\DeleteParcMachineUseCaseInterface;
 use Infrastructure\Symfony\Security\SymfonyUserAdapter;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -23,9 +21,7 @@ class ParcMachineController extends AbstractController
 {
     public function __construct(
         private readonly  CreateParcMachineUseCaseInterface $createUseCase,
-        private readonly FindUserByIdUseCaseInterface $findUserByIdUseCase,
         private readonly FindAllParcMachineByUserUseCaseInterface $findAllByUserUseCase,
-        private readonly FindParcMachineByIdUseCaseInterface $findParcMachineByIdUseCase,
         private readonly DeleteParcMachineUseCaseInterface $deleteParcMachineUseCase,
         private readonly TranslatorInterface $translator,
     ){}
@@ -58,14 +54,13 @@ class ParcMachineController extends AbstractController
         ]);
     }
 
-    #[Route('/parcMachines/{parcMachineId}/delete', name: 'app_delete_user_parc_machine', methods:['POST'])]
+    #[Route('/parcMachines/{parcMachine}/delete', name: 'app_delete_user_parc_machine', methods:['POST'])]
     #[IsGranted('ROLE_USER')]
-    public function deleteUserMachine(string $parcMachineId): Response
+    public function deleteUserMachine(ParcMachine $parcMachine): Response
     {
 
         try {
-            $machine = $this->findParcMachineByIdUseCase->__invoke(new ParcMachineId($parcMachineId));
-            $this->deleteParcMachineUseCase->__invoke($machine);
+            $this->deleteParcMachineUseCase->__invoke($parcMachine);
             $this->addFlash('success', $this->translator->trans('parc_machines.message.delete_succes'));
         } catch (\Exception $e) {
             $this->addFlash('error', $this->translator->trans('parc_machines.message.delete_error'));

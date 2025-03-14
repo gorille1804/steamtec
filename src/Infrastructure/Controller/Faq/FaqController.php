@@ -105,16 +105,15 @@ class FaqController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Faq $faq): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$faq->id, $request->request->get('_token'))) {
-            try {
-                $this->deleteFaqUseCase->__invoke($faq);
-                $this->addFlash('success', $this->translator->trans('FAQs.messages.delete_succes'));
-            } catch (\Exception $e) {
-                $this->addFlash('error', $this->translator->trans('FAQs.messages.delete_error'));
-            }
+        try {
+            $this->deleteFaqUseCase->__invoke($faq);
+            $this->addFlash('success', $this->translator->trans('FAQs.messages.delete_succes'));
+        } catch (\Exception $e) {
+            $this->addFlash('error', $this->translator->trans('FAQs.messages.delete_error'));
+        }finally{
+            return $this->redirectToRoute('app_faqs');
         }
         
-        return $this->redirectToRoute('app_faqs');
     }
 
     #[Route('/faqs/{faq}/status', name:'app_faqs_update_status', methods:['GET'])]

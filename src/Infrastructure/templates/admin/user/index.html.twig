@@ -70,8 +70,7 @@
                                                 {% if app.user.id == user.id %}disabled{% endif %}
                                                 data-user-id="{{ user.id }}"
                                                 data-user-name="{{ user.firstname ~ ' ' ~ user.lastname }}"
-                                                data-csrf-token="{{ csrf_token('delete' ~ user.id) }}">
-                                                
+                                            >
                                                 <i class="mdi mdi-delete"></i>
                                             </button>
                                         </div>
@@ -99,10 +98,8 @@
                 $('.delete-user-btn').click(function() {
                     var userId = $(this).data('user-id');
                     var userName = $(this).data('user-name');
-                    var csrfToken = $(this).data('csrf-token');
                     $('#name').text(userName);
-                    $('#deleteForm').attr('action', "{{path('app_users_delete', {'userId': 'USERID'})}}".replace('USERID', userId));
-                    $('#csrfToken').val(csrfToken);
+                    $('#deleteForm').attr('action', "{{path('app_users_delete', {'user': 'USERID'})}}".replace('USERID', userId));
                     $('#deleteConfirmationModal').modal('show');
                 });
                 $('.btn-secondary').click(function() {

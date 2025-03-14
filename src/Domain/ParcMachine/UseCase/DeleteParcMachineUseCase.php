@@ -12,6 +12,6 @@ class DeleteParcMachineUseCase implements DeleteParcMachineUseCaseInterface
     {}
     public function __invoke(ParcMachine $parcMachine): void
     {
-        $parcMachines= $this->repository->delete($parcMachine);
+        $this->repository->delete($parcMachine);
     }
 }

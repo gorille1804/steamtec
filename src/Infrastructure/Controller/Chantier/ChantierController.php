@@ -10,6 +10,7 @@ use Domain\Chantier\UseCase\CreateChantierUseCaseInterface;
 use Domain\Chantier\UseCase\DeleteChantierUseCaseInterface;
 use Domain\Chantier\UseCase\FindAllChantierUseCaseInterface;
 use Domain\Chantier\UseCase\FindChantierByIdUseCaseInterface;
+use Domain\Chantier\UseCase\FindChantierByUserUseCaseInterface;
 use Domain\Chantier\UseCase\UpdateChantierUseCaseInterface;
 use Domain\MachineLog\Data\Contract\CreateMachineLogRequest;
 use Domain\MachineLog\UseCase\CreateMachineLogUseCaseInterface;
@@ -28,22 +29,36 @@ class ChantierController extends AbstractController
 
     public function __construct(
         private readonly FindAllChantierUseCaseInterface $findaAllChantierUseCase,
-        private readonly CreateChantierUseCaseInterface $createChantierUseCase,
         private readonly FindChantierByIdUseCaseInterface $findChantierByIdUseCase,
+        private readonly FindChantierByUserUseCaseInterface $findChantierByUserUseCase,
+        private readonly CreateChantierUseCaseInterface $createChantierUseCase,
+        private readonly CreateMachineLogUseCaseInterface $CreateMachineLogUseCase,
         private readonly UpdateChantierUseCaseInterface $updateChantierUseCase,
         private readonly DeleteChantierUseCaseInterface $deleteChantierUseCase,
-        private readonly CreateMachineLogUseCaseInterface $CreateMachineLogUseCase,
         private readonly TranslatorInterface $translator,
     ){}
 
     #[Route('/chantiers', name: 'app_chantiers', methods: ['GET'])]
     #[IsGranted('ROLE_USER')]
-    public function index()
+    public function index(Request $request)
     {
-        $chantiers = $this->findaAllChantierUseCase->__invoke();
+        /** @var SymfonyUserAdapter $user */
+        $user = $this->getUser();
+        $user = $user->getUser();
+
+        $page = $request->query->getInt('page', 1);
+        $limit = 10;
+
+        $chantiers = $this->findChantierByUserUseCase->__invoke($page, $limit, $user->id);
+
+        $total = $this->findaAllChantierUseCase->getTotal();
+        $maxPages = ceil($total / $limit); 
 
         return $this->render('admin/chantier/index.html.twig', [
-            'chantiers' => $chantiers
+            'chantiers' => $chantiers,
+            'currentPage' => $page,
+            'maxPages' => $maxPages,
+            'limit' => $limit
         ]);
     }
 

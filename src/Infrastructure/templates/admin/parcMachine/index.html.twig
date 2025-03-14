@@ -117,7 +117,7 @@
                 var parcMachineId = $(this).data('parcmachine-id');  // Récupère l'ID de la machine
                 var machineName = $(this).data('machine-name');  
                 $('#machineName').text(machineName);  // Affiche le nom de la machine dans la modal
-                $('#deleteForm').attr('action', "{{ path('app_delete_user_parc_machine', {'parcMachineId': 'PARCMACHINEID'}) }}".replace('PARCMACHINEID', parcMachineId));  // Remplace 'PARCMACHINEID' par l'ID réel
+                $('#deleteForm').attr('action', "{{ path('app_delete_user_parc_machine', {'parcMachine': 'PARCMACHINEID'}) }}".replace('PARCMACHINEID', parcMachineId));  // Remplace 'PARCMACHINEID' par l'ID réel
                 $('#deleteConfirmationModal').modal('show');  // Affiche la modal de confirmation
             });            
             $('.btn-secondary').click(function() {
