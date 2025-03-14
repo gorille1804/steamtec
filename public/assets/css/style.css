@@ -36463,3 +36463,6 @@ section h3 {
   margin: 0 auto;
   display: block;
 }
+.with-welcome-text .main-panel{
+min-height: inherit!important;
+}
