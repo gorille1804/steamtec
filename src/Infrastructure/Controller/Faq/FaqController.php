@@ -41,6 +41,8 @@ class FaqController extends AbstractController
         return $this->render('admin/faq/index.html.twig', [
             'faqs' => $faqs,
             'maxPages'=> $maxPages,
+            'currentPage' => $page, 
+            'limit' => $limit
         ]);
     }
 
