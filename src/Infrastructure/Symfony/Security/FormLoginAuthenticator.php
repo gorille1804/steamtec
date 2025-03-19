@@ -13,10 +13,14 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordC
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+
 class FormLoginAuthenticator extends AbstractAuthenticator
 {
     public function __construct(
-        private readonly UrlGeneratorInterface $urlGenerator
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly TranslatorInterface $translator,
     ) {}
 
     public function supports(Request $request): ?bool
@@ -50,7 +54,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         if ($exception instanceof CustomUserMessageAuthenticationException) {
             $errorMessage = $exception->getMessage();
         } else {
-            $errorMessage = 'Invalide email ou mot de passe';
+            $errorMessage = $this->translator->trans('users.messages.auth_faillure');
         }
 
         $request->getSession()->set(SecurityRequestAttributes::AUTHENTICATION_ERROR, $exception);

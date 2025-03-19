@@ -216,7 +216,7 @@ users:
         reaction: "L'équipe Entech"
 
     forgot_password:
-        title: "Mots de passe oublier?"
+        title: "Mot de passe oublié?"
         instruction: "Veuillez saisir votre adresse e-mail pour réinitialiser votre mot de passe."
         form:
             email:
@@ -248,9 +248,10 @@ users:
         error_token: "Token CSRF invalide."
         reset_password_succes: "Email de Creation  de mot de passe envoyé avec succès"
         reset_password_error: "Erreur lors de l'envoi de l'email deCreation de mot de passe"
-        send_mail_succes: "Un email de confirmation a été envoye"
+        send_mail_succes: "Un email de confirmation vous a été envoyé"
         update_password_succes: "Votre mot de passe a ete mis a jour"
         login_error: "Une erreur inattendue s'est produite. Veuillez réessayer"
+        auth_faillure: "L'email ou le mot de passe que vous avez saisi est incorrect"
 
 
 machines:
