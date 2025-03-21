@@ -35491,7 +35491,8 @@ header .btn_contact {
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: #60B454;
+  color: #fff;
+  background: #60B454;
 }
 
 header .btn_contact:hover {
@@ -35508,13 +35509,13 @@ header .btn_se_connecter {
   padding-left: 18px;
   border-width: 1px;
   border-radius: 100px;
-  background: #60B454;
+  background: #fff;
   border: 1px solid #60B454;
   font-family: "Roboto";
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: #FFFFFF;
+  color: #60B454;
 }
 
 header .btn_se_connecter:hover {
@@ -35685,10 +35686,10 @@ header .btn_se_connecter:hover {
   border-radius: 40px;
   backdrop-filter: blur(56px);
   box-shadow: 0px 4px 54px 0px rgba(0, 0, 0, 0.25);
-  background: rgba(255, 255, 255, 0.09);
   position: absolute;
   align-items: center;
   max-width: 350px;
+  background: #FFFFFF;
 }
 
 .content_liste_text_droite_entete_accueil li svg {
@@ -35710,7 +35711,7 @@ header .btn_se_connecter:hover {
   font-weight: 600;
   font-size: 12px;
   line-height: 18px;
-  color: #FFFFFF;
+  color: #000;
 }
 
 .content_liste_text_droite_entete_accueil li:nth-child(1) {
@@ -36446,6 +36447,7 @@ section h3 {
   border-radius: 12px;
   border: 1px solid #D9D9D9;
 }
+
 .content_contact_gauche button[type="submit"] {
   padding-top: 12px;
   padding-right: 24px;
@@ -36463,6 +36465,254 @@ section h3 {
   margin: 0 auto;
   display: block;
 }
-.with-welcome-text .main-panel{
-min-height: inherit!important;
+
+.with-welcome-text .main-panel {
+  min-height: inherit !important;
+}
+
+/*page nettoyage*/
+.content_nettoyage_top {
+  margin: 0;
+  padding: 80px 0;
+  background: url('../images/fond_bloc_top_nettoyage.webp') no-repeat center center;
+  background-size: cover;
+}
+
+.content_nettoyage_top_inner {
+  background: #fff;
+}
+
+.content_bloc_verte {
+  background: #249FA8;
+  padding-top: 40px;
+  padding-right: 80px;
+  padding-bottom: 40px;
+  padding-left: 80px;
+  color: #fff;
+}
+
+.content_titre_left_bloc_vert {
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 120%;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.content_text_bloc_vert {
+  font-family: "Roboto";
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 150%;
+  margin-bottom: 24px;
+}
+
+.content_image_left_nettoyage {
+  margin-bottom: 50px;
+}
+
+.content_bloc_nettoyage {
+  padding-top: 60px;
+  padding-right: 80px;
+  padding-bottom: 60px;
+  padding-left: 80px;
+}
+
+.content_bloc_nettoyage_left h3 {
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 130%;
+  color: #000000;
+}
+
+.content_bloc_nettoyage_left p {
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 150%;
+  color: #636074;
+}
+
+.content_bloc_nettoyage_right h4 {
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 140%;
+  color: #60B454;
+  margin-bottom: 24px;
+}
+
+.content_bloc_nettoyage_right ul {
+  margin: 0;
+  padding: 0 0 0 40px;
+  list-style-type: none;
+}
+
+.content_bloc_nettoyage_right ul li {
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 150%;
+  color: #249FA8;
+  margin-bottom: 24px;
+  background: url('../images/icone_check_nettoyage.png') no-repeat left top;
+  padding-left: 48px;
+}
+
+.content_bloc_telecharger_fichier_nettoyage .btn_telecharger_fichier {
+  padding-top: 12px;
+  padding-right: 20px;
+  padding-bottom: 12px;
+  padding-left: 20px;
+  border-width: 1px;
+  border-radius: 100px;
+  display: inline-flex;
+  background: #60B454;
+  border: 1px solid #60B454;
+  color: #FFFFFF;
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  text-decoration: none;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.content_bloc_telecharger_fichier_nettoyage .btn_telecharger_fichier .icon_download {
+  margin-right: 8px;
+}
+
+.content_liste_application_nettoyage_inner {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.content_liste_application_nettoyage_inner li {
+  padding-top: 60px;
+  padding-right: 80px;
+  padding-bottom: 60px;
+  padding-left: 80px;
+}
+
+.content_liste_application_nettoyage_inner .content_img_app_nettoyage img {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.content_liste_application_nettoyage_inner h3 {
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 130%;
+  color: #000000;
+  margin-bottom: 8px;
+}
+
+.content_liste_application_nettoyage_inner p,
+.content_liste_application_nettoyage_inner ul li {
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: #636074;
+  margin: 0;
+  padding: 0;
+}
+
+.content_liste_application_nettoyage_inner ul {
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
+.content_liste_application_nettoyage_inner li.list_nettoyage_item:nth-child(even) {
+  background: #fff;
+}
+
+.content_liste_application_nettoyage_inner li.list_nettoyage_item:nth-child(odd) {
+  background: #F5F6FB;
+}
+
+.content_bloc_image_nettoyage {
+  width: 100%;
+  height: 100%;
+  background: url('../images/fond_bloc_image_nettoyage.jpg') no-repeat center center;
+  background-size: cover;
+  padding-top: 112px;
+  padding-bottom: 112px;
+
+}
+
+.content_bloc_image_nettoyage .content_liste_text_droite_entete_accueil {
+  gap: 20px;
+  display: flex;
+}
+
+.content_bloc_image_nettoyage .content_liste_text_droite_entete_accueil li {
+  position: inherit;
+  max-width: none;
+  width: 20%;
+  backdrop-filter: blur(56px);
+  box-shadow: 0px 4px 54px 0px rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.05);
+  gap: 16px;
+  padding-top: 12px;
+  padding-right: 16px;
+  padding-bottom: 12px;
+  padding-left: 16px;
+  border-radius: 40px;
+  height: 96px;
+  display: flex;
+  align-items: center;
+}
+
+.content_bloc_image_nettoyage .content_liste_text_droite_entete_accueil li .corp_texte h3 {
+  font-weight: 600;
+  color: #fff;
+}
+
+.content_bloc_image_nettoyage .content_liste_text_droite_entete_accueil li .corp_texte p {
+  color: #fff;
+  font-weight: 600;
+}
+
+.content_bloc_image_nettoyage .content_liste_text_droite_entete_accueil li svg {
+  width: 25%;
+}
+
+.content_bloc_image_nettoyage .content_liste_text_droite_entete_accueil li .corp_texte {
+  width: 75%;
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  align-items: center;
+}
+
+.content_titre_et_lien_gamme {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.content_titre_et_lien_gamme a {
+  padding-top: 12px;
+  padding-right: 24px;
+  padding-bottom: 12px;
+  padding-left: 24px;
+  border-radius: 100px;
+  border-width: 1px;
+  background: #60B454;
+  border: 1px solid #60B454;
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: #FFFFFF;
+  text-decoration: none;
 }
