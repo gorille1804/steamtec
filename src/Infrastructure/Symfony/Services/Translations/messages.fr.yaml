@@ -1,5 +1,5 @@
 navbars:
-    app_title: "Steamtech"
+    app_title: "Steamtec"
     hello: "Bonjour"
     sign_out: "Se déconnecter"
     my_profil: "Mon profil"
@@ -7,7 +7,7 @@ navbars:
     trap.escape: "Appuyez sur Échap"
 
 footers:
-    app_name: "Steamtech application"
+    app_name: "Steamtec application"
     app_copyright: "Copyright © 2025. All rights reserved."
     app_reaction: "lol."
 
