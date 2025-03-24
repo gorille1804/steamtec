@@ -82,6 +82,13 @@ chantiers:
             create: "Nouveau"
             title: "chantier"
 
+    maintenance_notification_mail:
+        subject: "Entretien de votre machine – Action requise"
+        hello: "Bonjour {first_name},"
+        instruction: "Nous vous informons que vous avez atteint un palier d'entretien pour votre machine <strong>{nom_machine}</strong>. Afin de garantir la continuité de son bon fonctionnement, nous vous invitons à consulter le tableau ci-joint et à prendre les mesures nécessaires."
+        availability: "Nous restons à votre disposition pour toute question ou précision supplémentaire."
+        thanks: "Cordialement,"
+
     messages:
         create_succes: "Nouveau chantier créé"
         update_succes: "Chantier modifié"

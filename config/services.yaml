@@ -78,3 +78,6 @@ services:
     Infrastructure\Database\Fixture\MachinesFixture:
         tags: ['doctrine.fixture.orm']
         
+    Infrastructure\Command\:
+        resource: '../src/Infrastructure/Command/*'
+        tags: ['console.command']

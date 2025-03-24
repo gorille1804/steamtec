@@ -6,5 +6,5 @@ use Domain\ParcMachine\Data\Model\ParcMachine;
 
 interface SendMaintenanceMailUseCaseInteface
 {
-    public function __invoke(ParcMachine $parcMachine): void;
+    public function __invoke(ParcMachine $parcMachine, ?string $content): void;
 }

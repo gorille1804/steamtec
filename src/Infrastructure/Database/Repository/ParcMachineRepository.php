@@ -88,5 +88,13 @@ class ParcMachineRepository extends ServiceEntityRepository implements ParcMachi
         return $result;
     }
 
-
+    public function findMachinesReachingMaintenanceThreshold(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.machine', 'm')
+            ->where('p.currentHourUse > 0')
+            ->getQuery()
+            ->getResult();
+    }
+    
 }

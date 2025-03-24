@@ -2,6 +2,7 @@
 
 namespace Domain\ParcMachine\Data\Model;
 
+use DateTimeInterface;
 use Domain\Machine\Data\Model\Machine;
 use Domain\ParcMachine\Data\ObjectValue\ParcMachineId;
 use Domain\ParcMachine\Gateway\ParcMachineInterface;
@@ -43,5 +44,10 @@ class ParcMachine implements ParcMachineInterface
     {
         $this->user=$user;
     }
+    
+    public function getCreatedAt(): DateTimeInterface
+    {
+        return $this->createdAt;
+    }  
 
 }

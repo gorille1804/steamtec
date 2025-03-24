@@ -1,4 +1,18 @@
-<h1>Bonjour {{user.firstname}}</h1><br>
-<h1>Machine : {{machine.nom}}</h1><br>
-<h1>Depasser la seuil d'utilisataion : {{machine.seuilMaintenance}}</h1>
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>{{ 'chantiers.maintenance_notification_mail.subject'|trans }}</title>
+</head>
+<body>
+    <p>{{ 'chantiers.maintenance_notification_mail.hello'|trans ({'{first_name}': user.getFirstName()}) }}</p>
 
+    <p>{{ 'chantiers.maintenance_notification_mail.instruction'|trans ({'{nom_machine}': machine.getNom()})|raw}}</p>
+
+    <p>{{ content|nl2br }}</p>
+
+    <p>{{ 'chantiers.maintenance_notification_mail.availability'|trans }}</p>
+
+    <p>{{ 'chantiers.maintenance_notification_mail.thanks'|trans }}</p>
+</body>
+</html>

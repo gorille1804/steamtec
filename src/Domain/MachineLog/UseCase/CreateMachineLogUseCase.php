@@ -25,14 +25,14 @@ class CreateMachineLogUseCase implements CreateMachineLogUseCaseInterface
         if(count($machileLogs)>0){
             foreach ($machileLogs as $log) {
                 $log = $this->repository->create($log);
-    
+                
                 //update ParcMachine aggregate hours
                 $oldCurrentHourUse = $log->parcMachine->currentHourUse;
                 $parcMachine = ParcMachineFactory::updateDuration($log->parcMachine, $log->duration);
                 $this->parcMachineRepository->update($parcMachine);
 
                 if ($oldCurrentHourUse + $log->duration >= $parcMachine->machine->seuilMaintenance) {
-                    $this->sendMaintenanceMailUseCase->__invoke($parcMachine);
+                    $this->sendMaintenanceMailUseCase->__invoke($parcMachine,null);
                 }
             }
         }
