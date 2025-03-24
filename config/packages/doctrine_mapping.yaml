@@ -51,3 +51,9 @@ doctrine:
                         dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/Faq'
                         prefix: 'Domain\Faq\Data\Model'
                         alias: faq
+                    maintenanceNotification:
+                        type: xml
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/MaintenanceNotification'
+                        prefix: 'Domain\MaintenanceNotification\Data\Model'
+                        alias: MaintenanceNotification
