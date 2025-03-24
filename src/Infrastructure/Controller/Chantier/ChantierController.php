@@ -158,12 +158,6 @@ class ChantierController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function delete(Request $request, Chantier $chantier)
     {
-        $submittedToken = $request->request->get('_token');
-        if (!$this->isCsrfTokenValid('delete' . $chantier->id, $submittedToken)) {
-            $this->addFlash('error', $this->translator->trans('chantiers.messages.error_token'));
-            return $this->redirectToRoute('app_chantiers');
-        }
-
         try {
             $this->deleteChantierUseCase->__invoke($chantier);
             $this->addFlash('success', $this->translator->trans('chantiers.messages.delete_succes'));
