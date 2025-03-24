@@ -1,0 +1,13 @@
+@for $i from 8 through 45 {
+    .fs-#{$i} {
+      font-size: #{$i}px!important;
+    }
+  }
+  @for $i from 1 through 9 {
+    .fw-#{$i * 100} {
+      font-weight: #{$i * 100}!important;
+    }
+  }
+  .roboto{
+    font-family: 'Roboto'!important;
+  }
