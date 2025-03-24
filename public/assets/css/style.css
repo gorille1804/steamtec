@@ -33326,10 +33326,16 @@ dl li {
 @media (max-width: 991px) {
   .navbar .navbar-menu-wrapper {
     width: calc(100% - 55px);
-    padding-top: 12px;
+    padding-top: 24px;
     padding-left: 15px;
     padding-right: 11px;
-    height: auto;
+    height: 97px;
+  }
+  .navbarleft {
+    display: none !important;
+  }
+  .navbarright {
+    width: 100% !important;
   }
 }
 
