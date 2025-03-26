@@ -6,6 +6,7 @@ use Domain\ParcMachine\Data\Model\ParcMachine;
 use Domain\Shared\Service\Email\EmailServiceInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Domain\MachineLog\UseCase\SendMaintenanceMailUseCaseInteface;
+use Domain\MaintenanceNotification\Data\Constant\MaintenanceNotification;
 
 class SendMaintenanceMailUseCase implements SendMaintenanceMailUseCaseInteface
 {
@@ -19,7 +20,7 @@ class SendMaintenanceMailUseCase implements SendMaintenanceMailUseCaseInteface
     {
         $user = $parcMachine->getUser();
         $machine = $parcMachine->getMachine();
-        $pdfPath = 'public/uploads/maintenance_machine/ELEC_ENTRETIEN_REGULIER&PONCTUEL.pdf';
+        $pdfPath = MaintenanceNotification::URL_FILE;
        $this->emailService->sendEmail(
         'email/parcmachine/maintenance.html.twig',
         [

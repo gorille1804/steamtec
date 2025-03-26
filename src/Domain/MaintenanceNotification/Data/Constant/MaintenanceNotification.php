@@ -6,6 +6,9 @@ class MaintenanceNotification
 {
     public const MINIMAL_HOURS = 50;
     public const MAXIMAL_HOURS = 3500;
+    public const MINIMAL_TIMELY_HOURS = 700;
+    public const MAXIMAL_TIMELY_HOURS = 3500;
+    public const URL_FILE= "public/uploads/maintenance_machine/ELEC_ENTRETIEN_REGULIER&PONCTUEL.pdf";
     public const REGULAR_MAINTENANCE_RANGES = [
         ['start' => 50, 'end' => 100],
         ['start' => 100, 'end' => 200],
@@ -44,5 +47,14 @@ class MaintenanceNotification
         ['start' => 3400, 'end' => 3500]
     ];
     //public const TIMELY_MAINTENANCE_RANGES = []
+    public const TIMELY_MAINTENANCE_RANGES = [
+        ['start' => 700, 'end' => 1400],
+        ['start' => 1400, 'end' => 2100],
+        ['start' => 2100, 'end' => 2800],
+        ['start' => 2800, 'end' => 3500],
+    ];
 
+    public const MAINTENANCE_THRESHOLDS = [
+        700 => 1, 1400 => 2, 2100 => 3, 2800 => 4, 3500 => 5
+    ];
 }

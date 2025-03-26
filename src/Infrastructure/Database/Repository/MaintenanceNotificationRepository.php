@@ -70,7 +70,16 @@ class MaintenanceNotificationRepository extends ServiceEntityRepository implemen
         
         return null;
     }
-
+    public function findHourTimelyRange(int $hours): ?array
+    {
+        foreach (ConstantMaintenanceNotification::TIMELY_MAINTENANCE_RANGES as $range) {
+            if ($hours >= $range['start'] && $hours < $range['end']) {
+                return $range;
+            }
+        }
+        
+        return null;
+    }
     public function findByHourRange(int $hours, ParcMachineId $machineId): ?array
     {
         $query = $this->createQueryBuilderForHourRange($hours, $machineId);

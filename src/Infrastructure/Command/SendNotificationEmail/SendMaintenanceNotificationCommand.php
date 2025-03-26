@@ -1,11 +1,13 @@
 <?php 
 namespace Infrastructure\Command\SendNotificationEmail;
 
-use Domain\MachineLog\UseCase\MaintenanceCheckerUseCaseInterface;
 use Domain\MachineLog\UseCase\MaintenanceEmailContentUseCaseInterface;
 use Domain\MachineLog\UseCase\SendMaintenanceMailUseCaseInteface;
 use Domain\ParcMachine\Gateway\ParcMachineRepositoryInterface;
-use Domain\ParcMachine\Data\Model\ParcMachine;
+use Domain\MaintenanceNotification\Data\Enum\MaintenanceNotificationEnum;
+use Domain\MaintenanceNotification\Factory\CreateMaitenanceNotificationRequestFactory;
+use Domain\MaintenanceNotification\Service\MaintenanceCheckerService;
+use Domain\MaintenanceNotification\UseCase\CreateMaintenanceNotificationTimelyUseCaseInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,8 +22,10 @@ class SendMaintenanceNotificationCommand extends Command
     public function __construct(
         private readonly ParcMachineRepositoryInterface $parcMachineRepository,
         private readonly SendMaintenanceMailUseCaseInteface $sendMaintenanceMailUseCase,
-        private readonly MaintenanceCheckerUseCaseInterface $maintenanceChecker,
-        private readonly MaintenanceEmailContentUseCaseInterface $maintenanceEmailContent
+        private readonly MaintenanceCheckerService $maintenanceChecker,
+        private readonly MaintenanceEmailContentUseCaseInterface $maintenanceEmailContent,
+        private readonly CreateMaintenanceNotificationTimelyUseCaseInterface $maitenanceNotificationTimelyUseCase,
+ 
     ) {
         parent::__construct();
     }
@@ -38,13 +42,19 @@ class SendMaintenanceNotificationCommand extends Command
         }
 
         foreach ($machinesToCheck as $parcMachine) {
-            if ($this->maintenanceChecker->_invoke($parcMachine)) {
-                $content = $this->maintenanceEmailContent->_invoke($parcMachine->getTempUsage());
-                $this->sendMaintenanceMailUseCase->__invoke($parcMachine, $content);
-                $machineName = $parcMachine->getMachine()->getNom();
-                $user=$parcMachine->getUser()->getEmail();
-                $output->writeln(sprintf('<info>- Notification sent for machine: %s of user: %s</info>', $machineName, $user));
-            }
+            if ($this->maintenanceChecker->maintenanceChecker($parcMachine)) {
+                $maitenanceNotificationRequest = CreateMaitenanceNotificationRequestFactory::make(
+                    MaintenanceNotificationEnum::TIMELY_MAINTENANCE, 
+                    $parcMachine,
+                    $parcMachine->getTempUsage()
+                );
+                $notification = $this->maitenanceNotificationTimelyUseCase->__invoke($maitenanceNotificationRequest); 
+                if ($notification !== null) {
+                    $machineName = $parcMachine->getMachine()->getNom();
+                    $user=$parcMachine->getUser()->getEmail();
+                    $output->writeln(sprintf('<info>- Notification sent for machine: %s of user: %s</info>', $machineName, $user));    
+                }
+             }
         }
 
         $output->writeln('<info>Maintenance notification process completed.</info>');
