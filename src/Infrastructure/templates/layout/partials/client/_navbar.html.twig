@@ -106,10 +106,25 @@
 					<nav class="navbar navbar-expand-lg">
 						<ul class="navbar-nav mx-auto">
 							<li class="nav-item {{ app.request.attributes.get('_route') == 'app_nettoyage' ? 'active' : '' }}">
-								<a class="nav-link" href="{{path('app_nettoyage')}}">Nettoyage</a>
+								<a class="nav-link" href="{{path('app_nettoyage')}}">Nettoyage
+								</a>
+								<div class="sous-menu">
+									<a href="{{ path('app_nettoyage') }}#avantage_methode">Les avantages de la méthode</a>
+									<a href="{{ path('app_nettoyage') }}#nettoyage_toiture">Nettoyage de toitures vapeur</a>
+									<a href="{{ path('app_nettoyage') }}#nettoyage_facade">Nettoyage de facades vapeur</a>
+									<a href="{{ path('app_nettoyage') }}#nettoyage_sol">Nettoyage de sols et terrasses vapeur</a>
+									<a href="{{ path('app_nettoyage') }}#nettoyage_monument">Nettoyage de monuments et monuments historiques vapeur</a>
+									<a href="{{ path('app_nettoyage') }}#nettoyage_bois">Nettoyage de bois vapeur</a>
+									<a href="{{ path('app_nettoyage') }}#autre_application">Autres applications</a>
+								</div>
 							</li>
 							<li class="nav-item {{ app.request.attributes.get('_route') == 'app_desherbage' ? 'active' : '' }}">
 								<a class="nav-link" href="{{path('app_desherbage')}}">Désherbage</a>
+								<div class="sous-menu">
+									<a href="{{ path('app_desherbage') }}#avantage_methode">Les avantages de la méthode</a>
+                                    <a href="{{ path('app_desherbage') }}#temp_desherbage">En combien de temps le désherbage vapeur ou à eau chaude est-il efficace ?</a>
+                                     <a href="{{ path('app_desherbage') }}#passage_desherbage">En combien de passages le désherbage à eau chaude est-il efficace ?</a>
+								</div>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="#">Machines</a>
