@@ -126,8 +126,8 @@
                                      <a href="{{ path('app_desherbage') }}#passage_desherbage">En combien de passages le désherbage à eau chaude est-il efficace ?</a>
 								</div>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">Machines</a>
+							<li class="nav-item {{ app.request.attributes.get('_route') == 'app_machine' ? 'active' : '' }}">
+								<a class="nav-link" href="{{ path('app_machine') }}">Machines</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="#">Accessoires</a>
