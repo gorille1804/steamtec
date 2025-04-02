@@ -6,7 +6,6 @@ use Domain\ParcMachine\Data\Model\ParcMachine;
 use Domain\Shared\Service\Email\EmailServiceInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Domain\MachineLog\UseCase\SendMaintenanceMailUseCaseInteface;
-use Domain\MaintenanceNotification\Data\Constant\MaintenanceNotification;
 
 class SendMaintenanceMailUseCase implements SendMaintenanceMailUseCaseInteface
 {
@@ -15,13 +14,14 @@ class SendMaintenanceMailUseCase implements SendMaintenanceMailUseCaseInteface
         private readonly string $appUrl,
         private readonly TranslatorInterface $translator,
         private readonly string $noReplyEmail,
+        private readonly string $maintenanceNotificationFile,
     ){}
     public function __invoke(ParcMachine $parcMachine, ?string $content): void
     {
         $user = $parcMachine->getUser();
         $machine = $parcMachine->getMachine();
-        $pdfPath = MaintenanceNotification::URL_FILE;
-       $this->emailService->sendEmail(
+        
+        $this->emailService->sendEmail(
         'email/parcmachine/maintenance.html.twig',
         [
             'user' => $user,
@@ -34,7 +34,7 @@ class SendMaintenanceMailUseCase implements SendMaintenanceMailUseCaseInteface
         [],
         [
             [
-                'path' => $pdfPath,
+                'path' => $this->maintenanceNotificationFile,
                 'name' => 'Entretien_Machine.pdf',
                 'contentType' => 'application/pdf'
             ]

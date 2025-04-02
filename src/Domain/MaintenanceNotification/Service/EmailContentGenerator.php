@@ -7,29 +7,34 @@ use Domain\MaintenanceNotification\Data\Model\MaintenanceNotification as Mainten
 class EmailContentGenerator
 {
     /**
-     * Generate email content for maintenance notification
+     * Générer le contenu de l'email pour la notification de maintenance
      *
      * @param MaintenanceNotificationModel $notification
+     * @param array $hoursRanges
      * @return string
      */
     public function generateMaintenanceEmailContent(MaintenanceNotificationModel $notification, array $hoursRanges): string
     {
-        $machineInfo = $notification->machine->machine->nom . ' (ID: ' . $notification->machine->machine->numeroIdentification . ')';
-        $timeRached = $notification->hours;
-        $rangeDescription = $hoursRanges ? "between {$hoursRanges['start']} and {$hoursRanges['end']} hours" : "";
+        $machineInfo = $notification->machine->machine->nom . ' (ID : ' . $notification->machine->machine->numeroIdentification . ')';
+        $timeReached = $notification->hours;
+        $rangeDescription = $hoursRanges ? "entre {$hoursRanges['start']} et {$hoursRanges['end']} heures" : "";
         
         return <<<EMAIL
-        Subject: Maintenance Notification - {$machineInfo}
+        Objet : Notification de maintenance - {$machineInfo}
 
-        Dear Customer,
+        Cher client,
 
-        This is an automated notification that your machine {$machineInfo} has reached {$timeRached} hours of operation and requires scheduled maintenance {$rangeDescription}.
+        Nous vous informons que vous avez atteint un palier d'entretien pour votre machine {$machineInfo}. 
+        Afin de garantir la continuité de son bon fonctionnement, nous vous invitons à consulter le tableau ci-joint et à prendre les mesures nécessaires.
 
-        Please contact our service department to schedule this important maintenance.
+        Ceci est une notification automatique indiquant que votre machine {$machineInfo} a atteint {$timeReached} heures de fonctionnement et nécessite une maintenance programmée {$rangeDescription}.
 
-        Thank you,
-        STEAMTECH Maintenance Team
+        Veuillez contacter notre service après-vente afin de planifier cette maintenance importante.
+
+        Nous restons à votre disposition pour toute question ou précision supplémentaire.
+
+        Cordialement,  
+        L'équipe de maintenance STEAMTECH
         EMAIL;
     }
-    
 }

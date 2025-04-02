@@ -6,6 +6,8 @@ parameters:
     noReplyEmail: '%env(NO_REPLY_EMAIL)%'
     mailerService: '%env(MAILER_SERVICE)%'
     publicDirectory: '%kernel.project_dir%/public'
+    maintenanceNotificationFile: '%kernel.project_dir%/public/uploads/maintenance_machine/ELEC_ENTRETIEN_REGULIER_PONCTUEL.pdf'
+
 
 services:
     _defaults:
@@ -20,6 +22,7 @@ services:
             $noReplyEmail: '%noReplyEmail%'
             $mailerService: '%mailerService%'
             $publicDirectory: '%publicDirectory%'
+            $maintenanceNotificationFile: '%maintenanceNotificationFile%'
 
     Infrastructure\Symfony\Services\Email\DefaultEmailSender:
         arguments:
