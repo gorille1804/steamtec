@@ -21,10 +21,10 @@ class CreateMaintenanceNotificationUseCase implements CreateMaintenanceNotificat
     {
         //check if the notification already exists
         $existingNotification = $this->repository->findByHourRange($request->hours, $request->machine->id);
-
+       
         if (!$existingNotification && 
-            $request->hours > ConstantMaintenanceNotification::MINIMAL_HOURS && 
-            $request->hours < ConstantMaintenanceNotification::MAXIMAL_HOURS
+            $request->hours >= ConstantMaintenanceNotification::MINIMAL_HOURS && 
+            $request->hours <= ConstantMaintenanceNotification::MAXIMAL_HOURS
         ) {
             $notification = MaintenanceNotificationFactory::make($request);
             $hoursRanges = $this->repository->findHourRange($request->hours);
