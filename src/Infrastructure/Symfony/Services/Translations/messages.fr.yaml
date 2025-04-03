@@ -96,6 +96,7 @@ chantiers:
         delete_error: "Erreur lors de la suppression de la chantier"
         create_journal_succes: "Activité(s) enregistrée(s)"
         error_token: "Token CSRF invalide."
+        error_alredy_exist: "Le chantier %name% existe déjà"
 
     shows:
         title: "Détails chantier"

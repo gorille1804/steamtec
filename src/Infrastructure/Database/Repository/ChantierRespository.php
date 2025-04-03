@@ -8,11 +8,13 @@ use Domain\Chantier\Gateway\ChantierRepositoryInterface;
 use Domain\Chantier\Data\Model\Chantier\Chantier;
 use Domain\Chantier\Data\ObjectValue\ChantierId;
 use Domain\User\Data\ObjectValue\UserId;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ChantierRespository extends ServiceEntityRepository implements ChantierRepositoryInterface
 {
     public function __construct(
-        private readonly ManagerRegistry $registry
+        private readonly ManagerRegistry $registry,
+        private readonly TranslatorInterface $translator,
     )
     {
         parent::__construct($registry, Chantier::class);
@@ -71,6 +73,13 @@ class ChantierRespository extends ServiceEntityRepository implements ChantierRep
 
     public function save(Chantier $chantier): Chantier
     {
+        $exists = $this->isAlredyExists($chantier);
+        if ($exists) {
+            throw new \Exception($this->translator->trans('chantiers.messages.error_alredy_exist', [
+                '%name%' => $chantier->name
+            ]));
+        }
+
         $em = $this->getEntityManager();
 
         $em->persist($chantier);
@@ -80,6 +89,14 @@ class ChantierRespository extends ServiceEntityRepository implements ChantierRep
 
     public function update(Chantier $chantier): Chantier
     {
+        $exists = $this->isAlredyExists($chantier);
+
+        if ($exists && $exists[0]->user->id == $chantier->user->id) {
+            throw new \Exception($this->translator->trans('chantiers.messages.error_alredy_exist', [
+                '%name%' => $chantier->name
+            ]));
+        }
+
         $em = $this->getEntityManager();
         
         $em->persist($chantier);
@@ -92,6 +109,14 @@ class ChantierRespository extends ServiceEntityRepository implements ChantierRep
         $em = $this->getEntityManager();
         $em->remove($chantier);
         $em->flush();
+    }
+
+    private function isAlredyExists(Chantier $chantier): array
+    {
+        return $this->findByCriteria([
+            'name' => $chantier->name,
+            'user' => $chantier->user
+        ]);
     }
 
 }
