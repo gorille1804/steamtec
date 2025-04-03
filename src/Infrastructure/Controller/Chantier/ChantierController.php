@@ -82,10 +82,15 @@ class ChantierController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var SymfonyUserAdapter $user  */
             $user = $this->getUser();
-            $this->createChantierUseCase->__invoke($createChantierRequest, $user->getUser());
-
-            $this->addFlash('success', $this->translator->trans('chantiers.messages.create_succes'));
-            return $this->redirectToRoute('app_chantiers');
+            try {
+                $this->createChantierUseCase->__invoke($createChantierRequest, $user->getUser());
+                $this->addFlash('success', $this->translator->trans('chantiers.messages.create_succes'));
+                return $this->redirectToRoute('app_chantiers');
+            } catch (\Throwable $th) {
+                $this->addFlash('error', $th->getMessage());
+                //redirect back
+                return $this->redirectToRoute('app_chantier_create');
+            }
         }
         return $this->render('admin/chantier/create_update.html.twig', [
             'form' => $form->createView(),
@@ -114,9 +119,15 @@ class ChantierController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $this->updateChantierUseCase->__invoke($updateRequest, $chantier);
-            $this->addFlash('success', $this->translator->trans('chantiers.messages.update_succes'));
-            return $this->redirectToRoute('app_chantiers');
+            try {
+                $this->updateChantierUseCase->__invoke($updateRequest, $chantier);
+                $this->addFlash('success', $this->translator->trans('chantiers.messages.update_succes'));
+                return $this->redirectToRoute('app_chantiers');
+            } catch (\Throwable $th) {
+                $this->addFlash('error', $th->getMessage());
+                //redirect back
+                return $this->redirectToRoute('app_chantier_edit', ['chantier' => $chantier->id]);
+            }
         }
 
         return $this->render('admin/chantier/create_update.html.twig', [

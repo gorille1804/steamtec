@@ -3,6 +3,12 @@
 
 {% block content %}
     <div class="row flex-grow">
+        <div class="col-md-12">
+            {% 
+                include "components/shared/_alert.html.twig" 
+                with { 'success_messages': app.flashes('success'), 'errors_messages': app.flashes('error') } 
+            %}
+        </div>
         <div class="col-12 grid-margin stretch-card">
             <div class="card card-rounded">
                 <div class="card-body">
