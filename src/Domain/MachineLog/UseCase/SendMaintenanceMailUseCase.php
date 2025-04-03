@@ -21,6 +21,10 @@ class SendMaintenanceMailUseCase implements SendMaintenanceMailUseCaseInteface
         $user = $parcMachine->getUser();
         $machine = $parcMachine->getMachine();
         
+        $subject = $this->translator->trans('chantiers.maintenance_notification_mail.subject', [
+            '%machine_name%' => strtoupper($machine->getNom()).' '.strtoupper($machine->getNumeroIdentification()),
+        ]);
+
         $this->emailService->sendEmail(
         'email/parcmachine/maintenance.html.twig',
         [
@@ -28,9 +32,9 @@ class SendMaintenanceMailUseCase implements SendMaintenanceMailUseCaseInteface
             'machine' => $machine,
             'content' => $content,
         ],
-        $this->translator->trans('chantiers.maintenance_notification_mail.subject'),
+        $subject,
         $this->noReplyEmail,
-        [ $user->getEmail()],
+        [$user->getEmail()],
         [],
         [
             [

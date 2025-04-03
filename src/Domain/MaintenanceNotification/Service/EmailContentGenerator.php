@@ -13,28 +13,21 @@ class EmailContentGenerator
      * @param array $hoursRanges
      * @return string
      */
-    public function generateMaintenanceEmailContent(MaintenanceNotificationModel $notification, array $hoursRanges): string
+    public function generateMaintenanceEmailContent(MaintenanceNotificationModel $notification, array $hoursRanges  = []): string
     {
-        $machineInfo = $notification->machine->machine->nom . ' (ID : ' . $notification->machine->machine->numeroIdentification . ')';
+        $machineName = $notification->machine->machine->nom;
+        $machineId = $notification->machine->machine->numeroIdentification;
         $timeReached = $notification->hours;
-        $rangeDescription = $hoursRanges ? "entre {$hoursRanges['start']} et {$hoursRanges['end']} heures" : "";
-        
+
         return <<<EMAIL
-        Objet : Notification de maintenance - {$machineInfo}
 
-        Cher client,
-
-        Nous vous informons que vous avez atteint un palier d'entretien pour votre machine {$machineInfo}. 
+        Nous vous informons que vous avez atteint un palier d'entretien de {$timeReached} heures pour votre machine {$machineName} (ID : {$machineId}).
         Afin de garantir la continuité de son bon fonctionnement, nous vous invitons à consulter le tableau ci-joint et à prendre les mesures nécessaires.
-
-        Ceci est une notification automatique indiquant que votre machine {$machineInfo} a atteint {$timeReached} heures de fonctionnement et nécessite une maintenance programmée {$rangeDescription}.
-
-        Veuillez contacter notre service après-vente afin de planifier cette maintenance importante.
 
         Nous restons à votre disposition pour toute question ou précision supplémentaire.
 
         Cordialement,  
-        L'équipe de maintenance STEAMTECH
+        L'équipe ENTECH
         EMAIL;
     }
 }
