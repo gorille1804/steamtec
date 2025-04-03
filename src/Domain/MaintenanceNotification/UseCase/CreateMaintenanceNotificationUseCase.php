@@ -27,11 +27,10 @@ class CreateMaintenanceNotificationUseCase implements CreateMaintenanceNotificat
             $request->hours <= ConstantMaintenanceNotification::MAXIMAL_HOURS
         ) {
             $notification = MaintenanceNotificationFactory::make($request);
-            $hoursRanges = $this->repository->findHourRange($request->hours);
             $notification =  $this->repository->create($notification);
 
             //send notification to the machine
-            $content = $this->emailContentGenerator->generateMaintenanceEmailContent($notification, $hoursRanges);
+            $content = $this->emailContentGenerator->generateMaintenanceEmailContent($notification);
             $this->sendMaintenanceMailUseCase->__invoke($request->machine, $content);
         }
     }
