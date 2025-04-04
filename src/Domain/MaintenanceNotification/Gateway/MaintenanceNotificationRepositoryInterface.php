@@ -15,4 +15,5 @@ interface MaintenanceNotificationRepositoryInterface
     public function findHourRange(int $hours): ?array; 
     public function findHourTimelyRange(int $hours): ?array; 
     public function findByHourRange(int $hours, ParcMachineId $machineId): ?array;
+    public function findByHourTimelyRange(int $hours, ParcMachineId $machineId): ?MaintenanceNotification;
 }

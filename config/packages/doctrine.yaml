@@ -23,6 +23,7 @@ doctrine:
             faqId: Infrastructure\Database\FieldType\FaqIdType
             maintenanceNotificationId: Infrastructure\Database\FieldType\MaintenanceNotificationIdType
             enumMaintenanceNotification: Infrastructure\Database\FieldType\EnumMaintenanceNotificationType
+            pushNotificationId: Infrastructure\Database\FieldType\PushNotificationIdType
     orm:
         auto_generate_proxy_classes: true
         default_entity_manager: default
@@ -40,6 +41,7 @@ doctrine:
                     datetime_functions:
                         date_format: DoctrineExtensions\Query\Mysql\DateFormat
                         date: DoctrineExtensions\Query\Mysql\Date
+                        TIMESTAMPDIFF: DoctrineExtensions\Query\Mysql\TimestampDiff
                 
 when@test:
     doctrine:

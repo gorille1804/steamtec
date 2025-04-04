@@ -86,6 +86,27 @@ class MaintenanceNotificationRepository extends ServiceEntityRepository implemen
         return $query->getQuery()->getResult();
     }
 
+    public function findByHourTimelyRange(int $hours, ParcMachineId $machineId): ?MaintenanceNotification
+{
+    $qb = $this->createQueryBuilder('mn')
+        ->join('mn.machine', 'm')
+        ->where('m.id = :machineId')
+        ->setParameter('machineId', $machineId->getValue());
+
+    $conditions = [];
+    foreach (ConstantMaintenanceNotification::TIMELY_MAINTENANCE_RANGES as $index => $range) {
+        // Utilisez directement la fonction TIMESTAMPDIFF enregistrée, sans le mot-clé FUNCTION
+        $conditions[] = "TIMESTAMPDIFF(HOUR, m.createdAt, mn.createdAt) BETWEEN :start{$index} AND :end{$index}";
+        $qb->setParameter("start{$index}", $range['start']);
+        $qb->setParameter("end{$index}", $range['end']);
+    }
+
+    if (!empty($conditions)) {
+        $qb->andWhere(implode(' OR ', $conditions));
+    }
+
+    return $qb->getQuery()->getOneOrNullResult();
+}
     /**
      * Creates a query builder for finding maintenance notifications within a specific hour range
      * 
