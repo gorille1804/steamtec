@@ -132,8 +132,8 @@
 							<li class="nav-item  {{ app.request.attributes.get('_route') == 'app_accessoire' ? 'active' : '' }}">
 								<a class="nav-link" href="{{ path('app_accessoire') }}">Accessoires</a>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">Configurations</a>
+							<li class="nav-item {{ app.request.attributes.get('_route') == 'app_configuration' ? 'active' : '' }}">
+								<a class="nav-link" href="{{ path('app_configuration') }}">Configurations</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="#">Utilisateurs</a>
