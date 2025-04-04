@@ -57,3 +57,9 @@ doctrine:
                         dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/MaintenanceNotification'
                         prefix: 'Domain\MaintenanceNotification\Data\Model'
                         alias: MaintenanceNotification
+                    PushNotification:
+                        type: xml
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/PushNotification'
+                        prefix: 'Domain\PushNotification\Data\Model'
+                        alias: PushNotification

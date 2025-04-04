@@ -8,11 +8,11 @@ class MaintenanceCheckerService
 {
       public function maintenanceChecker(ParcMachine $parcMachine): bool
     {
-        $tempUsage = $parcMachine->getTempUsage();
-        $yearsSinceCreation = $parcMachine->getCreatedAt()->diff(new \DateTime())->y;
+        $hoursSinceCreation = (new \DateTime())->diff($parcMachine->getCreatedAt())->h 
+        + (new \DateTime())->diff($parcMachine->getCreatedAt())->days * 24;
 
-        foreach (MaintenanceNotification::MAINTENANCE_THRESHOLDS as $hourThreshold => $yearThreshold) {
-            if ($tempUsage >= $hourThreshold || $yearsSinceCreation >= $yearThreshold) {
+        foreach (MaintenanceNotification::TIMELY_MAINTENANCE_RANGES as $range) {
+            if ($hoursSinceCreation >= $range['start'] && $hoursSinceCreation < $range['end']) {
                 return true;
             }
         }
