@@ -129,8 +129,8 @@
 							<li class="nav-item {{ app.request.attributes.get('_route') == 'app_machine' ? 'active' : '' }}">
 								<a class="nav-link" href="{{ path('app_machine') }}">Machines</a>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">Accessoires</a>
+							<li class="nav-item  {{ app.request.attributes.get('_route') == 'app_accessoire' ? 'active' : '' }}">
+								<a class="nav-link" href="{{ path('app_accessoire') }}">Accessoires</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="#">Configurations</a>
