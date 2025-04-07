@@ -90,7 +90,9 @@
                     <h2 class="fs-32 fw-700 roboto">Groupes électrogènes</h2>
                     <p class="fs-18 fw-400 lh-150 roboto">Nous avons un partenariat avec Benza pour vous proposer des groupes électrogènes adaptés à l’utilisation intensive de votre Steam_Tec en essence ou en Diesel et de différentes puissances.</p>
                 </div>
-                <div class="content-liste"></div>
+                <div class="content-liste">
+                    {% include "client/configuration/products/elegrtogene.html.twig" %}
+                </div>
             </div>
             <div class="tab-pane fade" id="citernes" role="tabpanel" aria-labelledby="link-citernes" tabindex="0">
                 <div class="sm-container text-center">
@@ -119,20 +121,24 @@
                     <h2 class="fs-32 fw-700 roboto">Chassis escamotable</h2>
                     <p class="fs-18 fw-400 lh-150 roboto">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis in itaque distinctio magni quaealias nisi.</p>
                 </div>
-                <div class="content-liste"></div>
+                <div class="content-liste">
+                </div>
             </div>
             <div class="tab-pane fade" id="specifique" role="tabpanel" aria-labelledby="link-specifique" tabindex="0">
              <div class="sm-container text-center">
                     <h2 class="fs-32 fw-700 roboto">Specifique Besoins spécifiques</h2>
                     <p class="fs-18 fw-400 lh-150 roboto">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis in itaque distinctio magni quaealias nisi.</p>
                 </div>
-                <div class="content-liste"></div>
+                <div class="content-liste">
+                     {% include "client/configuration/products/specifique.html.twig" %}
+                </div>                   
             </div>
         </div>
+        <div class="pagination-container pagination my-5" id="pagination"></div>
     </div>
 </div>
 
-<script>
+ <script>
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.config-link-wrapper').forEach(wrapper => {
             wrapper.addEventListener('click', function() {
@@ -150,6 +156,7 @@
             });
             wrapper.style.cursor = 'pointer';
         });
+     
     });
-</script>
+    </script> 
 {% endblock %}
