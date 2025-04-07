@@ -57,25 +57,110 @@
     <script src="{{ asset('assets/js/sweetalert2@11.js') }}"></script>
     <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
     <script>
-            $('.owl-carousel').owlCarousel({
-                    stagePadding: 50,
-                    loop:true,
-                    margin:10,
-                    nav:true,
-                    dot:true,
-                    responsive:{
-                        0:{
-                            items:1
-                        },
-                        600:{
-                            items:3
-                        },
-                        1000:{
-                            items:5
-                        }
-                    }
-                })
+    $(document).ready(function() {
+    $('.content_liste_gamme_caroussel').owlCarousel({
+        stagePadding: 50,
+        loop: true,
+        margin: 10,
+        nav: true,
+        dots: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 5
+            }
+        }
+    });
+
+    $('.content_image_list_accessoire').owlCarousel({
+        loop: true,
+        margin: 0,
+        nav: true,
+        dots: true,  
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 1
+            },
+            1000: {
+                items: 1
+            }
+        }
+    });
+});
+
      </script>
+        <script>
+          // Variables
+          const itemsPerPage = 6;  // Nombre d'éléments par page
+          let currentPage = 1;     // Page actuelle
+          const items = document.querySelectorAll('.content_list_bloc_accessoire li');  // Liste des éléments
+
+          // Calculer le nombre total de pages
+          const totalPages = Math.ceil(items.length / itemsPerPage);
+
+          // Fonction pour afficher les éléments selon la page
+          function displayItems(page) {
+              // Calculer les indices des éléments à afficher pour la page donnée
+              const start = (page - 1) * itemsPerPage;
+              const end = start + itemsPerPage;
+
+              // Cacher tous les éléments
+              items.forEach(item => item.style.display = 'none');
+
+              // Afficher seulement les éléments pour la page actuelle
+              for (let i = start; i < end && i < items.length; i++) {
+                  items[i].style.display = 'block';
+              }
+          }
+
+          // Fonction pour générer les boutons de pagination
+         function generatePagination() {
+    const paginationDiv = document.getElementById('pagination');
+    paginationDiv.innerHTML = ''; // Réinitialiser la pagination
+
+    // Créer les boutons de page
+    for (let i = 1; i <= totalPages; i++) {
+        const button = document.createElement('button');
+        button.innerText = i;
+        button.classList.add('page-button');
+        
+        // Lorsque le bouton est cliqué, on met à jour la page et les boutons
+        button.onclick = function() {
+            currentPage = i;
+            displayItems(currentPage);
+            updatePaginationButtons();
+        };
+        
+        paginationDiv.appendChild(button);
+    }
+
+    // Mettre à jour l'état des boutons (pour que le premier bouton soit actif)
+    updatePaginationButtons();  // Ajouter cette ligne pour activer le premier bouton
+}
+
+          // Fonction pour mettre à jour l'état des boutons de pagination
+         function updatePaginationButtons() {
+    const buttons = document.querySelectorAll('.page-button');
+    buttons.forEach(button => {
+        if (parseInt(button.innerText) === currentPage) {
+            button.classList.add('active');
+        } else {
+            button.classList.remove('active');
+        }
+    });
+}
+          // Initialisation
+          displayItems(currentPage);
+          generatePagination();
+      </script>
     {% block script %}
       {{ encore_entry_script_tags('app') }}
     {% endblock %}

@@ -37014,7 +37014,7 @@ section h3 {
 .content_faire_confiance .content_liste_confiance li {
   margin-bottom: 40px;
   position: relative;
-  padding-top:36px;
+  padding-top: 36px;
 }
 
 .content_faire_confiance .content_liste_confiance .liste_confiance {
@@ -37059,7 +37059,75 @@ section h3 {
   position: absolute;
   border-radius: 100px;
   border: 1px solid #249FA8;
-  color:#fff;
-  left:45%;
-  top:12px;
+  color: #fff;
+  left: 45%;
+  top: 12px;
+}
+
+/*page accessoire*/
+.content_bloc_tab_accessoire {
+  padding: 60px 0;
+}
+
+.content_bloc_tab_accessoire .nav-tabs li a,
+.content_bloc_tab_accessoire .nav-tabs li.nav-item:last-child a,
+.content_bloc_tab_accessoire .nav-tabs li.nav-item:first-child a {
+  padding-top: 12px;
+  padding-right: 24px;
+  padding-bottom: 12px;
+  padding-left: 24px;
+  border-radius: 100px;
+  border: 1px solid #60B454;
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: #60B454;
+  background: #fff;
+}
+
+.content_bloc_tab_accessoire .nav-tabs {
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 40px;
+  border-bottom: 0;
+}
+
+.content_bloc_tab_accessoire .nav-tabs li a.active,
+.content_bloc_tab_accessoire .nav-tabs li.nav-item:first-child a.active,
+.content_bloc_tab_accessoire .nav-tabs li.nav-item:last-child a.active,
+.content_bloc_tab_accessoire .nav-tabs li a:hover,
+.content_bloc_tab_accessoire .nav-tabs li.nav-item:last-child a:hover,
+.content_bloc_tab_accessoire .nav-tabs li.nav-item:first-child a:hover {
+  background: #60B454;
+  border: 1px solid #60B454;
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: #FFFFFF;
+}
+
+.content_bloc_tab_accessoire .tab-content {
+  border: 0;
+}
+
+.content_bloc_tab_accessoire .tab-content h3 {
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 130%;
+  color: #000000;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.content_bloc_tab_accessoire .tab-content .desc {
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 150%;
+  text-align: center;
+  color: #636074;
+  margin-bottom: 24px;
 }
