@@ -1,39 +1,42 @@
-.about{
-    .sub_title{
-        background-color: $primary;
-        font-family: $roboto;
-        h1{
-            color: #fff;
-        }
-        .content{
+.sub_title{
+    background-color: $primary;
+    font-family: $roboto;
+    h1{
+        color: #fff;
+    }
+    .content{
+        display: flex;
+        align-items: center;
+        flex-flow: row wrap;
+        padding: 11px 15px;
+        min-height: 286px;
+        .item{
+            width: 50%;
             display: flex;
             align-items: center;
-            flex-flow: row wrap;
-            .item{
-                width: 50%;
-                display: flex;
-                align-items: center;
-                flex-direction: column;
-                padding: 17px 10px;
-                gap: 24px;
-                color: #fff;
-                @media (max-width:992px) {
-                    width: 100%;
-                }
-                p{
-                    font-size: inherit;
-                    font-weight: inherit;
-                    line-height: 150%;
-                }
-                .title_logo{
-                    img{
-                        max-height:170px;
-                        max-width: 100%;
-                    }
+            flex-direction: column;
+            padding: 17px 10px;
+            gap: 24px;
+            color: #fff;
+            @media (max-width:992px) {
+                width: 100%;
+            }
+            p{
+                font-size: inherit;
+                font-weight: inherit;
+                line-height: 150%;
+            }
+            .title_logo{
+                img{
+                    max-height:170px;
+                    max-width: 100%;
                 }
             }
         }
     }
+}
+.about{
+   
     .video{
         .video-container {
             position: relative;
@@ -89,22 +92,7 @@
         }
     }
 }
-.btn-theme{
-    border-radius: 64px;
-    padding: 8px 24px;
-    border: 1px solid $theme;
-    font-family: "Roboto";
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 24px;
-    color: $theme;
-    margin-bottom: 16px;
-    transition: .3s;
-    &:hover{
-        background-color: $theme;
-        color: #fff;
-    }
-}
+
 .customers{
     font-family: "Roboto";
     .card{
