@@ -1,0 +1,162 @@
+{% extends "layout/frontend.layout.html.twig" %}
+
+{% block title %}Configuration{% endblock %}
+
+{% block content %}  
+    <div class="configuration">
+    <div class="bg">
+        <div class="container">
+            <div class="sub_title">
+                <div class="container content">
+                    <div class="item">
+                        <div class="title_logo">
+                        <img src="{{ asset('assets/images/configuration.png') }}" alt="Nos locaux" class="img-fluid rounded">
+                        </div>
+                        <h1 class="fs-40">Configuration</h1>
+                    </div>
+                    <div class="item fs-18 fw-600 align-items-start">
+                        <p>Chaque utilisateur est unique, c'est pourquoi nous vous proposons une multitude de
+                        configurations évolutives pour être au plus proche de vos besoins et de votre utilisation future.</p>
+                        <button class="btn-theme-primary btn icone">
+                            <span class="icon">
+                                <svg style="margin-top:-4px" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16.5 11.1656V14.499C16.5 14.941 16.3244 15.3649 16.0118 15.6775C15.6993 15.9901 15.2754 16.1656 14.8333 16.1656H3.16667C2.72464 16.1656 2.30072 15.9901 1.98816 15.6775C1.67559 15.3649 1.5 14.941 1.5 14.499V11.1656M4.83333 6.99898L9 11.1656M9 11.1656L13.1667 6.99898M9 11.1656V1.16565" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            Télécharger la brochure commerciale</button>
+                    </div>
+                </div>
+            </div>
+            <div class="sub_title_content p-4 bg-white">
+                <div class="container d-flex gap-4 align-items-center">
+                    <h2 class="fs-24 fw-700 roboto">
+                        Les questions à se poser pour définir une configuration
+                    </h2>
+                    <ul class="config_lik_group">
+                        <li>
+                            <div class="config-link-wrapper" data-target="#groupes-el">
+                                <strong>Besoin d'autonomie ? <span class="icon_arrow"></span></strong>
+                                <p>Nous vous proposons des groupes électrogènes et des citernes</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="config-link-wrapper" data-target="#montage-roues">
+                                <strong>Besoin de mobilité et de disponibilité du véhicule ? <span class="icon_arrow"></span></strong>
+                                <p>Nous vous proposons des montages sur roues, sur remorques</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="config-link-wrapper" data-target="#montage-remorque">
+                                <strong>Besoin de maniabilité seul ? <span class="icon_arrow"></span></strong>
+                                <p>Nous vous proposons des montages sur remorques, sur châssis escamotable</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="config-link-wrapper" data-target="#specifique">
+                                <strong>Un besoin spécifique ? <span class="icon_arrow"></span></strong>
+                                <p>Nous consulter pour l'étudier, exemples de montages particuliers</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container header-navigations">
+        <ul class="nav nav-pills nav-fill border-bottom-0" id="tab-nav" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active btn btn-theme" id="link-groupes-el" data-bs-toggle="tab" data-bs-target="#groupes-el" type="button" role="tab" aria-controls="groupes-el" aria-selected="true">Groupes électrogènes</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link btn btn-theme"  id="link-citernes" data-bs-toggle="tab" data-bs-target="#citernes" type="button" role="tab" aria-controls="citernes" aria-selected="false">Citernes, cuves à eau</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link btn btn-theme" id="link-montage-roues" data-bs-toggle="tab" data-bs-target="#montage-roues" type="button" role="tab" aria-controls="montage-roues" aria-selected="false">Montages sur roues</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link btn btn-theme" id="link-montage-remorque" data-bs-toggle="tab" data-bs-target="#montage-remorque" type="button" role="tab" aria-controls="montage-remorque" aria-selected="false">Montages sur remorque</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link btn btn-theme" id="link-chassis" data-bs-toggle="tab" data-bs-target="#chassis" type="button" role="tab" aria-controls="chassis" aria-selected="false">Chassis escamotable</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link btn btn-theme" id="link-specifique" data-bs-toggle="tab" data-bs-target="#specifique" type="button" role="tab" aria-controls="specifique" aria-selected="false">Besoins spécifiques</button>
+            </li>
+        </ul>
+        <div class="tab-content border-0" id="myTabContent">
+          
+            <div class="tab-pane fade show active" id="groupes-el" role="tabpanel" aria-labelledby="link-groupes-el" tabindex="0">
+                <div class="sm-container text-center">
+                    <h2 class="fs-32 fw-700 roboto">Groupes électrogènes</h2>
+                    <p class="fs-18 fw-400 lh-150 roboto">Nous avons un partenariat avec Benza pour vous proposer des groupes électrogènes adaptés à l’utilisation intensive de votre Steam_Tec en essence ou en Diesel et de différentes puissances.</p>
+                </div>
+                <div class="content-liste">
+                    {% include "client/configuration/products/elegrtogene.html.twig" %}
+                </div>
+            </div>
+            <div class="tab-pane fade" id="citernes" role="tabpanel" aria-labelledby="link-citernes" tabindex="0">
+                <div class="sm-container text-center">
+                    <h2 class="fs-32 fw-700 roboto">Citernes, cuves à eau</h2>
+                    <p class="fs-18 fw-400 lh-150 roboto">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis in itaque distinctio magni quaealias nisi.</p>
+                </div>
+                <div class="content-liste"></div>
+            </div>
+            <div class="tab-pane fade" id="montage-roues" role="tabpanel" aria-labelledby="link-montage-roues" tabindex="0">
+                <div class="sm-container text-center">
+                    <h2 class="fs-32 fw-700 roboto">Montages sur roues</h2>
+                    <p class="fs-18 fw-400 lh-150 roboto">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis in itaque distinctio magni quaealias nisi.</p>
+                </div>
+                <div class="content-liste"></div>
+            </div>
+            <div class="tab-pane fade" id="montage-remorque" role="tabpanel" aria-labelledby="link-montage-remorque" tabindex="0">
+                <div class="sm-container text-center">
+                    <h2 class="fs-32 fw-700 roboto">Montages sur remorque</h2>
+                    <p class="fs-18 fw-400 lh-150 roboto">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis in itaque distinctio magni quaealias nisi.</p>
+                </div>
+                <div class="content-liste"></div>
+            </div>
+            <div class="tab-pane fade" id="chassis" role="tabpanel" aria-labelledby="link-chassis" tabindex="0">
+                
+                <div class="sm-container text-center">
+                    <h2 class="fs-32 fw-700 roboto">Chassis escamotable</h2>
+                    <p class="fs-18 fw-400 lh-150 roboto">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis in itaque distinctio magni quaealias nisi.</p>
+                </div>
+                <div class="content-liste">
+                </div>
+            </div>
+            <div class="tab-pane fade" id="specifique" role="tabpanel" aria-labelledby="link-specifique" tabindex="0">
+             <div class="sm-container text-center">
+                    <h2 class="fs-32 fw-700 roboto">Specifique Besoins spécifiques</h2>
+                    <p class="fs-18 fw-400 lh-150 roboto">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis in itaque distinctio magni quaealias nisi.</p>
+                </div>
+                <div class="content-liste">
+                     {% include "client/configuration/products/specifique.html.twig" %}
+                </div>                   
+            </div>
+        </div>
+        <div class="pagination-container pagination my-5" id="pagination"></div>
+    </div>
+</div>
+
+ <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.config-link-wrapper').forEach(wrapper => {
+            wrapper.addEventListener('click', function() {
+                // Récupérer l'ID cible
+                const targetId = this.getAttribute('data-target');
+                const correspondingButton = document.querySelector(`button[data-bs-target="${targetId}"]`);
+                if (correspondingButton) {
+                    correspondingButton.click();
+                    setTimeout(() => {
+                        document.querySelector('.header-navigations').scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }, 50);
+                }
+            });
+            wrapper.style.cursor = 'pointer';
+        });
+     
+    });
+    </script> 
+{% endblock %}

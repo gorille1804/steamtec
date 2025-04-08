@@ -1,0 +1,32 @@
+.card-liste-primary{
+    .content{
+        background-color: $theme;
+        border-radius: 24px;
+        font-weight: 500;
+        font-family: "Roboto";
+       p{
+        padding: 2rem;
+        color: #fff;
+        text-align: center;
+        line-height: 150%;  
+        font-size: 18px;
+       }  
+    }
+}
+.bg-light{
+    background-color: $bg-light!important;
+}
+.utilisateur{
+    .client{
+        content: "";
+        padding: 2.7rem 1rem 0;
+        h2{
+            margin-bottom: 32px;
+        }
+    }
+}
+.img_epingle{
+    display: flex;
+    gap: 15px;
+    max-width: 48%;
+}

@@ -132,11 +132,11 @@
 							<li class="nav-item  {{ app.request.attributes.get('_route') == 'app_accessoire' ? 'active' : '' }}">
 								<a class="nav-link" href="{{ path('app_accessoire') }}">Accessoires</a>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">Configurations</a>
+							<li class="nav-item {{ app.request.attributes.get('_route') == 'app_configuration' ? 'active' : '' }}">
+								<a class="nav-link" href="{{ path('app_configuration') }}">Configurations</a>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">Utilisateurs</a>
+							<li class="nav-item {{ app.request.attributes.get('_route') == 'app_utilisateur_index' ? 'active' : '' }}">
+								<a class="nav-link" href="{{ path('app_utilisateur') }}">Utilisateurs</a>
 							</li>
 							<li class="nav-item {{ app.request.attributes.get('_route') == 'app_about' ? 'active' : '' }}">
 								<a class="nav-link" href="{{ path('app_about') }}">À propos de nous</a>

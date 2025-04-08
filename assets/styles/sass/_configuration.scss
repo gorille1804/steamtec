@@ -1,0 +1,107 @@
+.sub_title_content{
+    h2{
+        max-width: 309px;
+        line-height: 140%;
+    }
+    .config_lik_group{
+        li{
+            list-style: none;
+            
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 150%;
+            color: #636074;
+            margin-bottom: 15px;
+            position: relative;
+            width:100%;
+            .config-link-wrapper{
+                display: flex;
+                flex-flow: row wrap;
+                width: 100%;
+            }
+            strong{
+                font-weight: 700;
+                color: black;
+                position: relative;
+                padding-right: 32px;
+            }
+        }
+    }
+}
+.position-absolute-no-visible-click-content{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+}
+.icon_arrow {
+    position: absolute;
+    display: block;
+    right: 3px;
+    width: 25px;
+    height: 25px;
+    bottom: 4px;
+    background: url('~@images/right_arrow.svg') no-repeat center;
+    background-size: contain;
+}
+.configuration{
+    .bg{
+        background: url('~@images/attachment.jpeg') no-repeat center;
+        height: 90vh;
+        width: 100%;
+        padding: 2rem 1rem;
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        margin-bottom: 60px;
+    }
+
+}
+.header-navigations{
+    p{
+        color: #636074;
+    }
+    .nav-item{
+        .btn-theme{
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 150%;
+            padding: 11px 5px;
+            border-radius: 48px;
+            border-color: $theme;
+            &:focus{
+                outline: none;
+                color: $theme;
+            }
+            &.active,
+            &:hover{
+                background-color: $theme;
+                color: white;
+            }
+        }
+    }
+    .sm-container{
+        margin-bottom: 30px;
+    }
+   
+}
+.sm-container{
+    max-width: 1024px;
+    width:100%;
+    margin: auto;
+    padding: 0 15px;
+}
+.navbar{
+    .active a {
+        color: #60B454;
+        font-weight: 700;
+    }
+    a:hover{
+        color: #60B454;
+    }
+}
+
