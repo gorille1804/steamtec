@@ -77,7 +77,7 @@
         }
     });
 
-    $('.content_image_list_accessoire').owlCarousel({
+    $('.content_image_list_accessoire,.content_image_list_accessoire_tab2,.content_image_list_accessoire_tab3,.content_image_list_accessoire_tab4').owlCarousel({
         loop: true,
         margin: 0,
         nav: true,
@@ -95,72 +95,90 @@
         }
     });
 });
+</script>
+ <script>
+ // Fonction pour gérer la pagination pour chaque tabulation
+function setupPagination(tabId, itemsPerPage) {
+    const items = document.querySelectorAll(`#${tabId} ul li`);  // Liste des éléments dans la tab
+    const paginationDiv = document.querySelector(`#${tabId} .pagination`);  // Div de pagination pour la tab
+    const totalPages = Math.ceil(items.length / itemsPerPage); // Calculer le nombre total de pages
 
-     </script>
-        <script>
-          // Variables
-          const itemsPerPage = 6;  // Nombre d'éléments par page
-          let currentPage = 1;     // Page actuelle
-          const items = document.querySelectorAll('.content_list_bloc_accessoire li');  // Liste des éléments
+    let currentPage = 1;  // Page actuelle
 
-          // Calculer le nombre total de pages
-          const totalPages = Math.ceil(items.length / itemsPerPage);
+    // Fonction pour afficher les éléments selon la page
+    function displayItems(page) {
+        const start = (page - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
 
-          // Fonction pour afficher les éléments selon la page
-          function displayItems(page) {
-              // Calculer les indices des éléments à afficher pour la page donnée
-              const start = (page - 1) * itemsPerPage;
-              const end = start + itemsPerPage;
+        // Cacher tous les éléments
+        items.forEach(item => item.style.display = 'none');
 
-              // Cacher tous les éléments
-              items.forEach(item => item.style.display = 'none');
-
-              // Afficher seulement les éléments pour la page actuelle
-              for (let i = start; i < end && i < items.length; i++) {
-                  items[i].style.display = 'block';
-              }
-          }
-
-          // Fonction pour générer les boutons de pagination
-         function generatePagination() {
-    const paginationDiv = document.getElementById('pagination');
-    paginationDiv.innerHTML = ''; // Réinitialiser la pagination
-
-    // Créer les boutons de page
-    for (let i = 1; i <= totalPages; i++) {
-        const button = document.createElement('button');
-        button.innerText = i;
-        button.classList.add('page-button');
-        
-        // Lorsque le bouton est cliqué, on met à jour la page et les boutons
-        button.onclick = function() {
-            currentPage = i;
-            displayItems(currentPage);
-            updatePaginationButtons();
-        };
-        
-        paginationDiv.appendChild(button);
+        // Afficher seulement les éléments pour la page actuelle
+        for (let i = start; i < end && i < items.length; i++) {
+            items[i].style.display = 'block';
+        }
     }
 
-    // Mettre à jour l'état des boutons (pour que le premier bouton soit actif)
-    updatePaginationButtons();  // Ajouter cette ligne pour activer le premier bouton
+    // Fonction pour générer les boutons de pagination
+    function generatePagination() {
+        paginationDiv.innerHTML = ''; // Réinitialiser la pagination
+
+        // Si il y a plus d'une page, créer les boutons
+        if (totalPages > 1) {
+            // Créer les boutons de page
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.innerText = i;
+                button.classList.add('page-button');
+
+                // Lorsque le bouton est cliqué, on met à jour la page et les éléments
+                button.onclick = function() {
+                    currentPage = i;
+                    displayItems(currentPage);
+                    updatePaginationButtons();
+                };
+
+                paginationDiv.appendChild(button);
+            }
+        }
+        // Mettre à jour l'état des boutons (pour que le premier bouton soit actif)
+        updatePaginationButtons();
+    }
+
+    // Fonction pour mettre à jour l'état des boutons de pagination
+    function updatePaginationButtons() {
+        const buttons = document.querySelectorAll(`#${tabId} .page-button`);
+        buttons.forEach(button => {
+            if (parseInt(button.innerText) === currentPage) {
+                button.classList.add('active');
+            } else {
+                button.classList.remove('active');
+            }
+        });
+    }
+
+    // Initialisation
+    displayItems(currentPage);
+    generatePagination();
 }
 
-          // Fonction pour mettre à jour l'état des boutons de pagination
-         function updatePaginationButtons() {
-    const buttons = document.querySelectorAll('.page-button');
-    buttons.forEach(button => {
-        if (parseInt(button.innerText) === currentPage) {
-            button.classList.add('active');
-        } else {
-            button.classList.remove('active');
-        }
-    });
+// Fonction d'initialisation pour toutes les tabulations
+function initPagination() {
+    // Appel de la fonction pour chaque tabulation
+    setupPagination('accessoire-nettoyage', 6);  // Tab 1 avec 6 éléments par page
+    setupPagination('accessoire-desherbage', 6);  // Tab 2 avec 6 éléments par page
+     setupPagination('flexible-enrouler', 6);  // Tab 3 avec 6 éléments par page
+      setupPagination('equipement-specifique', 6);  // Tab 4 avec 6 éléments par page
+    // Ajouter plus de tabulations ici si nécessaire, par exemple :
+    // setupPagination('tab3', 6);
 }
-          // Initialisation
-          displayItems(currentPage);
-          generatePagination();
-      </script>
+
+// Lancer l'initialisation au chargement de la page
+initPagination();
+
+</script>
+
+       
     {% block script %}
       {{ encore_entry_script_tags('app') }}
     {% endblock %}
