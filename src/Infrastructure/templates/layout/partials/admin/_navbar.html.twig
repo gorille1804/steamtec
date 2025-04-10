@@ -20,6 +20,15 @@
             </li>
           </ul>
           <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown me-3" id="notification-container" style="position: relative;">
+              <a class="nav-link" href="#" id="notification-btn" role="button">
+                <i class="mdi mdi-bell-outline mdi-24px"></i>
+                <span class="badge bg-danger" id="notification-count" style="position: absolute; top: 0; right: 0; font-size: 0.6rem; padding: 0.25em 0.4em; display: none;">0</span>
+              </a>
+              <div id="notification-list" class="dropdown-menu dropdown-menu-right navbar-dropdown" style="display: none; max-height: 300px; overflow-y: auto; width: 300px;">
+                <p class="dropdown-item text-center">Chargement...</p>
+              </div>
+            </li>
             <li class="nav-item dropdown d-none d-lg-block user-dropdown">
               <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="img-md rounded-circle d-flex align-items-center justify-content-center bg-primary text-white fw-bold" style="width: 35px; height: 35px;">
@@ -43,3 +52,216 @@
             <span class="mdi mdi-menu"></span>
           </button>
         </div>
+            <!-- Modal -->
+          <div class="modal fade" id="notificationModal"  aria-labelledby="notificationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="notificationModalLabel">Détails de la notification</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <div class="modal-body" id="notification-modal-body">
+                  <!-- Contenu injecté dynamiquement ici -->
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+              </div>
+            </div>
+          </div>
+  {% block script %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const btn = document.getElementById('notification-btn');
+    const list = document.getElementById('notification-list');
+    const countSpan = document.getElementById('notification-count');
+    let notifications = [];
+
+    // Charger les notifications dès le chargement de la page
+    fetch('{{ path('app_push_notification') }}')
+      .then(res => res.json())
+      .then(data => {
+        notifications = data;
+        updateUnreadCount();
+
+        if (notifications.length === 0) {
+          countSpan.style.display = 'none';
+          list.innerHTML = '<p class="dropdown-item text-center">Aucune notification</p>';
+        } else {
+          list.innerHTML = notifications.map(n => `
+            <div class="dropdown-item d-flex justify-content-between align-items-start notification-item ${n.status ? '' : 'unread'}" data-id="${n.id.value}" style="cursor: pointer;">
+              <div class="flex-grow-1">
+                <strong>${n.type}</strong><br/>
+                ${n.message}<br/>
+                <small class="text-muted">${new Date(n.createdAt).toLocaleString()}</small>
+              </div>
+              <div class="dropdown ms-2">
+                <button class="btn btn-sm btn-light btn-dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="mdi mdi-dots-vertical"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <a class="dropdown-item update-notif" href="#" data-id="${n.id.value}">
+                      ${n.status ? 'Marquer comme non lue' : 'Marquer comme lue'}
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item text-danger delete-notif" href="#" data-id="${n.id.value}">
+                      Supprimer
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          `).join('');
+
+          // === Action: Afficher les détails d'une notification
+          document.querySelectorAll('.notification-item').forEach(item => {
+            item.addEventListener('click', function () {
+              const id = this.dataset.id;
+              const notif = notifications.find(n => n.id.value === id);
+
+              if (notif && notif.status === false) {
+              // Mise à jour du statut (marquer comme lue)
+              fetch(`/dashboard/pushNotifications/${id}/update`, {
+                method: 'POST',
+                headers: {
+                  'X-Requested-With': 'XMLHttpRequest',
+                  'Content-Type': 'application/json',
+                },
+              })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error("Erreur lors de la mise à jour du statut");
+                }
+                const notifItem = this.closest('.notification-item');
+                notifItem.classList.remove('unread');
+                // Mise à jour dans le tableau JS
+                const notif = notifications.find(n => n.id.value === id);
+                if (notif) notif.status = true;
+                updateUnreadCount();
+              })
+              .catch(err => console.error(err));
+              }
+              // Affichage de la modale
+              const modalBody = document.getElementById('notification-modal-body');
+              const content = `
+                <p><strong>Type :</strong> ${notif.type}</p>
+                <p><strong>Message :</strong> ${notif.message}</p>
+                <p><strong>Date :</strong> ${new Date(notif.createdAt).toLocaleString()}</p>
+                <p><strong>Document :</strong></p>
+                <a href="/uploads/maintenance_machine/ELEC_ENTRETIEN_REGULIER_PONCTUEL.pdf" class="btn btn-primary mt-2" target="_blank">Télécharger le PDF</a>
+              `;
+
+              modalBody.innerHTML = content;
+
+              const modal = new bootstrap.Modal(document.getElementById('notificationModal'));
+              modal.show();
+            });
+          });
+
+          // === Action: Supprimer une notification
+          document.querySelectorAll('.delete-notif').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+              e.stopPropagation();
+              e.preventDefault();
+              const id = this.dataset.id;
+
+              fetch(`/dashboard/pushNotifications/${id}/delete`, {
+                  method: 'POST',
+                  headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                  }
+                })
+                .then(res => {
+                  if (!res.ok) {
+                    throw new Error('Erreur lors de la suppression');
+                  }
+
+                  // Supprime l'élément du DOM
+                  const item = this.closest('.notification-item');
+                  if (item) item.remove();
+
+                  // Supprime du tableau notifications
+                  const index = notifications.findIndex(n => n.id.value === id);
+                  if (index !== -1) notifications.splice(index, 1);
+
+                  updateUnreadCount();
+                })
+                .catch(err => {
+                  console.error(err);
+                  alert("Échec de la suppression");
+                });
+            });
+          });
+
+          // === Action: Marquer comme lue / non lue
+          document.querySelectorAll('.update-notif').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+              e.stopPropagation();
+              e.preventDefault();
+              const id = this.dataset.id;
+
+              const notif = notifications.find(n => n.id.value === id);
+              if (!notif) return;
+
+              // Inverse le statut
+              const newStatus = !notif.status;
+
+              fetch(`/dashboard/pushNotifications/${id}/update`, {
+                method: 'POST',
+                headers: {
+                  'X-Requested-With': 'XMLHttpRequest',
+                  'Content-Type': 'application/json',
+                },
+              })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error("Erreur lors de la mise à jour du statut");
+                }
+
+                notif.status = newStatus;
+                updateUnreadCount();
+                const notifItem = this.closest('.notification-item');
+                if (notifItem) {
+                  if (newStatus) {
+                    notifItem.classList.remove('unread'); // déjà lue
+                  } else {
+                    notifItem.classList.add('unread'); // pas encore lue
+                  }
+                }
+                // Met à jour le texte du bouton
+                this.textContent = newStatus ? "Marquer comme non lue" : "Marquer comme lue";
+              })
+              .catch(err => console.error(err));
+            });
+          });
+
+          // Évite que le clic sur les 3 points ouvre la modale
+          document.querySelectorAll('.btn-dropdown').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+              e.stopPropagation();
+            });
+          });
+        }
+      })
+      .catch(err => {
+        console.error('Erreur lors de la récupération des notifications:', err);
+        list.innerHTML = '<p class="dropdown-item text-center text-danger">Erreur de chargement</p>';
+      });
+
+    // Afficher ou masquer la liste
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      list.style.display = (list.style.display === 'none' || list.style.display === '') ? 'block' : 'none';
+    });
+
+    // Mise à jour du compteur
+    function updateUnreadCount() {
+      const unreadCount = notifications.filter(n => n.status === false).length;
+      countSpan.textContent = unreadCount;
+      countSpan.style.display = unreadCount > 0 ? 'inline-block' : 'none';
+    }
+  });
+</script>
+{% endblock %}
