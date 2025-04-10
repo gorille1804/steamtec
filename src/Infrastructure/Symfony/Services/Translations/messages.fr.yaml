@@ -49,6 +49,10 @@ parc_machines:
         delete_succes: "Machine supprimé avec succès"
         delete_error: "Erreur lors de la suppression de la machine"
 
+push_notifications:
+    message:
+        delete_succes: "Notification supprimé avec succès"
+        delete_error: "Erreur lors de la suppression de la notification"
 
 chantiers:
     index:
