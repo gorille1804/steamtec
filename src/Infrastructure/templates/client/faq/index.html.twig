@@ -1,0 +1,76 @@
+{% extends "layout/frontend.layout.html.twig" %}
+{% block content %}
+	<div class="content_page_faq content_faq" id="faq-section">
+		<div class="container">
+			<h2 class="titre_page_faq">Foire Aux Questions</h2>
+			<div
+				class="accordion" id="faqAccordion">
+				<!-- Premier item ouvert par défaut -->
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="heading1">
+						<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+							Quel matériel professionnel proposez vous?
+						</button>
+					</h2>
+					<div id="collapse1" class="accordion-collapse collapse show" aria-labelledby="heading1" data-bs-parent="#faqAccordion">
+						<div class="accordion-body">
+							Nous proposons des solutions de nettoyage à vapeur basse pression et de désherbage à eau chaude. Nos machines sont conçues pour être efficaces et respectueuses de l'environnement. Contactez-nous pour plus de détails sur nos services.
+						</div>
+					</div>
+				</div>
+
+				<!-- Autres items -->
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="heading2">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+							comment fonctionne le désherbage ?
+						</button>
+					</h2>
+					<div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#faqAccordion">
+						<div class="accordion-body">
+							Le desherbage eau chaude à 150° C provoque la dilatation de l'eau contenue dans les cellules des plantes jusqu’à en provoquer leurs éclatement. De plus, au-delà de 80 °C les protéines chlorophylliennes contenues dans les plantes coagulent et tout le processus de photosynthèse est stoppé.
+						</div>
+					</div>
+				</div>
+
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="heading3">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+							Qu'est ce qui rend la solution écologique?
+						</button>
+					</h2>
+					<div id="collapse3" class="accordion-collapse collapse" aria-labelledby="heading3" data-bs-parent="#faqAccordion">
+						<div class="accordion-body">
+							Sans produit chimique, faible consommation en eau et préservation du support donc  rénovation retardée.
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="heading4">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+							Comment adapter votre solution?
+						</button>
+					</h2>
+					<div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#faqAccordion">
+						<div class="accordion-body">
+							Chaque client est unique et  nous nous efforçons de proposer des configuration "sur mesure"; contactez nous!
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="heading5">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+							Où êtes-vous situés ?
+						</button>
+					</h2>
+					<div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#faqAccordion">
+						<div class="accordion-body">
+							Notre atelier est à Bulgnéville dans les Vosges, nous sommes, depuis plus de 20 ans, les seuls fabricants Français de cette solution.
+						</div>
+					</div>
+				</div>
+				<div class="pagination mt-3 text-center"></div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
