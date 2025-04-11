@@ -1,0 +1,63 @@
+body {
+    .navbar .navbar-menu-wrapper .navbar-nav .nav-item.dropdown .navbar-dropdown#notification-list{
+        top: 46px;
+        max-width:450px;
+        width:450px;
+        max-height: 75vh;
+        overflow: auto;
+        .dropdown-item {
+            margin-bottom: 0;
+            padding: 15px 25px;
+            cursor: pointer;
+            border-bottom: 1px solid #dee2e6;
+            line-height: 1;
+            flex-wrap: wrap;
+            max-width: 100%;
+            white-space: normal;
+            padding-right: 65px;
+            position: relative;
+            .dropdown {
+                position:absolute;
+                right: 0;
+                top: 0;
+                .btn {
+                    position: absolute;
+                    right: 15px;
+                    top: 15px;
+                }
+                .dropdown-menu{
+                    li{
+                        a{
+                            padding: 10px;
+                            font-size: 12px;
+                            
+                        }
+                        &:last-child{
+                            a{
+                                border-bottom:0;
+                            }
+                        }
+                    }
+                }
+            }
+            &.item-loading{
+                min-height: 40px;
+                border:0;
+            }
+            &:last-child{
+                border-bottom:0;
+            }
+        }
+    }
+}
+.navbar {
+    .gadge-notif {
+        width: 15px;
+        height: 15px;
+        border-radius: 13px;
+        line-height: 12px;
+        font-weight: 700;
+        top: 10px !important;
+        right: -6px !important;
+    }
+}
