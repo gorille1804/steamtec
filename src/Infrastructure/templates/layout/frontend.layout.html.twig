@@ -177,8 +177,66 @@ function initPagination() {
 initPagination();
 
 </script>
+<script>
+     function setupFaqPagination(sectionId, itemsPerPage) {
+    const items = document.querySelectorAll(`#${sectionId} .accordion-item`);
+    const paginationDiv = document.querySelector(`#${sectionId} .pagination`);
+    const totalPages = Math.ceil(items.length / itemsPerPage);
+    let currentPage = 1;
 
-       
+    function displayItems(page) {
+        const start = (page - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+
+        items.forEach(item => item.style.display = 'none');
+
+        for (let i = start; i < end && i < items.length; i++) {
+            items[i].style.display = 'block';
+        }
+    }
+
+    function generatePagination() {
+        paginationDiv.innerHTML = '';
+
+        if (totalPages > 1) {
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.innerText = i;
+                button.classList.add('page-button');
+
+                button.onclick = function () {
+                    currentPage = i;
+                    displayItems(currentPage);
+                    updatePaginationButtons();
+                };
+
+                paginationDiv.appendChild(button);
+            }
+        }
+
+        updatePaginationButtons();
+    }
+
+    function updatePaginationButtons() {
+        const buttons = document.querySelectorAll(`#${sectionId} .page-button`);
+        buttons.forEach(button => {
+            if (parseInt(button.innerText) === currentPage) {
+                button.classList.add('active');
+            } else {
+                button.classList.remove('active');
+            }
+        });
+    }
+
+    displayItems(currentPage);
+    generatePagination();
+}
+
+// Appelle cette fonction au chargement
+document.addEventListener('DOMContentLoaded', function () {
+    setupFaqPagination('faq-section', 11); // 11 éléments FAQ par page
+});
+</script>
     {% block script %}
       {{ encore_entry_script_tags('app') }}
     {% endblock %}

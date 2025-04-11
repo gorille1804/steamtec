@@ -35466,6 +35466,13 @@ header .bg-light.row .col-lg-6:last-child {
 header .content_header_bottom.py-3 {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
+
+}
+header{
+  border-bottom: 2px solid  rgba(0, 0, 0, 0.1);
+}
+header .content_header_bottom.py-3 .col-lg-2{
+  padding-right: 0;
 }
 
 header .content_header_bottom.py-3 .navbar {
@@ -35502,6 +35509,7 @@ header .content_header_bottom.py-3 .navbar .nav-item:hover .sous-menu {
   border-radius: 8px;
   background: #FFFFFF;
   box-shadow: 0px 2px 10px -4px rgba(0, 0, 0, 1);
+  z-index: 1;
 }
 
 header .content_header_bottom.py-3 .navbar .nav-item:hover .sous-menu a {
@@ -35665,7 +35673,7 @@ header .btn_se_connecter:hover {
 }
 
 .bloc_entete_accueil .col-md-6 {
-  background: url("../images/image_entete_droite.jpg") no-repeat center top;
+  background: url("../images/image_entete_droite.jpg") no-repeat left 50%;
   min-height: 600px;
   border-radius: 350px 0 0 350px;
   background-size: cover;
@@ -35863,7 +35871,7 @@ section h3 {
   width: 270px;
   height: 270px;
   object-fit: cover;
-  object-position: center top;
+  object-position: center center;
   border-radius: 300px;
   border: 3px solid #FFFFFF;
 }
@@ -35950,6 +35958,14 @@ section h3 {
   border-radius: 24px;
   background: #fff;
 }
+.content_decouvrir_gamme .content_image_gamme{
+  height: 270px;
+  display:flex;
+  align-items:center;
+  background: #fff;
+  overflow-y: hidden;
+  border-radius: 24px 24px 0 0;
+}
 
 .content_decouvrir_gamme .item a {
   text-decoration: none;
@@ -35964,17 +35980,17 @@ section h3 {
 }
 
 .content_decouvrir_gamme .owl-carousel {
-  margin-top: 60px;
+  margin-top: 40px;
 }
-
-.content_decouvrir_gamme .content_image_gamme img {
-  border-radius: 24px 24px 0 0;
-}
-
 .content_decouvrir_gamme .content_texte_gamme {
-  padding: 24px;
+  padding: 24px 5px;
   gap: 10px;
   text-align: center;
+  border-top:1px solid #E4E2DF;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .content_decouvrir_gamme .content_texte_gamme h4 {
@@ -36079,12 +36095,15 @@ section h3 {
 
 .content_liste_fonction .content_image_fonction {
   position: relative;
+  height: 353px;
+  display: flex;
 }
 
 .content_liste_fonction .content_image_fonction img {
   border-radius: 8px;
+  height: 100%;
+  object-fit: cover;
 }
-
 .content_liste_fonction .content_image_fonction span {
   padding-top: 8px;
   padding-right: 24px;
@@ -36105,10 +36124,12 @@ section h3 {
 }
 
 .content_adresse_steam_tec {
-  background: #000000;
+  background-size:cover;
   padding-top: 80px;
   padding-bottom: 80px;
   color: #fff;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                    url('../images/professionnel_du_nettoyage_vapeur.jpg');
 }
 
 .content_adresse_steam_tec .col-md-4 {
@@ -36251,7 +36272,7 @@ section h3 {
 }
 
 .content_fabriquation {
-  background: url('../images/backround_fabriquation.jpg') no-repeat center center;
+  background: url('../images/fabriquant_française_materiel_de_nettoyage.png') no-repeat center center;
   background-size: cover;
 }
 
@@ -36290,9 +36311,13 @@ section h3 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 30px;
+  gap:10px;
   align-items: center;
   margin-top: 40px;
+  padding-left: 0;
+}
+.content_confiance .liste_confiance li{
+  width: 30%;
 }
 
 .content_confiance .class-vert {
