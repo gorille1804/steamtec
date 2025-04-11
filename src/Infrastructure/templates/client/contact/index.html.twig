@@ -58,49 +58,28 @@
 				<div class="col-md-6 content_contact_gauche">
 					<div class="content_formulaire_contact">
 						<h2>Laissez-nous un message</h2>
-						<form method="post" action="">
-							<fieldset class="row">
-								<div class="col-md-6">
-									<label for="nom">Nom</label>
-									<input type="text" name="nom" id="nom"/>
-								</div>
-								<div class="col-md-6">
-									<label for="prenom">Prénom</label>
-									<input type="text" name="prenom" id="prenom"/>
-								</div>
-							</fieldset>
-							<fieldset class="row">
-								<div class="col-md-6 content_radio">
-									<input type="radio" name="type"/>
-									<label for="societe">Société</label>
-								</div>
-								<div class="col-md-6 content_radio">
-									<input type="radio" name="type"/>
-									<label for="collectivite">Collectivité</label>
-								</div>
-							</fieldset>
-							<fieldset class="row">
-								<div class="col-md-12">
-									<label for="phone">Téléphone</label>
-									<input type="tel" name="phone" id="phone"/>
-								</div>
-							</fieldset>
-							<fieldset class="row">
-								<div class="col-md-12">
-									<label for="email">Email</label>
-									<input type="email" name="email" id="email"/>
-								</div>
-							</fieldset>
-							<fieldset class="row">
-								<div class="col-md-12">
-									<label for="message">message</label>
-									<textarea name="message" id="message" cols="30" rows="10"></textarea>
-								</div>
-							</fieldset>
-							<fieldset class="d-flex justify-content-center">
-								<button type="submit" class="btn btn-primary w-100 mb-3">Envoyer votre message</button>
-							</fieldset>
-						</form>
+						{{ form_start(form) }}
+						<fieldset class="row">
+							<div class="col-md-6">{{ form_row(form.nom) }}</div>
+							<div class="col-md-6">{{ form_row(form.prenom) }}</div>
+						</fieldset>
+						<fieldset class="row">
+							<div class="col-md-12">
+								{{ form_widget(form.type) }}
+								{{ form_errors(form.type) }}
+							</div>
+						</fieldset>
+						<fieldset class="row">
+							<div class="col-md-12">{{ form_row(form.email) }}</div>
+						</fieldset>
+						<fieldset class="row">
+							<div class="col-md-12">{{ form_row(form.message) }}</div>
+						</fieldset>
+						<fieldset class="d-flex justify-content-center">
+							<div class="col-md-12">{{ form_row(form.submit) }}</div>
+						</fieldset>
+					{{ form_end(form) }}
+
 						<div></div>
 					</div>
 				</div>
