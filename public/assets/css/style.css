@@ -36596,7 +36596,8 @@ section h3 {
 }
 
 .content_nettoyage_top.content_desherbage_top {
-  background: url('../images/fond_bloc_top_desherbage.webp') no-repeat center center;
+  background: url('../images/desherbage_vegetal.jpg') no-repeat center center;
+  background-size: cover;
 }
 
 .content_nettoyage_top_inner {
@@ -36792,7 +36793,7 @@ section h3 {
 }
 
 .content_page_machine .content_machine_top {
-  background: url('../images/fond_bloc_image_machine.webp') no-repeat center center;
+  background: url('../images/fond_bloc_image_machine.jpg') no-repeat center center;
   background-size: cover;
 }
 
