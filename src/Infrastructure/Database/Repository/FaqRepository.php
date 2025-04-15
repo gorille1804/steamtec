@@ -28,6 +28,11 @@ class FaqRepository extends ServiceEntityRepository implements FaqRepositoryInte
             ->getResult();
     }
 
+    public function getAllFaq():array
+    {
+        return $this->getAll();
+    }
+    
     public function getTotalFaqs(): int
     {
         return $this->createQueryBuilder('f')
