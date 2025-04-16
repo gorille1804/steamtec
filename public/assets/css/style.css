@@ -35521,6 +35521,7 @@ header .content_header_bottom.py-3 .navbar .nav-item:hover .sous-menu a {
   text-decoration: none;
   margin-bottom: 8px;
   display: block;
+  white-space: break-spaces;
 }
 
 header .content_header_bottom.py-3 .navbar .nav-item:hover .sous-menu a:hover {

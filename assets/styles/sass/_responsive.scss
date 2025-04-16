@@ -1,0 +1,12 @@
+@media (max-width:1280px) {
+    .content_bloc_image_nettoyage .content_liste_text_droite_entete_accueil,
+    .content_titre_et_lien_gamme{
+        flex-flow: row wrap;
+        li{
+            min-width: 240px;
+        }
+    }
+    .content_liste_application_nettoyage_inner li{
+        padding: 40px 15px;
+    }
+}
