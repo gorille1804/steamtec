@@ -175,4 +175,95 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.warn("No configuration links found on this page");
     }
+
+    // Responsive header
+    const contentHeader = document.querySelector('.content_header_bottom');
+    const btnToggleHeader = contentHeader.querySelector('.btn_toggle_header');
+    const meniLi = contentHeader.querySelectorAll('.nav-item-custome')
+    btnToggleHeader.addEventListener('click', function() {
+        contentHeader.classList.toggle('active');
+        document.querySelector('html').classList.toggle('no-scroll');
+        meniLi.forEach(item => {
+            item.classList.remove('nav-item');
+        });
+    });
+
+    // accordeon mobile
+    const btnCaret = contentHeader.querySelectorAll('.btn_caret');
+    
+    console.log("btnCaret", btnCaret.length);
+    
+    function closeOtherMenus(currentMenu) {
+        const allActiveMenus = contentHeader.querySelectorAll('.sous-menu.active');
+        allActiveMenus.forEach(menu => {
+            if (menu !== currentMenu) {
+                const parentLi = menu.closest('.nav-item-custome');
+                const caretBtn = parentLi.querySelector('.btn_caret');
+                const icon = caretBtn ? caretBtn.querySelector('i') : null;
+                
+                if (icon) {
+                    icon.classList.remove('fa-caret-up');
+                    icon.classList.add('fa-caret-down');
+                }
+                
+                menu.classList.remove('active');
+            }
+        });
+    }
+    
+    btnCaret.forEach((el) => {
+        el.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation(); 
+            
+            const parentLi = this.closest('.nav-item-custome');
+            const sousMenu = parentLi.querySelector('.sous-menu');
+            
+            console.log("Sous menu trouvé :", sousMenu);
+            
+            if (sousMenu) {
+                if (sousMenu.classList.contains('active')) {
+                    sousMenu.classList.remove('active');
+                    
+                    const icon = this.querySelector('i');
+                    icon.classList.remove('fa-caret-up');
+                    icon.classList.add('fa-caret-down');
+                } 
+                else {
+                    closeOtherMenus(sousMenu);
+                    sousMenu.classList.add('active');
+                    
+                    const icon = this.querySelector('i');
+                    icon.classList.remove('fa-caret-down');
+                    icon.classList.add('fa-caret-up');
+                }
+            }
+        });
+    });
+    
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.content_header_bottom') && !e.target.closest('.btn_toggle_header')) {
+            contentHeader.classList.remove("active");
+            document.querySelector('html').classList.remove('no-scroll');
+        }
+        if (!e.target.closest('.nav-item-custome')) {
+            
+            const allActiveMenus = contentHeader.querySelectorAll('.sous-menu.active');
+            allActiveMenus.forEach(menu => {
+                menu.classList.remove('active');
+                const parentLi = menu.closest('.nav-item-custome');
+                const caretBtn = parentLi.querySelector('.btn_caret');
+                const icon = caretBtn ? caretBtn.querySelector('i') : null;
+                
+                if (icon) {
+                    icon.classList.remove('fa-caret-up');
+                    icon.classList.add('fa-caret-down');
+                }
+            });
+           
+        }
+    });
 });
+
+
+

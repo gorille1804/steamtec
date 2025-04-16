@@ -92,21 +92,24 @@
 	<!-- Main Header -->
 	<div class="row">
 		<div class="container">
-			<div
-				class="row align-items-center py-3 content_header_bottom">
+			<div class="align-items-center content_header_bottom py-3">
 				<!-- Logo Column -->
-				<div class="col-lg-2">
+				<div class="logo">
 					<div class="logo">
 						<a href="/"><img src="{{ asset('assets/images/logo.png') }}" alt="Steamtec Logo" class="img-fluid"></a>
 					</div>
 				</div>
 
 				<!-- Navigation Column -->
-				<div class="col-lg-7">
-					<nav class="navbar navbar-expand-lg">
+				<div class="header_responsive">
+					<nav class="navbar navbar-expand-lg text-nowrap">
 						<ul class="navbar-nav mx-auto">
-							<li class="nav-item {{ app.request.attributes.get('_route') == 'app_nettoyage' ? 'active' : '' }}">
-								<a class="nav-link" href="{{path('app_nettoyage')}}">Nettoyage
+							<li class="nav-item nav-item-custome {{ app.request.attributes.get('_route') == 'app_nettoyage' ? 'active' : '' }}">
+								<a class="nav-link" href="{{path('app_nettoyage')}}">
+								Nettoyage
+								<button class="btn btn_caret p-1">
+									<i class="fa fa-caret-down"></i>
+								</button>
 								</a>
 								<div class="sous-menu">
 									<a href="{{ path('app_nettoyage') }}#avantage_methode">Les avantages de la méthode</a>
@@ -118,39 +121,50 @@
 									<a href="{{ path('app_nettoyage') }}#autre_application">Autres applications</a>
 								</div>
 							</li>
-							<li class="nav-item {{ app.request.attributes.get('_route') == 'app_desherbage' ? 'active' : '' }}">
-								<a class="nav-link" href="{{path('app_desherbage')}}">Désherbage</a>
-								<div class="sous-menu">
+							<li class="nav-item nav-item-custome {{ app.request.attributes.get('_route') == 'app_desherbage' ? 'active' : '' }}">
+								<a class="nav-link" href="{{path('app_desherbage')}}" >
+								Désherbage
+								<button class="btn btn_caret p-1">
+									<i class="fa fa-caret-down"></i>
+								</button>
+								</a>
+								<div class="sous-menu collapse sub1" >
 									<a href="{{ path('app_desherbage') }}#avantage_methode">Les avantages de la méthode</a>
                                     <a href="{{ path('app_desherbage') }}#temp_desherbage">En combien de temps le désherbage vapeur ou à eau chaude est-il efficace ?</a>
                                      <a href="{{ path('app_desherbage') }}#passage_desherbage">En combien de passages le désherbage à eau chaude est-il efficace ?</a>
 								</div>
 							</li>
-							<li class="nav-item {{ app.request.attributes.get('_route') == 'app_machine' ? 'active' : '' }}">
+							<li class="nav-item nav-item-custome {{ app.request.attributes.get('_route') == 'app_machine' ? 'active' : '' }}">
 								<a class="nav-link" href="{{ path('app_machine') }}">Machines</a>
 							</li>
-							<li class="nav-item  {{ app.request.attributes.get('_route') == 'app_accessoire' ? 'active' : '' }}">
+							<li class="nav-item nav-item-custome  {{ app.request.attributes.get('_route') == 'app_accessoire' ? 'active' : '' }}">
 								<a class="nav-link" href="{{ path('app_accessoire') }}">Accessoires</a>
 							</li>
-							<li class="nav-item {{ app.request.attributes.get('_route') == 'app_configuration' ? 'active' : '' }}">
+							<li class="nav-item nav-item-custome {{ app.request.attributes.get('_route') == 'app_configuration' ? 'active' : '' }}">
 								<a class="nav-link" href="{{ path('app_configuration') }}">Configurations</a>
 							</li>
-							<li class="nav-item {{ app.request.attributes.get('_route') == 'app_utilisateur_index' ? 'active' : '' }}">
+							<li class="nav-item nav-item-custome {{ app.request.attributes.get('_route') == 'app_utilisateur_index' ? 'active' : '' }}">
 								<a class="nav-link" href="{{ path('app_utilisateur') }}">Utilisateurs</a>
 							</li>
-							<li class="nav-item {{ app.request.attributes.get('_route') == 'app_about' ? 'active' : '' }}">
+							<li class="nav-item nav-item-custome {{ app.request.attributes.get('_route') == 'app_about' ? 'active' : '' }}">
 								<a class="nav-link" href="{{ path('app_about') }}">À propos de nous</a>
 							</li>
 						</ul>
 					</nav>
+					<div class="content_header_bottom_responsive">
+						<a href="{{path('app_contact')}}" class="btn btn-outline-primary btn_contact">Nous contacter</a>
+						<a href="{{path('app_security')}}" class="btn btn-primary btn_se_connecter">Se connecter</a>
+					</div>
 				</div>
-
-				<!-- Buttons Column -->
-				<div class="col-lg-3 d-flex justify-content-end gap-2">
-					<a href="{{path('app_contact')}}" class="btn btn-outline-primary btn_contact">Nous contacter</a>
-					<a href="{{path('app_security')}}" class="btn btn-primary btn_se_connecter">Se connecter</a>
-				</div>
+				<button class="navbar-toggler d-none btn_toggle_header" type="button" aria-label="Toggle navigation">
+					<span class="hamburger-icon">
+						<span></span>
+						<span></span>
+						<span></span>
+					</span>
+				</button>
 			</div>
 		</div>
 	</div>
 </header>
+
