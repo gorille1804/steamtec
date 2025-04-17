@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+
+    <entity name="Domain\\DecisionTree\\Data\\Model\\DiagnosticStep" table="diagnostic_step">
+        <id name="id" type="diagnosticStepId" column="id"/>
+        <field name="prompt" type="text" nullable="false"/>
+        <field name="needsTechnicalDoc" type="boolean" column="needs_technical_doc" nullable="false"/>
+        <field name="parentStepId" type="diagnosticStepId" column="parent_step_id" nullable="true"/>
+        <field name="gotoStepId" type="diagnosticStepId" column="goto_step_id" nullable="true"/>
+        <field name="isTerminal" type="boolean" column="is_terminal" nullable="false"/>
+        <field name="problemTypeId" type="problemTypeId" column="problem_type_id" nullable="false"/>
+    </entity>
+</doctrine-mapping>

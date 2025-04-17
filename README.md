@@ -2,108 +2,116 @@
 
 ## Architecture Overview
 
-This project follows a Hexagonal Architecture (also known as Ports and Adapters or Clean Architecture) implemented with Symfony 6+. This architecture ensures a clear separation of concerns and maintainable codebase.
+This project follows a Hexagonal Architecture (Ports & Adapters) implemented with Symfony 6+, ensuring a clear separation of concerns and a maintainable codebase.
 
 ## Project Structure
 
 ```
 steamtec/
+├── bin/                    # Executables (e.g., bin/console)
+├── config/                 # Symfony configuration (bundles, services, routes)
 ├── src/
-│   ├── Domain/             # Business logic and domain models
-│   │   └── User/          # User domain module
-│   └── Infrastructure/     # Technical implementations
-│       ├── Controller/    # HTTP Controllers
-│       ├── Database/      # Database persistence
-│       ├── Symfony/       # Symfony specific configurations
-│       └── templates/     # Twig templates
-├── config/                 # Symfony configuration files
-├── migrations/             # Database migrations
-├── public/                 # Web entry point
-├── tests/                  # Automated tests
-├── translations/           # Translation files
-├── assets/                # Frontend assets
-├── bin/                   # Executable files
-├── var/                   # Cache and logs
-└── vendor/                # Dependencies
+│   ├── Domain/             # Core business logic (entities, value objects,
+│   │                         domain services, repository interfaces)
+│   └── Infrastructure/     # Adapters & framework code
+│       ├── Controller/     # HTTP controllers (endpoints)
+│       ├── Database/       # Doctrine repositories & migration support
+│       ├── Form/           # Symfony Form types
+│       ├── Event/          # Event subscribers/listeners
+│       ├── Symfony/        # Console commands, security, framework glue
+│       └── templates/      # Twig templates
+├── migrations/             # Doctrine migrations
+├── public/                 # Web entry point (index.php), asset entry points
+├── assets/                 # Frontend assets (JS/CSS/images) – Webpack
+├── translations/           # Symfony translation files (XLIFF/YAML)
+├── tests/                  # PHPUnit tests (unit & functional)
+├── var/                    # Runtime files (cache, logs, uploads)
+├── vendor/                 # Composer dependencies
+├── .env*                   # Environment configs (.env, .env.dev, .env.test)
+├── composer.json/.lock     # PHP dependencies & scripts
+├── package.json/.lock      # JS dependencies & build scripts
+├── webpack.config.js       # Frontend build config
+├── Dockerfile(.dev)        # Docker images
+├── docker-compose.yml      # Docker Compose (with override)
+├── apache.conf             # Apache vhost config
+└── importmap.php           # Symfony Asset Mapper bootstrap
 ```
 
 ## Technical Stack
 
-- **Framework**: Symfony 6+
-- **Database**: MySQL
-- **ORM**: Doctrine
-- **Testing**: PHPUnit
-- **Containerization**: Docker
-- **Asset Management**: Symfony Asset Mapper
-- **Template Engine**: Twig
+- PHP 8.x & Symfony 6+  
+- MySQL via Doctrine ORM  
+- Twig templates  
+- Symfony Asset Mapper + Webpack (Node.js, npm)  
+- PHPUnit for testing  
+- Docker & Docker Compose for containerization  
+- Apache (production container)
+
+## Request Flow
+
+1. `public/index.php` → Symfony Kernel  
+2. Routing → Infrastructure Controller  
+3. Controller invokes Domain services or repository interfaces  
+4. Infrastructure\Database (Doctrine) loads/persists entities  
+5. Controller returns a Response (HTML via Twig, JSON, redirect, etc.)
 
 ## Architecture Details
 
 ### Domain Layer (`src/Domain/`)
-Contains the business logic and rules of the application. This layer is independent of any framework or technical implementation.
-
-- Business entities
-- Value objects
-- Domain services
-- Interfaces (ports)
+Pure business logic and rules (entities, value objects, domain services, repository interfaces).
 
 ### Infrastructure Layer (`src/Infrastructure/`)
-Contains all technical implementations and adapters for external services.
+Framework-specific implementations and adapters:
+- Controllers (HTTP endpoints)  
+- Database repositories & migrations support  
+- Form types & validation  
+- Event subscribers/listeners  
+- Console commands, security, other Symfony glue  
+- Twig templates
 
-- Controllers (HTTP endpoints)
-- Database repositories
-- Framework specific configurations
-- Template views
+## Getting Started
 
-## Development Setup
-
-### Prerequisites
-- Docker
-- Docker Compose
-- PHP 8.x
-- Composer
-
-### Environment Configuration
-The project uses different environment configurations:
-- `.env`: Default configuration
-- `.env.dev`: Development environment
-- `.env.test`: Test environment
-- `.env.local`: Local overrides (not committed)
-
-### Docker Setup
-The project includes Docker configuration:
-- `compose.yaml`: Main Docker configuration
-- `compose.override.yaml`: Local Docker overrides
+1. Copy `.env.dev` → `.env.local`, configure database credentials.  
+2. `docker-compose up --build` (or `docker-compose -f docker-compose.override.yml up`).  
+3. `bin/console doctrine:migrations:migrate`  
+4. `npm install && npm run dev`  
+5. Access the application at `http://localhost` (or your Docker‑exposed port).
 
 ## Testing
 
-Tests are configured with PHPUnit and can be found in the `/tests` directory.
+Automated tests are written with PHPUnit. See the `tests/` directory for unit and functional tests:
 
-## Multilingual Support
+```bash
+bin/phpunit
+```
 
-The application supports multiple languages through Symfony's translation system. Translation files are located in the `/translations` directory.
+## Internationalization (i18n)
+
+The application supports multiple languages via Symfony’s translation component.  
+Translation files live in `translations/` (XLIFF/YAML).
 
 ## Asset Management
 
-Frontend assets are managed through Symfony Asset Mapper and located in the `/assets` directory.
+Frontend assets (JS/CSS/images) are managed with Symfony Asset Mapper and Webpack.  
+Sources in `assets/`, built via `npm run dev` (or `npm run build`).
 
 ## Best Practices
 
-The project follows these architectural principles:
-- SOLID principles
-- Dependency Injection
-- Interface Segregation
-- Clean Architecture patterns
-- Domain-Driven Design concepts
+- SOLID principles  
+- Dependency Injection  
+- Interface Segregation  
+- Clean Architecture patterns  
+- Domain‑Driven Design (DDD)
 
 ## Contributing
 
-When contributing to this project, please:
-1. Follow the existing architecture patterns
-2. Maintain separation of concerns
-3. Write tests for new features
-4. Update documentation as needed
+When contributing, please:
+
+1. Follow existing architectural patterns (Hexagonal / DDD).  
+2. Keep a clear separation of concerns.  
+3. Cover new features with tests.  
+4. Update documentation & run pre-commit checks.
 
 ## License
 
-[Your License Here] 
+[Add your license here]
