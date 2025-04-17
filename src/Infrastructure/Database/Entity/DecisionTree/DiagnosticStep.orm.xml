@@ -4,13 +4,16 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                   https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
 
-    <entity name="Domain\\DecisionTree\\Data\\Model\\DiagnosticStep" table="diagnostic_step">
+    <entity name="Domain\DecisionTree\Data\Model\DiagnosticStep" table="diagnostic_step">
         <id name="id" type="diagnosticStepId" column="id"/>
-        <field name="prompt" type="text" nullable="false"/>
-        <field name="needsTechnicalDoc" type="boolean" column="needs_technical_doc" nullable="false"/>
-        <field name="parentStepId" type="diagnosticStepId" column="parent_step_id" nullable="true"/>
-        <field name="gotoStepId" type="diagnosticStepId" column="goto_step_id" nullable="true"/>
-        <field name="isTerminal" type="boolean" column="is_terminal" nullable="false"/>
         <field name="problemTypeId" type="problemTypeId" column="problem_type_id" nullable="false"/>
+        <field name="stepType" type="string" column="step_type" nullable="true"/>
+        <field name="parentStepId" type="diagnosticStepId" column="parent_step_id" nullable="true"/>
+        <field name="nextStepOKId" type="diagnosticStepId" column="next_step_ok_id" nullable="true"/>
+        <field name="nextStepKOId" type="diagnosticStepId" column="next_step_ko_id" nullable="true"/>
+        <field name="description" type="text" nullable="false"/>
+        <field name="needsTechnicalDoc" type="boolean" column="needs_technical_doc" nullable="false"/>
+        <field name="stepOrder" type="integer" column="step_order" nullable="false"/>
+        <field name="goTo" type="integer" column="go_to" nullable="true"/>
     </entity>
 </doctrine-mapping>

@@ -2,12 +2,17 @@
 
 namespace Domain\DecisionTree\Data\Contract;
 
+use Domain\DecisionTree\Data\Enum\DiagnosticStepType;
+
 class CreateDiagnosticStepRequest
 {
-    public string $prompt;
-    public bool $needsTechnicalDoc = false;
-    public ?string $parentStepId = null;
-    public ?string $gotoStepId = null;
-    public bool $isTerminal = false;
     public string $problemTypeId;
+    public DiagnosticStepType $stepType = DiagnosticStepType::SYMPTOM;
+    public ?string $parentStepId = null;
+    public ?string $nextStepOKId = null;
+    public ?string $nextStepKOId = null;
+    public string $description;
+    public bool $needsTechnicalDoc = false;
+    public int $stepOrder = 0;
+    public ?int $goTo = null;
 }

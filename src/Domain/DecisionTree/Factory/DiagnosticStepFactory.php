@@ -13,12 +13,15 @@ class DiagnosticStepFactory
     {
         return new DiagnosticStep(
             DiagnosticStepId::make(),
-            $request->prompt,
-            $request->needsTechnicalDoc,
+            new ProblemTypeId($request->problemTypeId),
+            $request->stepType,
             $request->parentStepId !== null ? new DiagnosticStepId($request->parentStepId) : null,
-            $request->gotoStepId !== null ? new DiagnosticStepId($request->gotoStepId) : null,
-            $request->isTerminal,
-            new ProblemTypeId($request->problemTypeId)
+            $request->nextStepOKId !== null ? new DiagnosticStepId($request->nextStepOKId) : null,
+            $request->nextStepKOId !== null ? new DiagnosticStepId($request->nextStepKOId) : null,
+            $request->description,
+            $request->needsTechnicalDoc,
+            $request->stepOrder,
+            $request->goTo
         );
     }
 }

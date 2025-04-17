@@ -67,5 +67,5 @@ doctrine:
                         type: xml
                         is_bundle: false
                         dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/DecisionTree'
-                        prefix: 'Domain\\DecisionTree\\Data\\Model'
+                        prefix: 'Domain\DecisionTree\Data\Model'
                         alias: DecisionTree
