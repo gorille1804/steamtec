@@ -28,9 +28,9 @@ class FaqRepository extends ServiceEntityRepository implements FaqRepositoryInte
             ->getResult();
     }
 
-    public function getAllFaq():array
+    public function getAllActive(): array
     {
-        return $this->getAll();
+        return  $this->findBy(['isActive' => true]);
     }
     
     public function getTotalFaqs(): int
