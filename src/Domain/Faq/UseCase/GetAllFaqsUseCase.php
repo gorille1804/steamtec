@@ -14,6 +14,6 @@ class GetAllFaqsUseCase implements GetAllFaqsUseCaseInterface
      */
     public function __invoke(): array
     {
-        return $this->faqRepository->getAll();
+        return $this->faqRepository->getAllActive();
     }
 }
