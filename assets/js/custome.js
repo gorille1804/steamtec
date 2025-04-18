@@ -183,8 +183,16 @@ document.addEventListener('DOMContentLoaded', function() {
     btnToggleHeader.addEventListener('click', function() {
         contentHeader.classList.toggle('active');
         document.querySelector('html').classList.toggle('no-scroll');
+       
         meniLi.forEach(item => {
             item.classList.remove('nav-item');
+        });
+    });
+    document.querySelectorAll('.sous-menu a').forEach(item => {
+        item.addEventListener('click', function(e) {
+         
+            contentHeader.classList.remove('active');
+            document.querySelector('html').classList.remove('no-scroll');
         });
     });
 
