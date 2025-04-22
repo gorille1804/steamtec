@@ -28,6 +28,11 @@
         max-width: 100%;
     }
 }
+@media (max-width:992px) {
+    .content_page_contact{
+        padding: 20px 15px;
+    }
+}
 @media (max-width:767px) {
     .content_liste_text_droite_entete_accueil {
 
