@@ -37176,3 +37176,18 @@ section h3 {
   color: #636074;
   margin-bottom: 24px;
 }
+@media(max-width:767px){
+  .bloc_entete_accueil:after {
+    content: "";
+    background: url(../images/bloc_entete_accueil.jpg) no-repeat;
+    width: 100%;
+    height: 56%;
+    position: absolute;
+    right: 0;
+    top: unset;
+    z-index: 1;
+    background-size: 100% 100%;
+    border-radius: 20rem 0 0 20rem;
+    bottom: 0;
+}
+}
