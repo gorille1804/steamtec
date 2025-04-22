@@ -35650,8 +35650,21 @@ header .btn_se_connecter:hover {
 .bloc_entete_accueil {
   background: #0281AF;
   color: #fff;
-  background: url("../images/bloc_entete_accueil.jpg") no-repeat;
+  no-repeat;
   background-size: 100% 100%;
+  position: relative;
+}
+.bloc_entete_accueil:after{
+  content:"";
+  background: url("../images/bloc_entete_accueil.jpg") no-repeat;
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+  background-size: 100% 100%;
+  border-radius: 20rem 0 0 20rem;
 }
 
 .bloc_entete_accueil .col-md-5 {
@@ -35731,6 +35744,8 @@ header .btn_se_connecter:hover {
 .content_liste_text_droite_entete_accueil {
   margin: 0;
   padding: 0;
+  position: relative;
+  z-index: 2;
 }
 
 .content_entete_bloc_avantage span {
@@ -35749,6 +35764,7 @@ header .btn_se_connecter:hover {
   font-size: 14px;
   line-height: 150%;
   color: #F5F6FB;
+  z-index: 2;
 }
 
 .content_liste_text_droite_entete_accueil {
