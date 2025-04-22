@@ -35650,6 +35650,8 @@ header .btn_se_connecter:hover {
 .bloc_entete_accueil {
   background: #0281AF;
   color: #fff;
+  background: url("../images/bloc_entete_accueil.jpg") no-repeat;
+  background-size: 100% 100%;
 }
 
 .bloc_entete_accueil .col-md-5 {
@@ -35674,7 +35676,7 @@ header .btn_se_connecter:hover {
 }
 
 .bloc_entete_accueil .col-md-6 {
-  background: url("../images/image_entete_droite.jpg") no-repeat left 50%;
+  //background: url("../images/image_entete_droite.jpg") no-repeat left 50%;
   min-height: 600px;
   border-radius: 350px 0 0 350px;
   background-size: cover;
