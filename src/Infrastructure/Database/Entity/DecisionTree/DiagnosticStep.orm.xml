@@ -7,7 +7,7 @@
     <entity name="Domain\DecisionTree\Data\Model\DiagnosticStep" table="diagnostic_step">
         <id name="id" type="diagnosticStepId" column="id"/>
         <field name="problemTypeId" type="problemTypeId" column="problem_type_id" nullable="false"/>
-        <field name="stepType" type="string" column="step_type" nullable="true"/>
+        <field name="stepType" type="string" column="step_type" nullable="true" enum-type="Domain\DecisionTree\Data\Enum\DiagnosticStepType"/>
         <field name="parentStepId" type="diagnosticStepId" column="parent_step_id" nullable="true"/>
         <field name="nextStepOKId" type="diagnosticStepId" column="next_step_ok_id" nullable="true"/>
         <field name="nextStepKOId" type="diagnosticStepId" column="next_step_ko_id" nullable="true"/>
