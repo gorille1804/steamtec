@@ -18,7 +18,10 @@ class CategoryRepository extends ServiceEntityRepository implements CategoryRepo
     /** @return Category[] */
     public function findAll(): array
     {
-        return parent::findAll();
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.position', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 
     public function findById(CategoryId $id): ?Category

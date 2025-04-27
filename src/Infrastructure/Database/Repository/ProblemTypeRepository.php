@@ -22,6 +22,7 @@ class ProblemTypeRepository extends ServiceEntityRepository implements ProblemTy
         return $this->createQueryBuilder('p')
             ->where('p.categoryId = :cat')
             ->setParameter('cat', $categoryId)
+            ->orderBy('p.position', 'ASC')
             ->getQuery()
             ->getResult();
     }

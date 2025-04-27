@@ -10,6 +10,7 @@ class ProblemType
     public function __construct(
         public ProblemTypeId $id,
         public string $name,
-        public CategoryId $categoryId
+        public CategoryId $categoryId,
+        public int $position = 0
     ) {}
 }

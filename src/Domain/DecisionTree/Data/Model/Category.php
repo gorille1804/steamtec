@@ -8,6 +8,7 @@ class Category
 {
     public function __construct(
         public CategoryId $id,
-        public string $name
+        public string $name,
+        public int $position = 0
     ) {}
 }

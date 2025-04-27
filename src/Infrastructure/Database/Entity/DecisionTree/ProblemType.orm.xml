@@ -8,5 +8,6 @@
         <id name="id" type="problemTypeId" column="id"/>
         <field name="name" type="string" length="180" nullable="false"/>
         <field name="categoryId" type="categoryId" column="category_id" nullable="false"/>
+        <field name="position" type="integer" nullable="false"/>
     </entity>
 </doctrine-mapping>

@@ -384,3 +384,7 @@ FAQs:
         update_error: "Erreur lors de la mise à jour de la Question fréquente"
         delete_succes: "Question fréquente supprimée"
         delete_error: "Erreur lors de la suppression de la Question fréquente"
+
+decisiontree:
+    index:
+        title: "Arbre de dépannage"

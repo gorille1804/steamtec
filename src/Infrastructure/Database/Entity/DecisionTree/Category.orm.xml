@@ -7,5 +7,6 @@
     <entity name="Domain\DecisionTree\Data\Model\Category" table="category">
         <id name="id" type="categoryId" column="id"/>
         <field name="name" type="string" length="180" nullable="false"/>
+        <field name="position" type="integer" nullable="false"/>
     </entity>
 </doctrine-mapping>

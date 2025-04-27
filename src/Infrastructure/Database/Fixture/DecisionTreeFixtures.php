@@ -21,14 +21,15 @@ class DecisionTreeFixtures extends Fixture implements FixtureGroupInterface
         // Create Categories
         // datas
         $cats = [
-            ['id' => null, 'name' => 'PROBLEME DE FONCTIONNEMENT GENERAL', 'problems' => []],
-            ['id' => null, 'name' => 'PROBLEME DE PRESSION', 'problems' => []],
-            ['id' => null, 'name' => 'PROBLEME DE CHAUFFE', 'problems' => []],
+            ['id' => null, 'name' => 'PROBLEME DE FONCTIONNEMENT GENERAL', 'position' => 1, 'problems' => []],
+            ['id' => null, 'name' => 'PROBLEME DE PRESSION', 'position' => 2, 'problems' => []],
+            ['id' => null, 'name' => 'PROBLEME DE CHAUFFE', 'position' => 3, 'problems' => []],
         ];
         for ($i=0; $i < count($cats); $i++) {
             $cat = new Category(
                 CategoryId::make(),
-                $cats[$i]['name']
+                $cats[$i]['name'],
+                $cats[$i]['position']
             );
             $manager->persist($cat);
             $cats[$i]['id'] = $cat->id;
@@ -38,7 +39,7 @@ class DecisionTreeFixtures extends Fixture implements FixtureGroupInterface
 
         // Create ProblemTypes and DiagnosticSteps
         $datas = [
-            ['id' => null, 'name' => 'LA MACHINE NE DEMARRE PAS', 'categoryId' => $cats[0]['id'], 'steps' => [
+            ['id' => null, 'name' => 'LA MACHINE NE DEMARRE PAS', 'categoryId' => $cats[0]['id'], 'position' => 1, 'steps' => [
                 ['stepType' => 'symptome', 'description' => 'Le moteur de la pompe ne tourne pas ET le programmateur est éteint'],
                 ['stepType' => 'check', 'description' => 'Vérifier la position du bouton On/Off'],
                 ['stepType' => 'action', 'description' => 'Mettre le bouton sur ON'],
@@ -58,7 +59,7 @@ class DecisionTreeFixtures extends Fixture implements FixtureGroupInterface
                 ['stepType' => 'action', 'description' => 'Une fois identifié où cela se passe, appeler le SAV'],
                 ['stepType' => 'action', 'description' => 'Appeler le SAV 0681676430'],
             ]],
-            ['id' => null, 'name' => 'PROGRAMMATEUR EN ERREUR (affiche ERR)', 'categoryId' => $cats[0]['id'],
+            ['id' => null, 'name' => 'PROGRAMMATEUR EN ERREUR (affiche ERR)', 'categoryId' => $cats[0]['id'], 'position' => 2,
                 'steps' => [
                     ['stepType' => 'symptome', 'description' => 'Identification du problème : PROGRAMMATEUR EN ERREUR (affiche ERR)'],
                     ['stepType' => 'check', 'description' => 'Vérifier l\'affichage du code d\'erreur'],
@@ -70,7 +71,7 @@ class DecisionTreeFixtures extends Fixture implements FixtureGroupInterface
                     ['stepType' => 'action', 'description' => 'Rétablir les connexions'],
                     ['stepType' => 'action', 'description' => 'Mettre à jour le firmware'],
                 ]],
-            ['id' => null, 'name' => 'PROGRAMMATEUR ne s\'allume plus ou clignote', 'categoryId' => $cats[0]['id'],
+            ['id' => null, 'name' => 'PROGRAMMATEUR ne s\'allume plus ou clignote', 'categoryId' => $cats[0]['id'], 'position' => 3,
                 'steps' => [
                     ['stepType' => 'symptome', 'description' => 'Identification du problème : PROGRAMMATEUR ne s\'allume plus ou clignote'],
                     ['stepType' => 'check', 'description' => 'Vérifier l\'alimentation électrique'],
@@ -82,7 +83,7 @@ class DecisionTreeFixtures extends Fixture implements FixtureGroupInterface
                     ['stepType' => 'action', 'description' => 'Remplacer le bouton d\'alimentation'],
                     ['stepType' => 'action', 'description' => 'Nettoyer les contacts'],
                 ]],
-            ['id' => null, 'name' => 'PLUS DE CONSOMMATION D\'ANTICALCAIRE', 'categoryId' => $cats[0]['id'],
+            ['id' => null, 'name' => 'PLUS DE CONSOMMATION D\'ANTICALCAIRE', 'categoryId' => $cats[0]['id'], 'position' => 4,
                 'steps' => [
                     ['stepType' => 'symptome', 'description' => 'Identification du problème : PLUS DE CONSOMMATION D\'ANTICALCAIRE'],
                     ['stepType' => 'check', 'description' => 'Vérifier le niveau d\'anticalcaire'],
@@ -97,7 +98,7 @@ class DecisionTreeFixtures extends Fixture implements FixtureGroupInterface
 
             ['id' => null,
                 'name' => 'PAS DE PRESSION AU MANO (LA POMPE NE TOURNE PAS) ALORS QU\'ON APPUIE SUR LA GACHETTE',
-                'categoryId' => $cats[1]['id'], 'steps' => [
+                'categoryId' => $cats[1]['id'], 'position' => 1, 'steps' => [
                 ['stepType' => 'symptome', 'description' => 'Identification du problème : PAS DE PRESSION AU MANO (LA POMPE NE TOURNE PAS) ALORS QU\'ON APPUIE SUR LA GACHETTE'],
                 ['stepType' => 'check', 'description' => 'Vérifier le manomètre'],
                 ['stepType' => 'check', 'description' => 'Vérifier la pompe'],
@@ -109,7 +110,7 @@ class DecisionTreeFixtures extends Fixture implements FixtureGroupInterface
                 ['stepType' => 'action', 'description' => 'Nettoyer les vannes'],
             ]],
             ['id' => null, 'name' => 'IMPOSSIBLE DE MONTER EN PRESSION SORTIE DE POMPE (AU MANO) et le moteur tourne',
-                'categoryId' => $cats[1]['id'], 'steps' => [
+                'categoryId' => $cats[1]['id'], 'position' => 2, 'steps' => [
                 ['stepType' => 'symptome', 'description' => 'Identification du problème : IMPOSSIBLE DE MONTER EN PRESSION SORTIE DE POMPE (AU MANO) et le moteur tourne'],
                 ['stepType' => 'check', 'description' => 'Vérifier le manomètre'],
                 ['stepType' => 'check', 'description' => 'Vérifier les joints d\'étanchéité'],
@@ -121,7 +122,7 @@ class DecisionTreeFixtures extends Fixture implements FixtureGroupInterface
                 ['stepType' => 'action', 'description' => 'Ajuster la pression'],
             ]],
             ['id' => null, 'name' => 'PRESSION OK AU MANO MAIS PAS OU PEU DE SORTIE D\'EAU AUX ACCESSOIRES',
-                'categoryId' => $cats[1]['id'], 'steps' => [
+                'categoryId' => $cats[1]['id'], 'position' => 3, 'steps' => [
                 ['stepType' => 'symptome', 'description' => 'Identification du problème : PRESSION OK AU MANO MAIS PAS OU PEU DE SORTIE D\'EAU AUX ACCESSOIRES'],
                 ['stepType' => 'check', 'description' => 'Vérifier les accessoires'],
                 ['stepType' => 'check', 'description' => 'Vérifier les tuyaux'],
@@ -132,7 +133,7 @@ class DecisionTreeFixtures extends Fixture implements FixtureGroupInterface
                 ['stepType' => 'action', 'description' => 'Nettoyer les filtres'],
                 ['stepType' => 'action', 'description' => 'Ajuster les vannes'],
             ]],
-            ['id' => null, 'name' => 'PRESSION SACCADEE', 'categoryId' => $cats[1]['id'], 'steps' => [
+            ['id' => null, 'name' => 'PRESSION SACCADEE', 'categoryId' => $cats[1]['id'], 'position' => 4, 'steps' => [
                 ['stepType' => 'symptome', 'description' => 'Identification du problème : PRESSION SACCADEE'],
                 ['stepType' => 'check', 'description' => 'Vérifier le manomètre'],
                 ['stepType' => 'check', 'description' => 'Vérifier la pompe'],
@@ -144,7 +145,7 @@ class DecisionTreeFixtures extends Fixture implements FixtureGroupInterface
                 ['stepType' => 'action', 'description' => 'Ajuster la pression'],
             ]],
 
-            ['id' => null, 'name' => 'LA MACHINE NE CHAUFFE PLUS VOYANT VERT ALLUME', 'categoryId' => $cats[2]['id'],
+            ['id' => null, 'name' => 'LA MACHINE NE CHAUFFE PLUS VOYANT VERT ALLUME', 'categoryId' => $cats[2]['id'], 'position' => 1,
                 'steps' => [
                     ['stepType' => 'symptome', 'description' => 'Identification du problème : LA MACHINE NE CHAUFFE PLUS VOYANT VERT ALLUME'],
                     ['stepType' => 'check', 'description' => 'Vérifier la résistance'],
@@ -157,7 +158,7 @@ class DecisionTreeFixtures extends Fixture implements FixtureGroupInterface
                     ['stepType' => 'action', 'description' => 'Nettoyer les contacts'],
                 ]],
             ['id' => null, 'name' => 'LA MACHINE NE CHAUFFE PLUS VOYANT VERT RESTE ETEINT',
-                'categoryId' => $cats[2]['id'], 'steps' => [
+                'categoryId' => $cats[2]['id'], 'position' => 2, 'steps' => [
                 ['stepType' => 'symptome', 'description' => 'Identification du problème : LA MACHINE NE CHAUFFE PLUS VOYANT VERT RESTE ETEINT'],
                 ['stepType' => 'check', 'description' => 'Vérifier le voyant'],
                 ['stepType' => 'check', 'description' => 'Vérifier le thermostat'],
@@ -168,7 +169,7 @@ class DecisionTreeFixtures extends Fixture implements FixtureGroupInterface
                 ['stepType' => 'action', 'description' => 'Réparer les connexions'],
                 ['stepType' => 'action', 'description' => 'Nettoyer les contacts'],
             ]],
-            ['id' => null, 'name' => 'LA MACHINE NE CHAUFFE PAS ASSEZ', 'categoryId' => $cats[2]['id'], 'steps' => [
+            ['id' => null, 'name' => 'LA MACHINE NE CHAUFFE PAS ASSEZ', 'categoryId' => $cats[2]['id'], 'position' => 3, 'steps' => [
                 ['stepType' => 'symptome', 'description' => 'Identification du problème : LA MACHINE NE CHAUFFE PAS ASSEZ'],
                 ['stepType' => 'check', 'description' => 'Vérifier la température'],
                 ['stepType' => 'check', 'description' => 'Vérifier le thermostat'],
@@ -180,7 +181,7 @@ class DecisionTreeFixtures extends Fixture implements FixtureGroupInterface
                 ['stepType' => 'action', 'description' => 'Mettre à jour les paramètres'],
             ]],
             ['id' => null, 'name' => 'VOYANT VERT S\'ETEINT JUSQU\'A UNE TEMPERATURE RELATIVEMENT BASSE',
-                'categoryId' => $cats[2]['id'], 'steps' => [
+                'categoryId' => $cats[2]['id'], 'position' => 4, 'steps' => [
                 ['stepType' => 'symptome', 'description' => 'Identification du problème : VOYANT VERT S\'ETEINT JUSQU\'A UNE TEMPERATURE RELATIVEMENT BASSE'],
                 ['stepType' => 'check', 'description' => 'Vérifier le thermostat'],
                 ['stepType' => 'check', 'description' => 'Vérifier la température'],
@@ -191,7 +192,7 @@ class DecisionTreeFixtures extends Fixture implements FixtureGroupInterface
                 ['stepType' => 'action', 'description' => 'Nettoyer les composants'],
                 ['stepType' => 'action', 'description' => 'Vérifier la calibration'],
             ]],
-            ['id' => null, 'name' => 'LA MACHINE MONTE TROP EN TEMPERATURE', 'categoryId' => $cats[2]['id'],
+            ['id' => null, 'name' => 'LA MACHINE MONTE TROP EN TEMPERATURE', 'categoryId' => $cats[2]['id'], 'position' => 5,
                 'steps' => [
                     ['stepType' => 'symptome', 'description' => 'Identification du problème : LA MACHINE MONTE TROP EN TEMPERATURE'],
                     ['stepType' => 'check', 'description' => 'Vérifier le thermostat'],
@@ -203,7 +204,7 @@ class DecisionTreeFixtures extends Fixture implements FixtureGroupInterface
                     ['stepType' => 'action', 'description' => 'Nettoyer les composants'],
                     ['stepType' => 'action', 'description' => 'Vérifier la ventilation'],
                 ]],
-            ['id' => null, 'name' => 'LA MACHINE FUME BEAUCOUP', 'categoryId' => $cats[2]['id'], 'steps' => [
+            ['id' => null, 'name' => 'LA MACHINE FUME BEAUCOUP', 'categoryId' => $cats[2]['id'], 'position' => 6, 'steps' => [
                 ['stepType' => 'symptome', 'description' => 'Identification du problème : LA MACHINE FUME BEAUCOUP'],
                 ['stepType' => 'check', 'description' => 'Vérifier la température'],
                 ['stepType' => 'check', 'description' => 'Vérifier les joints'],
@@ -220,7 +221,8 @@ class DecisionTreeFixtures extends Fixture implements FixtureGroupInterface
             $problemType = new ProblemType(
                 ProblemTypeId::make(),
                 $datas[$i]['name'],
-                $datas[$i]['categoryId']
+                $datas[$i]['categoryId'],
+                $datas[$i]['position']
             );
             $manager->persist($problemType);
             $datas[$i]['id'] = $problemType->id;
