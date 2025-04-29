@@ -1,119 +1,40 @@
-{% extends 'base.html.twig' %}
-
+{% extends "layout/dashboard.layout.html.twig" %}
 {% block title %}Arbre de dépannage - {{ problemType.name }}{% endblock %}
 
-{% block body %}
-    <div class="container mt-4">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ path('app_arbre_de_depannage') }}">Arbre de dépannage</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ problemType.name }}</li>
-            </ol>
-        </nav>
+{% block content %}
+    <div class="row flex-grow">
+        <div class="col-md-12">
+            {% for type, messages in {'success': 'alert-success', 'info': 'alert-primary', 'error': 'alert-danger'} %}
+                {% for message in app.flashes(type) %}
+                    <div class="alert {{ messages }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card card-rounded">
+                <div class="card-body">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ path('app_arbre_de_depannage') }}">Arbre de dépannage</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ problemType.name }}</li>
+                        </ol>
+                    </nav>
 
-        <div class="card">
-            <div class="card-header">
-                <h1 class="h3 mb-0">{{ problemType.name }}</h1>
-            </div>
-            <div class="card-body">
-                <div class="decision-tree">
-                    {% if diagnosticSteps is not empty %}
-                        {% set rootSteps = [] %}
-                        {% for step in diagnosticSteps %}
-                            {% if step.parentStepId is null %}
-                                {% set rootSteps = rootSteps|merge([step]) %}
-                            {% endif %}
-                        {% endfor %}
-                        
-                        {% if rootSteps is not empty %}
-                            {% for rootStep in rootSteps %}
-                                <div class="tree-node root">
-                                    <div class="node-content">
-                                        {{ rootStep.description }}
-                                    </div>
-                                    {% set children = [] %}
-                                    {% for step in diagnosticSteps %}
-                                        {% if step.parentStepId is not null and step.parentStepId.value == rootStep.id.value %}
-                                            {% set children = children|merge([step]) %}
-                                        {% endif %}
-                                    {% endfor %}
-                                    
-                                    {% if children is not empty %}
-                                        <div class="children">
-                                            {% for child in children %}
-                                                <div class="tree-node">
-                                                    <div class="node-content">
-                                                        {{ child.description }}
-                                                    </div>
-                                                    {% set grandChildren = [] %}
-                                                    {% for step in diagnosticSteps %}
-                                                        {% if step.parentStepId is not null and step.parentStepId.value == child.id.value %}
-                                                            {% set grandChildren = grandChildren|merge([step]) %}
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                    
-                                                    {% if grandChildren is not empty %}
-                                                        <div class="children">
-                                                            {% for grandChild in grandChildren %}
-                                                                <div class="tree-node leaf">
-                                                                    <div class="node-content">
-                                                                        {{ grandChild.description }}
-                                                                    </div>
-                                                                </div>
-                                                            {% endfor %}
-                                                        </div>
-                                                    {% endif %}
-                                                </div>
-                                            {% endfor %}
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            {% endfor %}
-                        {% else %}
-                            <p class="text-muted">Aucun arbre de décision n'est disponible pour ce type de problème.</p>
-                        {% endif %}
-                    {% else %}
-                        <p class="text-muted">Aucun arbre de décision n'est disponible pour ce type de problème.</p>
-                    {% endif %}
+                    <div class="card">
+                        <div class="card-header">
+                            <h1 class="h3 mb-0">{{ problemType.name }}</h1>
+                        </div>
+                        <div class="card-body">
+                            <div class="decision-tree">
+                                {# Utilise JOINTJS pour l'arbre de décision #}
+                                <div id="decision-tree"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 {% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <style>
-        .decision-tree {
-            padding: 20px;
-        }
-        .tree-node {
-            margin: 10px 0;
-            padding: 10px;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-        }
-        .tree-node.root {
-            background-color: #f8f9fa;
-        }
-        .node-content {
-            font-weight: 500;
-        }
-        .children {
-            margin-left: 30px;
-            position: relative;
-        }
-        .children::before {
-            content: '';
-            position: absolute;
-            left: -15px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background-color: #dee2e6;
-        }
-        .tree-node.leaf {
-            background-color: #e9ecef;
-        }
-    </style>
-{% endblock %} 
