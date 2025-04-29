@@ -58,8 +58,6 @@ class DecisionTreeController extends AbstractController
         }
 
         $diagnosticSteps = $this->diagnosticStepRepository->findAllByProblemType($problemType->id);
-        
-        dd($diagnosticSteps);
 
         return $this->render('admin/decisiontree/show.html.twig', [
             'problemType' => $problemType,

@@ -17,34 +17,61 @@
             </div>
             <div class="card-body">
                 <div class="decision-tree">
-                    {% if problemType.rootNode %}
-                        <div class="tree-node root">
-                            <div class="node-content">
-                                {{ problemType.rootNode.question }}
-                            </div>
-                            {% if problemType.rootNode.children is not empty %}
-                                <div class="children">
-                                    {% for child in problemType.rootNode.children %}
-                                        <div class="tree-node">
-                                            <div class="node-content">
-                                                {{ child.question }}
-                                            </div>
-                                            {% if child.children is not empty %}
-                                                <div class="children">
-                                                    {% for grandChild in child.children %}
-                                                        <div class="tree-node leaf">
-                                                            <div class="node-content">
-                                                                {{ grandChild.question }}
-                                                            </div>
-                                                        </div>
-                                                    {% endfor %}
-                                                </div>
-                                            {% endif %}
-                                        </div>
-                                    {% endfor %}
-                                </div>
+                    {% if diagnosticSteps is not empty %}
+                        {% set rootSteps = [] %}
+                        {% for step in diagnosticSteps %}
+                            {% if step.parentStepId is null %}
+                                {% set rootSteps = rootSteps|merge([step]) %}
                             {% endif %}
-                        </div>
+                        {% endfor %}
+                        
+                        {% if rootSteps is not empty %}
+                            {% for rootStep in rootSteps %}
+                                <div class="tree-node root">
+                                    <div class="node-content">
+                                        {{ rootStep.description }}
+                                    </div>
+                                    {% set children = [] %}
+                                    {% for step in diagnosticSteps %}
+                                        {% if step.parentStepId is not null and step.parentStepId.value == rootStep.id.value %}
+                                            {% set children = children|merge([step]) %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    
+                                    {% if children is not empty %}
+                                        <div class="children">
+                                            {% for child in children %}
+                                                <div class="tree-node">
+                                                    <div class="node-content">
+                                                        {{ child.description }}
+                                                    </div>
+                                                    {% set grandChildren = [] %}
+                                                    {% for step in diagnosticSteps %}
+                                                        {% if step.parentStepId is not null and step.parentStepId.value == child.id.value %}
+                                                            {% set grandChildren = grandChildren|merge([step]) %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    
+                                                    {% if grandChildren is not empty %}
+                                                        <div class="children">
+                                                            {% for grandChild in grandChildren %}
+                                                                <div class="tree-node leaf">
+                                                                    <div class="node-content">
+                                                                        {{ grandChild.description }}
+                                                                    </div>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-muted">Aucun arbre de décision n'est disponible pour ce type de problème.</p>
+                        {% endif %}
                     {% else %}
                         <p class="text-muted">Aucun arbre de décision n'est disponible pour ce type de problème.</p>
                     {% endif %}

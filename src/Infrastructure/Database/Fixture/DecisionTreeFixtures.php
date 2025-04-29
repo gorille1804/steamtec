@@ -138,6 +138,7 @@ class DecisionTreeFixtures extends Fixture implements FixtureGroupInterface
             ]],
         ];
 
+        // Première étape : créer tous les ProblemTypes
         for ($i=0; $i < count($datas); $i++) {
             $problemType = new ProblemType(
                 ProblemTypeId::make(),
@@ -147,10 +148,20 @@ class DecisionTreeFixtures extends Fixture implements FixtureGroupInterface
             );
             $manager->persist($problemType);
             $datas[$i]['id'] = $problemType->id;
+        }
+        
+        $manager->flush();
 
+        // Deuxième étape : créer toutes les étapes de diagnostic sans les relations
+        $stepMap = []; // Pour stocker les IDs des étapes par problème et position
+        
+        for ($i=0; $i < count($datas); $i++) {
+            $problemId = $datas[$i]['id'];
+            $stepMap[(string)$problemId] = [];
+            
             foreach ($datas[$i]['steps'] as $step) {
                 $stepType = match($step['stepType']) {
-                    'symptome' => DiagnosticStepType::SYMPTOM,
+                    'symptom' => DiagnosticStepType::SYMPTOM,
                     'check' => DiagnosticStepType::CHECK,
                     'action' => DiagnosticStepType::ACTION,
                     default => DiagnosticStepType::SYMPTOM
@@ -158,20 +169,52 @@ class DecisionTreeFixtures extends Fixture implements FixtureGroupInterface
                 
                 $diagnosticStep = new DiagnosticStep(
                     DiagnosticStepId::make(),
-                    $problemType->id,
+                    $problemId,
                     $stepType,
-                    null,
-                    null,
-                    null,
+                    null, // parentStepId sera mis à jour plus tard
+                    null, // nextStepOKId sera mis à jour plus tard
+                    null, // nextStepKOId sera mis à jour plus tard
                     $step['description'],
-                    false,
+                    $step['needDoc'] == 1,
                     $step['position'],
-                    null
+                    $step['goto']
                 );
+                
                 $manager->persist($diagnosticStep);
+                $stepMap[(string)$problemId][$step['position']] = $diagnosticStep->id;
             }
         }
-
+        
+        $manager->flush();
+        
+        // Troisième étape : mettre à jour les relations entre les étapes
+        for ($i=0; $i < count($datas); $i++) {
+            $problemId = $datas[$i]['id'];
+            
+            foreach ($datas[$i]['steps'] as $step) {
+                $currentStepId = $stepMap[(string)$problemId][$step['position']];
+                $currentStep = $manager->find(DiagnosticStep::class, $currentStepId);
+                
+                // Mettre à jour le parent
+                if ($step['parent'] !== null) {
+                    $parentStepId = $stepMap[(string)$problemId][$step['parent']];
+                    $currentStep->parentStepId = $parentStepId;
+                }
+                
+                // Mettre à jour nextOK
+                if ($step['nextOK'] !== null) {
+                    $nextOKStepId = $stepMap[(string)$problemId][$step['nextOK']];
+                    $currentStep->nextStepOKId = $nextOKStepId;
+                }
+                
+                // Mettre à jour nextKO
+                if ($step['nextKO'] !== null) {
+                    $nextKOStepId = $stepMap[(string)$problemId][$step['nextKO']];
+                    $currentStep->nextStepKOId = $nextKOStepId;
+                }
+            }
+        }
+        
         $manager->flush();
     }
 
