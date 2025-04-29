@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Arbre de dépannage - {{ problemType.name }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('app_arbre_de_depannage') }}">Arbre de dépannage</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ problemType.name }}</li>
+            </ol>
+        </nav>
+
+        <div class="card">
+            <div class="card-header">
+                <h1 class="h3 mb-0">{{ problemType.name }}</h1>
+            </div>
+            <div class="card-body">
+                <div class="decision-tree">
+                    {% if problemType.rootNode %}
+                        <div class="tree-node root">
+                            <div class="node-content">
+                                {{ problemType.rootNode.question }}
+                            </div>
+                            {% if problemType.rootNode.children is not empty %}
+                                <div class="children">
+                                    {% for child in problemType.rootNode.children %}
+                                        <div class="tree-node">
+                                            <div class="node-content">
+                                                {{ child.question }}
+                                            </div>
+                                            {% if child.children is not empty %}
+                                                <div class="children">
+                                                    {% for grandChild in child.children %}
+                                                        <div class="tree-node leaf">
+                                                            <div class="node-content">
+                                                                {{ grandChild.question }}
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted">Aucun arbre de décision n'est disponible pour ce type de problème.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .decision-tree {
+            padding: 20px;
+        }
+        .tree-node {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+        }
+        .tree-node.root {
+            background-color: #f8f9fa;
+        }
+        .node-content {
+            font-weight: 500;
+        }
+        .children {
+            margin-left: 30px;
+            position: relative;
+        }
+        .children::before {
+            content: '';
+            position: absolute;
+            left: -15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #dee2e6;
+        }
+        .tree-node.leaf {
+            background-color: #e9ecef;
+        }
+    </style>
+{% endblock %} 

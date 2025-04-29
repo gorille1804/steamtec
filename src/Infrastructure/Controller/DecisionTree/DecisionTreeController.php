@@ -8,19 +8,27 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Domain\DecisionTree\UseCase\FindAllCategoriesUseCaseInterface;
 use Domain\DecisionTree\Gateway\ProblemTypeRepositoryInterface;
+use Domain\DecisionTree\Gateway\DiagnosticStepRepositoryInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Domain\DecisionTree\Data\ObjectValue\ProblemTypeId;
 
 #[Route('/dashboard')]
 class DecisionTreeController extends AbstractController
 {
     public function __construct(
         private readonly FindAllCategoriesUseCaseInterface $findAllCategories,
-        private readonly ProblemTypeRepositoryInterface $problemTypeRepository
+        private readonly ProblemTypeRepositoryInterface $problemTypeRepository,
+        private readonly DiagnosticStepRepositoryInterface $diagnosticStepRepository
     ) {}
 
     #[Route('/arbre-de-depannage', name: 'app_arbre_de_depannage')]
     #[IsGranted('ROLE_USER')]
     public function index(): Response
     {
+        if (!$this->getUser()) {
+            throw new AccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+        
         $categories = ($this->findAllCategories)();
         
         // Organiser les problèmes types par catégorie
@@ -32,6 +40,30 @@ class DecisionTreeController extends AbstractController
         return $this->render('admin/decisiontree/index.html.twig', [
             'categories' => $categories,
             'problemTypesByCategory' => $problemTypesByCategory
+        ]);
+    }
+
+    #[Route('/arbre-de-depannage/{problemTypeId}', name: 'app_arbre_de_depannage_show')]
+    #[IsGranted('ROLE_USER')]
+    public function show(string $problemTypeId): Response
+    {
+        if (!$this->getUser()) {
+            throw new AccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
+        $problemType = $this->problemTypeRepository->findById(new ProblemTypeId($problemTypeId));
+        
+        if (!$problemType) {
+            throw $this->createNotFoundException('Ce type de problème n\'existe pas.');
+        }
+
+        $diagnosticSteps = $this->diagnosticStepRepository->findAllByProblemType($problemType->id);
+        
+        dd($diagnosticSteps);
+
+        return $this->render('admin/decisiontree/show.html.twig', [
+            'problemType' => $problemType,
+            'diagnosticSteps' => $diagnosticSteps
         ]);
     }
 } 
