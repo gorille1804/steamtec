@@ -1,6 +1,23 @@
 {% extends "layout/dashboard.layout.html.twig" %}
 {% block title %}Arbre de dépannage - {{ problemType.name }}{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .decision-tree {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #dee2e6;
+            border-radius: 0.25rem;
+            overflow: hidden;
+        }
+        #decision-tree {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
     <div class="row flex-grow">
         <div class="col-md-12">
@@ -26,8 +43,8 @@
                         <div class="card-header">
                             <h1 class="h3 mb-0">{{ problemType.name }}</h1>
                         </div>
-                        <div class="card-body">
-                            <div class="decision-tree">
+                        <div class="card-body px-0">
+                            <div class="decision-tree overflow-auto">
                                 {# Utilise JOINTJS pour l'arbre de décision #}
                                 <div id="decision-tree"></div>
                             </div>
@@ -37,4 +54,18 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block script %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Les données de l'arbre de décision seront injectées ici par le contrôleur
+            const treeData = {{ treeData|json_encode|raw }};
+            
+            // Initialiser l'arbre de décision
+            const decisionTree = new DecisionTree('decision-tree', treeData);
+            console.log(window.DecisionTree, DecisionTree, treeData);
+        });
+    </script>
 {% endblock %}

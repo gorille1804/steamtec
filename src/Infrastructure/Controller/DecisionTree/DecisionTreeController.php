@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Domain\DecisionTree\UseCase\FindAllCategoriesUseCaseInterface;
 use Domain\DecisionTree\Gateway\ProblemTypeRepositoryInterface;
 use Domain\DecisionTree\Gateway\DiagnosticStepRepositoryInterface;
+use Domain\DecisionTree\Service\DecisionTreeBuilder;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Domain\DecisionTree\Data\ObjectValue\ProblemTypeId;
 
@@ -18,7 +19,8 @@ class DecisionTreeController extends AbstractController
     public function __construct(
         private readonly FindAllCategoriesUseCaseInterface $findAllCategories,
         private readonly ProblemTypeRepositoryInterface $problemTypeRepository,
-        private readonly DiagnosticStepRepositoryInterface $diagnosticStepRepository
+        private readonly DiagnosticStepRepositoryInterface $diagnosticStepRepository,
+        private readonly DecisionTreeBuilder $decisionTreeBuilder
     ) {}
 
     #[Route('/arbre-de-depannage', name: 'app_arbre_de_depannage')]
@@ -58,10 +60,14 @@ class DecisionTreeController extends AbstractController
         }
 
         $diagnosticSteps = $this->diagnosticStepRepository->findAllByProblemType($problemType->id);
+        
+        // Construire les données de l'arbre de décision
+        $treeData = $this->decisionTreeBuilder->buildTreeData($diagnosticSteps);
 
         return $this->render('admin/decisiontree/show.html.twig', [
             'problemType' => $problemType,
-            'diagnosticSteps' => $diagnosticSteps
+            'diagnosticSteps' => $diagnosticSteps,
+            'treeData' => $treeData
         ]);
     }
 } 
