@@ -12,6 +12,7 @@ use Domain\DecisionTree\Gateway\DiagnosticStepRepositoryInterface;
 use Domain\DecisionTree\Service\DecisionTreeBuilder;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Domain\DecisionTree\Data\ObjectValue\ProblemTypeId;
+use Domain\DecisionTree\Data\ObjectValue\DiagnosticStepId;
 
 #[Route('/dashboard')]
 class DecisionTreeController extends AbstractController
@@ -59,7 +60,36 @@ class DecisionTreeController extends AbstractController
             throw $this->createNotFoundException('Ce type de problème n\'existe pas.');
         }
 
-        $diagnosticSteps = $this->diagnosticStepRepository->findAllByProblemType($problemType->id);
+        $symptoms = $this->diagnosticStepRepository->findAllByProblemType($problemType->id);
+
+
+        return $this->render('admin/decisiontree/show.html.twig', [
+            'problemType' => $problemType,
+            'symptoms' => $symptoms
+        ]);
+    }
+
+    #[Route('/arbre-de-depannage/{problemTypeId}/{symptomId}', name: 'app_arbre_de_depannage_show_symptom')]
+    #[IsGranted('ROLE_USER')]
+    public function showSymptom(string $problemTypeId, string $symptomId): Response
+    {
+        if (!$this->getUser()) {
+            throw new AccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
+        $problemType = $this->problemTypeRepository->findById(new ProblemTypeId($problemTypeId));
+        
+        if (!$problemType) {
+            throw $this->createNotFoundException('Ce type de problème n\'existe pas.');
+        }
+
+        $symptom = $this->diagnosticStepRepository->findById(new DiagnosticStepId($symptomId));
+
+        if (!$symptom) {
+            throw $this->createNotFoundException('Ce symptôme n\'existe pas.');
+        }
+
+        $diagnosticSteps = $this->diagnosticStepRepository->findAllBySymptome($symptom->id);
 
         // Préparer les données pour l'arbre D3.js
         $nodes = [];
@@ -99,8 +129,9 @@ class DecisionTreeController extends AbstractController
             'links' => $links
         ];
 
-        return $this->render('admin/decisiontree/show.html.twig', [
+        return $this->render('admin/decisiontree/show_symptom.html.twig', [
             'problemType' => $problemType,
+            'symptom' => $symptom,
             'diagnosticSteps' => $diagnosticSteps,
             'treeData' => $treeData
         ]);

@@ -10,6 +10,8 @@ interface DiagnosticStepRepositoryInterface
 {
     /** @return DiagnosticStep[] */
     public function findAllByProblemType(ProblemTypeId $problemTypeId): array;
+    /** @return DiagnosticStep[] */
+    public function findAllBySymptome(string $symptome): array;
     public function findById(DiagnosticStepId $id): ?DiagnosticStep;
     public function save(DiagnosticStep $diagnosticStep): DiagnosticStep;
     public function update(DiagnosticStep $diagnosticStep): DiagnosticStep;

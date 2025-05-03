@@ -21,9 +21,42 @@ class DiagnosticStepRepository extends ServiceEntityRepository implements Diagno
     {
         return $this->createQueryBuilder('d')
             ->where('d.problemTypeId = :pt')
+            ->andWhere('d.parentStepId IS NULL')
             ->setParameter('pt', $problemTypeId)
             ->getQuery()
             ->getResult();
+    }
+
+    /** @return DiagnosticStep[] */
+    public function findAllBySymptome(string $symptome): array
+    {
+        $em = $this->getEntityManager();
+        $conn = $em->getConnection();
+
+        $sql = "
+            WITH RECURSIVE diagnostic_tree AS (
+                SELECT id, parent_step_id, 1 as level
+                FROM diagnostic_step
+                WHERE id = :symptome
+                UNION ALL
+                SELECT ds.id, ds.parent_step_id, dt.level + 1
+                FROM diagnostic_step ds
+                JOIN diagnostic_tree dt ON ds.parent_step_id = dt.id
+            )
+            SELECT id, level
+            FROM diagnostic_tree
+            ORDER BY level
+        ";
+
+        $stmt = $conn->prepare($sql);
+        $result = $stmt->executeQuery(['symptome' => $symptome]);
+        $ids = array_column($result->fetchAllAssociative(), 'id');
+
+        if (empty($ids)) {
+            return [];
+        }
+
+        return $this->findBy(['id' => $ids]);
     }
 
     public function findById(DiagnosticStepId $id): ?DiagnosticStep
