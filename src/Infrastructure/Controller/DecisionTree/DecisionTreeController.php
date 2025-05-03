@@ -60,9 +60,44 @@ class DecisionTreeController extends AbstractController
         }
 
         $diagnosticSteps = $this->diagnosticStepRepository->findAllByProblemType($problemType->id);
-        
-        // Construire les données de l'arbre de décision
-        $treeData = $this->decisionTreeBuilder->buildTreeData($diagnosticSteps);
+
+        // Préparer les données pour l'arbre D3.js
+        $nodes = [];
+        $links = [];
+
+        // Créer les nœuds
+        foreach ($diagnosticSteps as $step) {
+            $nodes[] = [
+                'id' => $step->id->getValue(),
+                'label' => $step->description,
+                'type' => $step->stepType->value,
+                'x' => 0, // Ces valeurs seront calculées par D3.js
+                'y' => 0
+            ];
+        }
+
+        // Créer les liens
+        foreach ($diagnosticSteps as $step) {
+            if ($step->nextStepOKId) {
+                $links[] = [
+                    'source' => $step->id->getValue(),
+                    'target' => $step->nextStepOKId->getValue(),
+                    'label' => 'OK'
+                ];
+            }
+            if ($step->nextStepKOId) {
+                $links[] = [
+                    'source' => $step->id->getValue(),
+                    'target' => $step->nextStepKOId->getValue(),
+                    'label' => 'KO'
+                ];
+            }
+        }
+
+        $treeData = [
+            'nodes' => $nodes,
+            'links' => $links
+        ];
 
         return $this->render('admin/decisiontree/show.html.twig', [
             'problemType' => $problemType,
