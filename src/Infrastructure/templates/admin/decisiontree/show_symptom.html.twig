@@ -5,6 +5,7 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('assets/css/admin/decisiontree/show_symptom.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/admin/decisiontree/interactive.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -46,9 +47,21 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="interactive" role="tabpanel" aria-labelledby="interactive-tab">
-                            <div class="text-center py-5">
-                                <h4>Fonctionnalité interactive à venir</h4>
-                                <p>Cette section sera bientôt disponible pour une expérience interactive avec l'arbre de décision.</p>
+                            <div class="interactive-container">
+                                <div class="interactive-card" id="current-node">
+                                    <!-- Le contenu actuel du nœud sera inséré ici -->
+                                </div>
+
+                                <div class="history-container" id="history-container">
+                                    <div class="history-title">Historique</div>
+                                    <div id="history-list">
+                                        <!-- L'historique des nœuds sera inséré ici -->
+                                    </div>
+                                </div>
+
+                                <div class="restart-container">
+                                    <button class="btn btn-outline" id="restart-btn">Redémarrer le diagnostic</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -62,10 +75,12 @@
     {{ parent() }}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
     <script src="{{ asset('assets/js/admin/decisiontree/show_symptom.js') }}"></script>
+    <script src="{{ asset('assets/js/admin/decisiontree/interactive.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const treeData = {{ treeData|json_encode|raw }};
             initializeDecisionTree(treeData);
+            initializeTroubleshooter(treeData);
         });
     </script>
 {% endblock %} 
