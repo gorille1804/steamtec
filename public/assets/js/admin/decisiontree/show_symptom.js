@@ -191,7 +191,7 @@ function initializeDecisionTree(treeData) {
         // Ajout du texte multi-lignes centré verticalement
         const textGroup = element.append('text')
             .attr('text-anchor', 'middle')
-            .attr('fill', 'white')
+            .attr('fill', 'black')
             .attr('font-size', '14px')
             .attr('y', -(height / 2) + 8 + lineHeight); // 8px de padding haut
 

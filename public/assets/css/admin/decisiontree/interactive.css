@@ -9,12 +9,13 @@
     --text: #1e293b;
     --card: #ffffff;
     --border: #e2e8f0;
+    --verify: #fff700;
+        --action: #ffd500;
+        --symptom: #00ff7b;
 }
 
 .interactive-container {
-    max-width: 1000px;
     margin: 0 auto;
-    padding: 1.5rem;
     width: 100%;
     box-sizing: border-box;
 }
@@ -65,6 +66,17 @@
     background-color: #f1f5f9;
 }
 
+.node-type.symptom {
+    background-color: var(--symptom);
+}
+
+.node-type.check {
+    background-color: var(--verify);
+}
+
+.node-type.action {
+    background-color: var(--action);
+}
 .buttons {
     display: flex;
     gap: 1rem;

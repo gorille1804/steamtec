@@ -24,9 +24,9 @@
                     </nav>
 
                     {# Afficher les symptômes #}
-                    <div class="row">
+                    <div class="d-flex flex-wrap gap-2">
                         {% for symptom in symptoms %}
-                            <a href="{{ path('app_arbre_de_depannage_show_symptom', {'problemTypeId': problemType.id, 'symptomId': symptom.id}) }}" class="text-decoration-none">
+                            <a href="{{ path('app_arbre_de_depannage_show_symptom', {'problemTypeId': problemType.id, 'symptomId': symptom.id}) }}" class="text-decoration-none border p-2 bg-success text-center text-white col">
                                 {{ symptom.description }}
                             </a>
                         {% endfor %}

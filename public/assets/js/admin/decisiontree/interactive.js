@@ -72,7 +72,7 @@ function renderCurrentNode() {
     // Afficher le contenu du nœud
     currentNodeElement.innerHTML = `
         ${getNodeIcon(node.type)}
-        <div class="node-type">${translateNodeType(node.type)}</div>
+        <div class="node-type ${node.type}">${translateNodeType(node.type)}</div>
         <div class="node-title">${node.label}</div>
         <div class="buttons">
             ${buttonsHtml}
