@@ -21,7 +21,8 @@ class DiagnosticStepFactory
             $request->description,
             $request->needsTechnicalDoc,
             $request->stepOrder,
-            $request->goTo
+            $request->goTo,
+            $request->page
         );
     }
 }

@@ -35,11 +35,11 @@ class DiagnosticStepRepository extends ServiceEntityRepository implements Diagno
 
         $sql = "
             WITH RECURSIVE diagnostic_tree AS (
-                SELECT id, parent_step_id, 1 as level
+                SELECT id, parent_step_id, step_order as level
                 FROM diagnostic_step
                 WHERE id = :symptome
                 UNION ALL
-                SELECT ds.id, ds.parent_step_id, dt.level + 1
+                SELECT ds.id, ds.parent_step_id, step_order as level
                 FROM diagnostic_step ds
                 JOIN diagnostic_tree dt ON ds.parent_step_id = dt.id
             )
@@ -56,7 +56,7 @@ class DiagnosticStepRepository extends ServiceEntityRepository implements Diagno
             return [];
         }
 
-        return $this->findBy(['id' => $ids]);
+        return $this->findBy(['id' => $ids], ['stepOrder' => 'ASC']);
     }
 
     public function findById(DiagnosticStepId $id): ?DiagnosticStep

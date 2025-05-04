@@ -24,7 +24,7 @@
                 <div class="card-body">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ path('app_arbre_de_depannage') }}">Arbre de dépannage</a></li>
+                            <li class="breadcrumb-item"><a href="{{ path('app_arbre_de_depannage') }}">Arbre de dépannage</a> <a href="{{ asset('uploads/ARBRE_DE_DEPANNAGE.pdf') }}" target="_blank"><i class="mdi mdi-file-pdf-box"></i></a></li>
                             <li class="breadcrumb-item"><a href="{{ path('app_arbre_de_depannage_show', {'problemTypeId': problemType.id}) }}">{{ problemType.name }}</a></li>
                             <li class="breadcrumb-item active" aria-current="page">{{ symptom.description }}</li>
                         </ol>
@@ -32,7 +32,10 @@
 
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="tree-tab" data-bs-toggle="tab" data-bs-target="#tree" type="button" role="tab" aria-controls="tree" aria-selected="true">Arbre</button>
+                            <button class="nav-link active" id="pdf-tab" data-bs-toggle="tab" data-bs-target="#pdf" type="button" role="tab" aria-controls="pdf" aria-selected="true">PDF</button>
+                        </li>
+                        <li class="nav-item" role="presentation" style="display: none;">
+                            <button class="nav-link" id="tree-tab" data-bs-toggle="tab" data-bs-target="#tree" type="button" role="tab" aria-controls="tree" aria-selected="false">Arbre</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="interactive-tab" data-bs-toggle="tab" data-bs-target="#interactive" type="button" role="tab" aria-controls="interactive" aria-selected="false">Interactive</button>
@@ -40,7 +43,12 @@
                     </ul>
 
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="tree" role="tabpanel" aria-labelledby="tree-tab">
+                        <div class="tab-pane fade show active" id="pdf" role="tabpanel" aria-labelledby="pdf-tab">
+                            <div class="pdf-view">
+                                <embed src="{{ asset('uploads/ARBRE_DE_DEPANNAGE.pdf#page=' ~ symptom.page) }}" type="application/pdf" width="100%" height="600px" />
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tree" role="tabpanel" aria-labelledby="tree-tab">
                             <div class="decision-tree">
                                 <div id="tree-container"></div>
                                 <div class="tooltip" id="tooltip"></div>

@@ -15,4 +15,5 @@ class UpdateDiagnosticStepRequest
     public bool $needsTechnicalDoc = false;
     public int $stepOrder = 0;
     public ?int $goTo = null;
+    public ?int $page = null;
 }

@@ -18,6 +18,7 @@ class DiagnosticStep
         public string $description,
         public bool $needsTechnicalDoc,
         public int $stepOrder,
-        public ?int $goTo
+        public ?int $goTo,
+        public ?int $page
     ) {}
 }

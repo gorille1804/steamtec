@@ -101,6 +101,8 @@ class DecisionTreeController extends AbstractController
                 'id' => $step->id->getValue(),
                 'label' => $step->description,
                 'type' => $step->stepType->value,
+                'usedoc' => $step->needsTechnicalDoc,
+                'goto' => $step->goTo,
                 'x' => 0, // Ces valeurs seront calculées par D3.js
                 'y' => 0
             ];

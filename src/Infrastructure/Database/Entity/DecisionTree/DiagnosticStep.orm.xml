@@ -15,5 +15,6 @@
         <field name="needsTechnicalDoc" type="boolean" column="needs_technical_doc" nullable="false"/>
         <field name="stepOrder" type="integer" column="step_order" nullable="false"/>
         <field name="goTo" type="integer" column="go_to" nullable="true"/>
+        <field name="page" type="integer" column="page" nullable="true"/>
     </entity>
 </doctrine-mapping>
