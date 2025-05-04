@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+
+    <entity name="Domain\DecisionTree\Data\Model\ProblemType" table="problem_type">
+        <id name="id" type="problemTypeId" column="id"/>
+        <field name="name" type="string" length="180" nullable="false"/>
+        <field name="categoryId" type="categoryId" column="category_id" nullable="false"/>
+        <field name="position" type="integer" nullable="false"/>
+    </entity>
+</doctrine-mapping>

@@ -63,3 +63,9 @@ doctrine:
                         dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/PushNotification'
                         prefix: 'Domain\PushNotification\Data\Model'
                         alias: PushNotification
+                    DecisionTree:
+                        type: xml
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/DecisionTree'
+                        prefix: 'Domain\DecisionTree\Data\Model'
+                        alias: DecisionTree

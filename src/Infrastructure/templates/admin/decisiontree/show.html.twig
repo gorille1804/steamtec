@@ -1,0 +1,38 @@
+{% extends "layout/dashboard.layout.html.twig" %}
+
+{% block title %}Arbre de dépannage - {{ problemType.name }}{% endblock %}
+
+{% block content %}
+    <div class="row flex-grow">
+        <div class="col-md-12">
+            {% for type, messages in {'success': 'alert-success', 'info': 'alert-primary', 'error': 'alert-danger'} %}
+                {% for message in app.flashes(type) %}
+                    <div class="alert {{ messages }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card card-rounded">
+                <div class="card-body">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ path('app_arbre_de_depannage') }}">Arbre de dépannage</a> <a href="{{ asset('uploads/ARBRE_DE_DEPANNAGE.pdf') }}" target="_blank"><i class="mdi mdi-file-pdf-box"></i></a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ problemType.name }}</li>
+                        </ol>
+                    </nav>
+
+                    {# Afficher les symptômes #}
+                    <div class="d-flex flex-wrap gap-2">
+                        {% for symptom in symptoms %}
+                            <a href="{{ path('app_arbre_de_depannage_show_symptom', {'problemTypeId': problemType.id, 'symptomId': symptom.id}) }}" class="text-decoration-none border p-2 bg-success text-center text-white col">
+                                {{ symptom.description }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

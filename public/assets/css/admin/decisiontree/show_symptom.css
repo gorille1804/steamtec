@@ -1,0 +1,129 @@
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --secondary: #64748b;
+    --success: #16a34a;
+    --danger: #dc2626;
+    --warning: #f59e0b;
+    --background: #f8fafc;
+    --text: #1e293b;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --verify: #fff700;
+    --action: #ffd500;
+    --symptom: #00ff7b;
+}
+.decision-tree {
+    width: 100%;
+    height: 1000px;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    overflow: hidden;
+}
+
+#tree-container {
+    width: 100%;
+    height: 100%;
+}
+
+.node {
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.node rect {
+    stroke-width: 2px;
+    rx: 5;
+    ry: 5;
+}
+
+.check polygon {
+    stroke-width: 2px;
+}
+
+.node text {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.link {
+    fill: none;
+    stroke-width: 2px;
+}
+
+.symptom rect {
+    fill: var(--symptom);
+    stroke: #2980b9;
+    color: var(--text);
+}
+
+.check polygon {
+    fill: var(--verify);
+    stroke: #e67e22;
+    color: var(--text);
+}
+
+.action rect {
+    fill: var(--action);
+    stroke: #27ae60;
+    color: var(--text);
+}
+
+.tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 12px;
+    max-width: 300px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1000;
+    line-height: 1.4;
+}
+
+.path-highlight {
+    stroke-width: 4px !important;
+    stroke: #e74c3c !important;
+}
+
+.legend {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+.link-label {
+    display: none;
+}
+
+.nav-tabs {
+    margin-bottom: 0;
+}
+
+.tab-content {
+    padding: 1rem;
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-top: none;
+    border-radius: 0 0 0.25rem 0.25rem;
+}
+
+.tab-pane {
+    min-height: 1000px;
+}

@@ -1,0 +1,9 @@
+{% extends 'layout/dashboard.layout.html.twig' %}
+{% block title %}{{ is_edit ? 'Edit Category' : 'Create Category' }}{% endblock %}
+{% block content %}
+<h1>{{ is_edit ? 'Edit Category' : 'Create Category' }}</h1>
+{{ form_start(form) }}
+    {{ form_row(form.name) }}
+    <button class="btn">{{ is_edit ? 'Update' : 'Create' }}</button>
+{{ form_end(form) }}
+{% endblock %}

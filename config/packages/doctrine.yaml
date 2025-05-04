@@ -24,6 +24,9 @@ doctrine:
             maintenanceNotificationId: Infrastructure\Database\FieldType\MaintenanceNotificationIdType
             enumMaintenanceNotification: Infrastructure\Database\FieldType\EnumMaintenanceNotificationType
             pushNotificationId: Infrastructure\Database\FieldType\PushNotificationIdType
+            categoryId: Infrastructure\Database\FieldType\CategoryIdType
+            problemTypeId: Infrastructure\Database\FieldType\ProblemTypeIdType
+            diagnosticStepId: Infrastructure\Database\FieldType\DiagnosticStepIdType
     orm:
         auto_generate_proxy_classes: true
         default_entity_manager: default

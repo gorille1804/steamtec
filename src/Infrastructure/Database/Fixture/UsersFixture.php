@@ -8,12 +8,18 @@ use Domain\User\Data\Model\User;
 use Domain\User\Data\ObjectValue\UserId;
 use Domain\User\Gateway\PasswordHasherInterface;
 use Faker\Factory;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 
-class UsersFixture extends Fixture
+class UsersFixture extends Fixture implements FixtureGroupInterface
 {
     public function __construct(
         private readonly PasswordHasherInterface $hasher
     ){}
+
+    public static function getGroups(): array
+    {
+        return ['users'];
+    }
     
     public function load(ObjectManager $manager): void
     {
