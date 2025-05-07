@@ -35812,6 +35812,11 @@ header .btn_se_connecter:hover {
   color: #000;
 }
 
+.content_liste_text_droite_entete_accueil.non-decale li {
+  top: 0 !important;
+  left: 0 !important;
+}
+
 .content_liste_text_droite_entete_accueil li:nth-child(1) {
   top: 79px;
   left: -62px;
@@ -35836,7 +35841,6 @@ header .btn_se_connecter:hover {
   top: 499px;
   left: 38px;
 }
-
 .content_solution_nettoyage .content_gauche_nettoyage .content_usage,
 .content_usage {
   border-radius: 64px;
