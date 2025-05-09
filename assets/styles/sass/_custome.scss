@@ -10,6 +10,7 @@
         text-align: center;
         line-height: 150%;  
         font-size: 18px;
+        font-weight: 400;
        }  
     }
 }
@@ -29,4 +30,23 @@
     display: flex;
     gap: 15px;
     max-width: 48%;
+}
+.content_confiance{
+    .class-vert{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+.content_bloc_telecharger_fichier_nettoyage{
+    display: flex;
+        flex-direction: column;
+        gap: 2px;
+        align-items: start;
+    
+}
+.content_decouvrir_gamme{
+    .owl-carousel{
+        display: block;
+    }
 }
