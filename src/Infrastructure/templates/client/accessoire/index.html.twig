@@ -40,7 +40,7 @@
 						<a class="nav-link active" id="accessoire-nettoyage-tab" data-bs-toggle="tab" href="#accessoire-nettoyage" role="tab" aria-controls="accessoire-nettoyage" aria-selected="true">Accessoires de nettoyage</a>
 					</li>
 					<li class="nav-item" role="presentation">
-						<a class="nav-link" id="accessoire-desherbage-tab" data-bs-toggle="tab" href="#accessoire-desherbage" role="tab" aria-controls="accessoire-desherbage" aria-selected="false">Accessoires de desherbage</a>
+						<a class="nav-link" id="accessoire-desherbage-tab" data-bs-toggle="tab" href="#accessoire-desherbage" role="tab" aria-controls="accessoire-desherbage" aria-selected="false">Accessoires de désherbage</a>
 					</li>
 					<li class="nav-item" role="presentation">
 						<a class="nav-link" id="flexible-enrouler-tab" data-bs-toggle="tab" href="#flexible-enrouler" role="tab" aria-controls="flexible-enrouler" aria-selected="false">Flexibles et enrouleurs</a>
@@ -210,7 +210,7 @@
 						<div class="pagination" id="pagination"></div>
 					</div>
 					<div class="tab-pane fade" id="accessoire-desherbage" role="tabpanel" aria-labelledby="accessoire-desherbage-tab">
-						<h3>Accessoires de desherbage</h3>
+						<h3>Accessoires de désherbage</h3>
 						<p class="desc">Nous proposons une gamme très variée d'accessoires en acier inoxydable pour le désherbage vapeur. De la lance ponctuelle 1 buse jusqu'à des rampes d'1 mètre de large en passant par des accessoires spécifiques pour désherber la voirie et les dallages, votre besoin devrait être couvert. Nous pouvons également nous adapter à des besoins spécifiques.</p>
 						<ul class="content_list_bloc_accessoire row" id="bloc_liste_accessoire_tab2">
 							<li class="col-md-4">
@@ -465,4 +465,30 @@
 		</div>
 	</div>
 
+	<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		// Vérifier si l'URL contient un fragment
+		const hash = window.location.hash;
+		if (hash) {
+			// Trouver l'onglet correspondant
+			const tab = document.querySelector(`a[href="${hash}"]`);
+			if (tab) {
+				// Désactiver l'onglet actif par défaut
+				const activeTab = document.querySelector('.nav-link.active');
+				const activePane = document.querySelector('.tab-pane.show.active');
+				if (activeTab) activeTab.classList.remove('active');
+				if (activePane) {
+					activePane.classList.remove('show', 'active');
+				}
+				
+				// Activer le nouvel onglet
+				tab.classList.add('active');
+				const targetPane = document.querySelector(hash);
+				if (targetPane) {
+					targetPane.classList.add('show', 'active');
+				}
+			}
+		}
+	});
+	</script>
 {% endblock %}
