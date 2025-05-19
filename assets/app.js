@@ -13,17 +13,27 @@ import './styles/sass/app.scss';
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 
+// Fonction pour détecter si l'appareil est mobile
+function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
 // Vérifier si le navigateur supporte les notifications et Service Workers
 if ("serviceWorker" in navigator && "Notification" in window) {
     console.log("📢 Service Worker détecté !");
     
-    navigator.serviceWorker.register("/service-worker.js")
-        .then(registration => {
-            registration.update();    
-            console.log("✅ Service Worker enregistré :", registration);
-            demanderPermissionNotification();
-        })
-        .catch(error => console.error("❌ Erreur d'enregistrement du Service Worker :", error));
+    // N'enregistrer le Service Worker que sur mobile
+    if (isMobileDevice()) {
+        navigator.serviceWorker.register("/service-worker.js")
+            .then(registration => {
+                registration.update();
+                console.log("✅ Service Worker enregistré :", registration);
+                demanderPermissionNotification();
+            })
+            .catch(error => console.error("❌ Erreur d'enregistrement du Service Worker :", error));
+    } else {
+        console.log("ℹ️ Service Worker non enregistré car appareil desktop détecté");
+    }
 } else {
     console.warn("🚨 Notifications ou Service Workers non supportés sur ce navigateur.");
 }

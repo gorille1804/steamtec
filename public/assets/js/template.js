@@ -142,4 +142,16 @@
     }
   }); //missing );
 
+  // Empêche l'installation de la PWA sur desktop
+  function isDesktop() {
+    return !/android|iphone|ipad|ipod|mobile/i.test(navigator.userAgent);
+  }
+  window.addEventListener('beforeinstallprompt', function (e) {
+    if (isDesktop()) {
+      e.preventDefault();
+      return false;
+    }
+    // Sinon, laisse le prompt s'afficher sur mobile
+  });
+
 })(jQuery);
