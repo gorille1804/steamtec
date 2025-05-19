@@ -52,10 +52,16 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(
         fetch(event.request) // Essaye de récupérer depuis le réseau en premier
         .then((networkResponse) => {
-            return caches.open(CACHE_NAME).then((cache) => {
-                cache.put(event.request, networkResponse.clone());
-                return networkResponse;
-            });
+            // Only cache requests from our own origin and with supported schemes
+            const url = new URL(event.request.url);
+            if (url.origin === self.location.origin && 
+                (url.protocol === 'http:' || url.protocol === 'https:')) {
+                return caches.open(CACHE_NAME).then((cache) => {
+                    cache.put(event.request, networkResponse.clone());
+                    return networkResponse;
+                });
+            }
+            return networkResponse;
         })
         .catch(() => {
             return caches.match(event.request); // Si le réseau échoue, utiliser le cache

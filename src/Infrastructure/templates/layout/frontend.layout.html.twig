@@ -19,9 +19,10 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/select2-bootstrap-theme/select2-bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/js/select.dataTables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/owl.theme.default.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     {% block stylesheets %}
       {{ encore_entry_link_tags('app') }}
     {% endblock %}
@@ -101,6 +102,13 @@
 function setupPagination(tabId, itemsPerPage) {
     const items = document.querySelectorAll(`#${tabId} ul li`);  // Liste des éléments dans la tab
     const paginationDiv = document.querySelector(`#${tabId} .pagination`);  // Div de pagination pour la tab
+    
+    // Check if both elements exist
+    if (!items.length || !paginationDiv) {
+        console.warn(`Pagination elements not found for tab ${tabId}, skipping initialization`);
+        return;
+    }
+    
     const totalPages = Math.ceil(items.length / itemsPerPage); // Calculer le nombre total de pages
 
     let currentPage = 1;  // Page actuelle
@@ -181,6 +189,13 @@ initPagination();
      function setupFaqPagination(sectionId, itemsPerPage) {
     const items = document.querySelectorAll(`#${sectionId} .accordion-item`);
     const paginationDiv = document.querySelector(`#${sectionId} .pagination`);
+    
+    // Check if both elements exist
+    if (!items.length || !paginationDiv) {
+        console.warn(`Pagination elements not found for section ${sectionId}, skipping initialization`);
+        return;
+    }
+    
     const totalPages = Math.ceil(items.length / itemsPerPage);
     let currentPage = 1;
 

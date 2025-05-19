@@ -46,8 +46,73 @@
 		<div class="content_bloc_force_machine">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-5 d-flex flex-column justify-content-center">
-						<img src="{{ asset('assets/images/machines.jpg') }}" alt="" class="img-fluid"/>
+					<div class="col-md-5 d-flex flex-column justify-content-center interactive-image-container">
+						<img src="{{ asset('assets/images/machine.png') }}" alt="" class="img-fluid"/>
+						<!-- img src="{{ asset('assets/images/machines.jpg') }}" alt="" class="img-fluid"/-->
+						<div class="container-legend-points">
+							<div class="legend-point" style="top: 10%; left: 20%;">
+								<span class="legend-point-label">a</span>
+								<div class="legend-tooltip">
+									<strong>Chaudière</strong><br>
+									Double serpentin Inox de 40m, Brûleur à haute efficacité, Allumage électrique, Alimenté au diesel, 300 bars de pression maximale, évolution possible vers le Bio-Diesel
+								</div>
+							</div>
+							<div class="legend-point" style="top: 25%; left: 13%;">
+								<span class="legend-point-label">c</span>
+								<div class="legend-tooltip">
+									<strong>Branchement en eau</strong><br>
+									Possibilité de travail en direct ou sur citerne
+								</div>
+							</div>
+							<div class="legend-point" style="top: 35%; left: 81%;">
+								<span class="legend-point-label">d</span>
+								<div class="legend-tooltip">
+									Châssis robuste en INOX et Aluminium permettant de protéger le matériel et de travailler par presque tous les temps
+								</div>
+							</div>
+							<div class="legend-point" style="top: 46%; left: 67%;">
+								<span class="legend-point-label">b</span>
+								<div class="legend-tooltip">
+									<strong>Température réglable</strong><br>
+									Afficheur digital de température avec programmation précise, affichage simultané de la température réelle et de la consigne.
+								</div>
+							</div>
+							<div class="legend-point" style="top: 50%; left: 55%;">
+								<span class="legend-point-label">g</span>
+								<div class="legend-tooltip">
+									<strong>Alimentation Electrique</strong><br>
+									Fonctionne sur du 230V, possibilité d’alimenter via un groupe électrogène (nous consulter-lien vers équipements)
+								</div>
+							</div>
+							<div class="legend-point" style="top: 55%; left: 35%;">
+								<span class="legend-point-label">e</span>
+								<div class="legend-tooltip">
+									<strong>Réservoir carburant en Inox</strong><br>
+									accessible depuis l'extérieur, remplissage facile, capacité 41 L
+								</div>
+							</div>
+							<div class="legend-point" style="top: 68%; left: 17%;">
+								<span class="legend-point-label">f</span>
+								<div class="legend-tooltip">
+									<strong>Dosage anticalcaire</strong><br>
+									Micro dosage automatique (140 ml/h) de produit liant du calcaire
+								</div>
+							</div>
+							<div class="legend-point" style="top: 57%; left: 70%;">
+								<span class="legend-point-label">i</span>
+								<div class="legend-tooltip">
+									<strong>Basse Pression</strong><br>
+									Réglable jusque 60 bars - n'altère pas le support, faible consommation en eau, réglage facile avec visuel pompe
+								</div>
+							</div>
+							<div class="legend-point" style="top: 75%; left: 68%;">
+								<span class="legend-point-label">h</span>
+								<div class="legend-tooltip">
+									<strong>2 sorties opérateurs possibles</strong><br>
+									selon les supports, possibilité de travailler à 2, robinets haute température
+								</div>
+							</div>
+						</div>
 					</div>
 					<div class="col-md-7">
 						<h3>Ses forces : La qualité, la robustesse, consommations et accompagnement
@@ -129,4 +194,151 @@
 			</div>
 		</div>
 	</div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			function adjustLegendPointsHeight() {
+				var container = document.querySelector('.interactive-image-container');
+				var img = container.querySelector('img');
+				var legend = document.querySelector('.container-legend-points');
+				if (img && legend) {
+					legend.style.height = img.offsetHeight + 'px';
+				}
+			}
+			var img = document.querySelector('.interactive-image-container img');
+			if (img) {
+				img.addEventListener('load', adjustLegendPointsHeight);
+				window.addEventListener('resize', adjustLegendPointsHeight);
+				adjustLegendPointsHeight();
+			}
+		});
+	</script>
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<style>
+		.interactive-image-container {
+            position: relative;
+            display: inline-block;
+            max-width: 100%;
+            overflow: visible;
+			z-index: 10;
+        }
+
+		.container-legend-points {
+			width: 100%;
+			height: auto;
+			position: absolute;
+		}
+
+		.interactive-image-container img {
+			width: 100%;
+			height: auto;
+			display: block;
+		}
+
+        .legend-point {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            background-color: #CD6331;
+            border: 3px solid white;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 2;
+			transform: translate(-50%, -50%);
+        }
+
+        .legend-point::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            background-color: #CD6331;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+		.legend-point-label {
+			color: white;
+			font-size: 14px;
+			text-align: center;
+			position: absolute;
+			left: 50%;
+			transform: translateX(-4px);
+			font-weight: bold;
+		}
+
+        @keyframes pulse {
+            0% {
+                width: 0;
+                height: 0;
+                opacity: 1;
+            }
+            100% {
+                width: 40px;
+                height: 40px;
+                opacity: 0;
+            }
+        }
+
+        .legend-point:hover {
+            background-color: #CD6331;
+            box-shadow: 0 0 20px rgba(255, 68, 68, 0.5);
+        }
+
+        .legend-tooltip {
+            position: fixed;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            white-space: normal;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 9999;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            /* Valeurs par défaut - seront ajustées dynamiquement */
+            bottom: 100%;
+            left: 10%;
+            transform: translateX(-10%);
+            margin-bottom: 10px;
+			width: 300px;
+			pointer-events: none;
+        }
+
+        /* Ajustement pour les tooltips qui dépassent encore */
+        .legend-tooltip.adjust-left {
+            left: 0;
+            transform: none;
+        }
+
+        .legend-tooltip.adjust-right {
+            right: 0;
+            left: auto;
+            transform: none;
+        }
+
+        .legend-point:hover .legend-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .legend-tooltip {
+                font-size: 12px;
+                padding: 8px 12px;
+                max-width: 200px;
+                white-space: normal;
+            }
+        }
+	</style>
 {% endblock %}
