@@ -1,0 +1,287 @@
+{
+    "elements": [
+        {
+            "id": "cat1",
+            "type": "categorie",
+            "title": "PROBLEME DE FONCTIONNEMENT GENERAL",
+            "parent": null
+        },
+        {
+            "id": "cat2",
+            "type": "categorie",
+            "title": "PROBLEME DE PRESSION",
+            "parent": null
+        },
+        {
+            "id": "cat3",
+            "type": "categorie",
+            "title": "PROBLEME DE CHAUFFE",
+            "parent": null
+        },
+        {
+            "id": "prob1",
+            "type": "probleme",
+            "title": "LA MACHINE NE DEMARRE PAS",
+            "parent": "cat1"
+        },
+        {
+            "id": "prob2",
+            "type": "probleme",
+            "title": "PROGRAMMATEUR EN ERREUR (affiche ERR ou symboles)",
+            "parent": "cat1"
+        },
+        {
+            "id": "prob3",
+            "type": "probleme",
+            "title": "PROGRAMMATEUR ne s'allume pas ou clignote",
+            "parent": "cat1"
+        },
+        {
+            "id": "prob4",
+            "type": "probleme",
+            "title": "PLUS DE CONSOMMATION D'ANTICALCAIRE",
+            "parent": "cat1"
+        },
+        {
+            "id": "prob5",
+            "type": "probleme",
+            "title": "DEBORDEMENT DU BAC ANTICALCAIRE",
+            "parent": "cat1"
+        },
+        {
+            "id": "prob6",
+            "type": "probleme",
+            "title": "PAS DE PRESSION AU MANO (LA POMPE NE TOURNE PAS) ALORS QU'ON APPUIE SUR LA GACHETTE",
+            "parent": "cat2"
+        },
+        {
+            "id": "prob7",
+            "type": "probleme",
+            "title": "IMPOSSIBLE DE MONTER EN PRESSION SORTIE DE POMPE (AU MANO) ET LE MOTEUR TOURNE",
+            "parent": "cat2"
+        },
+        {
+            "id": "prob8",
+            "type": "probleme",
+            "title": "PRESSION OK AU MANO MAIS PAS OU PEU DE SORTIE D'EAU AUX ACCESSOIRES",
+            "parent": "cat2"
+        },
+        {
+            "id": "prob9",
+            "type": "probleme",
+            "title": "PRESSION SACCADER",
+            "parent": "cat2"
+        },
+        {
+            "id": "prob10",
+            "type": "probleme",
+            "title": "LA POMPE NE S'ARRETE PAS (1 MINUTE MAX APRES ARRET DE LA GACHETTE)",
+            "parent": "cat2"
+        },
+        {
+            "id": "prob11",
+            "type": "probleme",
+            "title": "LA MACHINE NE CHAUFFE PLUS VOYANT VERT ALLUME",
+            "parent": "cat3"
+        },
+        {
+            "id": "prob12",
+            "type": "probleme",
+            "title": "LA MACHINE NE CHAUFFE PLUS VOYANT VERT RESTE ETEINT",
+            "parent": "cat3"
+        },
+        {
+            "id": "prob13",
+            "type": "probleme",
+            "title": "LA MACHINE NE CHAUFFE PAS ASSEZ",
+            "parent": "cat3"
+        },
+        {
+            "id": "prob14",
+            "type": "probleme",
+            "title": "VOYANT VERT S'ETEINT JUSQU'A UNE TEMPERATURE RELATIVEMENT BASSE",
+            "parent": "cat3"
+        },
+        {
+            "id": "prob15",
+            "type": "probleme",
+            "title": "LA MACHINE MONTE TROP EN TEMPERATURE",
+            "parent": "cat3"
+        },
+        {
+            "id": "prob16",
+            "type": "probleme",
+            "title": "LA MACHINE FUME BEAUCOUP",
+            "parent": "cat3"
+        },
+        {
+            "id": "etat1",
+            "type": "etat",
+            "title": "Le moteur de la pompe ne tourne pas ET le programmateur est éteint",
+            "parent": "prob1",
+            "next": "verif1"
+        },
+        {
+            "id": "etat2",
+            "type": "etat",
+            "title": "Le moteur de la pompe ne tourne pas ET le programmateur est allumé",
+            "parent": "prob1",
+            "next": "prob5"
+        },
+        {
+            "id": "etat3",
+            "type": "etat",
+            "title": "Le moteur de la pompe tourne ET le programmateur est éteint",
+            "parent": "prob1",
+            "next": "prob4"
+        },
+        {
+            "id": "verif1",
+            "type": "verif",
+            "title": "Vérifier la position du bouton On/Off",
+            "parent": "etat1",
+            "next_ok": "verif2",
+            "next_ko": "action1"
+        },
+        {
+            "id": "action1",
+            "type": "action",
+            "title": "Mettre le bouton sur ON",
+            "parent": "verif1"
+        },
+        {
+            "id": "verif2",
+            "type": "verif",
+            "title": "Vérifier l'arrêt d'urgence (Tiré)",
+            "parent": "verif1",
+            "next_ok": "verif3",
+            "next_ko": "action2"
+        },
+        {
+            "id": "action2",
+            "type": "action",
+            "title": "Tirer l'arrêt d'urgence",
+            "parent": "verif2"
+        },
+        {
+            "id": "verif3",
+            "type": "verif",
+            "title": "Vérifier que le câble de la machine est correctement branché",
+            "parent": "verif2",
+            "next_ok": "verif4",
+            "next_ko": "action3"
+        },
+        {
+            "id": "action3",
+            "type": "action",
+            "title": "Brancher le câble correctement",
+            "parent": "verif3"
+        },
+        {
+            "id": "verif4",
+            "type": "verif",
+            "title": "Vérifier le disjoncteur de la 'maison'",
+            "parent": "verif3",
+            "next_ok": "verif5",
+            "next_ko": "action4"
+        },
+        {
+            "id": "action4",
+            "type": "action",
+            "title": "Réenclencher le disjoncteur, s'assurer qu'il n'y a rien d'autre de branché et qu'il s'agit d'une clé. En cas d'échec, changer de prise",
+            "parent": "verif4"
+        },
+        {
+            "id": "verif5",
+            "type": "verif",
+            "title": "Vérifier l'enrouleur / Tester avec un autre enrouleur",
+            "parent": "verif4",
+            "next_ok": "verif6",
+            "next_ko": "action5"
+        },
+        {
+            "id": "action5",
+            "type": "action",
+            "title": "Changer d'enrouleur (Min section 2,5)",
+            "parent": "verif5"
+        },
+        {
+            "id": "verif6",
+            "type": "verif",
+            "title": "Vérifier le disjoncteur principal de la machine dans coffret électrique",
+            "parent": "verif5",
+            "next_ok": "action6",
+            "next_ko": "action7"
+        },
+        {
+            "id": "action6",
+            "type": "action",
+            "title": "Réenclencher le disjoncteur, si le problème revient -> appeler le SAV 0681676430",
+            "parent": "verif6"
+        },
+        {
+            "id": "action7",
+            "type": "action",
+            "title": "Tester si disjonctions avec les 2 disjoncteurs baissés séparément pour cibler le circuit à problème",
+            "parent": "verif6"
+        },
+        {
+            "id": "action8",
+            "type": "action",
+            "title": "Appeler le SAV 0681676430",
+            "parent": "verif6"
+        },
+        {
+            "id": "etat4",
+            "type": "etat",
+            "title": "PROBLEME SUR INFOS RECUES",
+            "parent": "prob2",
+            "next": "action9"
+        },
+        {
+            "id": "action9",
+            "type": "action",
+            "title": "ARRETER LA MACHINE ET ATTENDRE QUELQUES SECONDES AVANT DE LA REDEMARRER (POUR REINITIALISER LES CONNEXIONS)",
+            "parent": "etat4",
+            "next": "verif7"
+        },
+        {
+            "id": "verif7",
+            "type": "verif",
+            "title": "VERIFIER SI LE CABLE DE LA SONDE ELECTRONIQUE N'EST PAS ABIME",
+            "parent": "action9",
+            "next_ok": "verif8",
+            "next_ko": "action10"
+        },
+        {
+            "id": "action10",
+            "type": "action",
+            "title": "CHANGER LA SONDE ELECTRONIQUE",
+            "parent": "verif7",
+            "usedoc": true
+        },
+        {
+            "id": "verif8",
+            "type": "verif",
+            "title": "VERIFIER LES BRANCHEMENTS DE LA SONDE SUR LE PROGRAMMATEUR",
+            "parent": "verif7",
+            "next_ok": "action11",
+            "next_ko": "action12",
+            "usedoc": true
+        },
+        {
+            "id": "action11",
+            "type": "action",
+            "title": "CHANGER LA SONDE ELECTRONIQUE",
+            "parent": "verif8",
+            "usedoc": true
+        },
+        {
+            "id": "action12",
+            "type": "action",
+            "title": "REBRANCHER CORRECTEMENT",
+            "parent": "verif8",
+            "usedoc": true
+        }
+    ]
+}

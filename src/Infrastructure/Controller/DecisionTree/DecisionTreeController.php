@@ -28,114 +28,17 @@ class DecisionTreeController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function index(): Response
     {
-        if (!$this->getUser()) {
-            throw new AccessDeniedException('Vous devez être connecté pour accéder à cette page.');
-        }
-        
-        $categories = ($this->findAllCategories)();
-        
-        // Organiser les problèmes types par catégorie
-        $problemTypesByCategory = [];
-        foreach ($categories as $category) {
-            $problemTypesByCategory[$category->id->getValue()] = $this->problemTypeRepository->findAllByCategory($category->id);
-        }
-
-        return $this->render('admin/decisiontree/index.html.twig', [
-            'categories' => $categories,
-            'problemTypesByCategory' => $problemTypesByCategory
-        ]);
+        // On ne passe plus de données, tout sera chargé côté JS
+        return $this->render('admin/decisiontree/index.html.twig');
     }
 
-    #[Route('/arbre-de-depannage/{problemTypeId}', name: 'app_arbre_de_depannage_show')]
+    // Optionnel : API pour servir le JSON (sinon, le front peut lire le fichier public/assets/data/decision-tree.json directement)
+    #[Route('/arbre-de-depannage/data', name: 'app_arbre_de_depannage_data')]
     #[IsGranted('ROLE_USER')]
-    public function show(string $problemTypeId): Response
+    public function data(): Response
     {
-        if (!$this->getUser()) {
-            throw new AccessDeniedException('Vous devez être connecté pour accéder à cette page.');
-        }
-
-        $problemType = $this->problemTypeRepository->findById(new ProblemTypeId($problemTypeId));
-        
-        if (!$problemType) {
-            throw $this->createNotFoundException('Ce type de problème n\'existe pas.');
-        }
-
-        $symptoms = $this->diagnosticStepRepository->findAllByProblemType($problemType->id);
-
-
-        return $this->render('admin/decisiontree/show.html.twig', [
-            'problemType' => $problemType,
-            'symptoms' => $symptoms
-        ]);
+        $jsonPath = $this->getParameter('kernel.project_dir') . '/public/assets/data/decision-tree.json';
+        $json = file_get_contents($jsonPath);
+        return new Response($json, 200, ['Content-Type' => 'application/json']);
     }
-
-    #[Route('/arbre-de-depannage/{problemTypeId}/{symptomId}', name: 'app_arbre_de_depannage_show_symptom')]
-    #[IsGranted('ROLE_USER')]
-    public function showSymptom(string $problemTypeId, string $symptomId): Response
-    {
-        if (!$this->getUser()) {
-            throw new AccessDeniedException('Vous devez être connecté pour accéder à cette page.');
-        }
-
-        $problemType = $this->problemTypeRepository->findById(new ProblemTypeId($problemTypeId));
-        
-        if (!$problemType) {
-            throw $this->createNotFoundException('Ce type de problème n\'existe pas.');
-        }
-
-        $symptom = $this->diagnosticStepRepository->findById(new DiagnosticStepId($symptomId));
-
-        if (!$symptom) {
-            throw $this->createNotFoundException('Ce symptôme n\'existe pas.');
-        }
-
-        $diagnosticSteps = $this->diagnosticStepRepository->findAllBySymptome($symptom->id);
-
-        // Préparer les données pour l'arbre D3.js
-        $nodes = [];
-        $links = [];
-
-        // Créer les nœuds
-        foreach ($diagnosticSteps as $step) {
-            $nodes[] = [
-                'id' => $step->id->getValue(),
-                'label' => $step->description,
-                'type' => $step->stepType->value,
-                'usedoc' => $step->needsTechnicalDoc,
-                'goto' => $step->goTo,
-                'x' => 0, // Ces valeurs seront calculées par D3.js
-                'y' => 0
-            ];
-        }
-
-        // Créer les liens
-        foreach ($diagnosticSteps as $step) {
-            if ($step->nextStepOKId) {
-                $links[] = [
-                    'source' => $step->id->getValue(),
-                    'target' => $step->nextStepOKId->getValue(),
-                    'label' => 'OK'
-                ];
-            }
-            if ($step->nextStepKOId) {
-                $links[] = [
-                    'source' => $step->id->getValue(),
-                    'target' => $step->nextStepKOId->getValue(),
-                    'label' => 'KO'
-                ];
-            }
-        }
-
-        $treeData = [
-            'nodes' => $nodes,
-            'links' => $links
-        ];
-
-        return $this->render('admin/decisiontree/show_symptom.html.twig', [
-            'problemType' => $problemType,
-            'symptom' => $symptom,
-            'diagnosticSteps' => $diagnosticSteps,
-            'treeData' => $treeData
-        ]);
-    }
-} 
+}
