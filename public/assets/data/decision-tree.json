@@ -282,6 +282,63 @@
             "title": "REBRANCHER CORRECTEMENT",
             "parent": "verif8",
             "usedoc": true
+        },
+        {
+            "id": "etat5",
+            "type": "etat",
+            "title": "PROGRAMMATEUR NE S'ALLUME PLUS MAIS LE MOTEUR DE POMPE OU VENTILATEUR TOURNE",
+            "parent": "prob3",
+            "next": "action13"
+        },
+        {
+            "id": "etat6",
+            "type": "etat",
+            "title": "PROGRAMMATEUR NE S'ALLUME PLUS MAIS LE MOTEUR DE POMPE ET VENTILATEUR A L'ARRET",
+            "parent": "prob3",
+            "next": "action13"
+        },
+        {
+            "id": "action13",
+            "type": "action",
+            "title": "ARRETER LA MACHINE ET ATTENDRE QUELQUES SECONDES AVANT DE LA REDEMARRER (POUR REINITIALISER LES CONNEXIONS)",
+            "parent": "etat5",
+            "next": "verif9"
+        },
+        {
+            "id": "verif9",
+            "type": "verif",
+            "title": "VERIFIER LES BRANCHEMENTS PHASE ET NEUTRE SUR LE PROGRAMMATEUR",
+            "parent": "action13",
+            "next_ok": "verif10",
+            "next_ko": "action14"
+        },
+        {
+            "id": "action14",
+            "type": "action",
+            "title": "REBRANCHER CORRECTEMENT",
+            "parent": "verif9"
+        },
+        {
+            "id": "verif10",
+            "type": "verif",
+            "title": "Tester la continuité de l'alimentation électrique du progr au voltmètre",
+            "parent": "verif9",
+            "next_ok": "action15",
+            "next_ko": "action16",
+            "usedoc": true
+        },
+        {
+            "id": "action15",
+            "type": "action",
+            "title": "CHANGER LE PROGRAMMATEUR",
+            "parent": "verif10",
+            "usedoc": true
+        },
+        {
+            "id": "action16",
+            "type": "action",
+            "title": "Une fois identifié où cela se passe, appeler le SAV",
+            "parent": "verif10"
         }
     ]
 }
