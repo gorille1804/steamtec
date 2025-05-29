@@ -74,28 +74,32 @@ class DecisionTree {
         });
 
         // Créer les liens entre les éléments
-        this.data.links.forEach(link => {
-            const connection = new joint.shapes.standard.Link({
-                source: { id: elements[link.source].id },
-                target: { id: elements[link.target].id },
-                labels: [{
-                    position: 0.5,
-                    attrs: {
-                        text: {
-                            text: link.label || '',
-                            fill: '#fff',
-                            fontSize: 18,
-                            fontWeight: 'bold',
-                            fontFamily: 'Arial, sans-serif',
-                            textShadow: '1px 1px 2px #000'
-                        }
-                    }
-                }],
-                attrs: linkStyle,
-                router: { name: 'orthogonal' },
-                connector: { name: 'rounded' }
-            });
-            this.graph.addCell(connection);
+        this.data.nodes.forEach(node => {
+            if (node.next && Array.isArray(node.next)) {
+                node.next.forEach(nextNode => {
+                    const connection = new joint.shapes.standard.Link({
+                        source: { id: elements[node.id].id },
+                        target: { id: elements[nextNode.id].id },
+                        labels: [{
+                            position: 0.5,
+                            attrs: {
+                                text: {
+                                    text: nextNode.label || '',
+                                    fill: '#fff',
+                                    fontSize: 18,
+                                    fontWeight: 'bold',
+                                    fontFamily: 'Arial, sans-serif',
+                                    textShadow: '1px 1px 2px #000'
+                                }
+                            }
+                        }],
+                        attrs: linkStyle,
+                        router: { name: 'orthogonal' },
+                        connector: { name: 'rounded' }
+                    });
+                    this.graph.addCell(connection);
+                });
+            }
         });
 
         // Centrer et zoomer le diagramme
