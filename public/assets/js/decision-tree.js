@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
             showProblem(nextProblem.id, elements, document.getElementById('decision-tree-app'), cat.title, nextProblem.title, true);
             return;
         }
-        let html = `<div class="border p-3 my-2"><strong>${step.title}</strong></div>`;
+        let html = `<div class="border p-3 my-2"><strong>${step.title} - ${step.id}</strong></div>`;
         if (navigationStack.length > 2) {
             html = `<button class="btn btn-outline-secondary mb-2" onclick="window.goBackStep()">Retour</button>` + html;
         }
