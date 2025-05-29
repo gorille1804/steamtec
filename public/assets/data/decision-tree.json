@@ -1,344 +1,1206 @@
 {
     "elements": [
-        {
-            "id": "cat1",
-            "type": "categorie",
-            "title": "PROBLEME DE FONCTIONNEMENT GENERAL",
-            "parent": null
-        },
-        {
-            "id": "cat2",
-            "type": "categorie",
-            "title": "PROBLEME DE PRESSION",
-            "parent": null
-        },
-        {
-            "id": "cat3",
-            "type": "categorie",
-            "title": "PROBLEME DE CHAUFFE",
-            "parent": null
-        },
-        {
-            "id": "prob1",
-            "type": "probleme",
-            "title": "LA MACHINE NE DEMARRE PAS",
-            "parent": "cat1"
-        },
-        {
-            "id": "prob2",
-            "type": "probleme",
-            "title": "PROGRAMMATEUR EN ERREUR (affiche ERR ou symboles)",
-            "parent": "cat1"
-        },
-        {
-            "id": "prob3",
-            "type": "probleme",
-            "title": "PROGRAMMATEUR ne s'allume pas ou clignote",
-            "parent": "cat1"
-        },
-        {
-            "id": "prob4",
-            "type": "probleme",
-            "title": "PLUS DE CONSOMMATION D'ANTICALCAIRE",
-            "parent": "cat1"
-        },
-        {
-            "id": "prob5",
-            "type": "probleme",
-            "title": "DEBORDEMENT DU BAC ANTICALCAIRE",
-            "parent": "cat1"
-        },
-        {
-            "id": "prob6",
-            "type": "probleme",
-            "title": "PAS DE PRESSION AU MANO (LA POMPE NE TOURNE PAS) ALORS QU'ON APPUIE SUR LA GACHETTE",
-            "parent": "cat2"
-        },
-        {
-            "id": "prob7",
-            "type": "probleme",
-            "title": "IMPOSSIBLE DE MONTER EN PRESSION SORTIE DE POMPE (AU MANO) ET LE MOTEUR TOURNE",
-            "parent": "cat2"
-        },
-        {
-            "id": "prob8",
-            "type": "probleme",
-            "title": "PRESSION OK AU MANO MAIS PAS OU PEU DE SORTIE D'EAU AUX ACCESSOIRES",
-            "parent": "cat2"
-        },
-        {
-            "id": "prob9",
-            "type": "probleme",
-            "title": "PRESSION SACCADER",
-            "parent": "cat2"
-        },
-        {
-            "id": "prob10",
-            "type": "probleme",
-            "title": "LA POMPE NE S'ARRETE PAS (1 MINUTE MAX APRES ARRET DE LA GACHETTE)",
-            "parent": "cat2"
-        },
-        {
-            "id": "prob11",
-            "type": "probleme",
-            "title": "LA MACHINE NE CHAUFFE PLUS VOYANT VERT ALLUME",
-            "parent": "cat3"
-        },
-        {
-            "id": "prob12",
-            "type": "probleme",
-            "title": "LA MACHINE NE CHAUFFE PLUS VOYANT VERT RESTE ETEINT",
-            "parent": "cat3"
-        },
-        {
-            "id": "prob13",
-            "type": "probleme",
-            "title": "LA MACHINE NE CHAUFFE PAS ASSEZ",
-            "parent": "cat3"
-        },
-        {
-            "id": "prob14",
-            "type": "probleme",
-            "title": "VOYANT VERT S'ETEINT JUSQU'A UNE TEMPERATURE RELATIVEMENT BASSE",
-            "parent": "cat3"
-        },
-        {
-            "id": "prob15",
-            "type": "probleme",
-            "title": "LA MACHINE MONTE TROP EN TEMPERATURE",
-            "parent": "cat3"
-        },
-        {
-            "id": "prob16",
-            "type": "probleme",
-            "title": "LA MACHINE FUME BEAUCOUP",
-            "parent": "cat3"
-        },
-        {
-            "id": "etat1",
-            "type": "etat",
-            "title": "Le moteur de la pompe ne tourne pas ET le programmateur est éteint",
-            "parent": "prob1",
-            "next": "verif1"
-        },
-        {
-            "id": "etat2",
-            "type": "etat",
-            "title": "Le moteur de la pompe ne tourne pas ET le programmateur est allumé",
-            "parent": "prob1",
-            "next": "prob5"
-        },
-        {
-            "id": "etat3",
-            "type": "etat",
-            "title": "Le moteur de la pompe tourne ET le programmateur est éteint",
-            "parent": "prob1",
-            "next": "prob4"
-        },
-        {
-            "id": "verif1",
-            "type": "verif",
-            "title": "Vérifier la position du bouton On/Off",
-            "parent": "etat1",
-            "next_ok": "verif2",
-            "next_ko": "action1"
-        },
-        {
-            "id": "action1",
-            "type": "action",
-            "title": "Mettre le bouton sur ON",
-            "parent": "verif1"
-        },
-        {
-            "id": "verif2",
-            "type": "verif",
-            "title": "Vérifier l'arrêt d'urgence (Tiré)",
-            "parent": "verif1",
-            "next_ok": "verif3",
-            "next_ko": "action2"
-        },
-        {
-            "id": "action2",
-            "type": "action",
-            "title": "Tirer l'arrêt d'urgence",
-            "parent": "verif2"
-        },
-        {
-            "id": "verif3",
-            "type": "verif",
-            "title": "Vérifier que le câble de la machine est correctement branché",
-            "parent": "verif2",
-            "next_ok": "verif4",
-            "next_ko": "action3"
-        },
-        {
-            "id": "action3",
-            "type": "action",
-            "title": "Brancher le câble correctement",
-            "parent": "verif3"
-        },
-        {
-            "id": "verif4",
-            "type": "verif",
-            "title": "Vérifier le disjoncteur de la 'maison'",
-            "parent": "verif3",
-            "next_ok": "verif5",
-            "next_ko": "action4"
-        },
-        {
-            "id": "action4",
-            "type": "action",
-            "title": "Réenclencher le disjoncteur, s'assurer qu'il n'y a rien d'autre de branché et qu'il s'agit d'une clé. En cas d'échec, changer de prise",
-            "parent": "verif4"
-        },
-        {
-            "id": "verif5",
-            "type": "verif",
-            "title": "Vérifier l'enrouleur / Tester avec un autre enrouleur",
-            "parent": "verif4",
-            "next_ok": "verif6",
-            "next_ko": "action5"
-        },
-        {
-            "id": "action5",
-            "type": "action",
-            "title": "Changer d'enrouleur (Min section 2,5)",
-            "parent": "verif5"
-        },
-        {
-            "id": "verif6",
-            "type": "verif",
-            "title": "Vérifier le disjoncteur principal de la machine dans coffret électrique",
-            "parent": "verif5",
-            "next_ok": "action6",
-            "next_ko": "action7"
-        },
-        {
-            "id": "action6",
-            "type": "action",
-            "title": "Réenclencher le disjoncteur, si le problème revient -> appeler le SAV 0681676430",
-            "parent": "verif6"
-        },
-        {
-            "id": "action7",
-            "type": "action",
-            "title": "Tester si disjonctions avec les 2 disjoncteurs baissés séparément pour cibler le circuit à problème",
-            "parent": "verif6"
-        },
-        {
-            "id": "action8",
-            "type": "action",
-            "title": "Appeler le SAV 0681676430",
-            "parent": "verif6"
-        },
-        {
-            "id": "etat4",
-            "type": "etat",
-            "title": "PROBLEME SUR INFOS RECUES",
-            "parent": "prob2",
-            "next": "action9"
-        },
-        {
-            "id": "action9",
-            "type": "action",
-            "title": "ARRETER LA MACHINE ET ATTENDRE QUELQUES SECONDES AVANT DE LA REDEMARRER (POUR REINITIALISER LES CONNEXIONS)",
-            "parent": "etat4",
-            "next": "verif7"
-        },
-        {
-            "id": "verif7",
-            "type": "verif",
-            "title": "VERIFIER SI LE CABLE DE LA SONDE ELECTRONIQUE N'EST PAS ABIME",
-            "parent": "action9",
-            "next_ok": "verif8",
-            "next_ko": "action10"
-        },
-        {
-            "id": "action10",
-            "type": "action",
-            "title": "CHANGER LA SONDE ELECTRONIQUE",
-            "parent": "verif7",
-            "usedoc": true
-        },
-        {
-            "id": "verif8",
-            "type": "verif",
-            "title": "VERIFIER LES BRANCHEMENTS DE LA SONDE SUR LE PROGRAMMATEUR",
-            "parent": "verif7",
-            "next_ok": "action11",
-            "next_ko": "action12",
-            "usedoc": true
-        },
-        {
-            "id": "action11",
-            "type": "action",
-            "title": "CHANGER LA SONDE ELECTRONIQUE",
-            "parent": "verif8",
-            "usedoc": true
-        },
-        {
-            "id": "action12",
-            "type": "action",
-            "title": "REBRANCHER CORRECTEMENT",
-            "parent": "verif8",
-            "usedoc": true
-        },
-        {
-            "id": "etat5",
-            "type": "etat",
-            "title": "PROGRAMMATEUR NE S'ALLUME PLUS MAIS LE MOTEUR DE POMPE OU VENTILATEUR TOURNE",
-            "parent": "prob3",
-            "next": "action13"
-        },
-        {
-            "id": "etat6",
-            "type": "etat",
-            "title": "PROGRAMMATEUR NE S'ALLUME PLUS MAIS LE MOTEUR DE POMPE ET VENTILATEUR A L'ARRET",
-            "parent": "prob3",
-            "next": "action13"
-        },
-        {
-            "id": "action13",
-            "type": "action",
-            "title": "ARRETER LA MACHINE ET ATTENDRE QUELQUES SECONDES AVANT DE LA REDEMARRER (POUR REINITIALISER LES CONNEXIONS)",
-            "parent": "etat5",
-            "next": "verif9"
-        },
-        {
-            "id": "verif9",
-            "type": "verif",
-            "title": "VERIFIER LES BRANCHEMENTS PHASE ET NEUTRE SUR LE PROGRAMMATEUR",
-            "parent": "action13",
-            "next_ok": "verif10",
-            "next_ko": "action14"
-        },
-        {
-            "id": "action14",
-            "type": "action",
-            "title": "REBRANCHER CORRECTEMENT",
-            "parent": "verif9"
-        },
-        {
-            "id": "verif10",
-            "type": "verif",
-            "title": "Tester la continuité de l'alimentation électrique du progr au voltmètre",
-            "parent": "verif9",
-            "next_ok": "action15",
-            "next_ko": "action16",
-            "usedoc": true
-        },
-        {
-            "id": "action15",
-            "type": "action",
-            "title": "CHANGER LE PROGRAMMATEUR",
-            "parent": "verif10",
-            "usedoc": true
-        },
-        {
-            "id": "action16",
-            "type": "action",
-            "title": "Une fois identifié où cela se passe, appeler le SAV",
-            "parent": "verif10"
-        }
-    ]
+    {
+        "id": "cat1",
+        "type": "categorie",
+        "title": "PROBLEME DE FONCTIONNEMENT GENERAL",
+        "parent": null
+    },
+    {
+        "id": "cat2",
+        "type": "categorie",
+        "title": "PROBLEME DE PRESSION",
+        "parent": null
+    },
+    {
+        "id": "cat3",
+        "type": "categorie",
+        "title": "PROBLEME DE CHAUFFE",
+        "parent": null
+    },
+    {
+        "id": "prob1",
+        "type": "probleme",
+        "title": "LA MACHINE NE DEMARRE PAS",
+        "parent": "cat1"
+    },
+    {
+        "id": "prob2",
+        "type": "probleme",
+        "title": "PROGRAMMATEUR EN ERREUR (affiche ERR ou symboles)",
+        "parent": "cat1"
+    },
+    {
+        "id": "prob3",
+        "type": "probleme",
+        "title": "PROGRAMMATEUR ne s'allume pas ou clignote",
+        "parent": "cat1"
+    },
+    {
+        "id": "prob4",
+        "type": "probleme",
+        "title": "PLUS DE CONSOMMATION D'ANTICALCAIRE",
+        "parent": "cat1"
+    },
+    {
+        "id": "prob5",
+        "type": "probleme",
+        "title": "DEBORDEMENT DU BAC ANTICALCAIRE",
+        "parent": "cat1"
+    },
+    {
+        "id": "prob6",
+        "type": "probleme",
+        "title": "PAS DE PRESSION AU MANO (LA POMPE NE TOURNE PAS) ALORS QU'ON APPUIE SUR LA GACHETTE",
+        "parent": "cat2"
+    },
+    {
+        "id": "prob7",
+        "type": "probleme",
+        "title": "IMPOSSIBLE DE MONTER EN PRESSION SORTIE DE POMPE (AU MANO) ET LE MOTEUR TOURNE",
+        "parent": "cat2"
+    },
+    {
+        "id": "prob8",
+        "type": "probleme",
+        "title": "PRESSION OK AU MANO MAIS PAS OU PEU DE SORTIE D'EAU AUX ACCESSOIRES",
+        "parent": "cat2"
+    },
+    {
+        "id": "prob9",
+        "type": "probleme",
+        "title": "PRESSION SACCADEE",
+        "parent": "cat2"
+    },
+    {
+        "id": "prob10",
+        "type": "probleme",
+        "title": "LA POMPE NE S'ARRETE PAS (1 MINUTE MAX APRES ARRET DE LA GACHETTE)",
+        "parent": "cat2"
+    },
+    {
+        "id": "prob11",
+        "type": "probleme",
+        "title": "LA MACHINE NE CHAUFFE PLUS VOYANT VERT ALLUME",
+        "parent": "cat3"
+    },
+    {
+        "id": "prob12",
+        "type": "probleme",
+        "title": "LA MACHINE NE CHAUFFE PLUS VOYANT VERT RESTE ETEINT",
+        "parent": "cat3"
+    },
+    {
+        "id": "prob13",
+        "type": "probleme",
+        "title": "LA MACHINE NE CHAUFFE PAS ASSEZ",
+        "parent": "cat3"
+    },
+    {
+        "id": "prob14",
+        "type": "probleme",
+        "title": "VOYANT VERT S'ETEINT JUSQU'A UNE TEMPERATURE RELATIVEMENT BASSE",
+        "parent": "cat3"
+    },
+    {
+        "id": "prob15",
+        "type": "probleme",
+        "title": "LA MACHINE MONTE TROP EN TEMPERATURE",
+        "parent": "cat3"
+    },
+    {
+        "id": "prob16",
+        "type": "probleme",
+        "title": "LA MACHINE FUME BEAUCOUP",
+        "parent": "cat3"
+    },
+    {
+        "id": "etat1",
+        "type": "etat",
+        "title": "Le moteur de la pompe ne tourne pas ET le programmateur est éteint",
+        "parent": "prob1",
+        "next": "verif1"
+    },
+    {
+        "id": "etat2",
+        "type": "etat",
+        "title": "Le moteur de la pompe ne tourne pas ET le programmateur est allumé",
+        "parent": "prob1",
+        "next": "prob5"
+    },
+    {
+        "id": "etat3",
+        "type": "etat",
+        "title": "Le moteur de la pompe tourne ET le programmateur est éteint",
+        "parent": "prob1",
+        "next": "prob4"
+    },
+    {
+        "id": "verif1",
+        "type": "verif",
+        "title": "Vérifier la position du bouton On/Off",
+        "parent": "etat1",
+        "next_ok": "verif2",
+        "next_ko": "action1"
+    },
+    {
+        "id": "action1",
+        "type": "action",
+        "title": "Mettre le bouton sur ON",
+        "parent": "verif1"
+    },
+    {
+        "id": "verif2",
+        "type": "verif",
+        "title": "Vérifier l'arrêt d'urgence (Tiré)",
+        "parent": "verif1",
+        "next_ok": "verif3",
+        "next_ko": "action2"
+    },
+    {
+        "id": "action2",
+        "type": "action",
+        "title": "Tirer l'arrêt d'urgence",
+        "parent": "verif2"
+    },
+    {
+        "id": "verif3",
+        "type": "verif",
+        "title": "Vérifier que le câble de la machine est correctement branché",
+        "parent": "verif2",
+        "next_ok": "verif4",
+        "next_ko": "action3"
+    },
+    {
+        "id": "action3",
+        "type": "action",
+        "title": "Brancher le câble correctement",
+        "parent": "verif3"
+    },
+    {
+        "id": "verif4",
+        "type": "verif",
+        "title": "Vérifier le disjoncteur de la 'maison'",
+        "parent": "verif3",
+        "next_ok": "verif5",
+        "next_ko": "action4"
+    },
+    {
+        "id": "action4",
+        "type": "action",
+        "title": "Réenclencher le disjoncteur, s'assurer qu'il n'y a rien d'autre de branché et qu'il s'agit d'une clé. En cas d'échec, changer de prise",
+        "parent": "verif4"
+    },
+    {
+        "id": "verif5",
+        "type": "verif",
+        "title": "Vérifier l'enrouleur / Tester avec un autre enrouleur",
+        "parent": "verif4",
+        "next_ok": "verif6",
+        "next_ko": "action5"
+    },
+    {
+        "id": "action5",
+        "type": "action",
+        "title": "Changer d'enrouleur (Min section 2,5)",
+        "parent": "verif5"
+    },
+    {
+        "id": "verif6",
+        "type": "verif",
+        "title": "Vérifier le disjoncteur principal de la machine dans coffret électrique",
+        "parent": "verif5",
+        "next_ok": "action7",
+        "next_ko": "action6"
+    },
+    {
+        "id": "action6",
+        "type": "action",
+        "title": "Réenclencher le disjoncteur, si le problème revient -> appeler le SAV 0681676430",
+        "parent": "verif6"
+    },
+    {
+        "id": "action7",
+        "type": "action",
+        "title": "Tester si disjonctions avec les 2 disjoncteurs baissés séparément pour cibler le circuit à problème",
+        "parent": "verif6",
+        "next": "action8"
+    },
+    {
+        "id": "action8",
+        "type": "action",
+        "title": "Appeler le SAV 0681676430",
+        "parent": "action7"
+    },
+    {
+        "id": "etat4",
+        "type": "etat",
+        "title": "PROBLEME SUR INFOS RECUES",
+        "parent": "prob2",
+        "next": "action9"
+    },
+    {
+        "id": "action9",
+        "type": "action",
+        "title": "ARRETER LA MACHINE ET ATTENDRE QUELQUES SECONDES AVANT DE LA REDEMARRER (POUR REINITIALISER LES CONNEXIONS)",
+        "parent": "etat4",
+        "next": "verif7"
+    },
+    {
+        "id": "verif7",
+        "type": "verif",
+        "title": "VERIFIER SI LE CABLE DE LA SONDE ELECTRONIQUE N'EST PAS ABIME",
+        "parent": "action9",
+        "next_ok": "verif8",
+        "next_ko": "action10"
+    },
+    {
+        "id": "action10",
+        "type": "action",
+        "title": "CHANGER LA SONDE ELECTRONIQUE",
+        "parent": "verif7",
+        "usedoc": true
+    },
+    {
+        "id": "verif8",
+        "type": "verif",
+        "title": "VERIFIER LES BRANCHEMENTS DE LA SONDE SUR LE PROGRAMMATEUR",
+        "parent": "verif7",
+        "next_ok": "action11",
+        "next_ko": "action12",
+        "usedoc": true
+    },
+    {
+        "id": "action11",
+        "type": "action",
+        "title": "CHANGER LA SONDE ELECTRONIQUE",
+        "parent": "verif8",
+        "usedoc": true
+    },
+    {
+        "id": "action12",
+        "type": "action",
+        "title": "REBRANCHER CORRECTEMENT",
+        "parent": "verif8",
+        "usedoc": true
+    },
+    {
+        "id": "etat5",
+        "type": "etat",
+        "title": "PROGRAMMATEUR NE S'ALLUME PLUS MAIS LE MOTEUR DE POMPE OU VENTILATEUR TOURNE",
+        "parent": "prob3",
+        "next": "action13"
+    },
+    {
+        "id": "etat6",
+        "type": "etat",
+        "title": "PROGRAMMATEUR NE S'ALLUME PLUS MAIS LE MOTEUR DE POMPE ET VENTILATEUR A L'ARRET",
+        "parent": "prob3",
+        "next": "action13"
+    },
+    {
+        "id": "action13",
+        "type": "action",
+        "title": "ARRETER LA MACHINE ET ATTENDRE QUELQUES SECONDES AVANT DE LA REDEMARRER (POUR REINITIALISER LES CONNEXIONS)",
+        "parent": "etat5",
+        "next": "verif9"
+    },
+    {
+        "id": "verif9",
+        "type": "verif",
+        "title": "VERIFIER LES BRANCHEMENTS PHASE ET NEUTRE SUR LE PROGRAMMATEUR",
+        "parent": "action13",
+        "next_ok": "verif10",
+        "next_ko": "action14"
+    },
+    {
+        "id": "action14",
+        "type": "action",
+        "title": "REBRANCHER CORRECTEMENT",
+        "parent": "verif9"
+    },
+    {
+        "id": "verif10",
+        "type": "verif",
+        "title": "Tester la continuité de l'alimentation électrique du progr au voltmètre",
+        "parent": "verif9",
+        "next_ok": "action15",
+        "next_ko": "action16",
+        "usedoc": true
+    },
+    {
+        "id": "action15",
+        "type": "action",
+        "title": "CHANGER LE PROGRAMMATEUR",
+        "parent": "verif10",
+        "usedoc": true
+    },
+    {
+        "id": "action16",
+        "type": "action",
+        "title": "Une fois identifié où cela se passe, appeler le SAV",
+        "parent": "verif10"
+    },
+    {
+        "id": "etat7",
+        "type": "etat",
+        "title": "PLUS DE CONSOMMATION D'ANTICALCAIRE",
+        "parent": "prob4",
+        "next": "verif11"
+    },
+    {
+        "id": "verif11",
+        "type": "verif",
+        "title": "VERIFIER SI LE BIDON EST VIDE",
+        "parent": "etat7",
+        "next_ok": "action17",
+        "next_ko": "verif12"
+    },
+    {
+        "id": "action17",
+        "type": "action",
+        "title": "REMPLIR LE BIDON",
+        "parent": "verif11"
+    },
+    {
+        "id": "verif12",
+        "type": "verif",
+        "title": "VERIFIER SI LE TUYAU N'EST PAS BOUCHE",
+        "parent": "verif11",
+        "next_ok": "verif13",
+        "next_ko": "action18"
+    },
+    {
+        "id": "action18",
+        "type": "action",
+        "title": "DEBOUCHER LE TUYAU",
+        "parent": "verif12"
+    },
+    {
+        "id": "verif13",
+        "type": "verif",
+        "title": "VERIFIER SI LE TUYAU N'EST PAS PERCE",
+        "parent": "verif12",
+        "next_ok": "verif14",
+        "next_ko": "action19"
+    },
+    {
+        "id": "action19",
+        "type": "action",
+        "title": "CHANGER LE TUYAU",
+        "parent": "verif13"
+    },
+    {
+        "id": "verif14",
+        "type": "verif",
+        "title": "VERIFIER SI LA CREPINE N'EST PAS BOUCHEE",
+        "parent": "verif13",
+        "next_ok": "verif15",
+        "next_ko": "action20"
+    },
+    {
+        "id": "action20",
+        "type": "action",
+        "title": "NETTOYER LA CREPINE",
+        "parent": "verif14"
+    },
+    {
+        "id": "verif15",
+        "type": "verif",
+        "title": "VERIFIER SI LA POMPE DOSEUSE FONCTIONNE",
+        "parent": "verif14",
+        "next_ok": "action22",
+        "next_ko": "action21",
+        "usedoc": true
+    },
+    {
+        "id": "action21",
+        "type": "action",
+        "title": "CHANGER LA POMPE DOSEUSE",
+        "parent": "verif15",
+        "usedoc": true
+    },
+    {
+        "id": "action22",
+        "type": "action",
+        "title": "REGLER LA POMPE DOSEUSE",
+        "parent": "verif15",
+        "usedoc": true
+    },
+    {
+        "id": "etat8",
+        "type": "etat",
+        "title": "DEBORDEMENT DU BAC ANTICALCAIRE",
+        "parent": "prob5",
+        "next": "verif16"
+    },
+    {
+        "id": "verif16",
+        "type": "verif",
+        "title": "VERIFIER SI LE TUYAU N'EST PAS BOUCHE",
+        "parent": "etat8",
+        "next_ok": "verif17",
+        "next_ko": "action23"
+    },
+    {
+        "id": "action23",
+        "type": "action",
+        "title": "DEBOUCHER LE TUYAU",
+        "parent": "verif16"
+    },
+    {
+        "id": "verif17",
+        "type": "verif",
+        "title": "VERIFIER SI LE TUYAU N'EST PAS PERCE",
+        "parent": "verif16",
+        "next_ok": "verif18",
+        "next_ko": "action24"
+    },
+    {
+        "id": "action24",
+        "type": "action",
+        "title": "CHANGER LE TUYAU",
+        "parent": "verif17"
+    },
+    {
+        "id": "verif18",
+        "type": "verif",
+        "title": "VERIFIER SI LA CREPINE N'EST PAS BOUCHEE",
+        "parent": "verif17",
+        "next_ok": "verif19",
+        "next_ko": "action25"
+    },
+    {
+        "id": "action25",
+        "type": "action",
+        "title": "NETTOYER LA CREPINE",
+        "parent": "verif18"
+    },
+    {
+        "id": "verif19",
+        "type": "verif",
+        "title": "VERIFIER SI LA POMPE DOSEUSE FONCTIONNE",
+        "parent": "verif18",
+        "next_ok": "action27",
+        "next_ko": "action26",
+        "usedoc": true
+    },
+    {
+        "id": "action26",
+        "type": "action",
+        "title": "CHANGER LA POMPE DOSEUSE",
+        "parent": "verif19",
+        "usedoc": true
+    },
+    {
+        "id": "action27",
+        "type": "action",
+        "title": "REGLER LA POMPE DOSEUSE",
+        "parent": "verif19",
+        "usedoc": true
+    },
+    {
+        "id": "etat9",
+        "type": "etat",
+        "title": "PAS DE PRESSION AU MANO (LA POMPE NE TOURNE PAS) ALORS QU'ON APPUIE SUR LA GACHETTE",
+        "parent": "prob6",
+        "next": "verif20"
+    },
+    {
+        "id": "verif20",
+        "type": "verif",
+        "title": "VERIFIER SI LE MOTEUR DE POMPE EST ALIMENTE",
+        "parent": "etat9",
+        "next_ok": "action28",
+        "next_ko": "verif21",
+        "usedoc": true
+    },
+    {
+        "id": "action28",
+        "type": "action",
+        "title": "CHANGER LE MOTEUR DE POMPE",
+        "parent": "verif20",
+        "usedoc": true
+    },
+    {
+        "id": "verif21",
+        "type": "verif",
+        "title": "VERIFIER LE CONTACTEUR DE PUISSANCE",
+        "parent": "verif20",
+        "next_ok": "action29",
+        "next_ko": "verif22",
+        "usedoc": true
+    },
+    {
+        "id": "action29",
+        "type": "action",
+        "title": "CHANGER LE CONTACTEUR",
+        "parent": "verif21",
+        "usedoc": true
+    },
+    {
+        "id": "verif22",
+        "type": "verif",
+        "title": "VERIFIER LE PRESSOSTAT",
+        "parent": "verif21",
+        "next_ok": "action30",
+        "next_ko": "verif23",
+        "usedoc": true
+    },
+    {
+        "id": "action30",
+        "type": "action",
+        "title": "CHANGER LE PRESSOSTAT",
+        "parent": "verif22",
+        "usedoc": true
+    },
+    {
+        "id": "verif23",
+        "type": "verif",
+        "title": "VERIFIER LE MANQUE D'EAU",
+        "parent": "verif22",
+        "next_ok": "action31",
+        "next_ko": "action32",
+        "usedoc": true
+    },
+    {
+        "id": "action31",
+        "type": "action",
+        "title": "CHANGER LE MANQUE D'EAU",
+        "parent": "verif23",
+        "usedoc": true
+    },
+    {
+        "id": "action32",
+        "type": "action",
+        "title": "APPELER LE SAV",
+        "parent": "verif23"
+    },
+    {
+        "id": "etat10",
+        "type": "etat",
+        "title": "IMPOSSIBLE DE MONTER EN PRESSION SORTIE DE POMPE (AU MANO) ET LE MOTEUR TOURNE",
+        "parent": "prob7",
+        "next": "verif24"
+    },
+    {
+        "id": "verif24",
+        "type": "verif",
+        "title": "VERIFIER SI L'EAU ARRIVE BIEN A LA POMPE",
+        "parent": "etat10",
+        "next_ok": "verif25",
+        "next_ko": "action33"
+    },
+    {
+        "id": "action33",
+        "type": "action",
+        "title": "VERIFIER L'ARRIVEE D'EAU (ROBINET, TUYAU PINCE, FILTRE BOUCHE)",
+        "parent": "verif24"
+    },
+    {
+        "id": "verif25",
+        "type": "verif",
+        "title": "VERIFIER SI LE BYPASS EST BLOQUE OUVERT",
+        "parent": "verif24",
+        "next_ok": "action34",
+        "next_ko": "verif26",
+        "usedoc": true
+    },
+    {
+        "id": "action34",
+        "type": "action",
+        "title": "CHANGER LE BYPASS",
+        "parent": "verif25",
+        "usedoc": true
+    },
+    {
+        "id": "verif26",
+        "type": "verif",
+        "title": "VERIFIER LES CLAPETS DE POMPE",
+        "parent": "verif25",
+        "next_ok": "action35",
+        "next_ko": "verif27",
+        "usedoc": true
+    },
+    {
+        "id": "action35",
+        "type": "action",
+        "title": "CHANGER LES CLAPETS",
+        "parent": "verif26",
+        "usedoc": true
+    },
+    {
+        "id": "verif27",
+        "type": "verif",
+        "title": "VERIFIER LES JOINTS DE PISTONS",
+        "parent": "verif26",
+        "next_ok": "action36",
+        "next_ko": "action37",
+        "usedoc": true
+    },
+    {
+        "id": "action36",
+        "type": "action",
+        "title": "CHANGER LES JOINTS",
+        "parent": "verif27",
+        "usedoc": true
+    },
+    {
+        "id": "action37",
+        "type": "action",
+        "title": "APPELER LE SAV",
+        "parent": "verif27"
+    },
+    {
+        "id": "etat11",
+        "type": "etat",
+        "title": "PRESSION OK AU MANO MAIS PAS OU PEU DE SORTIE D'EAU AUX ACCESSOIRES",
+        "parent": "prob8",
+        "next": "verif28"
+    },
+    {
+        "id": "verif28",
+        "type": "verif",
+        "title": "VERIFIER SI LA BUSE N'EST PAS BOUCHEE",
+        "parent": "etat11",
+        "next_ok": "verif29",
+        "next_ko": "action38"
+    },
+    {
+        "id": "action38",
+        "type": "action",
+        "title": "NETTOYER OU CHANGER LA BUSE",
+        "parent": "verif28"
+    },
+    {
+        "id": "verif29",
+        "type": "verif",
+        "title": "VERIFIER SI LE FILTRE HP N'EST PAS BOUCHE",
+        "parent": "verif28",
+        "next_ok": "verif30",
+        "next_ko": "action39"
+    },
+    {
+        "id": "action39",
+        "type": "action",
+        "title": "NETTOYER LE FILTRE HP",
+        "parent": "verif29"
+    },
+    {
+        "id": "verif30",
+        "type": "verif",
+        "title": "VERIFIER SI LE RACCORD RAPIDE N'EST PAS GRIPPE",
+        "parent": "verif29",
+        "next_ok": "action40",
+        "next_ko": "action41"
+    },
+    {
+        "id": "action40",
+        "type": "action",
+        "title": "CHANGER LE RACCORD RAPIDE",
+        "parent": "verif30"
+    },
+    {
+        "id": "action41",
+        "type": "action",
+        "title": "APPELER LE SAV",
+        "parent": "verif30"
+    },
+    {
+        "id": "etat12",
+        "type": "etat",
+        "title": "PRESSION SACCADEE",
+        "parent": "prob9",
+        "next": "verif31"
+    },
+    {
+        "id": "verif31",
+        "type": "verif",
+        "title": "VERIFIER SI L'EAU ARRIVE BIEN A LA POMPE",
+        "parent": "etat12",
+        "next_ok": "verif32",
+        "next_ko": "action42"
+    },
+    {
+        "id": "action42",
+        "type": "action",
+        "title": "VERIFIER L'ARRIVEE D'EAU (ROBINET, TUYAU PINCE, FILTRE BOUCHE)",
+        "parent": "verif31"
+    },
+    {
+        "id": "verif32",
+        "type": "verif",
+        "title": "VERIFIER SI LE BYPASS EST BLOQUE OUVERT",
+        "parent": "verif31",
+        "next_ok": "action43",
+        "next_ko": "verif33",
+        "usedoc": true
+    },
+    {
+        "id": "action43",
+        "type": "action",
+        "title": "CHANGER LE BYPASS",
+        "parent": "verif32",
+        "usedoc": true
+    },
+    {
+        "id": "verif33",
+        "type": "verif",
+        "title": "VERIFIER LES CLAPETS DE POMPE",
+        "parent": "verif32",
+        "next_ok": "action44",
+        "next_ko": "verif34",
+        "usedoc": true
+    },
+    {
+        "id": "action44",
+        "type": "action",
+        "title": "CHANGER LES CLAPETS",
+        "parent": "verif33",
+        "usedoc": true
+    },
+    {
+        "id": "verif34",
+        "type": "verif",
+        "title": "VERIFIER LES JOINTS DE PISTONS",
+        "parent": "verif33",
+        "next_ok": "action45",
+        "next_ko": "action46",
+        "usedoc": true
+    },
+    {
+        "id": "action45",
+        "type": "action",
+        "title": "CHANGER LES JOINTS",
+        "parent": "verif34",
+        "usedoc": true
+    },
+    {
+        "id": "action46",
+        "type": "action",
+        "title": "APPELER LE SAV",
+        "parent": "verif34"
+    },
+    {
+        "id": "etat13",
+        "type": "etat",
+        "title": "LA POMPE NE S'ARRETE PAS (1 MINUTE MAX APRES ARRET DE LA GACHETTE)",
+        "parent": "prob10",
+        "next": "verif35"
+    },
+    {
+        "id": "verif35",
+        "type": "verif",
+        "title": "VERIFIER SI LE BYPASS EST BLOQUE FERME",
+        "parent": "etat13",
+        "next_ok": "action47",
+        "next_ko": "verif36",
+        "usedoc": true
+    },
+    {
+        "id": "action47",
+        "type": "action",
+        "title": "CHANGER LE BYPASS",
+        "parent": "verif35",
+        "usedoc": true
+    },
+    {
+        "id": "verif36",
+        "type": "verif",
+        "title": "VERIFIER LE PRESSOSTAT",
+        "parent": "verif35",
+        "next_ok": "action48",
+        "next_ko": "action49",
+        "usedoc": true
+    },
+    {
+        "id": "action48",
+        "type": "action",
+        "title": "CHANGER LE PRESSOSTAT",
+        "parent": "verif36",
+        "usedoc": true
+    },
+    {
+        "id": "action49",
+        "type": "action",
+        "title": "APPELER LE SAV",
+        "parent": "verif36"
+    },
+    {
+        "id": "etat14",
+        "type": "etat",
+        "title": "LA MACHINE NE CHAUFFE PLUS VOYANT VERT ALLUME",
+        "parent": "prob11",
+        "next": "verif37"
+    },
+    {
+        "id": "verif37",
+        "type": "verif",
+        "title": "VERIFIER SI LE MOTEUR BRULEUR TOURNE",
+        "parent": "etat14",
+        "next_ok": "verif38",
+        "next_ko": "verif41"
+    },
+    {
+        "id": "verif38",
+        "type": "verif",
+        "title": "VERIFIER SI LE FUEL ARRIVE BIEN AU BRULEUR",
+        "parent": "verif37",
+        "next_ok": "verif39",
+        "next_ko": "action50"
+    },
+    {
+        "id": "action50",
+        "type": "action",
+        "title": "VERIFIER L'ARRIVEE DE FUEL (NIVEAU, ROBINET, FILTRE BOUCHE)",
+        "parent": "verif38"
+    },
+    {
+        "id": "verif39",
+        "type": "verif",
+        "title": "VERIFIER SI LA POMPE FUEL FONCTIONNE",
+        "parent": "verif38",
+        "next_ok": "verif40",
+        "next_ko": "action51",
+        "usedoc": true
+    },
+    {
+        "id": "action51",
+        "type": "action",
+        "title": "CHANGER LA POMPE FUEL",
+        "parent": "verif39",
+        "usedoc": true
+    },
+    {
+        "id": "verif40",
+        "type": "verif",
+        "title": "VERIFIER LES ELECTRODES ET LE GICLEUR",
+        "parent": "verif39",
+        "next_ok": "action52",
+        "next_ko": "action53",
+        "usedoc": true
+    },
+    {
+        "id": "action52",
+        "type": "action",
+        "title": "CHANGER LES ELECTRODES ET/OU LE GICLEUR",
+        "parent": "verif40",
+        "usedoc": true
+    },
+    {
+        "id": "action53",
+        "type": "action",
+        "title": "APPELER LE SAV",
+        "parent": "verif40"
+    },
+    {
+        "id": "verif41",
+        "type": "verif",
+        "title": "VERIFIER L'ALIMENTATION DU MOTEUR BRULEUR",
+        "parent": "verif37",
+        "next_ok": "action54",
+        "next_ko": "verif42",
+        "usedoc": true
+    },
+    {
+        "id": "action54",
+        "type": "action",
+        "title": "CHANGER LE MOTEUR BRULEUR",
+        "parent": "verif41",
+        "usedoc": true
+    },
+    {
+        "id": "verif42",
+        "type": "verif",
+        "title": "VERIFIER LE CONTACTEUR DE PUISSANCE",
+        "parent": "verif41",
+        "next_ok": "action55",
+        "next_ko": "action56",
+        "usedoc": true
+    },
+    {
+        "id": "action55",
+        "type": "action",
+        "title": "CHANGER LE CONTACTEUR",
+        "parent": "verif42",
+        "usedoc": true
+    },
+    {
+        "id": "action56",
+        "type": "action",
+        "title": "APPELER LE SAV",
+        "parent": "verif42"
+    },
+    {
+        "id": "etat15",
+        "type": "etat",
+        "title": "LA MACHINE NE CHAUFFE PLUS VOYANT VERT RESTE ETEINT",
+        "parent": "prob12",
+        "next": "verif43"
+    },
+    {
+        "id": "verif43",
+        "type": "verif",
+        "title": "VERIFIER LE THERMOSTAT DE REGULATION",
+        "parent": "etat15",
+        "next_ok": "action57",
+        "next_ko": "verif44",
+        "usedoc": true
+    },
+    {
+        "id": "action57",
+        "type": "action",
+        "title": "CHANGER LE THERMOSTAT",
+        "parent": "verif43",
+        "usedoc": true
+    },
+    {
+        "id": "verif44",
+        "type": "verif",
+        "title": "VERIFIER LE THERMOSTAT DE SECURITE",
+        "parent": "verif43",
+        "next_ok": "action58",
+        "next_ko": "verif45",
+        "usedoc": true
+    },
+    {
+        "id": "action58",
+        "type": "action",
+        "title": "REARMER OU CHANGER LE THERMOSTAT",
+        "parent": "verif44",
+        "usedoc": true
+    },
+    {
+        "id": "verif45",
+        "type": "verif",
+        "title": "VERIFIER LE MANQUE D'EAU",
+        "parent": "verif44",
+        "next_ok": "action59",
+        "next_ko": "verif46",
+        "usedoc": true
+    },
+    {
+        "id": "action59",
+        "type": "action",
+        "title": "CHANGER LE MANQUE D'EAU",
+        "parent": "verif45",
+        "usedoc": true
+    },
+    {
+        "id": "verif46",
+        "type": "verif",
+        "title": "VERIFIER LE PRESSOSTAT",
+        "parent": "verif45",
+        "next_ok": "action60",
+        "next_ko": "action61",
+        "usedoc": true
+    },
+    {
+        "id": "action60",
+        "type": "action",
+        "title": "CHANGER LE PRESSOSTAT",
+        "parent": "verif46",
+        "usedoc": true
+    },
+    {
+        "id": "action61",
+        "type": "action",
+        "title": "APPELER LE SAV",
+        "parent": "verif46"
+    },
+    {
+        "id": "etat16",
+        "type": "etat",
+        "title": "LA MACHINE NE CHAUFFE PAS ASSEZ",
+        "parent": "prob13",
+        "next": "verif47"
+    },
+    {
+        "id": "verif47",
+        "type": "verif",
+        "title": "VERIFIER LE REGLAGE DU THERMOSTAT",
+        "parent": "etat16",
+        "next_ok": "verif48",
+        "next_ko": "action62"
+    },
+    {
+        "id": "action62",
+        "type": "action",
+        "title": "REGLER LE THERMOSTAT",
+        "parent": "verif47"
+    },
+    {
+        "id": "verif48",
+        "type": "verif",
+        "title": "VERIFIER LE GICLEUR",
+        "parent": "verif47",
+        "next_ok": "verif49",
+        "next_ko": "action63",
+        "usedoc": true
+    },
+    {
+        "id": "action63",
+        "type": "action",
+        "title": "CHANGER LE GICLEUR",
+        "parent": "verif48",
+        "usedoc": true
+    },
+    {
+        "id": "verif49",
+        "type": "verif",
+        "title": "VERIFIER LE REGLAGE D'AIR DU BRULEUR",
+        "parent": "verif48",
+        "next_ok": "verif50",
+        "next_ko": "action64",
+        "usedoc": true
+    },
+    {
+        "id": "action64",
+        "type": "action",
+        "title": "REGLER L'AIR DU BRULEUR",
+        "parent": "verif49",
+        "usedoc": true
+    },
+    {
+        "id": "verif50",
+        "type": "verif",
+        "title": "VERIFIER LE SERPENTIN (CALCAIRE OU BOUCHE)",
+        "parent": "verif49",
+        "next_ok": "action65",
+        "next_ko": "action66",
+        "usedoc": true
+    },
+    {
+        "id": "action65",
+        "type": "action",
+        "title": "DETARTRER OU CHANGER LE SERPENTIN",
+        "parent": "verif50",
+        "usedoc": true
+    },
+    {
+        "id": "action66",
+        "type": "action",
+        "title": "APPELER LE SAV",
+        "parent": "verif50"
+    },
+    {
+        "id": "etat17",
+        "type": "etat",
+        "title": "VOYANT VERT S'ETEINT JUSQU'A UNE TEMPERATURE RELATIVEMENT BASSE",
+        "parent": "prob14",
+        "next": "verif51"
+    },
+    {
+        "id": "verif51",
+        "type": "verif",
+        "title": "VERIFIER LE THERMOSTAT DE REGULATION",
+        "parent": "etat17",
+        "next_ok": "action67",
+        "next_ko": "action68",
+        "usedoc": true
+    },
+    {
+        "id": "action67",
+        "type": "action",
+        "title": "CHANGER LE THERMOSTAT",
+        "parent": "verif51",
+        "usedoc": true
+    },
+    {
+        "id": "action68",
+        "type": "action",
+        "title": "APPELER LE SAV",
+        "parent": "verif51"
+    },
+    {
+        "id": "etat18",
+        "type": "etat",
+        "title": "LA MACHINE MONTE TROP EN TEMPERATURE",
+        "parent": "prob15",
+        "next": "verif52"
+    },
+    {
+        "id": "verif52",
+        "type": "verif",
+        "title": "VERIFIER LE THERMOSTAT DE REGULATION",
+        "parent": "etat18",
+        "next_ok": "action69",
+        "next_ko": "action70",
+        "usedoc": true
+    },
+    {
+        "id": "action69",
+        "type": "action",
+        "title": "CHANGER LE THERMOSTAT",
+        "parent": "verif52",
+        "usedoc": true
+    },
+    {
+        "id": "action70",
+        "type": "action",
+        "title": "APPELER LE SAV",
+        "parent": "verif52"
+    },
+    {
+        "id": "etat19",
+        "type": "etat",
+        "title": "LA MACHINE FUME BEAUCOUP",
+        "parent": "prob16",
+        "next": "verif53"
+    },
+    {
+        "id": "verif53",
+        "type": "verif",
+        "title": "VERIFIER LE REGLAGE D'AIR DU BRULEUR",
+        "parent": "etat19",
+        "next_ok": "verif54",
+        "next_ko": "action71",
+        "usedoc": true
+    },
+    {
+        "id": "action71",
+        "type": "action",
+        "title": "REGLER L'AIR DU BRULEUR",
+        "parent": "verif53",
+        "usedoc": true
+    },
+    {
+        "id": "verif54",
+        "type": "verif",
+        "title": "VERIFIER LE GICLEUR",
+        "parent": "verif53",
+        "next_ok": "verif55",
+        "next_ko": "action72",
+        "usedoc": true
+    },
+    {
+        "id": "action72",
+        "type": "action",
+        "title": "CHANGER LE GICLEUR",
+        "parent": "verif54",
+        "usedoc": true
+    },
+    {
+        "id": "verif55",
+        "type": "verif",
+        "title": "VERIFIER LE RAMONAGE DU SERPENTIN",
+        "parent": "verif54",
+        "next_ok": "action73",
+        "next_ko": "action74",
+        "usedoc": true
+    },
+    {
+        "id": "action73",
+        "type": "action",
+        "title": "RAMONER LE SERPENTIN",
+        "parent": "verif55",
+        "usedoc": true
+    },
+    {
+        "id": "action74",
+        "type": "action",
+        "title": "APPELER LE SAV",
+        "parent": "verif55"
+    }
+]
 }
