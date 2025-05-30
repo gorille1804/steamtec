@@ -1,351 +1,187 @@
 {
-    "elements": [
-      {
-        "id": "cat1",
-        "type": "categorie",
-        "title": "PROBLEME DE FONCTIONNEMENT GENERAL",
-        "parent": null
-      },
-      {
-        "id": "cat2",
-        "type": "categorie",
-        "title": "PROBLEME DE PRESSION",
-        "parent": null
-      },
-      {
-        "id": "cat3",
-        "type": "categorie",
-        "title": "PROBLEME DE CHAUFFE",
-        "parent": null
-      },
-      {
-        "id": "prob1",
-        "type": "probleme",
-        "title": "LA MACHINE NE DEMARRE PAS",
-        "parent": "cat1"
-      },
-      {
-        "id": "prob2",
-        "type": "probleme",
-        "title": "PROGRAMMATEUR EN ERREUR (affiche ERR ou symboles)",
-        "parent": "cat1"
-      },
-      {
-        "id": "prob3",
-        "type": "probleme",
-        "title": "PROGRAMMATEUR ne s'allume pas ou clignote",
-        "parent": "cat1"
-      },
-      {
-        "id": "prob4",
-        "type": "probleme",
-        "title": "PLUS DE CONSOMMATION D'ANTICALCAIRE",
-        "parent": "cat1"
-      },
-      {
-        "id": "prob5",
-        "type": "probleme",
-        "title": "DEBORDEMENT DU BAC ANTICALCAIRE",
-        "parent": "cat1"
-      },
-      {
-        "id": "prob6",
-        "type": "probleme",
-        "title": "PAS DE PRESSION AU MANO (LA POMPE NE TOURNE PAS) ALORS QU'ON APPUIE SUR LA GACHETTE",
-        "parent": "cat2"
-      },
-      {
-        "id": "prob7",
-        "type": "probleme",
-        "title": "IMPOSSIBLE DE MONTER EN PRESSION SORTIE DE POMPE (AU MANO) ET LE MOTEUR TOURNE",
-        "parent": "cat2"
-      },
-      {
-        "id": "prob8",
-        "type": "probleme",
-        "title": "PRESSION OK AU MANO MAIS PAS OU PEU DE SORTIE D'EAU AUX ACCESSOIRES",
-        "parent": "cat2"
-      },
-      {
-        "id": "prob9",
-        "type": "probleme",
-        "title": "PRESSION SACCADEE",
-        "parent": "cat2"
-      },
-      {
-        "id": "prob10",
-        "type": "probleme",
-        "title": "LA POMPE NE S'ARRETE PAS (1 MINUTE MAX APRES ARRET DE LA GACHETTE)",
-        "parent": "cat2"
-      },
-      {
-        "id": "prob11",
-        "type": "probleme",
-        "title": "LA MACHINE NE CHAUFFE PLUS VOYANT VERT ALLUME",
-        "parent": "cat3"
-      },
-      {
-        "id": "prob12",
-        "type": "probleme",
-        "title": "LA MACHINE NE CHAUFFE PLUS VOYANT VERT RESTE ETEINT",
-        "parent": "cat3"
-      },
-      {
-        "id": "prob13",
-        "type": "probleme",
-        "title": "LA MACHINE NE CHAUFFE PAS ASSEZ",
-        "parent": "cat3"
-      },
-      {
-        "id": "prob14",
-        "type": "probleme",
-        "title": "VOYANT VERT S'ETEINT JUSQU'A UNE TEMPERATURE RELATIVEMENT BASSE",
-        "parent": "cat3"
-      },
-      {
-        "id": "prob15",
-        "type": "probleme",
-        "title": "LA MACHINE MONTE TROP EN TEMPERATURE",
-        "parent": "cat3"
-      },
-      {
-        "id": "prob16",
-        "type": "probleme",
-        "title": "LA MACHINE FUME BEAUCOUP",
-        "parent": "cat3"
-      },
-      {
-        "id": "etat1",
-        "type": "etat",
-        "title": "Le moteur de la pompe ne tourne pas ET le programmateur est éteint",
-        "parent": "prob1",
-        "next": [
-          "verif1"
-        ]
-      },
-      {
-        "id": "etat2",
-        "type": "etat",
-        "title": "Le moteur de la pompe ne tourne pas ET le programmateur est allumé",
-        "parent": "prob1",
-        "next": [
-          "prob5"
-        ]
-      },
-      {
-        "id": "etat3",
-        "type": "etat",
-        "title": "Le moteur de la pompe tourne ET le programmateur est éteint",
-        "parent": "prob1",
-        "next": [
-          "prob4"
-        ]
-      },
-      {
-        "id": "etat76683",
-        "type": "etat",
-        "title": " PAS DE MELANGE DE CARBURANT",
-        "parent": "prob16",
-        "next": [
-          "etat38602"
-        ]
-      },
-      {
-        "id": "etat94555",
-        "type": "etat",
-        "title": " MELANGE DE CARBURANT",
-        "parent": "prob16",
-        "next": [
-          "action09603"
-        ]
-      },
-      {
-        "id": "action09603",
-        "type": "action",
-        "title": "FAIRE UNE VIDANGE COMPLETE DU CIRCUIT, CHANGER LES FILTRES (y compris pompe à fuel), NETTOYER LE BRULEUR",
-        "parent": "etat94555"
-      },
-      {
-        "id": "etat38602",
-        "type": "etat",
-        "title": " TYPE DE FUMEE",
-        "parent": "etat76683",
-        "next": [
-          "etat58618",
-          "etat86521"
-        ]
-      },
-      {
-        "id": "etat58618",
-        "type": "etat",
-        "title": " FUMEE BLANCHE",
-        "parent": "etat38602",
-        "next": [
-          "verif19162"
-        ]
-      },
-      {
-        "id": "etat86521",
-        "type": "etat",
-        "title": "FUMEE NOIRE",
-        "parent": "etat38602",
-        "next": [
-          "action47641"
-        ]
-      },
-      {
-        "id": "verif19162",
-        "type": "verif",
-        "title": "S'ASSURER QU'IL Y A ASSEZ DE CARBURANT",
-        "parent": "etat58618",
-        "next_ok": "verif05610",
-        "next_ko": "action62180"
-      },
-      {
-        "id": "action62180",
-        "type": "action",
-        "title": " FAIRE LE PLEIN DE CARBURANT",
-        "parent": "verif19162"
-      },
-      {
-        "id": "verif05610",
-        "type": "verif",
-        "title": "VERIFIER L'ETAT DU FILTRE A CARBURANT",
-        "parent": "verif19162",
-        "next_ok": "verif66058",
-        "next_ko": "action36539"
-      },
-      {
-        "id": "action36539",
-        "type": "action",
-        "title": "CHANGER LE FILTRE A CARBURANT",
-        "parent": "verif05610",
-        "usedoc": true
-      },
-      {
-        "id": "verif66058",
-        "type": "verif",
-        "title": "VERIFIER QUE LE ROBINET A CARBURANT EST BIEN OUVERT",
-        "parent": "verif05610",
-        "next_ok": "verif26810",
-        "next_ko": "action06194"
-      },
-      {
-        "id": "action06194",
-        "type": "action",
-        "title": "OUVRIR LE ROBINET",
-        "parent": "verif66058"
-      },
-      {
-        "id": "verif26810",
-        "type": "verif",
-        "title": "VERIFIER L'ETAT ET LE BON BRANCHEMENT DES DURITES",
-        "parent": "verif66058",
-        "next_ok": "verif80794",
-        "next_ko": "action53418"
-      },
-      {
-        "id": "action53418",
-        "type": "action",
-        "title": "CHANGER ET/OU REBRANCHER CORRECTEMENT LES DURITES",
-        "parent": "verif26810"
-      },
-      {
-        "id": "verif80794",
-        "type": "verif",
-        "title": "VERIFIER L'ETAT DU FILTRE INTERNE DE LA POMPE A FUEL",
-        "parent": "verif26810",
-        "next_ok": "action22131",
-        "next_ko": "action03826"
-      },
-      {
-        "id": "action03826",
-        "type": "action",
-        "title": "NETTOYER ET/OU CHANGER LE FILTRE INTERNE DE LA POMPE A FUEL",
-        "parent": "verif80794",
-        "usedoc": true
-      },
-      {
-        "id": "action22131",
-        "type": "action",
-        "title": "NETTOYER ET VERIFIER LE BRULEUR",
-        "parent": "verif80794",
-        "next": [
-          "action55858"
-        ],
-        "usedoc": true
-      },
-      {
-        "id": "action55858",
-        "type": "action",
-        "title": "CHANGER LA POMPE A FUEL",
-        "parent": "verif80794",
-        "next": [
-          "action03131"
-        ],
-        "usedoc": true
-      },
-      {
-        "id": "action03131",
-        "type": "action",
-        "title": "Appeler le SAV 0681676430",
-        "parent": "verif80794"
-      },
-      {
-        "id": "action47641",
-        "type": "action",
-        "title": "Vérifier que les réglages de base sont toujours en place (pompe à gasoil et ventilateur)",
-        "parent": "etat86521",
-        "next": [
-          "action94786"
-        ],
-        "usedoc": true
-      },
-      {
-        "id": "action94786",
-        "type": "action",
-        "title": "VERIFIER QUE LA BOBINE ET LES ELECTRODES SONT BIEN BRANCHEES ET ETAT DES CABLES",
-        "parent": "etat86521",
-        "next": [
-          "action18993"
-        ],
-        "usedoc": true
-      },
-      {
-        "id": "action18993",
-        "type": "action",
-        "title": "NETTOYER ET VERIFIER LE BRULEUR (gicleur, électrodes et support)",
-        "parent": "etat86521",
-        "next": [
-          "action55146"
-        ],
-        "usedoc": true
-      },
-      {
-        "id": "action55146",
-        "type": "action",
-        "title": "VERIFIER LE BON BRANCHEMENT DANS L'ARMOIRE ELECTRIQUE DE L'ALLUMAGE CHAUDIERE",
-        "parent": "etat86521",
-        "next": [
-          "action82210"
-        ],
-        "usedoc": true
-      },
-      {
-        "id": "action82210",
-        "type": "action",
-        "title": "CHANGER LA BOBINE ET LE CÂBLE D'ALIMENTATION",
-        "parent": "etat86521",
-        "next": [
-          "action21121"
-        ],
-        "usedoc": true
-      },
-      {
-        "id": "action21121",
-        "type": "action",
-        "title": "Appeler le SAV 0681676430",
-        "parent": "action82210"
-      }
-    ]
-  }
+  "elements": [
+    {
+      "id": "cat1",
+      "type": "categorie",
+      "title": "PROBLEME DE FONCTIONNEMENT GENERAL",
+      "parent": null
+    },
+    {
+      "id": "cat2",
+      "type": "categorie",
+      "title": "PROBLEME DE PRESSION",
+      "parent": null
+    },
+    {
+      "id": "cat3",
+      "type": "categorie",
+      "title": "PROBLEME DE CHAUFFE",
+      "parent": null
+    },
+    {
+      "id": "prob1",
+      "type": "probleme",
+      "title": "LA MACHINE NE DEMARRE PAS",
+      "parent": "cat1"
+    },
+    {
+      "id": "prob2",
+      "type": "probleme",
+      "title": "PROGRAMMATEUR EN ERREUR (affiche ERR ou symboles)",
+      "parent": "cat1"
+    },
+    {
+      "id": "prob3",
+      "type": "probleme",
+      "title": "PROGRAMMATEUR ne s'allume pas ou clignote",
+      "parent": "cat1"
+    },
+    {
+      "id": "prob4",
+      "type": "probleme",
+      "title": "PLUS DE CONSOMMATION D'ANTICALCAIRE",
+      "parent": "cat1"
+    },
+    {
+      "id": "prob5",
+      "type": "probleme",
+      "title": "DEBORDEMENT DU BAC ANTICALCAIRE",
+      "parent": "cat1"
+    },
+    {
+      "id": "prob6",
+      "type": "probleme",
+      "title": "PAS DE PRESSION AU MANO (LA POMPE NE TOURNE PAS) ALORS QU'ON APPUIE SUR LA GACHETTE",
+      "parent": "cat2"
+    },
+    {
+      "id": "prob7",
+      "type": "probleme",
+      "title": "IMPOSSIBLE DE MONTER EN PRESSION SORTIE DE POMPE (AU MANO) ET LE MOTEUR TOURNE",
+      "parent": "cat2"
+    },
+    {
+      "id": "prob8",
+      "type": "probleme",
+      "title": "PRESSION OK AU MANO MAIS PAS OU PEU DE SORTIE D'EAU AUX ACCESSOIRES",
+      "parent": "cat2"
+    },
+    {
+      "id": "prob9",
+      "type": "probleme",
+      "title": "PRESSION SACCADEE",
+      "parent": "cat2"
+    },
+    {
+      "id": "prob10",
+      "type": "probleme",
+      "title": "LA POMPE NE S'ARRETE PAS (1 MINUTE MAX APRES ARRET DE LA GACHETTE)",
+      "parent": "cat2"
+    },
+    {
+      "id": "prob11",
+      "type": "probleme",
+      "title": "LA MACHINE NE CHAUFFE PLUS VOYANT VERT ALLUME",
+      "parent": "cat3"
+    },
+    {
+      "id": "prob12",
+      "type": "probleme",
+      "title": "LA MACHINE NE CHAUFFE PLUS VOYANT VERT RESTE ETEINT",
+      "parent": "cat3"
+    },
+    {
+      "id": "prob13",
+      "type": "probleme",
+      "title": "LA MACHINE NE CHAUFFE PAS ASSEZ",
+      "parent": "cat3"
+    },
+    {
+      "id": "prob14",
+      "type": "probleme",
+      "title": "VOYANT VERT S'ETEINT JUSQU'A UNE TEMPERATURE RELATIVEMENT BASSE",
+      "parent": "cat3"
+    },
+    {
+      "id": "prob15",
+      "type": "probleme",
+      "title": "LA MACHINE MONTE TROP EN TEMPERATURE",
+      "parent": "cat3"
+    },
+    {
+      "id": "prob16",
+      "type": "probleme",
+      "title": "LA MACHINE FUME BEAUCOUP",
+      "parent": "cat3",
+      "next": []
+    },
+    {
+      "id": "etat08270",
+      "type": "etat",
+      "title": "Le mano ne redescend pas du tout",
+      "parent": "prob10",
+      "next": [
+        "verif44818"
+      ]
+    },
+    {
+      "id": "etat30026",
+      "type": "etat",
+      "title": "Le mano redescend tout doucement et pas jusqu'à 0",
+      "parent": "prob10",
+      "next": [
+        "action90600"
+      ]
+    },
+    {
+      "id": "etat69605",
+      "type": "etat",
+      "title": "Le mano redescend rapidement à 0 mais la pompe ne s'arrête pas",
+      "parent": "prob10",
+      "next": [
+        "action25231"
+      ]
+    },
+    {
+      "id": "verif44818",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE FUITE IMPORTANTE y compris clapet de décharge",
+      "parent": "etat08270",
+      "next_ok": "action88553",
+      "next_ko": "action03225"
+    },
+    {
+      "id": "action88553",
+      "type": "action",
+      "title": "Réparer les fuites",
+      "parent": "verif44818"
+    },
+    {
+      "id": "action03225",
+      "type": "action",
+      "title": "Changer le clapet du raccord de sortie",
+      "parent": "verif44818",
+      "next": [
+        "etat30026",
+        "etat69605"
+      ],
+      "usedoc": true
+    },
+    {
+      "id": "action90600",
+      "type": "action",
+      "title": "CHANGER LA VANNE BY-PASS",
+      "parent": "etat30026",
+      "next": [
+        "etat69605"
+      ],
+      "usedoc": true
+    },
+    {
+      "id": "action25231",
+      "type": "action",
+      "title": "CHANGER LE PRESSOSTAT CÔTE TETE DE POMPE",
+      "parent": "etat69605"
+    }
+  ]
+}

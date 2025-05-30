@@ -116,14 +116,38 @@ document.addEventListener('DOMContentLoaded', function () {
             html = `<button class="btn btn-outline-secondary mb-2" onclick="window.goBackStep()">Retour</button>` + html;
         }
         if (step.type === 'etat' && step.next) {
-            html += `<button class="btn btn-primary" onclick="window.showStep('${step.next}')">Commencer le diagnostic</button>`;
+            if (Array.isArray(step.next) && step.next.length > 1) {
+                html += `<div class="mt-2 mb-2">Veuillez choisir la suite :</div>`;
+                step.next.forEach(nextId => {
+                    const nextNode = elements.find(e => e.id === nextId);
+                    if (nextNode) {
+                        html += `<button class="btn btn-primary me-2 mb-2" onclick="window.showStep('${nextNode.id}')">${nextNode.title}</button>`;
+                    }
+                });
+            } else if (Array.isArray(step.next) && step.next.length === 1) {
+                html += `<button class="btn btn-primary" onclick="window.showStep('${step.next[0]}')">Commencer le diagnostic</button>`;
+            } else if (typeof step.next === 'string') {
+                html += `<button class="btn btn-primary" onclick="window.showStep('${step.next}')">Commencer le diagnostic</button>`;
+            }
         }
         if (step.type === 'action') {
             if (step.usedoc === true) {
                 html += `<div class="alert alert-danger mt-2"><i class="mdi mdi-file-document"></i> Besoin d'une fiche technique</div>`;
             }
             if (step.next) {
-                html += `<button class="btn btn-primary mt-2" onclick="window.showStep('${step.next}')">Suite</button>`;
+                if (Array.isArray(step.next) && step.next.length > 1) {
+                    html += `<div class="mt-2 mb-2">Veuillez choisir la suite :</div>`;
+                    step.next.forEach(nextId => {
+                        const nextNode = elements.find(e => e.id === nextId);
+                        if (nextNode) {
+                            html += `<button class="btn btn-primary me-2 mb-2" onclick="window.showStep('${nextNode.id}')">${nextNode.title}</button>`;
+                        }
+                    });
+                } else if (Array.isArray(step.next) && step.next.length === 1) {
+                    html += `<button class="btn btn-primary mt-2" onclick="window.showStep('${step.next[0]}')">Suite</button>`;
+                } else if (typeof step.next === 'string') {
+                    html += `<button class="btn btn-primary mt-2" onclick="window.showStep('${step.next}')">Suite</button>`;
+                }
             }
         }
         if (step.type === 'verif') {
