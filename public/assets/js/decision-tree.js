@@ -18,10 +18,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         let html = '<nav aria-label="breadcrumb"><ol class="breadcrumb">';
         navigationStack.forEach((item, idx) => {
+            // Cherche le type de l'item dans elements
+            const element = elements.find(e => e.id === item.id);
+            let badge = '';
+            if (element) {
+                if (element.type === 'probleme') {
+                    badge = '<span class="breadcrumb-problem-badge"></span>';
+                } else if (element.type === 'etat' || element.type === 'symptome') {
+                    badge = '<span class="breadcrumb-state-badge"></span>';
+                } else if (element.type === 'verif') {
+                    badge = '<span class="breadcrumb-verif-badge"></span>';
+                } else if (element.type === 'action') {
+                    badge = '<span class="breadcrumb-action-badge"></span>';
+                }
+            }
             if (idx < navigationStack.length - 1) {
-                html += `<li class="breadcrumb-item"><a href="#" onclick="window.breadcrumbGoTo(${idx});return false;">${item.label}</a></li>`;
+                html += `<li class="breadcrumb-item"><a href="#" onclick="window.breadcrumbGoTo(${idx});return false;">${badge}${item.label}</a></li>`;
             } else {
-                html += `<li class="breadcrumb-item active" aria-current="page">${item.label}</li>`;
+                html += `<li class="breadcrumb-item active" aria-current="page">${badge}${item.label}</li>`;
             }
         });
         html += '</ol></nav>';
@@ -79,7 +93,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 <button class="btn btn-secondary" onclick="window.showCategories()">Retour aux catégories</button>
                 <button class="btn btn-outline-info" onclick="window.goBackStep()">Retour</button>
             </div>
-            <h3>${catTitle} > ${probTitle}</h3>
             <div id="problem-details"></div>`;
         // Afficher tous les états enfants du problème
         const etats = elements.filter(e => (e.parent === problemId) && (e.type === 'etat' || e.type === 'symptome'));
