@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
         updateBreadcrumb();
         const categories = elements.filter(e => e.type === 'categorie');
         const appDiv = document.getElementById('decision-tree-app');
-        appDiv.innerHTML = '<h2>Catégories</h2>';
+        appDiv.innerHTML = '';
         const ul = document.createElement('ul');
         categories.forEach(cat => {
             const li = document.createElement('li');

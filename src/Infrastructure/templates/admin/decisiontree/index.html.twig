@@ -1,6 +1,11 @@
 {% extends "layout/dashboard.layout.html.twig" %}
 {% block title %} Arbre de Dépannage {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/admin/decisiontree/decision-tree.css') }}">
+{% endblock %}
+
 {% block content %}
 <div class="row flex-grow">
     <div class="col-md-12">
