@@ -111,6 +111,23 @@ document.addEventListener('DOMContentLoaded', function () {
             showProblem(nextProblem.id, elements, document.getElementById('decision-tree-app'), cat.title, nextProblem.title, true);
             return;
         }
+        // Ajout : gestion du cas où le noeud est de type 'probleme'
+        if (step && step.type === 'probleme') {
+            const etats = elements.filter(e => (e.parent === step.id) && (e.type === 'etat' || e.type === 'symptome'));
+            if (etats.length === 1) {
+                showStep(etats[0].id, elements, container, true);
+                return;
+            } else if (etats.length > 1) {
+                let html = '<div class="mb-2">Veuillez sélectionner l\'état correspondant :</div><ul>';
+                etats.forEach(etat => {
+                    html += `<li><button class="btn btn-outline-primary mb-2" onclick="window.showStep('${etat.id}')">${etat.title}</button></li>`;
+                });
+                html += '</ul>';
+                container.innerHTML = html;
+                window.showStep = (id) => showStep(id, elements, container, true);
+                return;
+            }
+        }
         let html = `<div class="border p-3 my-2"><strong>${step.title} - ${step.id}</strong></div>`;
         if (navigationStack.length > 2) {
             html = `<button class="btn btn-outline-secondary mb-2" onclick="window.goBackStep()">Retour</button>` + html;
