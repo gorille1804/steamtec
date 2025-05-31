@@ -182,6 +182,2067 @@
       "type": "action",
       "title": "CHANGER LE PRESSOSTAT CÔTE TETE DE POMPE",
       "parent": "etat69605"
+    },
+    {
+      "id": "etat05263",
+      "type": "etat",
+      "title": "DEBIT FAIBLE",
+      "parent": "prob9",
+      "next": [
+        "action64005"
+      ]
+    },
+    {
+      "id": "action64005",
+      "type": "action",
+      "title": "VERIFIER LA BONNE ALIMENTATION EN EAU (DU ROBINET JUSQU'A L'ENTREE MACHINE)",
+      "parent": "etat05263",
+      "next": [
+        "etat71180",
+        "etat44954",
+        "etat83983"
+      ]
+    },
+    {
+      "id": "etat71180",
+      "type": "etat",
+      "title": "SUR CITERNE (PAS A PLUS DE 3M DE LA MACHINE ET DE NIVEAU)",
+      "parent": "action64005",
+      "next": [
+        "verif32738"
+      ]
+    },
+    {
+      "id": "etat44954",
+      "type": "etat",
+      "title": "EN DIRECT SANS BAC ANTI CALCAIRE",
+      "parent": "action64005",
+      "next": [
+        "verif23569"
+      ]
+    },
+    {
+      "id": "etat83983",
+      "type": "etat",
+      "title": "EN DIRECT AVEC BAC ANTI CALCAIRE",
+      "parent": "action64005",
+      "next": [
+        "verif95654"
+      ]
+    },
+    {
+      "id": "verif23569",
+      "type": "verif",
+      "title": "VERIFIER L'OUVERTURE COMPLETE DU ROBINET D'ALIMENTATION",
+      "parent": "etat44954",
+      "next_ok": "verif90194"
+    },
+    {
+      "id": "verif90194",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE PLI DANS LE TUYAU D'ALIMENTATION",
+      "parent": "etat44954",
+      "next_ok": "verif08664"
+    },
+    {
+      "id": "verif08664",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE BLANC ENTREE MACHINE (SI BESOIN LE CHANGER OU NETTOYER)",
+      "parent": "etat44954",
+      "next_ok": "verif81282"
+    },
+    {
+      "id": "verif32738",
+      "type": "verif",
+      "title": "VERIFIER LE FONCTIONNEMENT EN DIRECT (SUR ROBINET)",
+      "parent": "etat71180",
+      "next_ok": "verif51072",
+      "next_ko": "verif08664"
+    },
+    {
+      "id": "verif51072",
+      "type": "verif",
+      "title": "VERIFIER LE NIVEAU D'EAU DANS LA CITERNE",
+      "parent": "etat71180",
+      "next_ok": "verif21988"
+    },
+    {
+      "id": "verif21988",
+      "type": "verif",
+      "title": "VERIFIER QUE LA SORTIE N'EST PAS LEGEREMENT OBSTRUEE (EN DEBRANCHANT)",
+      "parent": "etat71180",
+      "next_ok": "verif46886"
+    },
+    {
+      "id": "verif46886",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE BLANC ENTRE LA CITERNE ET LA MACHINE (SI BESOIN LE CHANGER OU NETTOYER)",
+      "parent": "etat71180",
+      "next_ok": "verif87356"
+    },
+    {
+      "id": "verif87356",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE POINT BAS ENTRE LA CITERNE ET LA MACHINE",
+      "parent": "etat71180",
+      "next_ko": "action47035"
+    },
+    {
+      "id": "action47035",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "verif87356"
+    },
+    {
+      "id": "verif81282",
+      "type": "verif",
+      "title": "VERIFIER LE FILTRE ENTREE POMPE (COUVERCLE VERT) (SI BESOIN LE NETTOYER)",
+      "parent": "etat44954",
+      "next_ok": "etat28253",
+      "next_ko": "etat59701"
+    },
+    {
+      "id": "etat28253",
+      "type": "etat",
+      "title": "L'AIGUILLE DU MANO NE VIBRE PAS",
+      "parent": "verif81282",
+      "next": [
+        "verif17206"
+      ]
+    },
+    {
+      "id": "etat59701",
+      "type": "etat",
+      "title": "L'AIGUILLE DU MANO VIBRE",
+      "parent": "verif81282",
+      "next": [
+        "verif27159"
+      ]
+    },
+    {
+      "id": "verif27159",
+      "type": "verif",
+      "title": "VERIFIER LES CLAPETS ET LES CHANGER SII BESOIN",
+      "parent": "etat59701",
+      "next_ko": "action47035",
+      "usedoc": true
+    },
+    {
+      "id": "verif17206",
+      "type": "verif",
+      "title": "TESTER AVEC UN AUTRE ACCESSOIRE -> Si OK NETTOYER ACCESSOIRE",
+      "parent": "etat28253",
+      "next_ko": "verif49154"
+    },
+    {
+      "id": "verif49154",
+      "type": "verif",
+      "title": "TESTER SUR AUTRE ROBINET -> Si OK UTILISER CE ROBINET PUIS REALISER UN DETARTRAGE",
+      "parent": "etat28253",
+      "next_ko": "verif77869"
+    },
+    {
+      "id": "verif77869",
+      "type": "verif",
+      "title": "CIRCUT PROBABLEMENT ENTARTRE -> FAIRE UN DETARTRAGE DE LA MACHINE",
+      "parent": "etat28253",
+      "next_ko": "action47035"
+    },
+    {
+      "id": "verif95654",
+      "type": "verif",
+      "title": "VERIFIER l'ECOULEMENT D'EAU EN SORTIE DE BAC",
+      "parent": "etat83983",
+      "next_ok": "etat31601",
+      "next_ko": "etat15064"
+    },
+    {
+      "id": "etat31601",
+      "type": "etat",
+      "title": "L'EAU EN SORTIE DE BAC S'ECOULE NORMALEMENT",
+      "parent": "verif95654",
+      "next": [
+        "verif81282"
+      ]
+    },
+    {
+      "id": "etat15064",
+      "type": "etat",
+      "title": "L'EAU EN SORTIE DE BAC NE SECOULE PAS NORMALEMENT",
+      "parent": "verif95654",
+      "next": [
+        "verif45828"
+      ]
+    },
+    {
+      "id": "verif45828",
+      "type": "verif",
+      "title": "VERIFIER l'écoulement en entrée de Bac",
+      "parent": "etat15064",
+      "next_ok": "etat79529",
+      "next_ko": "etat90318"
+    },
+    {
+      "id": "etat90318",
+      "type": "etat",
+      "title": "ECOULEMENT ANORMAL EN ENTREE DE BAC",
+      "parent": "verif45828",
+      "next": [
+        "verif72520"
+      ]
+    },
+    {
+      "id": "etat79529",
+      "type": "etat",
+      "title": "ECOULEMENT NORMAL EN ENTREE DE BAC",
+      "parent": "verif45828",
+      "next": [
+        "verif69838"
+      ]
+    },
+    {
+      "id": "verif72520",
+      "type": "verif",
+      "title": "VERIFIER L'OUVERTURE DU ROBINET D'ALIMENTATION",
+      "parent": "etat90318",
+      "next_ok": "verif02855"
+    },
+    {
+      "id": "verif02855",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE PLI DANS LE TUYAU D'ALIMENTATION",
+      "parent": "etat90318",
+      "next_ok": "verif25999"
+    },
+    {
+      "id": "verif25999",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE BLANC ENTREE MACHINE (SI BESOIN LE CHANGER OU NETTOYER)",
+      "parent": "etat90318",
+      "next_ko": "action47035"
+    },
+    {
+      "id": "verif69838",
+      "type": "verif",
+      "title": "VERIFIER LE BON FONCTIONNEMENT DU FLOTTEUR",
+      "parent": "etat79529",
+      "next_ok": "verif01377"
+    },
+    {
+      "id": "verif01377",
+      "type": "verif",
+      "title": "VERIFIER QUE L'ENTREE N'EST PAS LEGEREMENT BOUCHEE",
+      "parent": "etat79529",
+      "next_ok": "verif20388"
+    },
+    {
+      "id": "verif20388",
+      "type": "verif",
+      "title": "VERIFIER QUE LA SORTIE N'EST PAS LEGEREMENT BOUCHEE",
+      "parent": "etat79529",
+      "next_ko": "action47035"
+    },
+    {
+      "id": "etat73582",
+      "type": "etat",
+      "title": "Le moteur de la pompe ne tourne pas ET le programmateur est éteint",
+      "parent": "prob1",
+      "next": [
+        "verif06160"
+      ]
+    },
+    {
+      "id": "etat95820",
+      "type": "etat",
+      "title": "Le moteur de la pompe ne tourne pas ET le programmateur est allumé",
+      "parent": "prob1",
+      "next": [
+        "prob5"
+      ]
+    },
+    {
+      "id": "etat34912",
+      "type": "etat",
+      "title": "Le moteur de la pompe tourne ET le programmateur est éteint",
+      "parent": "prob1",
+      "next": [
+        "prob4"
+      ]
+    },
+    {
+      "id": "verif06160",
+      "type": "verif",
+      "title": "Vérifier la position du bouton On/Off",
+      "parent": "etat73582",
+      "next_ok": "verif65920",
+      "next_ko": "action96129"
+    },
+    {
+      "id": "verif65920",
+      "type": "verif",
+      "title": "Vérifier l'arrêt d'urgence (Tiré)",
+      "parent": "etat73582",
+      "next_ok": "verif23912",
+      "next_ko": "action95223"
+    },
+    {
+      "id": "action96129",
+      "type": "action",
+      "title": "Mettre le bouton sur ON",
+      "parent": "verif06160"
+    },
+    {
+      "id": "action95223",
+      "type": "action",
+      "title": "Tirer l'Arrêt d'urgence",
+      "parent": "verif65920"
+    },
+    {
+      "id": "verif23912",
+      "type": "verif",
+      "title": "Vérifier que le câble de la machine est correctement branché",
+      "parent": "etat73582",
+      "next_ok": "verif00544",
+      "next_ko": "action74071"
+    },
+    {
+      "id": "action74071",
+      "type": "action",
+      "title": "Brancher le câble correctement",
+      "parent": "verif23912"
+    },
+    {
+      "id": "verif00544",
+      "type": "verif",
+      "title": "Vérifier le disjoncteur de la \"maison\"",
+      "parent": "etat73582",
+      "next_ok": "verif65400",
+      "next_ko": "action31019"
+    },
+    {
+      "id": "action31019",
+      "type": "action",
+      "title": "Réenclancher le disjoncteur, s'assurrer qu'il n'y a rien d'autre de branché et qu'il s'agit d'un 16A, le cas échéant changer de prise",
+      "parent": "verif00544"
+    },
+    {
+      "id": "verif65400",
+      "type": "verif",
+      "title": "Vérifier l'enrouleur / Tester avec un autre enrouleur",
+      "parent": "etat73582",
+      "next_ok": "verif30069",
+      "next_ko": "action90007"
+    },
+    {
+      "id": "action90007",
+      "type": "action",
+      "title": "Changer d'enrouleur (Min section 2,5)",
+      "parent": "verif65400"
+    },
+    {
+      "id": "verif30069",
+      "type": "verif",
+      "title": "Vérifier le disjoncteur principal de la machine dans coffret électrique",
+      "parent": "etat73582",
+      "next_ok": "action47035",
+      "next_ko": "action64947"
+    },
+    {
+      "id": "action64947",
+      "type": "action",
+      "title": "Réenclancher le disjoncteur, si le problème revient -> appeler le SAV 0681676430",
+      "parent": "verif30069",
+      "next": [
+        "action92868"
+      ]
+    },
+    {
+      "id": "action92868",
+      "type": "action",
+      "title": "Tester si dijonctions avec les 2 disjoncteurs baissés séparément pour cibler le circuit à problème",
+      "parent": "verif30069"
+    },
+    {
+      "id": "etat73017",
+      "type": "etat",
+      "title": "PROBLEME SUR INFOS RECUES",
+      "parent": "prob2",
+      "next": [
+        "verif93163"
+      ]
+    },
+    {
+      "id": "verif93163",
+      "type": "verif",
+      "title": "VERIFIER SI LE CABLE DE LA SONDE ELECTRONIQUE N'EST PAS ABIME",
+      "parent": "etat73017",
+      "next_ok": "verif15673",
+      "next_ko": "action37735"
+    },
+    {
+      "id": "verif15673",
+      "type": "verif",
+      "title": "VERIFIER LES BRANCHEMENTS DE LA SONDE SUR LE PROGRAMMATEUR",
+      "parent": "etat73017",
+      "next_ok": "action91814",
+      "next_ko": "action61949",
+      "usedoc": true
+    },
+    {
+      "id": "action37735",
+      "type": "action",
+      "title": "CHANGER LA SONDE ELECTRONIQUE",
+      "parent": "verif93163",
+      "usedoc": true
+    },
+    {
+      "id": "action61949",
+      "type": "action",
+      "title": "REBRANCHER CORRECTEMENT",
+      "parent": "verif15673",
+      "usedoc": true
+    },
+    {
+      "id": "action91814",
+      "type": "action",
+      "title": "CHANGER LA SONDE ELECTRONIQUE",
+      "parent": "verif15673",
+      "usedoc": true
+    },
+    {
+      "id": "etat60008",
+      "type": "etat",
+      "title": "LA POMPE TOURNE",
+      "parent": "prob4",
+      "next": [
+        "verif63223"
+      ]
+    },
+    {
+      "id": "etat69888",
+      "type": "etat",
+      "title": "LA POMPE NE TOURNE PAS",
+      "parent": "prob4",
+      "next": [
+        "verif62558"
+      ]
+    },
+    {
+      "id": "verif63223",
+      "type": "verif",
+      "title": "VERIFIER LE NIVEAU D'ANTICALCAIRE DANS LE RESERVOIR PLASTIQUE",
+      "parent": "etat60008",
+      "next_ok": "verif31869",
+      "next_ko": "action96145"
+    },
+    {
+      "id": "action96145",
+      "type": "action",
+      "title": "FAIRE LE PLEIN D'ANTICALCAIRE",
+      "parent": "verif63223"
+    },
+    {
+      "id": "verif31869",
+      "type": "verif",
+      "title": "VERIFIER QUE LES TUYAUX NE SONT PAS BOUCHES",
+      "parent": "etat60008",
+      "next_ok": "action19667",
+      "next_ko": "action82476"
+    },
+    {
+      "id": "action82476",
+      "type": "action",
+      "title": "CHANGER LES ELEMENTS DEFECTUEUX",
+      "parent": "verif31869"
+    },
+    {
+      "id": "action19667",
+      "type": "action",
+      "title": "CHANGER LA POMPE ANTICALCAIRE",
+      "parent": "verif31869",
+      "usedoc": true
+    },
+    {
+      "id": "verif62558",
+      "type": "verif",
+      "title": "SI PRESENCE INTERRUPTEUR, VERIFIER SA POSITION",
+      "parent": "etat69888",
+      "next_ok": "verif81037",
+      "next_ko": "action18420"
+    },
+    {
+      "id": "verif81037",
+      "type": "verif",
+      "title": "VERIFIER LE CABLAGE DANS LE COFFRET ELECTRIQUE",
+      "parent": "etat69888",
+      "next_ok": "action55978",
+      "next_ko": "action80746",
+      "usedoc": true
+    },
+    {
+      "id": "action18420",
+      "type": "action",
+      "title": "METTRE L'INTERRUPTEUR SUR \"ON\"",
+      "parent": "verif62558"
+    },
+    {
+      "id": "action55978",
+      "type": "action",
+      "title": "CHANGER LA POMPE ANTICALCAIRE",
+      "parent": "verif81037",
+      "usedoc": true
+    },
+    {
+      "id": "action80746",
+      "type": "action",
+      "title": "REBRANCHER CORRECTEMENT",
+      "parent": "verif81037",
+      "usedoc": true
+    },
+    {
+      "id": "etat36442",
+      "type": "etat",
+      "title": "PROGRAMMATEUR NE S'ALLUME PLUS MAIS LE MOTEUR DE POMPE OU VENTILATEUR TOURNE",
+      "parent": "prob3",
+      "next": [
+        "action70204"
+      ]
+    },
+    {
+      "id": "etat64984",
+      "type": "etat",
+      "title": "PROGRAMMATEUR NE S'ALLUME PLUS MAIS LE MOTEUR DE POMPE ET VENTILATEUR A L'ARRET",
+      "parent": "prob3",
+      "next": [
+        "prob1"
+      ]
+    },
+    {
+      "id": "action70204",
+      "type": "action",
+      "title": "ARRETER LA MACHINE ET ATTENDRE QUELQUE SECONDES AVANT DE LA REDEMARRER (POUR REINITIALISER LES CONNEXIONS)",
+      "parent": "etat36442",
+      "next": [
+        "verif98331"
+      ]
+    },
+    {
+      "id": "verif98331",
+      "type": "verif",
+      "title": "VERIFIER LES BRANCHEMENTS PHASE ET NEUTRE SUR LE PROGRAMMATEUR",
+      "parent": "etat36442",
+      "next_ok": "verif83273",
+      "next_ko": "action12998",
+      "usedoc": true
+    },
+    {
+      "id": "verif83273",
+      "type": "verif",
+      "title": "Tester la continuité de l'alimentation électrique du progr au voltmètre",
+      "parent": "etat36442",
+      "next_ok": "action79552",
+      "next_ko": "action55680",
+      "usedoc": true
+    },
+    {
+      "id": "action12998",
+      "type": "action",
+      "title": "REBRANCHER CORRECTEMENT",
+      "parent": "verif98331",
+      "usedoc": true
+    },
+    {
+      "id": "action55680",
+      "type": "action",
+      "title": "Une fois identifié où cela se passe, appeler le SAV",
+      "parent": "verif83273"
+    },
+    {
+      "id": "action79552",
+      "type": "action",
+      "title": "CHANGER LE PROGRAMMATEUR",
+      "parent": "verif83273",
+      "usedoc": true
+    },
+    {
+      "id": "verif86657",
+      "type": "verif",
+      "title": "LA PRESSION DU RESEAU D'EAU EST PEUT-ETRE TROP FORTE, FERMER LEGEREMENT LE ROBINET D'ALIMENTATION",
+      "parent": "etat55693",
+      "next_ok": "verif15097",
+      "next_ko": "action31524"
+    },
+    {
+      "id": "etat55693",
+      "type": "etat",
+      "title": "DEBORDEMANT DU BAC ANTICALAIRE",
+      "parent": "prob5",
+      "next": [
+        "verif86657"
+      ]
+    },
+    {
+      "id": "verif15097",
+      "type": "verif",
+      "title": "VERIFIER l'ETAT MECANIQUE DU FLOTTEUR",
+      "parent": "etat55693",
+      "next_ko": "action65415"
+    },
+    {
+      "id": "action31524",
+      "type": "action",
+      "title": "REGLER LE ROBINET D'ALIMENTATION POUR ETRE SUFFISAMMENT ALIMENTE SANS DEBORDEMENT",
+      "parent": "verif86657"
+    },
+    {
+      "id": "action65415",
+      "type": "action",
+      "title": "CHANGER LES ELEMENTS DEFECTUEUX",
+      "parent": "verif15097"
+    },
+    {
+      "id": "etat77148",
+      "type": "etat",
+      "title": "LE PROGRAMMATEUR EST ETEINT",
+      "parent": "prob6",
+      "next": [
+        "prob1"
+      ]
+    },
+    {
+      "id": "etat09696",
+      "type": "etat",
+      "title": "LE PROGRAMMATEUR EST ALLUME",
+      "parent": "prob6",
+      "next": [
+        "verif50976"
+      ]
+    },
+    {
+      "id": "verif50976",
+      "type": "verif",
+      "title": "VERIFIER QUE L'INTERRUPTEUR DE LA POMPE EST SUR \"I\"",
+      "parent": "etat09696",
+      "next_ok": "etat46030",
+      "next_ko": "action30648"
+    },
+    {
+      "id": "action30648",
+      "type": "action",
+      "title": "REENCLANCHER L'INTERRUPTEUR DE LA POMPE SUR \"I\"",
+      "parent": "verif50976",
+      "next": [
+        "action58221"
+      ]
+    },
+    {
+      "id": "action58221",
+      "type": "action",
+      "title": "En cas de difficultés pour l'enclencher, ou de problème répétitif -> Problème d'arrêt de pompe",
+      "parent": "verif50976",
+      "next": [
+        "prob10"
+      ]
+    },
+    {
+      "id": "etat46030",
+      "type": "etat",
+      "title": "AUCUN DEBIT DETECTE",
+      "parent": "verif50976",
+      "next": [
+        "action19155"
+      ]
+    },
+    {
+      "id": "action19155",
+      "type": "action",
+      "title": "QUELLE EST LA CONFIGURATION DE L'ALIMENTATION EN EAU ?",
+      "parent": "etat46030",
+      "next": [
+        "etat63888",
+        "etat91626",
+        "etat11767"
+      ]
+    },
+    {
+      "id": "etat63888",
+      "type": "etat",
+      "title": "SUR CITERNE (PAS A PLUS DE 3M DE LA MACHINE ET DE NIVEAU)",
+      "parent": "etat46030",
+      "next": [
+        "verif01842"
+      ]
+    },
+    {
+      "id": "etat91626",
+      "type": "etat",
+      "title": "EN DIRECTSANS BAC ANTI CALCAIRE",
+      "parent": "etat46030",
+      "next": [
+        "verif10965"
+      ]
+    },
+    {
+      "id": "etat11767",
+      "type": "etat",
+      "title": "EN DIRECT AVEC BAC ANTI CALCAIRE",
+      "parent": "etat46030",
+      "next": [
+        "verif54602"
+      ]
+    },
+    {
+      "id": "verif01842",
+      "type": "verif",
+      "title": "VERIFIER LE FONCTIONNEMENT EN DIRECT (SUR ROBINET)",
+      "parent": "etat63888",
+      "next_ok": "verif23053",
+      "next_ko": "verif65465"
+    },
+    {
+      "id": "verif23053",
+      "type": "verif",
+      "title": "VERIFIER LE NIVEAU D'EAU DANS LA CITERNE",
+      "parent": "etat63888",
+      "next_ok": "verif45521"
+    },
+    {
+      "id": "verif45521",
+      "type": "verif",
+      "title": "VERIFIER QUE LA SORTIE N'EST PAS BOUCHEE (EN DEBRANCHANT)",
+      "parent": "etat63888",
+      "next_ok": "verif64373"
+    },
+    {
+      "id": "verif64373",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE BLANC ENTRE LA CITERNE ET LA MACHINE (SI BESOIN LE CHANGER OU NETTOYER)",
+      "parent": "etat63888",
+      "next_ok": "verif90465"
+    },
+    {
+      "id": "verif90465",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE POINT BAS ENTRE LA CITERNE ET LA MACHINE",
+      "parent": "etat63888",
+      "next_ko": "action47035"
+    },
+    {
+      "id": "verif10965",
+      "type": "verif",
+      "title": "VERIFIER L'OUVERTURE DU ROBINET D'ALIMENTATION",
+      "parent": "etat91626",
+      "next_ok": "verif39284"
+    },
+    {
+      "id": "verif39284",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE PLI DANS LE TUYAU D'ALIMENTATION",
+      "parent": "etat91626",
+      "next_ok": "verif65465"
+    },
+    {
+      "id": "verif65465",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE BLANC ENTREE MACHINE (SI BESOIN LE CHANGER OU NETTOYER)",
+      "parent": "etat91626",
+      "next_ok": "verif18264"
+    },
+    {
+      "id": "verif18264",
+      "type": "verif",
+      "title": "VERIFIER LE FILTRE ENTREE POMPE (COUVERCLE VERT) (SI BESOIN LE NETTOYER)",
+      "parent": "etat91626",
+      "next_ok": "verif44660"
+    },
+    {
+      "id": "verif44660",
+      "type": "verif",
+      "title": "VERIFIER L'OUVERTURE DU ROBINET VAPEUR",
+      "parent": "etat91626",
+      "next_ok": "verif67686"
+    },
+    {
+      "id": "verif67686",
+      "type": "verif",
+      "title": "VERIFIER LA SORTIE D'EAU (MÊME FAIBLE) EN SORTIE D'ACCESSOIRE (SI ABSENCE D'EAU, NETTOYER LA BUSE DE L'ACCESSOIRE OU CHANGER D'ACCESSOIRE°",
+      "parent": "etat91626",
+      "next_ok": "etat11132"
+    },
+    {
+      "id": "etat11132",
+      "type": "etat",
+      "title": "PROBLEME ELECTRIQUE",
+      "parent": "verif67686",
+      "next": [
+        "verif37292"
+      ]
+    },
+    {
+      "id": "verif37292",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU/DES CONDENSATEURS (SI BESOIN CHANGER LE CONDENSATEUR)",
+      "parent": "etat11132",
+      "next_ok": "verif49435"
+    },
+    {
+      "id": "verif49435",
+      "type": "verif",
+      "title": "VERIFIER POSITION DU CONTACTEUR , DU DISJONTEUR, ET VERIFIER TEMOIN ROUGE DU CONTACTEUR DE LA POMPE DANS LE COFFRET ELECTRIQUE",
+      "parent": "etat11132",
+      "next_ok": "verif89740",
+      "usedoc": true
+    },
+    {
+      "id": "verif89740",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU CABLAGE DANS BOITIER ELEC DE LA POMPE ET ENCLENCHEMENT DU CONTACTEUR et contacter le SAV",
+      "parent": "etat11132",
+      "next_ok": "action16124",
+      "usedoc": true
+    },
+    {
+      "id": "action16124",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "verif89740",
+      "next": [
+        "action48442"
+      ]
+    },
+    {
+      "id": "action48442",
+      "type": "action",
+      "title": "CHANGER LE PRESSOSTAT A COTE DE LA VANNE DE REGLAGE",
+      "parent": "verif89740",
+      "next": [
+        "action70553"
+      ]
+    },
+    {
+      "id": "action70553",
+      "type": "action",
+      "title": "VERIFIER POSITION CLAPET ANTI\u0002RETOU",
+      "parent": "verif89740"
+    },
+    {
+      "id": "verif54602",
+      "type": "verif",
+      "title": "VERIFIER l'ECOULEMENT D'EAU EN SORTIE DE BAC",
+      "parent": "etat11767",
+      "next_ok": "etat76956",
+      "next_ko": "etat24783"
+    },
+    {
+      "id": "etat76956",
+      "type": "etat",
+      "title": "L'EAU EN SORTIE DE BAC S'ECOULE NORMALEMENT",
+      "parent": "verif54602",
+      "next": [
+        "verif18264"
+      ]
+    },
+    {
+      "id": "etat24783",
+      "type": "etat",
+      "title": "ABSENCE D'EAU EN SORTIE DE BAC",
+      "parent": "verif54602",
+      "next": [
+        "verif69812"
+      ]
+    },
+    {
+      "id": "verif69812",
+      "type": "verif",
+      "title": "VERIFIER la présence d'EAU en entrée de BAC",
+      "parent": "etat24783",
+      "next_ok": "etat87542",
+      "next_ko": "etat34506"
+    },
+    {
+      "id": "etat34506",
+      "type": "etat",
+      "title": "ABSENCE D'EAU EN ENTREE DE BAC",
+      "parent": "verif69812",
+      "next": [
+        "verif11112"
+      ]
+    },
+    {
+      "id": "etat87542",
+      "type": "etat",
+      "title": "PRESENCE D'EAU EN ENTREE DE BAC",
+      "parent": "verif69812",
+      "next": [
+        "verif98784"
+      ]
+    },
+    {
+      "id": "verif11112",
+      "type": "verif",
+      "title": "VERIFIER L'OUVERTURE DU ROBINET",
+      "parent": "etat34506",
+      "next_ok": "verif30365"
+    },
+    {
+      "id": "verif30365",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE PLI DANS LE TUYAU D'ALIMENTATION",
+      "parent": "etat34506",
+      "next_ok": "verif58214"
+    },
+    {
+      "id": "verif58214",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE BLANC ENTREE MACHINE (SI BESOIN LE CHANGER OU NETTOYER)",
+      "parent": "etat34506",
+      "next_ko": "action47035"
+    },
+    {
+      "id": "verif98784",
+      "type": "verif",
+      "title": "VERIFIER LE BON FONCTIONNEMENT DU FLOTTEUR",
+      "parent": "etat87542",
+      "next_ok": "verif22176"
+    },
+    {
+      "id": "verif22176",
+      "type": "verif",
+      "title": "VERIFIER QUE L'ENTREE N'EST PAS BOUCHEE",
+      "parent": "etat87542",
+      "next_ok": "verif42775"
+    },
+    {
+      "id": "verif42775",
+      "type": "verif",
+      "title": "VERIFIER QUE LA SORTIE N'EST PAS BOUCHEE",
+      "parent": "etat87542",
+      "next_ko": "action47035"
+    },
+    {
+      "id": "verif72708",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE FUITE IMPORTANTE y compris clapet de décharge",
+      "parent": "prob8",
+      "next_ok": "verif37480",
+      "next_ko": "action93274"
+    },
+    {
+      "id": "action93274",
+      "type": "action",
+      "title": "REPARER LES FUITES",
+      "parent": "verif72708"
+    },
+    {
+      "id": "verif37480",
+      "type": "verif",
+      "title": "VERIFIER L'OUVERTURE CORRECTE DU ROBINET VAPEUR",
+      "parent": "prob8",
+      "next_ok": "verif93686",
+      "next_ko": "action68893"
+    },
+    {
+      "id": "action68893",
+      "type": "action",
+      "title": "OUVRIR LE ROBINET A FOND",
+      "parent": "verif37480"
+    },
+    {
+      "id": "verif93686",
+      "type": "verif",
+      "title": "TESTER AVEC UN AUTRE ACCESSOIRE",
+      "parent": "prob8",
+      "next_ok": "verif44970",
+      "next_ko": "action16661"
+    },
+    {
+      "id": "action16661",
+      "type": "action",
+      "title": "NETTOYER L'ACCESSOIRE BOUCHE",
+      "parent": "verif93686",
+      "usedoc": true
+    },
+    {
+      "id": "verif44970",
+      "type": "verif",
+      "title": "TESTER SUR AUTRE ROBINET VAPEUR",
+      "parent": "prob8",
+      "next_ok": "etat94454",
+      "next_ko": "action73757"
+    },
+    {
+      "id": "action73757",
+      "type": "action",
+      "title": "UTILISER CE ROBINET PUIS REALISER UN DETARTRAGE",
+      "parent": "verif44970",
+      "usedoc": true
+    },
+    {
+      "id": "etat94454",
+      "type": "etat",
+      "title": "CIRCUT PROBABLEMENT ENTARTRE",
+      "parent": "verif44970",
+      "next": [
+        "action56343",
+        "action71924"
+      ]
+    },
+    {
+      "id": "action56343",
+      "type": "action",
+      "title": "REALISER UN DETARTRAGE DE LA MACHINE",
+      "parent": "etat94454",
+      "usedoc": true
+    },
+    {
+      "id": "action71924",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "etat94454",
+      "next": [
+        "action15742"
+      ]
+    },
+    {
+      "id": "action15742",
+      "type": "action",
+      "title": "POSITION CLAPET ANTIRETOUR",
+      "parent": "etat94454"
+    },
+    {
+      "id": "etat61271",
+      "type": "etat",
+      "title": "LE MOTEUR NE TOURNE PAS",
+      "parent": "prob7",
+      "next": [
+        "prob1"
+      ]
+    },
+    {
+      "id": "verif79776",
+      "type": "verif",
+      "title": "VERIFIER LE REGLAGE DE LA PRESSION (SENS HORAIRE POUR AUGMENTER) ET QUE LA MOLETTE EST BIEN ENCLENCHEE",
+      "parent": "prob7",
+      "next_ok": "verif34991",
+      "next_ko": "action15985"
+    },
+    {
+      "id": "action15985",
+      "type": "action",
+      "title": "MONTER LA PRESSION OU ENCLENCHER LA MOLETTE CORRECTEMENT",
+      "parent": "verif79776"
+    },
+    {
+      "id": "verif34991",
+      "type": "verif",
+      "title": "TESTER LA PRESSION AVEC UN ACCESSOIRE UNE SEULE BUSE (Calibre maxi 04)",
+      "parent": "prob7",
+      "next_ok": "etat60246",
+      "next_ko": "action78819"
+    },
+    {
+      "id": "etat60246",
+      "type": "etat",
+      "title": "DEBIT FAIBLE",
+      "parent": "verif34991",
+      "next": [
+        "action20599"
+      ]
+    },
+    {
+      "id": "action78819",
+      "type": "action",
+      "title": "UTILISER UN SEUL ACCESSOIRE (Pression > 35 bars) ou UNE SEULE BUSE (Calibre max 04) ou rester à une pression max de 35 bars",
+      "parent": "verif34991"
+    },
+    {
+      "id": "action20599",
+      "type": "action",
+      "title": "VERIFIER LA BONNE ALIMENTATION EN EAU (DU ROBINET JUSQU'A L'ENTREE MACHINE)",
+      "parent": "etat60246",
+      "next": [
+        "etat46558",
+        "etat87411",
+        "etat97255"
+      ]
+    },
+    {
+      "id": "etat46558",
+      "type": "etat",
+      "title": "SUR CITERNE (PAS A PLUS DE 3M DE LA MACHINE ET DE NIVEAU)",
+      "parent": "etat60246",
+      "next": [
+        "verif86653"
+      ]
+    },
+    {
+      "id": "etat87411",
+      "type": "etat",
+      "title": "EN DIRECT SANS BAC ANTI CALCAIRE",
+      "parent": "etat60246",
+      "next": [
+        "verif79072"
+      ]
+    },
+    {
+      "id": "etat97255",
+      "type": "etat",
+      "title": "EN DIRECT AVEC BAC ANTI CALCAIRE",
+      "parent": "etat60246",
+      "next": [
+        "verif78139"
+      ]
+    },
+    {
+      "id": "verif86653",
+      "type": "verif",
+      "title": "VERIFIER LE FONCTIONNEMENT EN DIRECT (SUR ROBINET)",
+      "parent": "etat46558",
+      "next_ok": "verif11524",
+      "next_ko": "verif20857"
+    },
+    {
+      "id": "verif11524",
+      "type": "verif",
+      "title": "VERIFIER LE NIVEAU D'EAU DANS LA CITERNE",
+      "parent": "etat46558",
+      "next_ok": "verif29423"
+    },
+    {
+      "id": "verif29423",
+      "type": "verif",
+      "title": "VERIFIER QUE LA SORTIE N'EST PAS BOUCHEE (EN DEBRANCHANT)",
+      "parent": "etat46558",
+      "next_ok": "verif51983"
+    },
+    {
+      "id": "verif51983",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE BLANC ENTRE LA CITERNE ET LA MACHINE (SI BESOIN LE CHANGER OU NETTOYER)",
+      "parent": "etat46558",
+      "next_ok": "verif70527"
+    },
+    {
+      "id": "verif70527",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE POINT BAS ENTRE LA CITERNE ET LA MACHINE",
+      "parent": "etat46558",
+      "next_ko": "action47035"
+    },
+    {
+      "id": "verif79072",
+      "type": "verif",
+      "title": "VERIFIER L'OUVERTURE DU ROBINET",
+      "parent": "etat87411",
+      "next_ok": "verif93422"
+    },
+    {
+      "id": "verif93422",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE PLI DANS LE TUYAU D'ALIMENTATION",
+      "parent": "etat87411",
+      "next_ok": "verif20857"
+    },
+    {
+      "id": "verif20857",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE BLANC ENTREE MACHINE (SI BESOIN LE CHANGER OU NETTOYER)",
+      "parent": "etat87411",
+      "next_ok": "verif68339"
+    },
+    {
+      "id": "verif68339",
+      "type": "verif",
+      "title": "VERIFIER LE FILTRE ENTREE POMPE (COUVERCLE VERT) (SI BESOIN LE NETTOYER)",
+      "parent": "etat87411",
+      "next_ok": "verif93500"
+    },
+    {
+      "id": "verif93500",
+      "type": "verif",
+      "title": "VERIFIER L'OUVERTURE DU ROBINET VAPEUR",
+      "parent": "etat87411",
+      "next_ok": "verif18460"
+    },
+    {
+      "id": "verif18460",
+      "type": "verif",
+      "title": "VERIFIER LA SORTIE D'EAU (MÊME FAIBLE) EN SORTIE D'ACCESSOIRE (SI ABSENCE D'EAU, NETTOYER LA BUSE DE L'ACCESSOIRE OU CHANGER D'ACCESSOIRE°",
+      "parent": "etat87411",
+      "next_ok": "etat44830"
+    },
+    {
+      "id": "etat44830",
+      "type": "etat",
+      "title": "PROBLEME DE PRESSION",
+      "parent": "verif18460",
+      "next": [
+        "verif91861"
+      ]
+    },
+    {
+      "id": "verif91861",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE FUITE (Flexible de pression, mano, pressostat, pompe et chaudière)",
+      "parent": "etat44830",
+      "next_ok": "etat52403",
+      "next_ko": "etat09715"
+    },
+    {
+      "id": "etat09715",
+      "type": "etat",
+      "title": "LA PRESSSION SORTIE D'ACCESSOIRE CHANGE (RESSENTI) AU REGLAGE DE LA VANNE",
+      "parent": "verif91861",
+      "next": [
+        "verif21920"
+      ]
+    },
+    {
+      "id": "etat52403",
+      "type": "etat",
+      "title": "LA PRESSSION SORTIE D'ACCESSOIRE NE CHANGE PAS (RESSENTI) AU REGLAGE DE LA VANNE",
+      "parent": "verif91861",
+      "next": [
+        "verif55661"
+      ]
+    },
+    {
+      "id": "verif21920",
+      "type": "verif",
+      "title": "MANO HS",
+      "parent": "etat09715",
+      "next_ko": "action47035"
+    },
+    {
+      "id": "verif55661",
+      "type": "verif",
+      "title": "CLAPETS COLLES OU BLOQUES PAR UNE IMPURETE -> DEMONTER LES CLAPETS POUR VERIFIER et les manœuvrer délicatement",
+      "parent": "etat52403",
+      "next_ko": "action47035",
+      "usedoc": true
+    },
+    {
+      "id": "verif78139",
+      "type": "verif",
+      "title": "VERIFIER l'ECOULEMENT D'EAU EN SORTIE DE BAC",
+      "parent": "etat97255",
+      "next_ok": "etat13637",
+      "next_ko": "etat62114"
+    },
+    {
+      "id": "etat13637",
+      "type": "etat",
+      "title": "L'EAU EN SORTIE DE BAC S'ECOULE NORMALEMENT",
+      "parent": "verif78139",
+      "next": [
+        "verif68339"
+      ]
+    },
+    {
+      "id": "etat62114",
+      "type": "etat",
+      "title": "ABSENCE D'EAU EN SORTIE DE BAC",
+      "parent": "verif78139",
+      "next": [
+        "verif51400"
+      ]
+    },
+    {
+      "id": "verif51400",
+      "type": "verif",
+      "title": "VERIFIER la présence d'EAU en entrée de BAC\n",
+      "parent": "etat62114",
+      "next_ok": "etat86995",
+      "next_ko": "etat60646"
+    },
+    {
+      "id": "etat60646",
+      "type": "etat",
+      "title": "ABSENCE D'EAU EN ENTREE DE BAC",
+      "parent": "verif51400",
+      "next": [
+        "verif16736"
+      ]
+    },
+    {
+      "id": "etat86995",
+      "type": "etat",
+      "title": "PRESENCE D'EAU EN ENTREE DE BAC",
+      "parent": "verif51400",
+      "next": [
+        "verif16441"
+      ]
+    },
+    {
+      "id": "verif16736",
+      "type": "verif",
+      "title": "VERIFIER L'OUVERTURE DU ROBINET",
+      "parent": "etat60646",
+      "next_ok": "verif37269"
+    },
+    {
+      "id": "verif37269",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE PLI DANS LE TUYAU D'ALIMENTATION",
+      "parent": "etat60646",
+      "next_ok": "verif58679"
+    },
+    {
+      "id": "verif58679",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE BLANC ENTREE MACHINE (SI BESOIN LE CHANGER OU NETTOYER)",
+      "parent": "etat60646",
+      "next_ko": "action47035"
+    },
+    {
+      "id": "verif16441",
+      "type": "verif",
+      "title": "VERIFIER LE BON FONCTIONNEMENT DU FLOTTEUR",
+      "parent": "etat86995",
+      "next_ok": "verif30450"
+    },
+    {
+      "id": "verif30450",
+      "type": "verif",
+      "title": "VERIFIER QUE L'ENTREE N'EST PAS BOUCHEE",
+      "parent": "etat86995",
+      "next_ok": "verif57938"
+    },
+    {
+      "id": "verif57938",
+      "type": "verif",
+      "title": "VERIFIER QUE LA SORTIE N'EST PAS BOUCHEE",
+      "parent": "etat86995",
+      "next_ko": "action47035"
+    },
+    {
+      "id": "etat48979",
+      "type": "etat",
+      "title": "VOYANT VERT RESTE ALLUME",
+      "parent": "prob13",
+      "next": [
+        "verif75744"
+      ]
+    },
+    {
+      "id": "etat66642",
+      "type": "etat",
+      "title": "VOYANT VERT RESTE ETEINT",
+      "parent": "prob13",
+      "next": [
+        "prob12"
+      ]
+    },
+    {
+      "id": "etat95538",
+      "type": "etat",
+      "title": "VOYANT VERT S'ETEINT JUSQU'A UNE TEMPERATURE RELATIVEMENT BASSE",
+      "parent": "prob13",
+      "next": [
+        "prob14"
+      ]
+    },
+    {
+      "id": "verif75744",
+      "type": "verif",
+      "title": "SI LA PRESSION EST MAX VERIFIER L'UTILISATION D'UN SEUL ACCESSOIRE OU UNE SEULE BUSE (voir détail à côté)",
+      "parent": "etat48979",
+      "next_ok": "verif86317",
+      "next_ko": "action14729"
+    },
+    {
+      "id": "action14729",
+      "type": "action",
+      "title": "Rester dans les consignes max d'utilisation : un accessoire buse 034 : Max 60 bars / 150°c ; un accessoire buse 04 : Max 50 bars / 150°c ou 60 bars / 140°c ; 2 buses 034 : Max 35 bars",
+      "parent": "verif75744"
+    },
+    {
+      "id": "verif86317",
+      "type": "verif",
+      "title": "S'ASSURER QU'IL Y A ASSEZ DE CARBURANT",
+      "parent": "etat48979",
+      "next_ok": "verif86063",
+      "next_ko": "action44874"
+    },
+    {
+      "id": "action44874",
+      "type": "action",
+      "title": "FAIRE LE PLEIN DE CARBURANT",
+      "parent": "verif86317"
+    },
+    {
+      "id": "verif86063",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE A CARBURANT",
+      "parent": "etat48979",
+      "next_ok": "verif47168",
+      "next_ko": "action22813",
+      "usedoc": true
+    },
+    {
+      "id": "action22813",
+      "type": "action",
+      "title": "CHANGER LE FILTRE A CARBURANT",
+      "parent": "verif86063",
+      "usedoc": true
+    },
+    {
+      "id": "verif47168",
+      "type": "verif",
+      "title": "VERIFIER QUE LE ROBINET A CARBURANT EST BIEN OUVERT",
+      "parent": "etat48979",
+      "next_ok": "verif93241",
+      "next_ko": "action69649"
+    },
+    {
+      "id": "action69649",
+      "type": "action",
+      "title": "OUVRIR LE ROBINET",
+      "parent": "verif47168"
+    },
+    {
+      "id": "verif93241",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT ET LE BON BRANCHEMENT DES DURITES",
+      "parent": "etat48979",
+      "next_ok": "verif52260",
+      "next_ko": "action16993"
+    },
+    {
+      "id": "action16993",
+      "type": "action",
+      "title": "CHANGER ET/OU REBRANCHER CORRECTEMENT LES DURITES",
+      "parent": "verif93241"
+    },
+    {
+      "id": "verif52260",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE INTERNE DE LA POMPE A FUE",
+      "parent": "etat48979",
+      "next_ok": "action04606",
+      "next_ko": "action76640",
+      "usedoc": true
+    },
+    {
+      "id": "action76640",
+      "type": "action",
+      "title": "NETTOYER ET/OU CHANGER LE FILTRE INTERNE DE LA POMPE A FUEL",
+      "parent": "verif52260",
+      "usedoc": true
+    },
+    {
+      "id": "action04606",
+      "type": "action",
+      "title": "NETTOYER ET VERIFIER LE BRULEUR",
+      "parent": "verif52260",
+      "next": [
+        "action28181"
+      ],
+      "usedoc": true
+    },
+    {
+      "id": "action28181",
+      "type": "action",
+      "title": "CHANGER LA POMPE A FUEL",
+      "parent": "verif52260",
+      "next": [
+        "action47035"
+      ],
+      "usedoc": true
+    },
+    {
+      "id": "etat81268",
+      "type": "etat",
+      "title": "LA MACHINE NE CHAUFFE PAS ASSEZ",
+      "parent": "prob11",
+      "next": [
+        "prob13"
+      ]
+    },
+    {
+      "id": "etat23630",
+      "type": "etat",
+      "title": "VOYANT VERT ETEINT",
+      "parent": "prob11",
+      "next": [
+        "prob12"
+      ]
+    },
+    {
+      "id": "etat61825",
+      "type": "etat",
+      "title": "VOYANT VERT ALLUME",
+      "parent": "prob11",
+      "next": [
+        "verif81554"
+      ]
+    },
+    {
+      "id": "verif81554",
+      "type": "verif",
+      "title": "S'ASSURER QU'IL Y A ASSEZ DE CARBURANT",
+      "parent": "etat61825",
+      "next_ok": "verif80459",
+      "next_ko": "action44874"
+    },
+    {
+      "id": "verif80459",
+      "type": "verif",
+      "title": "VERIFIER QUE LE ROBINET A CARBURANT EST BIEN OUVERT",
+      "parent": "etat61825",
+      "next_ok": "verif42867",
+      "next_ko": "action69649"
+    },
+    {
+      "id": "verif42867",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE A CARBURANT",
+      "parent": "etat61825",
+      "next_ok": "verif13147",
+      "next_ko": "action22813",
+      "usedoc": true
+    },
+    {
+      "id": "verif13147",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT ET LE BON BRANCHEMENT DES DURITES",
+      "parent": "etat61825",
+      "next_ok": "action83246",
+      "next_ko": "action52763"
+    },
+    {
+      "id": "action52763",
+      "type": "action",
+      "title": "CHANGER ET/OU REBRANCHER CORRECTEMENT LES DURITES",
+      "parent": "verif13147"
+    },
+    {
+      "id": "action83246",
+      "type": "action",
+      "title": "VERIFIER SI LE BRULEUR EST ALIMENTE EN CARBURANT",
+      "parent": "verif13147",
+      "next": [
+        "etat16641",
+        "etat38012"
+      ],
+      "usedoc": true
+    },
+    {
+      "id": "etat16641",
+      "type": "etat",
+      "title": "LE BRULEUR N'EST PAS ALIMENTE EN CARBURANT",
+      "parent": "verif13147",
+      "next": [
+        "verif45937"
+      ]
+    },
+    {
+      "id": "etat38012",
+      "type": "etat",
+      "title": "LE BRULEUR EST ALIMENTE EN CARBURANT",
+      "parent": "verif13147",
+      "next": [
+        "verif35043"
+      ]
+    },
+    {
+      "id": "verif45937",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE INTERNE DE LA POMPE A FUEL",
+      "parent": "etat16641",
+      "next_ok": "verif03353",
+      "next_ko": "action66566",
+      "usedoc": true
+    },
+    {
+      "id": "action66566",
+      "type": "action",
+      "title": "NETTOYER ET/OU CHANGER LE FILTRE INTERNE DE LA POMPE A FUEL",
+      "parent": "verif45937",
+      "usedoc": true
+    },
+    {
+      "id": "verif03353",
+      "type": "verif",
+      "title": "VERIFIER QUE L'ELECTROVANNE EST BIEN BRANCHEE",
+      "parent": "etat16641",
+      "next_ok": "verif62745",
+      "next_ko": "action28024"
+    },
+    {
+      "id": "action28024",
+      "type": "action",
+      "title": "BRANCHER CORRECTEMENT L'ELECTROVANNE",
+      "parent": "verif03353"
+    },
+    {
+      "id": "verif62745",
+      "type": "verif",
+      "title": "TESTER LE FONCTIONNEMENT DE LA BOBINE D'ELECTROVANNE",
+      "parent": "etat16641",
+      "next_ok": "verif21247",
+      "next_ko": "action89714",
+      "usedoc": true
+    },
+    {
+      "id": "action89714",
+      "type": "action",
+      "title": "CHANGER L'ELECTROVANNE",
+      "parent": "verif62745",
+      "usedoc": true
+    },
+    {
+      "id": "verif21247",
+      "type": "verif",
+      "title": "VERIFIER LE BON BRANCHEMENT DANS L'ARMOIRE ELECTRIQUE DE L'ELECTROVANNE",
+      "parent": "etat16641",
+      "next_ok": "action74096",
+      "next_ko": "action48822",
+      "usedoc": true
+    },
+    {
+      "id": "action48822",
+      "type": "action",
+      "title": "REBRANCHER CORRECTEMENT",
+      "parent": "verif21247"
+    },
+    {
+      "id": "action74096",
+      "type": "action",
+      "title": "CHANGER LA POMPE A FUEL",
+      "parent": "verif21247",
+      "next": [
+        "action47035"
+      ],
+      "usedoc": true
+    },
+    {
+      "id": "verif35043",
+      "type": "verif",
+      "title": "VERIFIER QUE LA BOBINE ET LES ELECTRODES SONT BIEN BRANCHEES ET ETAT DES CABLES",
+      "parent": "etat38012",
+      "next_ok": "action84000",
+      "next_ko": "action57817",
+      "usedoc": true
+    },
+    {
+      "id": "action57817",
+      "type": "action",
+      "title": "REBRANCHER / CHANGER LES ELEMENTS DEFECTUEUX",
+      "parent": "verif35043"
+    },
+    {
+      "id": "action84000",
+      "type": "action",
+      "title": "NETTOYER ET VERIFIER LE BRULEUR (gicleur, électrodes et support)",
+      "parent": "verif35043",
+      "next": [
+        "action27382",
+        "verif48158"
+      ],
+      "usedoc": true
+    },
+    {
+      "id": "action27382",
+      "type": "action",
+      "title": "CHANGER LES ELEMENTS DEFECTUEUX / AJUSTER LE REGLAGE",
+      "parent": "verif35043",
+      "usedoc": true
+    },
+    {
+      "id": "verif48158",
+      "type": "verif",
+      "title": "VERIFIER LE BON BRANCHEMENT DANS L'ARMOIRE ELECTRIQUE DE L'ALLUMAGE CHAUDIERE",
+      "parent": "verif35043",
+      "next_ok": "action97296",
+      "next_ko": "action81579",
+      "usedoc": true
+    },
+    {
+      "id": "action81579",
+      "type": "action",
+      "title": "REBRANCHER CORRECTEMENT",
+      "parent": "verif48158"
+    },
+    {
+      "id": "action97296",
+      "type": "action",
+      "title": "CHANGER LA BOBINE ET LE CÂBLE D'ALIMENTATION",
+      "parent": "verif48158",
+      "next": [
+        "action47035"
+      ],
+      "usedoc": true
+    },
+    {
+      "id": "etat50952",
+      "type": "etat",
+      "title": "LA MACHINE NE CHAUFFE PAS ASSEZ ET LE VOYANT EST ALLUME",
+      "parent": "prob12",
+      "next": [
+        "prob13"
+      ]
+    },
+    {
+      "id": "etat29351",
+      "type": "etat",
+      "title": "LA MACHINE NE CHAUFFE PLUS / VOYANT VERT ALLUME",
+      "parent": "prob12",
+      "next": [
+        "prob11"
+      ]
+    },
+    {
+      "id": "etat77149",
+      "type": "etat",
+      "title": "VOYANT VERT S'ETEINT JUSQU'A UNE TEMPERATURE RELATIVEMENT BASSE",
+      "parent": "prob12",
+      "next": [
+        "prob14"
+      ]
+    },
+    {
+      "id": "etat31910",
+      "type": "etat",
+      "title": "LE PROGRAMMATEUR S'ETEINT",
+      "parent": "prob12",
+      "next": [
+        "prob3"
+      ]
+    },
+    {
+      "id": "verif68453",
+      "type": "verif",
+      "title": "VERIFIER LE VOYANT K1",
+      "parent": "prob12",
+      "next_ok": "etat33862",
+      "next_ko": "etat09273",
+      "usedoc": true
+    },
+    {
+      "id": "etat09273",
+      "type": "etat",
+      "title": "LE VOYANT K1 N'EST PAS ALLUME",
+      "parent": "verif68453",
+      "next": [
+        "verif63840"
+      ]
+    },
+    {
+      "id": "etat33862",
+      "type": "etat",
+      "title": "LE VOYANT K1 EST ALLUME",
+      "parent": "verif68453",
+      "next": [
+        "prob7",
+        "prob8",
+        "etat28233"
+      ]
+    },
+    {
+      "id": "verif63840",
+      "type": "verif",
+      "title": "VERIFIER QU'UNE CONSIGNE DE TEMPERATURE EST BIEN DONNEE ET APPUYER SUR LA GACHETTE",
+      "parent": "etat09273"
+    },
+    {
+      "id": "etat28233",
+      "type": "etat",
+      "title": "LA PRESSION EN SORTIE D'ACCESSOIRE EST CORRECTE",
+      "parent": "etat33862",
+      "next": [
+        "verif08015"
+      ]
+    },
+    {
+      "id": "verif08015",
+      "type": "verif",
+      "title": "VERIFIER LE FONCTIONNEMENT DE LA SONDE DE DEBIT",
+      "parent": "etat28233",
+      "next_ok": "verif53872",
+      "next_ko": "action31851",
+      "usedoc": true
+    },
+    {
+      "id": "action31851",
+      "type": "action",
+      "title": "CHANGER LA SONDE DE DEBIT",
+      "parent": "verif08015",
+      "usedoc": true
+    },
+    {
+      "id": "verif53872",
+      "type": "verif",
+      "title": "VERIFIER LE BRANCHEMENT DU PROGRAMMATEUR ET DU VOYANT VERT",
+      "parent": "etat28233",
+      "next_ok": "action24688",
+      "next_ko": "action82741",
+      "usedoc": true
+    },
+    {
+      "id": "action82741",
+      "type": "action",
+      "title": "REBRANCHER CORRECTEMENT",
+      "parent": "verif53872"
+    },
+    {
+      "id": "action24688",
+      "type": "action",
+      "title": "ETAT ou câblage de la sonde mécanique",
+      "parent": "verif53872",
+      "next": [
+        "action47035"
+      ]
+    },
+    {
+      "id": "etat01468",
+      "type": "etat",
+      "title": "LA MACHINE A TROP CHAUFFE (> 165°C)",
+      "parent": "prob14",
+      "next": [
+        "prob15"
+      ]
+    },
+    {
+      "id": "etat36914",
+      "type": "etat",
+      "title": "LA MACHINE FONCTIONNAIT NORMALEMENT",
+      "parent": "prob14",
+      "next": [
+        "verif26156"
+      ]
+    },
+    {
+      "id": "etat50477",
+      "type": "etat",
+      "title": "LA MACHINE NE CHAUFFAIT PAS ASSEZ",
+      "parent": "prob14",
+      "next": [
+        "verif36122"
+      ]
+    },
+    {
+      "id": "verif26156",
+      "type": "verif",
+      "title": "FAIRE UN TEST EN SEPARANT MECANIQUEMENT LA SONDE MECANIQUE",
+      "parent": "etat36914",
+      "next_ok": "action55659",
+      "next_ko": "action47035",
+      "usedoc": true
+    },
+    {
+      "id": "action55659",
+      "type": "action",
+      "title": "Changer le sonde mécanique",
+      "parent": "verif26156"
+    },
+    {
+      "id": "verif36122",
+      "type": "verif",
+      "title": "FAIRE UN TEST EN SEPARANT MECANIQUEMENT LA SONDE MECANIQUE",
+      "parent": "etat50477",
+      "next_ok": "verif91971",
+      "next_ko": "action55659",
+      "usedoc": true
+    },
+    {
+      "id": "verif91971",
+      "type": "verif",
+      "title": "VERIFIER LE BON POSITIONNEMENT DE LA SONDE ELECTRONIQUE",
+      "parent": "etat50477",
+      "next_ok": "action22211",
+      "usedoc": true
+    },
+    {
+      "id": "action22211",
+      "type": "action",
+      "title": "CHANGER LA SONDE ELECTRONIQUE (INFOS VERS LE PROGRAMMATEUR ERRONEES)",
+      "parent": "verif91971",
+      "next": [
+        "action47035"
+      ],
+      "usedoc": true
+    },
+    {
+      "id": "etat18545",
+      "type": "etat",
+      "title": "PAS OU PEU DE SORTIE D'EAU AUX ACCESSOIRES",
+      "parent": "prob15",
+      "next": [
+        "prob8",
+        "etat57145",
+        "etat13505"
+      ]
+    },
+    {
+      "id": "etat57145",
+      "type": "etat",
+      "title": "LE VOYANT S'ETEINT QUAND J'ARRETE DE TIRER DE L'EAU ET LA MACHINE CONTINUE A CHAUFFER",
+      "parent": "prob15",
+      "next": [
+        "action39650"
+      ]
+    },
+    {
+      "id": "etat13505",
+      "type": "etat",
+      "title": "LE VOYANT RESTE ALLUME QUAND J'ARRETE DE TIRER DE L'EAU",
+      "parent": "prob15",
+      "next": [
+        "action70035"
+      ]
+    },
+    {
+      "id": "action39650",
+      "type": "action",
+      "title": "CHANGER L'ELECTROVANNE",
+      "parent": "etat57145",
+      "next": [
+        "action47035"
+      ],
+      "usedoc": true
+    },
+    {
+      "id": "action70035",
+      "type": "action",
+      "title": "CHANGER LA SONDE DE DEBIT",
+      "parent": "etat13505",
+      "next": [
+        "action47035"
+      ],
+      "usedoc": true
+    },
+    {
+      "id": "etat48333",
+      "type": "etat",
+      "title": "PAS DE MELANGE DE CARBURANT",
+      "parent": "prob16",
+      "next": [
+        "verif09021"
+      ]
+    },
+    {
+      "id": "etat56409",
+      "type": "etat",
+      "title": "MELANGE DE CARBURANT",
+      "parent": "prob16",
+      "next": [
+        "action67928"
+      ]
+    },
+    {
+      "id": "action67928",
+      "type": "action",
+      "title": "FAIRE UNE VIDANGE COMPLETE DU CIRCUIT, CHANGER LES FILTRES (y compris pompe à fuel), NETTOYER LE BRULEUR",
+      "parent": "etat56409"
+    },
+    {
+      "id": "verif09021",
+      "type": "verif",
+      "title": "TYPE DE FUMEE: BLANCHE ?",
+      "parent": "etat48333",
+      "next_ok": "etat35468",
+      "next_ko": "etat57624"
+    },
+    {
+      "id": "etat35468",
+      "type": "etat",
+      "title": "FUMEE BLANCHE",
+      "parent": "verif09021",
+      "next": [
+        "verif62856"
+      ]
+    },
+    {
+      "id": "etat57624",
+      "type": "etat",
+      "title": "FUMEE NOIRE",
+      "parent": "verif09021",
+      "next": [
+        "verif71582"
+      ]
+    },
+    {
+      "id": "verif62856",
+      "type": "verif",
+      "title": "S'ASSURER QU'IL Y A ASSEZ DE CARBURANT",
+      "parent": "etat35468",
+      "next_ok": "verif69770",
+      "next_ko": "action44874"
+    },
+    {
+      "id": "verif69770",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE A CARBURANT",
+      "parent": "etat35468",
+      "next_ok": "verif28731",
+      "next_ko": "action22813"
+    },
+    {
+      "id": "verif28731",
+      "type": "verif",
+      "title": "VERIFIER QUE LE ROBINET A CARBURANT EST BIEN OUVERT",
+      "parent": "etat35468",
+      "next_ok": "verif63804",
+      "next_ko": "action69649"
+    },
+    {
+      "id": "verif63804",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT ET LE BON BRANCHEMENT DES DURITES",
+      "parent": "etat35468",
+      "next_ok": "verif28675",
+      "next_ko": "action16993"
+    },
+    {
+      "id": "verif28675",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE INTERNE DE LA POMPE A FUEL",
+      "parent": "etat35468",
+      "next_ok": "action04606",
+      "next_ko": "action76640"
+    },
+    {
+      "id": "verif71582",
+      "type": "verif",
+      "title": "Vérifier que les réglages de base sont toujours en place (pompe à gasoil et ventilateur)",
+      "parent": "etat57624",
+      "next_ok": "verif02858",
+      "usedoc": true
+    },
+    {
+      "id": "verif02858",
+      "type": "verif",
+      "title": "VERIFIER QUE LA BOBINE ET LES ELECTRODES SONT BIEN BRANCHEES ET ETAT DES CABLES",
+      "parent": "etat57624",
+      "next_ok": "verif23679",
+      "usedoc": true
+    },
+    {
+      "id": "verif23679",
+      "type": "verif",
+      "title": "NETTOYER ET VERIFIER LE BRULEUR (gicleur, électrodes et support)",
+      "parent": "etat57624",
+      "next_ok": "verif60148",
+      "usedoc": true
+    },
+    {
+      "id": "verif60148",
+      "type": "verif",
+      "title": "VERIFIER LE BON BRANCHEMENT DANS L'ARMOIRE ELECTRIQUE DE L'ALLUMAGE CHAUDIERE",
+      "parent": "etat57624",
+      "next_ko": "action79929",
+      "usedoc": true
+    },
+    {
+      "id": "action79929",
+      "type": "action",
+      "title": "CHANGER LA BOBINE ET LE CÂBLE D'ALIMENTATION",
+      "parent": "verif60148",
+      "next": [
+        "action47035"
+      ],
+      "usedoc": true
     }
   ]
 }

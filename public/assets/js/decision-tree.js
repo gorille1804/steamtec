@@ -154,12 +154,14 @@ document.addEventListener('DOMContentLoaded', function () {
             if (step.usedoc === true) {
                 html += `<div class="alert alert-danger mt-2"><i class="mdi mdi-file-document"></i> Besoin d'une fiche technique</div>`;
             }
-            html += `
-                <div>
-                    <button class="btn btn-success me-2" onclick="window.showStep('${step.next_ok}')">OK</button>
-                    <button class="btn btn-danger" onclick="window.showStep('${step.next_ko}')">KO</button>
-                </div>
-            `;
+            html += `<div>`;
+            if (step.next_ok) {
+                html += `<button class="btn btn-success me-2" onclick="window.showStep('${step.next_ok}')">OK</button>`;
+            }
+            if (step.next_ko) {
+                html += `<button class="btn btn-danger" onclick="window.showStep('${step.next_ko}')">KO</button>`;
+            }
+            html += `</div>`;
         }
         container.innerHTML = html;
         window.showStep = (id) => showStep(id, elements, container, true);
