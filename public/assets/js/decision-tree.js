@@ -74,7 +74,11 @@ document.addEventListener('DOMContentLoaded', function () {
             ];
         }
         updateBreadcrumb();
-        appDiv.innerHTML = `<button class="btn btn-secondary mb-2" onclick="window.showCategories()">Retour aux catégories</button>
+        appDiv.innerHTML = `
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <button class="btn btn-secondary" onclick="window.showCategories()">Retour aux catégories</button>
+                <button class="btn btn-outline-info" onclick="window.goBackStep()">Retour</button>
+            </div>
             <h3>${catTitle} > ${probTitle}</h3>
             <div id="problem-details"></div>`;
         // Afficher tous les états enfants du problème
@@ -128,10 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
         }
-        let html = `<div class="border p-3 my-2"><strong>${step.title} - ${step.id}</strong></div>`;
-        if (navigationStack.length > 2) {
-            html = `<button class="btn btn-outline-secondary mb-2" onclick="window.goBackStep()">Retour</button>` + html;
-        }
+        let html = `<div class="border p-3 my-2"><strong>${step.title}<span style="display: none;"> - ${step.id}</span></strong></div>`;
         if (step.type === 'etat' && step.next) {
             if (Array.isArray(step.next) && step.next.length > 1) {
                 html += `<div class="mt-2 mb-2">Veuillez choisir la suite :</div>`;
