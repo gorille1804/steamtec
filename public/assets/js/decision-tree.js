@@ -2,6 +2,46 @@ document.addEventListener('DOMContentLoaded', function () {
     const jsonUrl = document.getElementById('decision-tree-app').getAttribute('data-json-url');
     let navigationStack = [];
     let elements = [];
+    let pdfDoc = null;
+    let currentPage = 1;
+
+    // Charger PDF.js
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    // Fonction pour charger et afficher une page PDF
+    async function loadPDFPage(pdfUrl, pageNumber, canvasContainer) {
+        try {
+            if (!pdfDoc) {
+                pdfDoc = await pdfjsLib.getDocument(pdfUrl).promise;
+            }
+
+            const page = await pdfDoc.getPage(pageNumber);
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+
+            // Calculer le ratio pour que le PDF s'adapte à la largeur du conteneur
+            const containerWidth = canvasContainer.clientWidth;
+            const viewport = page.getViewport({ scale: 1 });
+            const scale = containerWidth / viewport.width;
+            const scaledViewport = page.getViewport({ scale: scale });
+
+            canvas.width = scaledViewport.width;
+            canvas.height = scaledViewport.height;
+
+            // Rendre la page sur le canvas
+            await page.render({
+                canvasContext: context,
+                viewport: scaledViewport
+            }).promise;
+
+            // Vider le conteneur et ajouter le canvas
+            canvasContainer.innerHTML = '';
+            canvasContainer.appendChild(canvas);
+
+        } catch (error) {
+            console.error('Erreur lors du chargement du PDF:', error);
+        }
+    }
 
     fetch(jsonUrl)
         .then(response => response.json())
@@ -88,12 +128,32 @@ document.addEventListener('DOMContentLoaded', function () {
             ];
         }
         updateBreadcrumb();
+
+        // Trouver le problème dans les éléments pour obtenir sa page
+        const problem = elements.find(e => e.id === problemId);
+
         appDiv.innerHTML = `
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <button class="btn btn-secondary" onclick="window.showCategories()">Retour aux catégories</button>
                 <button class="btn btn-outline-info" onclick="window.goBackStep()">Retour</button>
             </div>
-            <div id="problem-details"></div>`;
+            <div class="row">
+                <div id="problem-details" class="col-12 col-md-4"></div>
+                ${problem && problem.page ? `
+                <div class="mt-4 col-12 col-md-8">
+                    <h4>Arbre de dépannage</h4>
+                    <div class="pdf-view" style="width: 100%; overflow: hidden;">
+                        <div id="pdf-container"></div>
+                    </div>
+                </div>
+                ` : ''}
+            </div>`;
+
+        // Charger la page PDF si nécessaire
+        if (problem && problem.page) {
+            loadPDFPage('/uploads/ARBRE_DE_DEPANNAGE.pdf', problem.page, document.getElementById('pdf-container'));
+        }
+
         // Afficher tous les états enfants du problème
         const etats = elements.filter(e => (e.parent === problemId) && (e.type === 'etat' || e.type === 'symptome'));
         const detailsDiv = document.getElementById('problem-details');
