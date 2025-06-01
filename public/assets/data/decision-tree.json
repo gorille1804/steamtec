@@ -1123,7 +1123,7 @@
       "id": "verif72708",
       "type": "verif",
       "title": "VERIFIER L'ABSENCE DE FUITE IMPORTANTE y compris clapet de décharge",
-      "parent": "prob8",
+      "parent": "etat03411",
       "next_ok": "verif37480",
       "next_ko": "action93274"
     },
@@ -1137,7 +1137,7 @@
       "id": "verif37480",
       "type": "verif",
       "title": "VERIFIER L'OUVERTURE CORRECTE DU ROBINET VAPEUR",
-      "parent": "prob8",
+      "parent": "etat03411",
       "next_ok": "verif93686",
       "next_ko": "action68893"
     },
@@ -1151,7 +1151,7 @@
       "id": "verif93686",
       "type": "verif",
       "title": "TESTER AVEC UN AUTRE ACCESSOIRE",
-      "parent": "prob8",
+      "parent": "etat03411",
       "next_ok": "verif44970",
       "next_ko": "action16661"
     },
@@ -1166,7 +1166,7 @@
       "id": "verif44970",
       "type": "verif",
       "title": "TESTER SUR AUTRE ROBINET VAPEUR",
-      "parent": "prob8",
+      "parent": "etat03411",
       "next_ok": "etat94454",
       "next_ko": "action73757"
     },
@@ -1222,7 +1222,7 @@
       "id": "verif79776",
       "type": "verif",
       "title": "VERIFIER LE REGLAGE DE LA PRESSION (SENS HORAIRE POUR AUGMENTER) ET QUE LA MOLETTE EST BIEN ENCLENCHEE",
-      "parent": "prob7",
+      "parent": "etat16794",
       "next_ok": "verif34991",
       "next_ko": "action15985"
     },
@@ -1236,7 +1236,7 @@
       "id": "verif34991",
       "type": "verif",
       "title": "TESTER LA PRESSION AVEC UN ACCESSOIRE UNE SEULE BUSE (Calibre maxi 04)",
-      "parent": "prob7",
+      "parent": "etat16794",
       "next_ok": "etat60246",
       "next_ko": "action78819"
     },
@@ -1914,7 +1914,7 @@
       "id": "verif68453",
       "type": "verif",
       "title": "VERIFIER LE VOYANT K1",
-      "parent": "prob12",
+      "parent": "etat19812",
       "next_ok": "etat33862",
       "next_ko": "etat09273",
       "usedoc": true
@@ -2243,6 +2243,42 @@
         "action47035"
       ],
       "usedoc": true
+    },
+    {
+      "id": "etat19812",
+      "type": "etat",
+      "title": "VOYANT K1",
+      "parent": "prob12",
+      "next": [
+        "verif68453"
+      ]
+    },
+    {
+      "id": "etat71663",
+      "type": "etat",
+      "title": "IMPOSSIBLE DE MONTER EN PRESSION AU MANO",
+      "parent": "prob8",
+      "next": [
+        "prob6"
+      ]
+    },
+    {
+      "id": "etat03411",
+      "type": "etat",
+      "title": "PRESSION OK AU MANO MAIS PAS OU PEU DE SORTIE D'EAU AUX ACCESSOIRES",
+      "parent": "prob8",
+      "next": [
+        "verif72708"
+      ]
+    },
+    {
+      "id": "etat16794",
+      "type": "etat",
+      "title": "IMPOSSIBLE DE MONTER EN PRESSION",
+      "parent": "prob7",
+      "next": [
+        "verif79776"
+      ]
     }
   ]
 }
