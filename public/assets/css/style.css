@@ -35751,7 +35751,7 @@ header .btn_se_connecter:hover {
 .content_entete_bloc_avantage span {
   position: absolute;
   top: 23px;
-  left: 44px;
+  left: 21px;
   padding-top: 8px;
   padding-right: 24px;
   padding-bottom: 8px;
@@ -36340,7 +36340,21 @@ section h3 {
   padding-left: 0;
 }
 .content_confiance .liste_confiance li{
-  width: 30%;
+  flex: 1 1 200px; /* largeur minimale */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 125px; /* hauteur uniforme */
+  padding: 10px;
+  box-sizing: border-box;
+}
+.content_confiance .liste_confiance li a {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .content_confiance .class-vert {
