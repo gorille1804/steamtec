@@ -14,6 +14,7 @@ use Domain\Chantier\UseCase\FindChantierByUserUseCaseInterface;
 use Domain\Chantier\UseCase\UpdateChantierUseCaseInterface;
 use Domain\MachineLog\Data\Contract\CreateMachineLogRequest;
 use Domain\MachineLog\UseCase\CreateMachineLogUseCaseInterface;
+use Domain\User\Data\ObjectValue\UserId;
 use Infrastructure\Form\Chantier\ChantierFormType;
 use Infrastructure\Form\MachineLog\MachineLogFormType;
 use Infrastructure\Symfony\Security\SymfonyUserAdapter;
@@ -49,7 +50,8 @@ class ChantierController extends AbstractController
         $page = $request->query->getInt('page', 1);
         $limit = 10;
 
-        $chantiers = $this->findChantierByUserUseCase->__invoke($page, $limit, $user->id);
+        $userId = new UserId($user->id);
+        $chantiers = $this->findChantierByUserUseCase->__invoke($userId, $page, $limit);
 
         $total = $this->findaAllChantierUseCase->getTotal();
         $maxPages = ceil($total / $limit); 
