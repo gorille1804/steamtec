@@ -35797,7 +35797,7 @@ header .btn_se_connecter:hover {
 .content_liste_text_droite_entete_accueil li .corp_texte h3 {
   font-family: "Roboto";
   font-weight: 800;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 18px;
   color: #60B454;
   margin: 0;
@@ -35807,7 +35807,7 @@ header .btn_se_connecter:hover {
 .content_liste_text_droite_entete_accueil li .corp_texte p {
   font-family: "Roboto";
   font-weight: 600;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 18px;
   color: #000;
 }
@@ -36895,7 +36895,7 @@ section h3 {
   padding-bottom: 12px;
   padding-left: 16px;
   border-radius: 40px;
-  height: 96px;
+  height: 110px;
   display: flex;
   align-items: center;
 }
