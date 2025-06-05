@@ -51,7 +51,7 @@ class ChantierRespository extends ServiceEntityRepository implements ChantierRep
                     ->getOneOrNullResult();
     }
 
-    public function findByUser(int $page = 1, int $limit = 10, UserId $userId): array
+    public function findByUser(UserId $userId, int $page = 1, int $limit = 10): array
     {
         $offset = ($page - 1) * $limit;
         return $this->createQueryBuilder('c')

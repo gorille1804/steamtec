@@ -10,8 +10,8 @@ class FindChantierByUserUseCase implements FindChantierByUserUseCaseInterface
     public function __construct(
         private readonly ChantierRepositoryInterface $repository
     ){}
-    public function __invoke(int $page = 1, int $limit = 10, UserId $userId): array
+    public function __invoke(UserId $userId, int $page = 1, int $limit = 10): array
     {
-        return $this->repository->findByUser($page, $limit, $userId);
+        return $this->repository->findByUser($userId, $page, $limit);
     }
 }
