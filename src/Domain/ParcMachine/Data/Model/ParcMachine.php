@@ -15,9 +15,9 @@ class ParcMachine implements ParcMachineInterface
         public ParcMachineId $id,
         public Machine $machine,
         public User $user,
-        public int $currentHourUse = 0,
         public ?int $tempUsage,
         public \DateTimeInterface $createdAt,
+        public int $currentHourUse = 0,
         public ?\DateTimeInterface $updatedAt = null,
     ) {}
     public function getId(): ParcMachineId
