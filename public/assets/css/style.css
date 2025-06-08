@@ -9527,6 +9527,7 @@ body {
   background-color: var(--bs-body-bg);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  padding-top: 77px !important;
 }
 
 hr {
@@ -35473,6 +35474,10 @@ header .content_header_bottom.py-3 {
 }
 header{
   border-bottom: 2px solid  rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  background-color: white;
 }
 header .content_header_bottom.py-3 .col-lg-2{
   padding-right: 0;
