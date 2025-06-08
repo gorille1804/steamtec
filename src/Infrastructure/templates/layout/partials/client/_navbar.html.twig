@@ -5,7 +5,7 @@
 		<div
 			class="container">
 			<!-- Contact Information -->
-			<div class="row py-2">
+			<div class="row py-2 d-none">
 				<div class="col-lg-6">
 					<ul class="list-unstyled d-flex gap-4 mb-0 liste_contact">
 						<li>
@@ -25,7 +25,7 @@
 									</clipPath>
 								</defs>
 							</svg>
-							<span>03 29 09 15 78 - 06 81 67 64 30</span>
+							<span>03 29 09 15 78 - 06 86 71 66 96</span>
 						</li>
 						<li>
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 16 16" fill="none">
@@ -42,7 +42,6 @@
 							<span>ZA du Moulin, Bulgnéville, France</span>
 						</li>
 					</ul>
-
 				</div>
 
 				<!-- Social Media Icons -->
@@ -148,12 +147,6 @@
 							</li>
 							<li class="nav-item nav-item-custome {{ app.request.attributes.get('_route') == 'app_about' ? 'active' : '' }}">
 								<a class="nav-link" href="{{ path('app_about') }}">À propos de nous</a>
-							</li>
-							<li class="nav-item nav-item-custome {{ app.request.attributes.get('_route') == 'app_contact' ? 'active' : '' }}">
-								<a class="nav-link" href="{{path('app_contact')}}">Nous contacter</a>
-							</li>
-							<li class="nav-item nav-item-custome {{ app.request.attributes.get('_route') == 'app_security' ? 'active' : '' }}">
-								<a class="nav-link" href="{{path('app_security')}}" class="decoration-none">Se connecter</a>
 							</li>
 						</ul>
 					</nav>
