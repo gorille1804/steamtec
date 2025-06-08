@@ -36382,7 +36382,10 @@ section h3 {
 
   .content_confiance .class-blanc,
   .content_confiance .class-vert {
-    width: 100%;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+    flex: auto !important;
   }
 
   .content_confiance .liste_confiance {
