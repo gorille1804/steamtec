@@ -5,7 +5,7 @@
 			<div class="row">
 				<div class="col-md-6 content_contact_droite">
 					<h2>Vous avez des questions<br/>
-						ou avez besoin d’aide ?</h2>
+						ou avez besoin d'aide ?</h2>
 					<div class="row">
 						<div class="col-md-6 content_info_contact">
 							<div class="content_icone">
@@ -39,7 +39,7 @@
 									<path d="M16 8V16L21.3334 18.6667M29.3334 16C29.3334 23.3638 23.3638 29.3333 16 29.3333C8.63622 29.3333 2.66669 23.3638 2.66669 16C2.66669 8.6362 8.63622 2.66666 16 2.66666C23.3638 2.66666 29.3334 8.6362 29.3334 16Z" stroke="#F5F6FB" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
 								</svg>
 							</div>
-							<h3>Heures d’ouverture</h3>
+							<h3>Heures d'ouverture</h3>
 							<p>Lundi - Vendredi : 8h30 - 18h00</p>
 						</div>
 						<div class="col-md-6 content_info_contact">
@@ -66,13 +66,20 @@
 							<div class="col-md-6">{{ form_row(form.prenom) }}</div>
 						</fieldset>
 						<fieldset class="row">
-							<div class="col-md-12">
-								{{ form_widget(form.type) }}
-								{{ form_errors(form.type) }}
-							</div>
+							<div class="col-md-12">{{ form_row(form.societe) }}</div>
 						</fieldset>
 						<fieldset class="row">
 							<div class="col-md-12">{{ form_row(form.email) }}</div>
+						</fieldset>
+						<fieldset class="row">
+							<div class="col-md-12">
+								{{ form_row(form.phone) }}
+								{% if form_errors(form.phone) %}
+									<div class="invalid-feedback d-block">
+										{{ form_errors(form.phone) }}
+									</div>
+								{% endif %}
+							</div>
 						</fieldset>
 						<fieldset class="row">
 							<div class="col-md-12">{{ form_row(form.message) }}</div>
@@ -80,10 +87,48 @@
 						<fieldset class="d-flex justify-content-center">
 							<div class="col-md-12">{{ form_row(form.submit) }}</div>
 						</fieldset>
-					{{ form_end(form) }}
-
-						<div></div>
+						<div class="d-none">
+							{{ form_row(form.type) }}
+						</div>
+						{{ form_end(form) }}
 					</div>
 				</div>
 			</div>
-		{% endblock %}
+		</div>
+	</div>
+	<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		const form = document.querySelector('form[name="contact"]'); // adapte le name si besoin
+		if (!form) return;
+		const phoneInput = form.querySelector('input[name$="[phone]"]');
+		const errorDivId = 'phone-error-message';
+
+		form.addEventListener('submit', function (e) {
+			// Supprime l'ancien message d'erreur s'il existe
+			let oldError = document.getElementById(errorDivId);
+			if (oldError) oldError.remove();
+
+			const phoneValue = phoneInput.value.trim();
+			const phonePattern = /^\+?[0-9\s\-\(\)]+$/;
+
+			if (phoneValue.length > 0 && !phonePattern.test(phoneValue)) {
+				e.preventDefault();
+
+				// Crée le message d'erreur
+				const errorDiv = document.createElement('div');
+				errorDiv.id = errorDivId;
+				errorDiv.className = 'invalid-feedback d-block';
+				errorDiv.textContent = 'Veuillez renseigner un numéro de téléphone valide.';
+
+				// Ajoute le message juste après le champ téléphone
+				phoneInput.parentNode.appendChild(errorDiv);
+
+				// Ajoute la classe Bootstrap d'erreur
+				phoneInput.classList.add('is-invalid');
+			} else {
+				phoneInput.classList.remove('is-invalid');
+			}
+		});
+	});
+	</script>
+{% endblock %}

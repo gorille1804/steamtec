@@ -19,7 +19,9 @@ class SendContactMailUseCase implements SendContactMailUseCaseInterface
             [
                 'nom' => $request->nom,
                 'prenom' => $request->prenom,
+                'societe' => $request->societe,
                 'email' => $request->email,
+                'phone' => $request->phone,
                 'type' => $request->type,
                 'message' => $request->message,
             ],
