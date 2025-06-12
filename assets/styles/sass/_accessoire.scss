@@ -147,11 +147,12 @@
         color: #636074;
         width: 100%;
         text-align: initial;
-        height: 85px;
+        height: 110px;
         display: -webkit-box;
         -webkit-box-orient: vertical;
-        -webkit-line-clamp: 3;
-        overflow: hidden;
+        -webkit-line-clamp: 5;
+            line-clamp: 5;
+            overflow: auto;
         text-overflow: ellipsis;
     }
 }
