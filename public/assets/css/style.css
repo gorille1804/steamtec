@@ -13719,6 +13719,7 @@ fieldset:disabled .btn {
 @media(max-width:767px) {
   .content_header_bottom.active .header_responsive {
     height: 80vh !important;
+    height: 80dvh !important;
   }
 }
 .dropdown-header {
