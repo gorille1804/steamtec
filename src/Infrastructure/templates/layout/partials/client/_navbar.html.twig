@@ -130,7 +130,7 @@
 								<div class="sous-menu collapse sub1" >
 									<a href="{{ path('app_desherbage') }}#avantage_methode">Les avantages de la méthode</a>
                                     <a href="{{ path('app_desherbage') }}#temp_desherbage">En combien de temps le désherbage vapeur ou à eau chaude est-il efficace ?</a>
-                                     <a href="{{ path('app_desherbage') }}#passage_desherbage">En combien de passages le désherbage à eau chaude est-il efficace ?</a>
+                                    <a href="{{ path('app_desherbage') }}#passage_desherbage">En combien de passages le désherbage à eau chaude est-il efficace ?</a>
 								</div>
 							</li>
 							<li class="nav-item nav-item-custome {{ app.request.attributes.get('_route') == 'app_machine' ? 'active' : '' }}">
@@ -143,7 +143,19 @@
 								<a class="nav-link" href="{{ path('app_configuration') }}">Configurations</a>
 							</li>
 							<li class="nav-item nav-item-custome {{ app.request.attributes.get('_route') == 'app_utilisateur' ? 'active' : '' }}">
-								<a class="nav-link" href="{{ path('app_utilisateur') }}">Utilisateurs</a>
+								<a class="nav-link" href="{{ path('app_utilisateur') }}">
+								Utilisateurs
+								<button class="btn btn_caret p-1">
+									<i class="fa fa-caret-down"></i>
+								</button>
+								</a>
+								<div class="sous-menu collapse sub2">
+									<a href="{{ path('app_utilisateur') }}#createur_entreprise">Créateurs d'entreprise</a>
+									<a href="{{ path('app_utilisateur') }}#professionnel_nettoyage">Les professionnels du nettoyage</a>
+									<a href="{{ path('app_utilisateur') }}#artisans_batiment">Artisans du bâtiment</a>
+									<a href="{{ path('app_utilisateur') }}#collectivites">Collectivités</a>
+									<a href="{{ path('app_utilisateur') }}#autres">Autres</a>
+								</div>
 							</li>
 							<li class="nav-item nav-item-custome {{ app.request.attributes.get('_route') == 'app_about' ? 'active' : '' }}">
 								<a class="nav-link" href="{{ path('app_about') }}">À propos de nous</a>
