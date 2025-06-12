@@ -13716,6 +13716,11 @@ fieldset:disabled .btn {
   display: block;
 }
 
+@media(max-width:767px) {
+  .content_header_bottom.active .header_responsive {
+    height: 80vh !important;
+  }
+}
 .dropdown-header {
   display: block;
   padding: var(--bs-dropdown-header-padding-y) var(--bs-dropdown-header-padding-x);
