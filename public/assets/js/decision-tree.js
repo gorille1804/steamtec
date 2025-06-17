@@ -138,15 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <button class="btn btn-outline-info" onclick="window.goBackStep()">Retour</button>
             </div>
             <div class="row">
-                <div id="problem-details" class="col-12 col-md-4"></div>
-                ${problem && problem.page ? `
-                <div class="mt-4 col-12 col-md-8">
-                    <h4>Arbre de dépannage</h4>
-                    <div class="pdf-view" style="width: 100%; overflow: hidden;">
-                        <div id="pdf-container"></div>
-                    </div>
-                </div>
-                ` : ''}
+                <div id="problem-details" class="col-12"></div>
             </div>`;
 
         // Charger la page PDF si nécessaire
