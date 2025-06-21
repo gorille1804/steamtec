@@ -1,7 +1,5 @@
 import './bootstrap.js';
 import './js/custome.js';
-import DecisionTree from './js/decision-tree';
-window.DecisionTree = DecisionTree;
 /*
  * Welcome to your app's main JavaScript file!
  *

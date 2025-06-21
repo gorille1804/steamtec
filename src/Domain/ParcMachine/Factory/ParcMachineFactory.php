@@ -22,10 +22,10 @@ class ParcMachineFactory
             ParcMachineId::make(), // ID généré
             $request->machine,
             $request->user,
-            0,
             $request->tempUsage,
             new \DateTimeImmutable(),
-            null
+            0, // currentHourUse
+            null // updatedAt
         );
     }
 

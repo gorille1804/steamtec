@@ -19,6 +19,7 @@ doctrine:
             chantierMachineId: Infrastructure\Database\FieldType\ChantierMachineIdType
             parcMachineId: Infrastructure\Database\FieldType\ParcMachineIdType
             machineLogId: Infrastructure\Database\FieldType\MachineLogIdType
+            entretienLogId: Infrastructure\Database\FieldType\EntretienLogIdType
             documentId: Infrastructure\Database\FieldType\DocumentIdType
             faqId: Infrastructure\Database\FieldType\FaqIdType
             maintenanceNotificationId: Infrastructure\Database\FieldType\MaintenanceNotificationIdType

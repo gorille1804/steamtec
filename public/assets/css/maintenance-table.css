@@ -236,3 +236,374 @@
         z-index: 3;
     }
 }
+/* Styles pour les cellules cliquables */
+.clickable-cell {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.clickable-cell:hover {
+    background-color: rgba(0, 123, 255, 0.1) !important;
+    transform: scale(1.05);
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+}
+
+.clickable-cell:active {
+    transform: scale(0.98);
+}
+
+.clickable-cell::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.clickable-cell:hover::after {
+    opacity: 1;
+}
+
+/* Styles pour le modal d'entretien */
+#maintenanceModal .modal-content {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+#maintenanceModal .modal-header {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    border-radius: 15px 15px 0 0;
+    border-bottom: none;
+}
+
+#maintenanceModal .modal-title {
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+#maintenanceModal .btn-close {
+    filter: invert(1);
+    opacity: 0.8;
+}
+
+#maintenanceModal .btn-close:hover {
+    opacity: 1;
+}
+
+#maintenanceModal .form-label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+#maintenanceModal .form-control,
+#maintenanceModal .form-select {
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+#maintenanceModal .form-control:focus,
+#maintenanceModal .form-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+#maintenanceModal .form-control[readonly] {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+#maintenanceModal .modal-footer {
+    border-top: 1px solid #dee2e6;
+    padding: 1rem 1.5rem;
+}
+
+#maintenanceModal .btn {
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 0.5rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+#maintenanceModal .btn-primary {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    border: none;
+}
+
+#maintenanceModal .btn-primary:hover {
+    background: linear-gradient(135deg, #0056b3, #004085);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
+}
+
+#maintenanceModal .btn-secondary {
+    background: linear-gradient(135deg, #6c757d, #545b62);
+    border: none;
+}
+
+#maintenanceModal .btn-secondary:hover {
+    background: linear-gradient(135deg, #545b62, #3d4449);
+    transform: translateY(-2px);
+}
+
+/* Animation d'entrée pour le modal */
+#maintenanceModal.fade .modal-dialog {
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+}
+
+#maintenanceModal.show .modal-dialog {
+    transform: scale(1);
+}
+
+/* Styles pour les champs obligatoires */
+#maintenanceModal .form-label.required::after {
+    content: ' *';
+    color: #dc3545;
+}
+
+/* Styles pour les messages de validation */
+#maintenanceModal .form-control.is-invalid {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+#maintenanceModal .invalid-feedback {
+    display: block;
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* Responsive pour le modal */
+@media (max-width: 768px) {
+    #maintenanceModal .modal-dialog {
+        margin: 0.5rem;
+        max-width: calc(100% - 1rem);
+    }
+
+    #maintenanceModal .modal-body {
+        padding: 1rem;
+    }
+
+    #maintenanceModal .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    #maintenanceModal .col-md-6 {
+        padding-left: 0;
+        padding-right: 0;
+        margin-bottom: 1rem;
+    }
+}
+
+/* Styles pour le container des tâches */
+#maintenanceTasksContainer {
+    max-height: 200px;
+    overflow-y: auto;
+    transition: border-color 0.3s ease;
+}
+
+#maintenanceTasksContainer .form-check {
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+#maintenanceTasksContainer .form-check:hover {
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+#maintenanceTasksContainer .form-check-input:checked {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+#maintenanceTasksContainer .form-check-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+#maintenanceTasksContainer .form-check-label {
+    cursor: pointer;
+    font-weight: 500;
+    color: #495057;
+    margin-left: 0.5rem;
+}
+
+#maintenanceTasksContainer .form-check-label:hover {
+    color: #007bff;
+}
+
+/* Animation pour les checkboxes */
+#maintenanceTasksContainer .form-check-input:checked+.form-check-label {
+    color: #007bff;
+    font-weight: 600;
+}
+
+/* Style pour l'erreur de validation des tâches */
+#maintenanceTasksContainer.invalid {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+/* Styles pour la sélection de machine */
+#machineSelect {
+    transition: all 0.3s ease;
+    border: 2px solid #e9ecef;
+}
+
+#machineSelect:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+#machineSelect.is-valid {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+#machineSelect.is-invalid {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+/* Animation pour l'apparition des sections */
+#hoursSection,
+#maintenanceTableSection {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Styles pour les options du select */
+#machineSelect option {
+    padding: 8px;
+    font-weight: 500;
+}
+
+#machineSelect option:first-child {
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Responsive pour la sélection de machine */
+@media (max-width: 768px) {
+    #machineSelect {
+        font-size: 16px;
+        /* Évite le zoom sur iOS */
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* Styles pour les cellules d'entretien complétées */
+.maintenance-table .completed-maintenance {
+    background-color: #d4edda !important;
+    border-color: #c3e6cb !important;
+    position: relative;
+    cursor: not-allowed !important;
+}
+
+.maintenance-table .completed-maintenance:hover {
+    background-color: #d4edda !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.maintenance-table .completed-maintenance::after {
+    content: none !important;
+}
+
+/* Styles pour la date d'entretien affichée */
+.maintenance-table .maintenance-date {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #155724;
+    background-color: #c3e6cb;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    text-align: center;
+    min-width: 60px;
+}
+
+.maintenance-table .task-icon.completed {
+    color: #28a745 !important;
+    font-size: 1.3rem;
+}
+
+.maintenance-table .completed-maintenance .task-icon {
+    animation: completedPulse 2s ease-in-out infinite;
+}
+
+@keyframes completedPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1.1);
+    }
+}
+
+/* Styles pour le backdrop de chargement */
+.loading-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(2px);
+}
+
+.loading-spinner {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    min-width: 200px;
+}
+
+.loading-text {
+    color: #6c757d;
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}

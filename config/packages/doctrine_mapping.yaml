@@ -39,6 +39,12 @@ doctrine:
                         dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/MachineLog'
                         prefix: 'Domain\MachineLog\Data\Model'
                         alias: MachineLog
+                    EntretienLog:
+                        type: xml
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/EntretienLog'
+                        prefix: 'Domain\Entretien\Data\Model'
+                        alias: EntretienLog
                     Document:
                         type: xml
                         is_bundle: false
