@@ -70,7 +70,7 @@
 
             const hoursCell = document.createElement('td');
             hoursCell.className = 'hours-cell';
-            hoursCell.textContent = row.heures + 'h';
+            hoursCell.textContent = row.heures + ' h';
             tr.appendChild(hoursCell);
 
             taskKeys.forEach(taskKey => {
@@ -78,10 +78,10 @@
                 const isRequired = row[taskKey];
 
                 if (isRequired) {
-                    td.innerHTML = '<i class="mdi mdi-check-circle task-icon required" title="Requis"></i>';
+                    td.innerHTML = '<i class="mdi mdi-asterisk-circle-outline task-icon required" title="Prévu"></i>';
                     td.className = 'task-required';
                 } else {
-                    td.innerHTML = '<i class="mdi mdi-minus-circle task-icon not-required" title="Non requis"></i>';
+                    td.innerHTML = '<i class="mdi mdi-radiobox-blank task-icon not-required" title="Non prévu"></i>';
                     td.className = 'task-not-required';
                 }
 
@@ -116,19 +116,30 @@
     function findClosestRow(hours) {
         const schedule = maintenanceData.maintenance_schedule;
         let closestRow = null;
-        let minDifference = Infinity;
+        let closestHours = -1;
+        let closestIndex = -1;
 
+        // Trouve la valeur la plus élevée dans le planning qui est inférieure ou égale aux heures saisies
         schedule.forEach((item, index) => {
             const scheduleHours = parseInt(item.heures);
-            const difference = Math.abs(scheduleHours - hours);
-
-            if (difference < minDifference) {
-                minDifference = difference;
-                closestRow = document.querySelector(`tr[data-row-index="${index}"]`);
+            if (scheduleHours <= hours) {
+                if (scheduleHours > closestHours) {
+                    closestHours = scheduleHours;
+                    closestIndex = index;
+                }
             }
         });
 
-        return { row: closestRow, difference: minDifference };
+        if (closestIndex !== -1) {
+            closestRow = document.querySelector(`tr[data-row-index="${closestIndex}"]`);
+        }
+
+        const difference = closestHours !== -1 ? hours - closestHours : Infinity;
+
+        return {
+            row: closestRow,
+            difference: difference
+        };
     }
 
     function updateHoursInfo(hours, closestRow, difference) {

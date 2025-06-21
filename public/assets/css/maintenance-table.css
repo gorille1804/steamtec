@@ -46,16 +46,13 @@
 .maintenance-table .hours-cell {
     font-weight: bold;
     color: #007bff;
-    background-color: #f8f9fa;
 }
 
 .maintenance-table .task-required {
-    background-color: #d4edda;
     color: #155724;
 }
 
 .maintenance-table .task-not-required {
-    background-color: #f8f9fa;
     color: #6c757d;
 }
 
