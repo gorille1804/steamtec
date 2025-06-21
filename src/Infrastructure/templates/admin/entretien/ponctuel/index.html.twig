@@ -2,6 +2,27 @@
 {% block title %}Entretien ponctuel machine{% endblock %}
 
 {% block content %}
+    <style>
+        .alert-animated {
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { 
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7);
+            }
+            50% { 
+                transform: scale(0.98);
+                box-shadow: 0 0 0 10px rgba(255, 193, 7, 0);
+            }
+            100% { 
+                transform: scale(1);
+                box-shadow: 0 0 0 1px rgba(255, 193, 7, 0);
+            }
+        }
+    </style>
+
     <div class="row flex-grow">
         <div class="col-md-12">
             {% for message in app.flashes('success') %}
@@ -22,6 +43,11 @@
                                 <i class="mdi mdi-plus"></i> Ajouter un entretien ponctuel
                             </a>
                         </div>
+                    </div>
+                    
+                    <div class="alert alert-warning mt-3 alert-animated" role="alert">
+                        <i class="mdi mdi-alert-circle"></i>
+                        <strong>Attention :</strong> Pour toute activité d'entretien ou de dépannage : machine à l'arrêt et hors tension
                     </div>
                     
                     <div class="mt-3 text-center">
