@@ -32747,6 +32747,10 @@ dl li {
   padding-top: 97px;
 }
 
+.page-body-wrapper.admin-dashboard {
+  min-height: calc(100vh - 20px) !important;
+  padding-top: 20px !important;
+}
 .page-body-wrapper.full-page-wrapper {
   width: 100%;
   min-height: 100vh;
@@ -32791,7 +32795,7 @@ dl li {
   font-family: "Manrope", sans-serif;
   font-weight: 500;
   padding: 0;
-  width: 220px;
+  width: 240px;
   z-index: 11;
   transition: width 0.25s ease, background 0.25s ease;
   -webkit-transition: width 0.25s ease, background 0.25s ease;
@@ -32850,7 +32854,7 @@ dl li {
 .sidebar .nav .nav-item .nav-link i.menu-icon {
   font-size: 22px;
   line-height: 1;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
   color: #484848;
 }
 
@@ -33033,16 +33037,6 @@ dl li {
 .sidebar .nav.sub-menu .nav-item {
   position: relative;
   padding: 0;
-}
-
-.sidebar .nav.sub-menu .nav-item::before {
-  content: "";
-  width: 5px;
-  height: 5px;
-  position: absolute;
-  margin-top: 16px;
-  border-radius: 50%;
-  background: #b2b2b2;
 }
 
 .sidebar .nav.sub-menu .nav-item .nav-link {
