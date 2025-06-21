@@ -34,6 +34,37 @@
                         <strong>Attention :</strong> Pour toute activité d'entretien ou de dépannage : machine à l'arrêt et hors tension
                     </div>
                     
+                    <!-- Zone de saisie des heures -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="machineHours" class="form-label">
+                                    <i class="mdi mdi-clock-outline text-primary"></i>
+                                    Nombre d'heures de la machine
+                                </label>
+                                <div class="input-group">
+                                    <input type="number" 
+                                           class="form-control w-100" 
+                                           id="machineHours" 
+                                           name="machineHours" 
+                                           placeholder="Ex: 1250" 
+                                           min="0" 
+                                           max="4000"
+                                           step="50">
+                                </div>
+                                <small class="form-text text-muted">
+                                    Entrez le nombre d'heures pour voir la ligne correspondante dans le tableau
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="alert alert-info" id="hoursInfo" style="display: none;">
+                                <i class="mdi mdi-information-outline"></i>
+                                <span id="hoursInfoText"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="mt-3">
                         <div class="row">
                             <div class="col-12">
