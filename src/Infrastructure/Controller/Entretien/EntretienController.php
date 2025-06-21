@@ -63,8 +63,16 @@ class EntretienController extends AbstractController
     #[IsGranted(New MultiplyRolesExpression(RoleEnum::ADMIN, RoleEnum::USER))]
     public function ponctuel(Request $request): Response
     {
+        /** @var SymfonyUserAdapter $user */
+        $user = $this->getUser();
+        $currentUser = $this->findUserByIdUseCase->__invoke(new UserId($user->getId()));
+        
+        // Récupérer les machines du parc de l'utilisateur
+        $parcMachines = $this->findAllParcMachineByUserUseCase->__invoke($currentUser);
+        
         return $this->render('admin/entretien/ponctuel/index.html.twig', [
-            'title' => 'Entretien ponctuel machine',
+            'title' => 'Entretien ponctuel',
+            'parcMachines' => $parcMachines,
         ]);
     }
 
