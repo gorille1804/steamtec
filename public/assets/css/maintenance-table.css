@@ -521,25 +521,24 @@
 }
 
 /* Styles pour les cellules d'entretien complétées */
-.maintenance-table .completed-maintenance {
+.completed-maintenance {
     background-color: #d4edda !important;
     border-color: #c3e6cb !important;
     position: relative;
     cursor: not-allowed !important;
 }
 
-.maintenance-table .completed-maintenance:hover {
+.completed-maintenance:hover {
     background-color: #d4edda !important;
     transform: none !important;
     box-shadow: none !important;
 }
 
-.maintenance-table .completed-maintenance::after {
+.completed-maintenance::after {
     content: none !important;
 }
 
-/* Styles pour la date d'entretien affichée */
-.maintenance-table .maintenance-date {
+.completed-maintenance .maintenance-date {
     font-size: 0.8rem;
     font-weight: 600;
     color: #155724;
@@ -551,19 +550,15 @@
     min-width: 60px;
 }
 
-.maintenance-table .task-icon.completed {
+.completed-maintenance .task-icon {
     color: #28a745 !important;
     font-size: 1.3rem;
-}
-
-.maintenance-table .completed-maintenance .task-icon {
     animation: completedPulse 2s ease-in-out infinite;
 }
 
 @keyframes completedPulse {
-
     0%,
-    100% {
+        100% {
         opacity: 1;
         transform: scale(1);
     }
@@ -572,39 +567,4 @@
         opacity: 0.8;
         transform: scale(1.1);
     }
-}
-
-/* Styles pour le backdrop de chargement */
-.loading-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    backdrop-filter: blur(2px);
-}
-
-.loading-spinner {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    min-width: 200px;
-}
-
-.loading-text {
-    color: #6c757d;
-    font-weight: 500;
-    margin-top: 1rem;
-}
-
-.spinner-border {
-    width: 3rem;
-    height: 3rem;
 }
