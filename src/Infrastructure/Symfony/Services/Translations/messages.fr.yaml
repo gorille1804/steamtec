@@ -67,9 +67,29 @@ chantiers:
         actions: "Actions"
   
     form:
+        machine_serial:
+            label: "Machine utilisée"
         name:
             label: "Nom du chantier"
             placeholder: "Nom du chantier"
+        chantier_date:
+            label: "Date du chantier"
+        surface:
+            label: "Surface (m²)"
+        duration:
+            label: "Durée (heures)"
+        surface_types:
+            label: "Type de surface"
+        materials:
+            label: "Matériaux"
+        encrassement:
+            label: "Niveau d'encrassement"
+        vetuste:
+            label: "État de vétusté"
+        commentaire:
+            label: "Commentaire"
+        rendement:
+            label: "Rendement (m²/h)"
         description:
             label: "Description"
             placeholder: "Description"

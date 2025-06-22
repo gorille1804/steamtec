@@ -8,6 +8,16 @@
         <id name="id" type="chantierId" column="id" />
         <field name="name" type="string" length="180" unique="true" />
         <field name="description" type="text"/>
+        <field name="machineSerialNumber" type="string" length="255" />
+        <field name="chantierDate" type="datetime" />
+        <field name="surface" type="decimal" precision="10" scale="2" />
+        <field name="duration" type="decimal" precision="5" scale="1" />
+        <field name="rendement" type="decimal" precision="10" scale="2" />
+        <field name="surfaceTypes" type="json" />
+        <field name="materials" type="json" />
+        <field name="encrassementLevel" type="integer" />
+        <field name="vetusteLevel" type="integer" />
+        <field name="commentaire" type="text" nullable="true" />
          <many-to-one field="user" target-entity="Domain\User\Data\Model\User">
             <join-column name="user_id" referenced-column-name="id"/>
         </many-to-one>   

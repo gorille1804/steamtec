@@ -1,6 +1,13 @@
- {{ form_start(form) }}
+{{ form_start(form) }}
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.machineSerialNumber) }}
+                {{ form_widget(form.machineSerialNumber) }}
+                {{ form_errors(form.machineSerialNumber) }}
+            </div>
+        </div>
+        <div class="col-md-6">
             <div class="form-group">
                 {{ form_label(form.name) }}
                 {{ form_widget(form.name) }}
@@ -14,26 +21,92 @@
         </div>
     </div>
 
-    <div class="form-group">
-        {{ form_label(form.description) }}
-        {{ form_widget(form.description) }}
-        {% if form_errors(form.description) %}
-            <div class="invalid-feedback d-block">
-                {{ form_errors(form.description) }}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.chantierDate) }}
+                {{ form_widget(form.chantierDate) }}
+                {{ form_errors(form.chantierDate) }}
             </div>
-        {% endif %}
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                {{ form_label(form.surface) }}
+                {{ form_widget(form.surface) }}
+                {{ form_errors(form.surface) }}
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                {{ form_label(form.duration) }}
+                {{ form_widget(form.duration) }}
+                {{ form_errors(form.duration) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.surfaceTypes) }}
+                {{ form_widget(form.surfaceTypes) }}
+                {{ form_errors(form.surfaceTypes) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.materials) }}
+                {{ form_widget(form.materials) }}
+                {{ form_errors(form.materials) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.encrassementLevel) }}
+                {{ form_widget(form.encrassementLevel) }}
+                {{ form_errors(form.encrassementLevel) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.vetusteLevel) }}
+                {{ form_widget(form.vetusteLevel) }}
+                {{ form_errors(form.vetusteLevel) }}
+            </div>
+        </div>
     </div>
 
     <div class="form-group">
-        {{ form_label(form.parcMachines) }}
-        {{ form_widget(form.parcMachines) }}
-        {{ form_errors(form.parcMachines) }}
-        <small class="form-text text-muted">
-           {{'chantiers.form.machine.instruction'|trans}}
-        </small>
+        {{ form_label(form.commentaire) }}
+        {{ form_widget(form.commentaire) }}
+        {{ form_errors(form.commentaire) }}
     </div>
 
     <div class="form-group mb-0">
         {{ form_widget(form.save) }}
     </div>
 {{ form_end(form) }}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const surfaceField = document.querySelector('#{{ form.surface.vars.id }}');
+    const durationField = document.querySelector('#{{ form.duration.vars.id }}');
+    
+    function calculateRendement() {
+        const surface = parseFloat(surfaceField.value) || 0;
+        const duration = parseFloat(durationField.value) || 0;
+        
+        if (duration > 0) {
+            const rendement = surface / duration;
+            // Vous pouvez afficher le rendement dans un champ calculé ou l'envoyer via un champ caché
+            console.log('Rendement calculé:', rendement.toFixed(2) + ' m²/h');
+        }
+    }
+    
+    surfaceField.addEventListener('input', calculateRendement);
+    durationField.addEventListener('input', calculateRendement);
+});
+</script>

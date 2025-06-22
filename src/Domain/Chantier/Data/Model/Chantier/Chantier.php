@@ -18,7 +18,17 @@ class Chantier
         public string $description,
         public User $user,
         public \DateTimeInterface $createdAt,
-        public ?\DateTimeInterface $updatedAt
+        public ?\DateTimeInterface $updatedAt,
+        public string $machineSerialNumber,
+        public \DateTimeInterface $chantierDate,
+        public float $surface,
+        public float $duration,
+        public float $rendement,
+        public array $surfaceTypes,
+        public array $materials,
+        public int $encrassementLevel,
+        public int $vetusteLevel,
+        public string $commentaire
     ) {
 
         $this->chantierMachines = new ArrayCollection();
