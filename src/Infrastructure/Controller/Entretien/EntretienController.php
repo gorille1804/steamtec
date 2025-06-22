@@ -80,8 +80,40 @@ class EntretienController extends AbstractController
     #[IsGranted(New MultiplyRolesExpression(RoleEnum::ADMIN, RoleEnum::USER))]
     public function aides(Request $request): Response
     {
+        // Récupérer les documents PDF qui commencent par "E0"
+        $documentsPath = $this->getParameter('kernel.project_dir') . '/public/uploads/documents';
+        $documents = [];
+        
+        if (is_dir($documentsPath)) {
+            $files = scandir($documentsPath);
+            foreach ($files as $file) {
+                if (is_file($documentsPath . '/' . $file) && 
+                    pathinfo($file, PATHINFO_EXTENSION) === 'pdf' && 
+                    str_starts_with($file, 'E0')) {
+                    
+                    // Extraire le numéro et le titre du document
+                    $filename = pathinfo($file, PATHINFO_FILENAME);
+                    $number = substr($filename, 0, 4); // E001, E002, etc.
+                    $title = substr($filename, 4); // Le reste du nom
+                    
+                    $documents[] = [
+                        'filename' => $file,
+                        'number' => $number,
+                        'title' => trim($title),
+                        'path' => 'uploads/documents/' . $file
+                    ];
+                }
+            }
+            
+            // Trier les documents par numéro
+            usort($documents, function($a, $b) {
+                return strcmp($a['number'], $b['number']);
+            });
+        }
+        
         return $this->render('admin/entretien/aides/index.html.twig', [
             'title' => 'Liste des aides à l\'entretien',
+            'documents' => $documents,
         ]);
     }
 
