@@ -1,6 +1,7 @@
 <?php
 namespace Infrastructure\Symfony\Security;
 
+use Domain\User\Data\Enum\RoleEnum;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,7 +47,18 @@ class FormLoginAuthenticator extends AbstractAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        return new RedirectResponse($this->urlGenerator->generate('app_dashboard'));
+        // Récupérer l'utilisateur connecté
+        $user = $token->getUser();
+        
+        // Vérifier si l'utilisateur est admin
+        $isAdmin = in_array(RoleEnum::ADMIN->value, $user->getRoles());
+        
+        // Rediriger selon le rôle
+        if ($isAdmin) {
+            return new RedirectResponse($this->urlGenerator->generate('app_dashboard'));
+        } else {
+            return new RedirectResponse($this->urlGenerator->generate('app_chantiers'));
+        }
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
