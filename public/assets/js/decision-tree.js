@@ -1,5 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const jsonUrl = document.getElementById('decision-tree-app').getAttribute('data-json-url');
+    console.log('Decision tree script loaded');
+
+    const appElement = document.getElementById('decision-tree-app');
+    if (!appElement) {
+        console.error('Decision tree app element not found');
+        return;
+    }
+
+    const jsonUrl = appElement.getAttribute('data-json-url');
+    console.log('JSON URL:', jsonUrl);
+
     let navigationStack = [];
     let elements = [];
     let pdfDoc = null;
@@ -43,11 +53,30 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    console.log('Fetching JSON data from:', jsonUrl);
     fetch(jsonUrl)
-        .then(response => response.json())
+        .then(response => {
+            console.log('Response status:', response.status);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
+            console.log('JSON data loaded successfully:', data);
             elements = data.elements;
+            console.log('Elements count:', elements.length);
             showCategories();
+        })
+        .catch(error => {
+            console.error('Error loading JSON data:', error);
+            document.getElementById('decision-tree-app').innerHTML = `
+                <div class="alert alert-danger">
+                    <h4>Erreur de chargement</h4>
+                    <p>Impossible de charger les données de l'arbre de dépannage.</p>
+                    <p>Erreur: ${error.message}</p>
+                </div>
+            `;
         });
 
     function updateBreadcrumb() {

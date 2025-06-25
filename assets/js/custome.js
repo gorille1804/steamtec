@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
     
     if ($('.configuration').length) {
@@ -176,101 +175,116 @@ document.addEventListener('DOMContentLoaded', function() {
         console.warn("No configuration links found on this page");
     }
 
-    // Responsive header
+    // Responsive header - only initialize if header elements exist
     const contentHeader = document.querySelector('.content_header_bottom');
-    const btnToggleHeader = contentHeader.querySelector('.btn_toggle_header');
-    const meniLi = contentHeader.querySelectorAll('.nav-item-custome')
-    btnToggleHeader.addEventListener('click', function() {
-        contentHeader.classList.toggle('active');
-        document.querySelector('html').classList.toggle('no-scroll');
-       
-        meniLi.forEach(item => {
-            item.classList.remove('nav-item');
-        });
-    });
-    document.querySelectorAll('.sous-menu a').forEach(item => {
-        item.addEventListener('click', function(e) {
-         
-            contentHeader.classList.remove('active');
-            document.querySelector('html').classList.remove('no-scroll');
-        });
-    });
+    if (contentHeader) {
+        const btnToggleHeader = contentHeader.querySelector('.btn_toggle_header');
+        if (btnToggleHeader) {
+            const meniLi = contentHeader.querySelectorAll('.nav-item-custome');
+            btnToggleHeader.addEventListener('click', function () {
+                contentHeader.classList.toggle('active');
+                document.querySelector('html').classList.toggle('no-scroll');
 
-    // accordeon mobile
-    const btnCaret = contentHeader.querySelectorAll('.btn_caret');
-    
-    console.log("btnCaret", btnCaret.length);
-    
-    function closeOtherMenus(currentMenu) {
-        const allActiveMenus = contentHeader.querySelectorAll('.sous-menu.active');
-        allActiveMenus.forEach(menu => {
-            if (menu !== currentMenu) {
-                const parentLi = menu.closest('.nav-item-custome');
-                const caretBtn = parentLi.querySelector('.btn_caret');
-                const icon = caretBtn ? caretBtn.querySelector('i') : null;
-                
-                if (icon) {
-                    icon.classList.remove('fa-caret-up');
-                    icon.classList.add('fa-caret-down');
-                }
-                
-                menu.classList.remove('active');
-            }
-        });
-    }
-    
-    btnCaret.forEach((el) => {
-        el.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation(); 
-            
-            const parentLi = this.closest('.nav-item-custome');
-            const sousMenu = parentLi.querySelector('.sous-menu');
-            
-            console.log("Sous menu trouvé :", sousMenu);
-            
-            if (sousMenu) {
-                if (sousMenu.classList.contains('active')) {
-                    sousMenu.classList.remove('active');
-                    
-                    const icon = this.querySelector('i');
-                    icon.classList.remove('fa-caret-up');
-                    icon.classList.add('fa-caret-down');
-                } 
-                else {
-                    closeOtherMenus(sousMenu);
-                    sousMenu.classList.add('active');
-                    
-                    const icon = this.querySelector('i');
-                    icon.classList.remove('fa-caret-down');
-                    icon.classList.add('fa-caret-up');
-                }
-            }
-        });
-    });
-    
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.content_header_bottom') && !e.target.closest('.btn_toggle_header')) {
-            contentHeader.classList.remove("active");
-            document.querySelector('html').classList.remove('no-scroll');
+                meniLi.forEach(item => {
+                    item.classList.remove('nav-item');
+                });
+            });
+        } else {
+            console.warn("Toggle header button not found, skipping header toggle initialization");
         }
-        if (!e.target.closest('.nav-item-custome')) {
-            
+
+        const sousMenuLinks = document.querySelectorAll('.sous-menu a');
+        if (sousMenuLinks.length > 0) {
+            sousMenuLinks.forEach(item => {
+                item.addEventListener('click', function (e) {
+                    contentHeader.classList.remove('active');
+                    document.querySelector('html').classList.remove('no-scroll');
+                });
+            });
+        }
+
+        // accordeon mobile
+        const btnCaret = contentHeader.querySelectorAll('.btn_caret');
+
+        console.log("btnCaret", btnCaret.length);
+
+        function closeOtherMenus(currentMenu) {
             const allActiveMenus = contentHeader.querySelectorAll('.sous-menu.active');
             allActiveMenus.forEach(menu => {
-                menu.classList.remove('active');
-                const parentLi = menu.closest('.nav-item-custome');
-                const caretBtn = parentLi.querySelector('.btn_caret');
-                const icon = caretBtn ? caretBtn.querySelector('i') : null;
-                
-                if (icon) {
-                    icon.classList.remove('fa-caret-up');
-                    icon.classList.add('fa-caret-down');
+                if (menu !== currentMenu) {
+                    const parentLi = menu.closest('.nav-item-custome');
+                    const caretBtn = parentLi ? parentLi.querySelector('.btn_caret') : null;
+                    const icon = caretBtn ? caretBtn.querySelector('i') : null;
+
+                    if (icon) {
+                        icon.classList.remove('fa-caret-up');
+                        icon.classList.add('fa-caret-down');
+                    }
+
+                    menu.classList.remove('active');
                 }
             });
-           
         }
-    });
+
+        btnCaret.forEach((el) => {
+            el.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const parentLi = this.closest('.nav-item-custome');
+                const sousMenu = parentLi ? parentLi.querySelector('.sous-menu') : null;
+
+                console.log("Sous menu trouvé :", sousMenu);
+
+                if (sousMenu) {
+                    if (sousMenu.classList.contains('active')) {
+                        sousMenu.classList.remove('active');
+
+                        const icon = this.querySelector('i');
+                        if (icon) {
+                            icon.classList.remove('fa-caret-up');
+                            icon.classList.add('fa-caret-down');
+                        }
+                    } 
+                    else {
+                        closeOtherMenus(sousMenu);
+                        sousMenu.classList.add('active');
+
+                        const icon = this.querySelector('i');
+                        if (icon) {
+                            icon.classList.remove('fa-caret-down');
+                            icon.classList.add('fa-caret-up');
+                        }
+                    }
+                }
+            });
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.content_header_bottom') && !e.target.closest('.btn_toggle_header')) {
+                contentHeader.classList.remove("active");
+                document.querySelector('html').classList.remove('no-scroll');
+            }
+            if (!e.target.closest('.nav-item-custome')) {
+
+                const allActiveMenus = contentHeader.querySelectorAll('.sous-menu.active');
+                allActiveMenus.forEach(menu => {
+                    menu.classList.remove('active');
+                    const parentLi = menu.closest('.nav-item-custome');
+                    const caretBtn = parentLi ? parentLi.querySelector('.btn_caret') : null;
+                    const icon = caretBtn ? caretBtn.querySelector('i') : null;
+
+                    if (icon) {
+                        icon.classList.remove('fa-caret-up');
+                        icon.classList.add('fa-caret-down');
+                    }
+                });
+
+            }
+        });
+    } else {
+        console.warn("Content header element not found, skipping header initialization");
+    }
 });
 
 
