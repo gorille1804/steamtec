@@ -16,8 +16,11 @@
                         <h2 class="card-title card-title-dash">{{'chantiers.index.list_chantiers'|trans}}</h2>
                     </div>
                     <div>
-                        <a  href="{{path('app_chantier_create')}}" class="btn btn-primary btn-md text-white mb-0 me-0" type="button">
-                            <i class="mdi mdi-account-plus"></i> {{'chantiers.index.btn_create_new'|trans}}
+                        <a href="{{ path('app_chantiers_export') }}" class="btn btn-success btn-md text-white mb-0 me-2" type="button">
+                            <i class="mdi mdi-file-excel"></i> Exporter XLS
+                        </a>
+                        <a href="{{path('app_chantier_create')}}" class="btn btn-primary btn-md text-white mb-0 me-0" type="button">
+                            <i class="mdi mdi-layers-plus"></i> {{'chantiers.index.btn_create_new'|trans}}
                         </a>
                     </div>
                 </div>
@@ -25,10 +28,12 @@
                     <table class="table select-table">
                         <thead>
                             <tr>
-                                <th>{{'chantiers.index.name'|trans}}</th>
-                                <th>{{'chantiers.index.description'|trans}}</th>
-                                <th>{{'chantiers.index.machine'|trans}}</th>
-                                <th>{{'chantiers.index.date_creation'|trans}}</th>
+                                <th>Date</th>
+                                <th>Nom du chantier</th>
+                                <th>Machine</th>
+                                <th>Type de surface</th>
+                                <th>Matériaux</th>
+                                <th>Rendement (m²/h)</th>
                                 <th>{{'chantiers.index.actions'|trans}}</th>
                             </tr>
                         </thead>
@@ -36,28 +41,35 @@
                             {% for chantier in chantiers %}
                                 <tr>
                                     <td class="py-1">
+                                        {{ chantier.chantierDate|date('d/m/Y') }}
+                                    </td>
+                                    <td class="py-1">
                                         {{ chantier.name }}
                                     </td>
                                     <td class="py-1">
-                                        {{ chantier.description|length > 30 ? chantier.description|slice(0, 30) ~ '...' : chantier.description }}
-                                    </td>
-                                    <td class="py-1">
-                                    {% for machine in chantier.chantierMachines %}
-                                        {% set machine = machine.parcMachine.machine %}
+                                        {% for machine in chantier.chantierMachines %}
+                                            {% set machine = machine.parcMachine.machine %}
                                             <span class="badge badge-opacity-primary mb-1" >
                                                 {{ machine.nom ~ ' | ' ~ machine.numeroIdentification  }}
                                             </span>
                                             <br>
-                                    {% endfor %}
+                                        {% endfor %}
                                     </td>
                                     <td class="py-1">
-                                        {{ chantier.createdAt|date('d-m-Y') }}
+                                        {{ chantier.surfaceTypes }}
+                                    </td>
+                                    <td class="py-1">
+                                        {% for material in chantier.materials %}
+                                            <span class="badge badge-outline-primary mb-1">{{ material }}</span>
+                                        {% else %}
+                                            <span class="text-muted">-</span>
+                                        {% endfor %}
+                                    </td>
+                                    <td class="py-1">
+                                        {{ chantier.rendement }}
                                     </td>
                                     <td class="py-1">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="{{path('app_chantier_show',{'chantier':chantier.id})}}" class="btn btn-primary btn-sm" type="button">
-                                                <i class="mdi mdi-eye"></i>
-                                            </a>
                                             <a href="{{path('app_chantier_edit',{'chantier':chantier.id})}}" class="btn btn-warning btn-sm" type="button">
                                                 <i class="mdi mdi-pencil"></i>
                                             </a>

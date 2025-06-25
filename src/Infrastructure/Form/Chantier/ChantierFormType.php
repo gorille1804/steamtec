@@ -13,10 +13,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
+use Infrastructure\Form\Chantier\MaterialsJsonToArrayTransformer;
 
 class ChantierFormType extends AbstractType
 {
@@ -32,22 +34,16 @@ class ChantierFormType extends AbstractType
         $parcMachines = $this->repository->findAllByUser($user);
 
         $builder
-            ->add('machineSerialNumber', EntityType::class, [
-                'class' => ParcMachine::class,
-                'choices' => $parcMachines,
-                'choice_label' => function (ParcMachine $parcMachine) {
-                    $machine = $parcMachine->getMachine();
-                    return $machine->numeroIdentification;
-                },
-                'choice_value' => 'id',
+            ->add('machineSerialNumber', ChoiceType::class, [
+                'choices' => $this->buildMachineChoices($parcMachines),
                 'label' => 'chantiers.form.machine_serial.label',
                 'attr' => [
-                    'class' => 'form-control select2',
+                    'class' => 'form-control',
                     'data-placeholder' => 'Sélectionnez la machine',
                 ],
                 'label_attr' => ['class' => 'form-label'],
                 'constraints' => [
-                    new Assert\NotNull(['message' => 'Une machine doit être sélectionnée']),
+                    new Assert\NotBlank(['message' => 'Une machine doit être sélectionnée']),
                 ]
             ])
             ->add('name', TextType::class, [
@@ -111,6 +107,19 @@ class ChantierFormType extends AbstractType
                     new Assert\Positive(['message' => 'La durée doit être positive']),
                 ]
             ])
+            ->add('rendement', TextType::class, [
+                'label' => 'chantiers.form.rendement.label',
+                'required' => false,
+                'mapped' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                    'readonly' => true,
+                    'placeholder' => 'Calculé automatiquement',
+                ],
+                'label_attr' => [
+                    'class' => 'form-label',
+                ],
+            ])
             ->add('surfaceTypes', ChoiceType::class, [
                 'label' => 'chantiers.form.surface_types.label',
                 'choices' => [
@@ -119,61 +128,27 @@ class ChantierFormType extends AbstractType
                     'SOL' => 'SOL',
                     'AUTRES' => 'AUTRES',
                 ],
-                'multiple' => true,
+                'multiple' => false,
                 'expanded' => true,
-                'attr' => [
-                    'class' => 'form-check-input',
+                'row_attr' => [
+                    'class' => 'radio-horizontal-group',
                 ],
                 'label_attr' => [
                     'class' => 'form-label',
                 ],
                 'constraints' => [
-                    new Assert\Count([
-                        'min' => 1,
-                        'minMessage' => 'Au moins un type de surface doit être sélectionné',
-                    ]),
+                    new Assert\NotBlank(['message' => 'Un type de surface doit être sélectionné']),
                 ]
             ])
-            ->add('materials', ChoiceType::class, [
+            ->add('materials', HiddenType::class, [
                 'label' => 'chantiers.form.materials.label',
-                'choices' => [
-                    'TOIT' => [
-                        'TUILE CIMENT' => 'TUILE CIMENT',
-                        'TUILE TERRE CUITE' => 'TUILE TERRE CUITE',
-                        'PIERRE NATURELLE' => 'PIERRE NATURELLE',
-                        'AUTRES' => 'AUTRES',
-                    ],
-                    'MUR' => [
-                        'ENDUIT' => 'ENDUIT',
-                        'PIERRE NATURELLE' => 'PIERRE NATURELLE',
-                        'BARDAGE BOIS' => 'BARDAGE BOIS',
-                        'BARDAGE METAL' => 'BARDAGE METAL',
-                        'AUTRES' => 'AUTRES',
-                    ],
-                    'SOL' => [
-                        'BOIS' => 'BOIS',
-                        'PIERRE NATURELLE' => 'PIERRE NATURELLE',
-                        'AUTRES' => 'AUTRES',
-                    ],
-                    'AUTRES' => [
-                        'AUTRES' => 'AUTRES',
-                    ],
-                ],
-                'multiple' => true,
-                'expanded' => false,
+                'required' => false,
                 'attr' => [
-                    'class' => 'form-control select2',
-                    'data-placeholder' => 'Sélectionnez les matériaux',
+                    'class' => 'form-control',
                 ],
                 'label_attr' => [
                     'class' => 'form-label',
                 ],
-                'constraints' => [
-                    new Assert\Count([
-                        'min' => 1,
-                        'minMessage' => 'Au moins un matériau doit être sélectionné',
-                    ]),
-                ]
             ])
             ->add('encrassementLevel', ChoiceType::class, [
                 'label' => 'chantiers.form.encrassement.label',
@@ -181,6 +156,11 @@ class ChantierFormType extends AbstractType
                     '1 - Peu sale' => 1,
                     '2 - Moyennement sale' => 2,
                     '3 - Très sale' => 3,
+                ],
+                'multiple' => false,
+                'expanded' => true,
+                'row_attr' => [
+                    'class' => 'radio-horizontal-group',
                 ],
                 'attr' => [
                     'class' => 'form-control',
@@ -204,6 +184,11 @@ class ChantierFormType extends AbstractType
                     '2 - État d\'usage' => 2,
                     '3 - Très ancien' => 3,
                 ],
+                'multiple' => false,
+                'expanded' => true,
+                'row_attr' => [
+                    'class' => 'radio-horizontal-group',
+                ],
                 'attr' => [
                     'class' => 'form-control',
                 ],
@@ -223,8 +208,9 @@ class ChantierFormType extends AbstractType
                 'label' => 'chantiers.form.commentaire.label',
                 'required' => false,
                 'attr' => [
-                    'class' => 'form-control',
-                    'rows' => 5
+                    'class' => 'form-control h-auto',
+                    'rows' => 10,
+                    'placeholder' => 'Ajoutez d\'autres informations (optionnel)',
                 ],
                 'label_attr' => [
                     'class' => 'form-label',
@@ -236,6 +222,9 @@ class ChantierFormType extends AbstractType
                     'class' => 'btn btn-primary w-100 mb-3',
                 ],
             ]);
+
+        // Ajout du DataTransformer pour materials
+        $builder->get('materials')->addModelTransformer(new MaterialsJsonToArrayTransformer());
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -248,5 +237,15 @@ class ChantierFormType extends AbstractType
 
         $resolver->setAllowedTypes('is_edit', 'bool');
         $resolver->setAllowedTypes('user', User::class);
+    }
+
+    private function buildMachineChoices(array $parcMachines): array
+    {
+        $choices = [];
+        foreach ($parcMachines as $parcMachine) {
+            $machine = $parcMachine->getMachine();
+            $choices[$machine->numeroIdentification] = $machine->numeroIdentification;
+        }
+        return $choices;
     }
 }

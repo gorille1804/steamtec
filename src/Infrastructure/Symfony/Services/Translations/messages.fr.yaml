@@ -59,7 +59,7 @@ chantiers:
         title: "Chantiers"
         contexte: "le chantier"
         list_chantiers: "Chantiers"
-        btn_create_new: "Ajouter un nouveau chantier"
+        btn_create_new: "Nouveau chantier"
         name: "Nom"
         description: "Description"
         machine: "Machines"
@@ -98,7 +98,7 @@ chantiers:
             placeholder: "Sélectionner un machine"
             instruction: "Sélectionnez une ou plusieurs machines pour ce chantier"
         submit:
-            create: "créér"
+            create: "Créer le chantier"
             update: "Mettre à jour"
             cancel: "Retour"
         title:
@@ -200,7 +200,7 @@ users:
                 user: "Utilisateur"
                 admin: "Administrateur"
         submit:
-            create: "créér"
+            create: "Créer l'utilisateur"
             update: "Mettre à jour"
             cancel: "Retour"
         title:
@@ -317,7 +317,7 @@ machines:
         file:
             label: "Téléverser un fichier"
         submit:
-            create: "créér"
+            create: "Créer la machine"
             update: "Mettre à jour"
             cancel: "Retour"
         title:

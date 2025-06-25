@@ -21,15 +21,29 @@ class CreateChantierUseCase implements CreateChantierUseCaseInterface
 
     public function __invoke(CreateChantierRequest $request, User $user): Chantier
     {
+        // Le machineSerialNumber contient maintenant directement le numéro de série
+        // Nous devons trouver le ParcMachine correspondant
+        $parcMachines = $this->parcMachineRepository->findAllByUser($user);
+        $parcMachine = null;
+        
+        foreach ($parcMachines as $pm) {
+            if ($pm->getMachine()->getNumeroIdentification() === $request->machineSerialNumber) {
+                $parcMachine = $pm;
+                break;
+            }
+        }
+        
+        if (!$parcMachine) {
+            throw new \Exception('Machine non trouvée');
+        }
+
+        // Créer le chantier avec le numéro de série
         $chantier = CreateChantierFactory::make($request, $user);
         $chantier = $this->repository->save($chantier);
 
         // Créer la relation avec la machine sélectionnée
-        $parcMachine = $this->parcMachineRepository->findById($request->machineSerialNumber);
-        if ($parcMachine) {
-            $chantierMachineRequest = CreateChantierMachineFactory::makeRequest($parcMachine, $chantier);
-            $this->createChantierMachineUseCase->__invoke($chantierMachineRequest);
-        }
+        $chantierMachineRequest = CreateChantierMachineFactory::makeRequest($parcMachine, $chantier);
+        $this->createChantierMachineUseCase->__invoke($chantierMachineRequest);
 
         return $chantier;   
     }

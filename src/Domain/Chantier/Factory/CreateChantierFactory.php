@@ -12,7 +12,9 @@ class CreateChantierFactory
    public static function make(CreateChantierRequest $request, User $user):Chantier
    {
         // Calcul automatique du rendement
-        $rendement = $request->duration > 0 ? $request->surface / $request->duration : 0;
+        $duration = (float) $request->duration;
+        $surface = (float) $request->surface;
+        $rendement = $duration > 0 ? $surface / $duration : 0;
         
         return new Chantier(
             ChantierId::make(),
@@ -25,12 +27,12 @@ class CreateChantierFactory
             $request->chantierDate,
             $request->surface,
             $request->duration,
-            $rendement,
+            number_format($rendement, 2, '.', ''),
             $request->surfaceTypes,
             $request->materials,
             $request->encrassementLevel,
             $request->vetusteLevel,
-            $request->commentaire
+            $request->commentaire ?? ''
         );
    }
 }

@@ -7,13 +7,13 @@
     <entity name="Domain\Chantier\Data\Model\Chantier\Chantier" table="chantiers">
         <id name="id" type="chantierId" column="id" />
         <field name="name" type="string" length="180" unique="true" />
-        <field name="description" type="text"/>
+        <field name="description" type="text" nullable="true" />
         <field name="machineSerialNumber" type="string" length="255" />
         <field name="chantierDate" type="datetime" />
         <field name="surface" type="decimal" precision="10" scale="2" />
         <field name="duration" type="decimal" precision="5" scale="1" />
         <field name="rendement" type="decimal" precision="10" scale="2" />
-        <field name="surfaceTypes" type="json" />
+        <field name="surfaceTypes" type="string" length="50" />
         <field name="materials" type="json" />
         <field name="encrassementLevel" type="integer" />
         <field name="vetusteLevel" type="integer" />

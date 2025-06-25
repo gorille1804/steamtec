@@ -60,6 +60,7 @@ class ChantierRespository extends ServiceEntityRepository implements ChantierRep
             ->leftJoin('c.user', 'u')
             ->where('u.id = :userId')
             ->setParameter('userId', $userId)
+            ->orderBy('c.chantierDate', 'DESC')
             ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->getQuery()
@@ -89,12 +90,18 @@ class ChantierRespository extends ServiceEntityRepository implements ChantierRep
 
     public function update(Chantier $chantier): Chantier
     {
-        $exists = $this->isAlredyExists($chantier);
+        $existingChantiers = $this->findByCriteria([
+            'name' => $chantier->name,
+            'user' => $chantier->user
+        ]);
 
-        if ($exists && $exists[0]->user->id == $chantier->user->id) {
-            throw new \Exception($this->translator->trans('chantiers.messages.error_alredy_exist', [
-                '%name%' => $chantier->name
-            ]));
+        // Vérifier s'il existe d'autres chantiers avec le même nom (exclure le chantier actuel)
+        foreach ($existingChantiers as $existingChantier) {
+            if ($existingChantier->id->getValue() !== $chantier->id->getValue()) {
+                throw new \Exception($this->translator->trans('chantiers.messages.error_alredy_exist', [
+                    '%name%' => $chantier->name
+                ]));
+            }
         }
 
         $em = $this->getEntityManager();

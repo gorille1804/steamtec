@@ -23,6 +23,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 #[Route('/dashboard')]
 class ChantierController extends AbstractController
@@ -81,9 +84,19 @@ class ChantierController extends AbstractController
 
         $form->handleRequest($request);
 
+        // Correction: transformer le JSON en array avant validation
+        if ($form->isSubmitted()) {
+            $materialsJson = $form->get('materials')->getData();
+            if (is_string($materialsJson)) {
+                $materials = json_decode($materialsJson, true) ?: [];
+                $form->getData()->materials = $materials;
+            }
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var SymfonyUserAdapter $user  */
             $user = $this->getUser();
+            
             try {
                 $this->createChantierUseCase->__invoke($createChantierRequest, $user->getUser());
                 $this->addFlash('success', $this->translator->trans('chantiers.messages.create_succes'));
@@ -119,6 +132,15 @@ class ChantierController extends AbstractController
         ]);
 
         $form->handleRequest($request);
+
+        // Correction: transformer le JSON en array avant validation
+        if ($form->isSubmitted()) {
+            $materialsJson = $form->get('materials')->getData();
+            if (is_string($materialsJson)) {
+                $materials = json_decode($materialsJson, true) ?: [];
+                $form->getData()->materials = $materials;
+            }
+        }
 
         if($form->isSubmitted() && $form->isValid()) {
             try {
@@ -179,5 +201,77 @@ class ChantierController extends AbstractController
         }
 
         return $this->redirectToRoute('app_chantiers');
+    }
+
+    #[Route('/chantiers/export', name: 'app_chantiers_export', methods: ['GET'])]
+    public function export()
+    {
+        $user = $this->getUser()->getUser();
+        $userId = new UserId($user->id);
+        $chantiers = $this->findChantierByUserUseCase->__invoke($userId, 1, 10000); // récupère tout
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->fromArray([
+            [
+                'Date',
+                'Nom',
+                'Machine',
+                'Type de surface',
+                'Matériaux',
+                'Niveau d\'encrassement',
+                'État de vétusté',
+                'Surface',
+                'Durée',
+                'Rendement (m²/h)',
+                'Commentaire'
+            ]
+        ], null, 'A1');
+
+        $row = 2;
+        foreach ($chantiers as $chantier) {
+            $machines = [];
+            foreach ($chantier->chantierMachines as $cm) {
+                $machine = $cm->parcMachine->machine;
+                $machines[] = $machine->nom . ' | ' . $machine->numeroIdentification;
+            }
+            // Libellés pour encrassement
+            $encrassementLabels = [
+                1 => 'Peu sale',
+                2 => 'Moyennement sale',
+                3 => 'Très sale',
+            ];
+            $vetusteLabels = [
+                1 => 'Récent',
+                2 => 'État d\'usage',
+                3 => 'Très ancien',
+            ];
+            $sheet->fromArray([
+                $chantier->chantierDate->format('d/m/Y'),
+                $chantier->name,
+                implode(', ', $machines),
+                $chantier->surfaceTypes,
+                implode(', ', $chantier->materials),
+                $encrassementLabels[$chantier->encrassementLevel] ?? $chantier->encrassementLevel,
+                $vetusteLabels[$chantier->vetusteLevel] ?? $chantier->vetusteLevel,
+                $chantier->surface,
+                $chantier->duration,
+                $chantier->rendement,
+                $chantier->commentaire
+            ], null, 'A' . $row);
+            $row++;
+        }
+
+        $response = new StreamedResponse(function() use ($spreadsheet) {
+            $writer = new Xlsx($spreadsheet);
+            $writer->save('php://output');
+        });
+
+        $filename = 'chantiers_' . date('Ymd_His') . '.xlsx';
+        $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $response->headers->set('Content-Disposition', 'attachment;filename="' . $filename . '"');
+        $response->headers->set('Cache-Control', 'max-age=0');
+
+        return $response;
     }
 }

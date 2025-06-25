@@ -15,20 +15,20 @@ class Chantier
     public function __construct(
         public readonly ChantierId $id,
         public string $name,
-        public string $description,
+        public ?string $description,
         public User $user,
         public \DateTimeInterface $createdAt,
         public ?\DateTimeInterface $updatedAt,
         public string $machineSerialNumber,
         public \DateTimeInterface $chantierDate,
-        public float $surface,
-        public float $duration,
-        public float $rendement,
-        public array $surfaceTypes,
+        public string $surface,
+        public string $duration,
+        public string $rendement,
+        public string $surfaceTypes,
         public array $materials,
         public int $encrassementLevel,
         public int $vetusteLevel,
-        public string $commentaire
+        public ?string $commentaire
     ) {
 
         $this->chantierMachines = new ArrayCollection();

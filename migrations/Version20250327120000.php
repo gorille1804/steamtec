@@ -25,7 +25,7 @@ final class Version20250327120000 extends AbstractMigration
         $this->addSql('ALTER TABLE chantiers ADD surface DECIMAL(10,2) NOT NULL');
         $this->addSql('ALTER TABLE chantiers ADD duration DECIMAL(5,1) NOT NULL');
         $this->addSql('ALTER TABLE chantiers ADD rendement DECIMAL(10,2) NOT NULL');
-        $this->addSql('ALTER TABLE chantiers ADD surface_types JSON NOT NULL');
+        $this->addSql('ALTER TABLE chantiers ADD surface_types VARCHAR(50) NOT NULL');
         $this->addSql('ALTER TABLE chantiers ADD materials JSON NOT NULL');
         $this->addSql('ALTER TABLE chantiers ADD encrassement_level INT NOT NULL');
         $this->addSql('ALTER TABLE chantiers ADD vetuste_level INT NOT NULL');
