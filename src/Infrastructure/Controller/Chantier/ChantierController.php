@@ -11,6 +11,7 @@ use Domain\Chantier\UseCase\DeleteChantierUseCaseInterface;
 use Domain\Chantier\UseCase\FindAllChantierUseCaseInterface;
 use Domain\Chantier\UseCase\FindChantierByIdUseCaseInterface;
 use Domain\Chantier\UseCase\FindChantierByUserUseCaseInterface;
+use Domain\Chantier\UseCase\FindChantierByUserWithSearchUseCaseInterface;
 use Domain\Chantier\UseCase\UpdateChantierUseCaseInterface;
 use Domain\MachineLog\Data\Contract\CreateMachineLogRequest;
 use Domain\MachineLog\UseCase\CreateMachineLogUseCaseInterface;
@@ -35,6 +36,7 @@ class ChantierController extends AbstractController
         private readonly FindAllChantierUseCaseInterface $findaAllChantierUseCase,
         private readonly FindChantierByIdUseCaseInterface $findChantierByIdUseCase,
         private readonly FindChantierByUserUseCaseInterface $findChantierByUserUseCase,
+        private readonly FindChantierByUserWithSearchUseCaseInterface $findChantierByUserWithSearchUseCase,
         private readonly CreateChantierUseCaseInterface $createChantierUseCase,
         private readonly CreateMachineLogUseCaseInterface $CreateMachineLogUseCase,
         private readonly UpdateChantierUseCaseInterface $updateChantierUseCase,
@@ -52,18 +54,29 @@ class ChantierController extends AbstractController
 
         $page = $request->query->getInt('page', 1);
         $limit = 10;
+        $search = $request->query->get('search', '');
 
         $userId = new UserId($user->id);
-        $chantiers = $this->findChantierByUserUseCase->__invoke($userId, $page, $limit);
-
-        $total = $this->findaAllChantierUseCase->getTotal();
+        
+        if (!empty($search)) {
+            $chantiers = $this->findChantierByUserWithSearchUseCase->__invoke($userId, $search, $page, $limit);
+            $total = $this->findChantierByUserWithSearchUseCase->getTotal($userId, $search);
+        } else {
+            $chantiers = $this->findChantierByUserUseCase->__invoke($userId, $page, $limit);
+            $total = $this->findChantierByUserWithSearchUseCase->getTotal($userId, '');
+        }
+        
+        // Debug temporaire
+        error_log('Search: ' . $search . ', Total: ' . $total . ', Chantiers count: ' . count($chantiers));
+        
         $maxPages = ceil($total / $limit); 
 
         return $this->render('admin/chantier/index.html.twig', [
             'chantiers' => $chantiers,
             'currentPage' => $page,
             'maxPages' => $maxPages,
-            'limit' => $limit
+            'limit' => $limit,
+            'search' => $search
         ]);
     }
 
@@ -204,11 +217,17 @@ class ChantierController extends AbstractController
     }
 
     #[Route('/chantiers/export', name: 'app_chantiers_export', methods: ['GET'])]
-    public function export()
+    public function export(Request $request)
     {
         $user = $this->getUser()->getUser();
         $userId = new UserId($user->id);
-        $chantiers = $this->findChantierByUserUseCase->__invoke($userId, 1, 10000); // récupère tout
+        $search = $request->query->get('search', '');
+        
+        if (!empty($search)) {
+            $chantiers = $this->findChantierByUserWithSearchUseCase->__invoke($userId, $search, 1, 10000);
+        } else {
+            $chantiers = $this->findChantierByUserUseCase->__invoke($userId, 1, 10000);
+        }
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();

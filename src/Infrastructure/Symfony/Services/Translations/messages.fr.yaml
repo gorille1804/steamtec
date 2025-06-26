@@ -65,6 +65,11 @@ chantiers:
         machine: "Machines"
         date_creation: "Créé le"
         actions: "Actions"
+        search:
+            placeholder: "Rechercher dans tous les champs..."
+            label: "Rechercher"
+            clear: "Effacer la recherche"
+            info: "Recherche pour :"
   
     form:
         machine_serial:
