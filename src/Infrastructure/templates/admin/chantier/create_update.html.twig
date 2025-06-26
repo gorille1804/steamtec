@@ -14,12 +14,22 @@
                 <div class="card-body">
                     <div class="d-sm-flex justify-content-between align-items-start">
                         <div>
-                            <h4 class="card-title card-title-dash">{{is_edit ? 'chantiers.form.title.update'|trans : 'chantiers.form.title.create'|trans}}  {{'chantiers.form.title.title'|trans}}</h4>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <h4 class="card-title card-title-dash">{{'chantiers.shows.title'|trans}}</h4>
+                            {% else %}
+                                <h4 class="card-title card-title-dash">{{is_edit ? 'chantiers.form.title.update'|trans : 'chantiers.form.title.create'|trans}}  {{'chantiers.form.title.title'|trans}}</h4>
+                            {% endif %}
                         </div>
                         <div>
-                            <a href="{{ path('app_chantiers') }}" class="btn btn-primary btn-sm mb-0 me-0">
-                                <i class="mdi mdi-arrow-left"></i> {{'chantiers.form.submit.cancel'|trans}}
-                            </a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <button type="button" onclick="history.back()" class="btn btn-primary btn-sm mb-0 me-0">
+                                    <i class="mdi mdi-arrow-left"></i> {{'chantiers.form.submit.cancel'|trans}}
+                                </button>
+                            {% else %}
+                                <a href="{{ path('app_chantiers') }}" class="btn btn-primary btn-sm mb-0 me-0">
+                                    <i class="mdi mdi-arrow-left"></i> {{'chantiers.form.submit.cancel'|trans}}
+                                </a>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="mt-4">

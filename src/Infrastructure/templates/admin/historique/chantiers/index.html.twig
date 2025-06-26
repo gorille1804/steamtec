@@ -1,0 +1,203 @@
+{% extends 'layout/dashboard.layout.html.twig' %}
+{% block title %}Historique des chantiers{% endblock %}
+
+{% block content %}
+<style>
+    .search-compact .form-control,
+    .search-compact .btn {
+        height: 32px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        font-size: 0.95rem;
+    }
+    .search-info-compact {
+        height: 32px;
+        display: flex;
+        align-items: center;
+        padding-top: 0;
+        padding-bottom: 0;
+        font-size: 0.95rem;
+    }
+    .input-group .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 0;
+        padding-bottom: 0;
+        height: 32px;
+    }
+    .input-group .btn i {
+        line-height: 1;
+        font-size: 1.1em;
+    }
+</style>
+
+<div class="row flex-grow">
+    <div class="col-md-12">
+        {% 
+            include "components/shared/_alert.html.twig" 
+            with { 'success_messages': app.flashes('success'), 'errors_messages': app.flashes('error') } 
+        %}
+    </div>
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card card-rounded">
+            <div class="card-body">
+                <div class="d-sm-flex justify-content-between align-items-start">
+                    <div>
+                        <h2 class="card-title card-title-dash">Historique des chantiers</h2>
+                        <p class="card-subtitle card-subtitle-dash">Consultez l'historique complet de tous les chantiers</p>
+                    </div>
+                    <div>
+                        <a href="{{ path('app_historique_chantiers_export', {'search': search}) }}" class="btn btn-success btn-md text-white mb-0 me-2" type="button">
+                            <i class="mdi mdi-file-excel"></i> Exporter XLS
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Search Form -->
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <form method="GET" action="{{ path('app_historique_chantiers') }}" class="d-flex search-compact">
+                            <div class="input-group">
+                                <input type="text" 
+                                       class="form-control form-control-sm" 
+                                       name="search" 
+                                       value="{{ search }}" 
+                                       placeholder="Rechercher un chantier..."
+                                       aria-label="Rechercher un chantier">
+                                <button class="btn btn-outline-secondary btn-sm" type="submit">
+                                    <i class="mdi mdi-magnify"></i>
+                                </button>
+                                {% if search %}
+                                    <a href="{{ path('app_historique_chantiers') }}" class="btn btn-outline-danger btn-sm" type="button" title="Effacer la recherche">
+                                        <i class="mdi mdi-close"></i>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+                    {% if search %}
+                        <div class="col-md-6">
+                            <div class="alert alert-info mb-0 search-info-compact">
+                                <i class="mdi mdi-information-outline"></i>
+                                Résultats de recherche pour <strong>"{{ search }}"</strong>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                {% if chantiers is empty %}
+                    <div class="alert alert-info mt-3" role="alert">
+                        <i class="mdi mdi-information-outline"></i>
+                        <strong>Aucun chantier trouvé :</strong> 
+                        {% if search %}
+                            Aucun chantier ne correspond à votre recherche.
+                        {% else %}
+                            Aucun chantier n'a été enregistré dans l'historique.
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div class="table-responsive mt-1">
+                        <table class="table select-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Nom du chantier</th>
+                                    <th>Client</th>
+                                    <th>Machine</th>
+                                    <th>Type de surface</th>
+                                    <th>Matériaux</th>
+                                    <th>Rendement (m²/h)</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for chantier in chantiers %}
+                                    <tr>
+                                        <td class="py-1">
+                                            {{ chantier.chantierDate|date('d/m/Y') }}
+                                        </td>
+                                        <td class="py-1">
+                                            {{ chantier.name }}
+                                        </td>
+                                        <td class="py-1">
+                                            <span class="">
+                                                {{ chantier.user.firstName ~ ' ' ~ chantier.user.lastName }}
+                                            </span>
+                                        </td>
+                                        <td class="py-1">
+                                            {% for machine in chantier.chantierMachines %}
+                                                {% set machine = machine.parcMachine.machine %}
+                                                <span class="badge badge-opacity-primary mb-1" >
+                                                    {{ machine.nom ~ ' | ' ~ machine.numeroIdentification  }}
+                                                </span>
+                                                <br>
+                                            {% endfor %}
+                                        </td>
+                                        <td class="py-1">
+                                            {{ chantier.surfaceTypes }}
+                                        </td>
+                                        <td class="py-1">
+                                            {% for material in chantier.materials %}
+                                                <span class="badge badge-outline-primary mb-1">{{ material }}</span>
+                                            {% else %}
+                                                <span class="text-muted">-</span>
+                                            {% endfor %}
+                                        </td>
+                                        <td class="py-1">
+                                            {{ chantier.rendement }}
+                                        </td>
+                                        <td class="py-1">
+                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                <a href="{{path('app_chantier_show',{'chantier':chantier.id})}}" class="btn btn-info btn-sm" type="button" title="Voir les détails">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    {% if maxPages is defined and maxPages > 1 %}
+                        {% include "components/shared/_pagination.html.twig" with { 'maxPages': maxPages, 'path':'app_historique_chantiers' } %}
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof jQuery !== 'undefined') {
+                // Amélioration de la recherche
+                var searchInput = $('input[name="search"]');
+                var searchForm = searchInput.closest('form');
+                var searchTimeout;
+
+                // Recherche automatique après 500ms d'inactivité
+                searchInput.on('input', function() {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(function() {
+                        searchForm.submit();
+                    }, 500);
+                });
+
+                // Soumission du formulaire avec Entrée
+                searchInput.on('keypress', function(e) {
+                    if (e.which === 13) {
+                        clearTimeout(searchTimeout);
+                        searchForm.submit();
+                    }
+                });
+
+                // Focus automatique sur le champ de recherche
+                searchInput.focus();
+            }
+        });
+    </script>
+{% endblock %} 

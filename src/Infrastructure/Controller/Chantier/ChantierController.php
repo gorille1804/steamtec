@@ -27,6 +27,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\ExpressionLanguage\Expression;
+use Domain\User\Data\ObjectValue\RoleEnum;
 
 #[Route('/dashboard')]
 class ChantierController extends AbstractController
@@ -131,8 +133,8 @@ class ChantierController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function update(Request $request, Chantier $chantier)
     {
-         /** @var SymfonyUserAdapter $user */
-         $user = $this->getUser();
+        /** @var SymfonyUserAdapter $user */
+        $user = $this->getUser();
 
         $chantier = $this->findChantierByIdUseCase->__invoke($chantier->id);
         $updatehantierRequest = new UpdateChantierRequest(); 
@@ -175,30 +177,25 @@ class ChantierController extends AbstractController
     }
 
     #[Route('/chantiers/{chantier}/show', name: 'app_chantier_show', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted(new Expression('is_granted("ROLE_USER") or is_granted("ROLE_ADMIN")'))]
     public function show(Request $request, Chantier $chantier)
     {
         $chantier = $this->findChantierByIdUseCase->__invoke($chantier->id);
-        $parcMachinesChantier = [];
-        foreach ($chantier->chantierMachines as $chantierMachine) {
-            $parcMachinesChantier[] = $chantierMachine->parcMachine;
-        }
-        $machineLogRequest = new CreateMachineLogRequest();
-        $machineLogForm = $this->createForm(MachineLogFormType::class, $machineLogRequest, [
-            'parcMachines' => $parcMachinesChantier
+        // trouver l'utilisateur qui a créé le chantier
+        $user = $chantier->user;
+        $updatehantierRequest = new UpdateChantierRequest(); 
+        $updateRequest = UpdateChantierFactory::makeRequest($chantier, $updatehantierRequest);
+
+        $form = $this->createForm(ChantierFormType::class, $updateRequest, [
+            'is_edit' => true,
+            'data_class' => UpdateChantierRequest::class,
+            'user' => $user
         ]);
-    
-        $machineLogForm->handleRequest($request);
-    
-        if ($machineLogForm->isSubmitted() && $machineLogForm->isValid()) {
-            $this->CreateMachineLogUseCase->__invoke($machineLogForm->getData(), $chantier);
-            $this->addFlash('success', $this->translator->trans('chantiers.messages.create_journal_succes'));
-            return $this->redirectToRoute('app_chantier_show', ['chantier'=>$chantier->id]);
-        }
-    
-        return $this->render('admin/chantier/show.html.twig', [
-            'chantier' => $chantier,
-            'machineLogForm' => $machineLogForm->createView()
+
+        return $this->render('admin/chantier/create_update.html.twig', [
+            'form' => $form->createView(),
+            'is_edit' => true,
+            'errors' => $form->getErrors(true, false)
         ]);
     }
 

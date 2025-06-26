@@ -178,7 +178,9 @@
                                             {# Les entrées de formulaire seront insérées dynamiquement ici #}
                                         </div>
 
-                                        {{ form_widget(machineLogForm.save) }}
+                                        {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN') %}
+                                            {{ form_widget(machineLogForm.save) }}
+                                        {% endif %}
                                         {{ form_end(machineLogForm) }}
                                     </div>
                                 </div>

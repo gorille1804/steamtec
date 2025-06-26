@@ -65,7 +65,7 @@
         <div class="col-md-4">
             <div class="fom-group mb-2">
                 {{ form_label(form.name) }}
-                {{ form_widget(form.name) }}
+                {{ form_widget(form.name, {'attr': {'readonly': is_granted('ROLE_ADMIN') ? 'readonly' : false}}) }}
                 {{ form_errors(form.name) }}
                 {% if form_errors(form.name) %}
                     <div class="invalid-feedback d-block">
@@ -77,14 +77,14 @@
         <div class="col-md-4">
             <div class="fom-group mb-2">
                 {{ form_label(form.chantierDate) }}
-                {{ form_widget(form.chantierDate) }}
+                {{ form_widget(form.chantierDate, {'attr': {'readonly': is_granted('ROLE_ADMIN') ? 'readonly' : false}}) }}
                 {{ form_errors(form.chantierDate) }}
             </div>
         </div>
         <div class="col-md-4">
             <div class="fom-group mb-2">
                 {{ form_label(form.machineSerialNumber) }}
-                {{ form_widget(form.machineSerialNumber) }}
+                {{ form_widget(form.machineSerialNumber, {'attr': {'readonly': is_granted('ROLE_ADMIN') ? 'readonly' : false}}) }}
                 {{ form_errors(form.machineSerialNumber) }}
             </div>
         </div>
@@ -99,7 +99,8 @@
                         {{ form_widget(choice, {
                             attr: {
                                 class: 'btn-check',
-                                autocomplete: 'off'
+                                autocomplete: 'off',
+                                disabled: is_granted('ROLE_ADMIN') ? 'disabled' : false
                             }
                         }) }}
                         <label class="btn btn-primary btn-sm" for="{{ choice.vars.id }}">
@@ -124,7 +125,8 @@
                         {{ form_widget(choice, {
                             attr: {
                                 class: 'btn-check',
-                                autocomplete: 'off'
+                                autocomplete: 'off',
+                                disabled: is_granted('ROLE_ADMIN') ? 'disabled' : false
                             }
                         }) }}
                         <label class="btn btn-primary btn-sm" for="{{ choice.vars.id }}">
@@ -141,7 +143,8 @@
                         {{ form_widget(choice, {
                             attr: {
                                 class: 'btn-check',
-                                autocomplete: 'off'
+                                autocomplete: 'off',
+                                disabled: is_granted('ROLE_ADMIN') ? 'disabled' : false
                             }
                         }) }}
                         <label class="btn btn-primary btn-sm" for="{{ choice.vars.id }}">
@@ -158,34 +161,37 @@
         <div class="col-md-6">
             <div class="fom-group mb-2 col">
                 {{ form_label(form.surface) }}
-                {{ form_widget(form.surface) }}
+                {{ form_widget(form.surface, {'attr': {'readonly': is_granted('ROLE_ADMIN') ? 'readonly' : false}}) }}
                 {{ form_errors(form.surface) }}
             </div>
             <div class="fom-group mb-2 col">
                 {{ form_label(form.duration) }}
-                {{ form_widget(form.duration) }}
+                {{ form_widget(form.duration, {'attr': {'readonly': is_granted('ROLE_ADMIN') ? 'readonly' : false}}) }}
                 {{ form_errors(form.duration) }}
             </div>
             <div class="fom-group mb-2 col">
                 {{ form_label(form.rendement) }}
-                {{ form_widget(form.rendement) }}
+                {{ form_widget(form.rendement, {'attr': {'readonly': is_granted('ROLE_ADMIN') ? 'readonly' : false}}) }}
                 {{ form_errors(form.rendement) }}
             </div>
         </div>
         <div class="col-md-6">
             <div class="fom-group mb-2">
                 {{ form_label(form.commentaire) }}
-                {{ form_widget(form.commentaire) }}
+                {{ form_widget(form.commentaire, {'attr': {'readonly': is_granted('ROLE_ADMIN') ? 'readonly' : false}}) }}
                 {{ form_errors(form.commentaire) }}
             </div>
         </div>
     </div>
 
-    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary w-auto'}}) }}
+    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary w-auto ' ~ (is_granted('ROLE_ADMIN') ? 'd-none' : '')}}) }}
 {{ form_end(form) }}
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Vérifier si l'utilisateur est admin
+    const isAdmin = {{ is_granted('ROLE_ADMIN') ? 'true' : 'false' }};
+    
     const surfaceField = document.querySelector('#{{ form.surface.vars.id }}');
     const durationField = document.querySelector('#{{ form.duration.vars.id }}');
     const rendementField = document.querySelector('#{{ form.rendement.vars.id }}');
@@ -251,7 +257,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 input.id = inputId;
                 input.value = material;
                 input.autocomplete = 'off';
-                input.addEventListener('change', updateHiddenField);
+                // Désactiver les checkboxes pour les admins
+                if (isAdmin) {
+                    input.disabled = true;
+                } else {
+                    input.addEventListener('change', updateHiddenField);
+                }
                 const label = document.createElement('label');
                 label.className = 'btn btn-outline-primary btn-sm';
                 label.setAttribute('for', inputId);
@@ -283,12 +294,15 @@ document.addEventListener('DOMContentLoaded', function() {
         materialsHiddenField.value = JSON.stringify(selectedValues);
     }
     
-    surfaceField.addEventListener('input', calculateRendement);
-    durationField.addEventListener('input', calculateRendement);
-    // Ajoute l'écouteur sur chaque radio
-    Array.from(surfaceTypeRadios).forEach(radio => {
-        radio.addEventListener('change', updateMaterials);
-    });
+    // N'ajouter les écouteurs d'événements que si l'utilisateur n'est pas admin
+    if (!isAdmin) {
+        surfaceField.addEventListener('input', calculateRendement);
+        durationField.addEventListener('input', calculateRendement);
+        // Ajoute l'écouteur sur chaque radio
+        Array.from(surfaceTypeRadios).forEach(radio => {
+            radio.addEventListener('change', updateMaterials);
+        });
+    }
     
     // Calculer le rendement au chargement de la page
     calculateRendement();

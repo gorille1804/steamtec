@@ -9,6 +9,7 @@ use Domain\User\Data\ObjectValue\UserId;
 interface ChantierRepositoryInterface
 {
     public function getAll(): array;
+    public function getAllWithPagination(int $page = 1, int $limit = 10): array;
     public function getTotalChantiers(): int;
     public function findById(ChantierId $id): ?Chantier;
     public function findByUser(UserId $userId, int $page = 1, int $limit = 10): array;
@@ -18,4 +19,6 @@ interface ChantierRepositoryInterface
     public function save(Chantier $chantier): Chantier;
     public function update(Chantier $chantier): Chantier;
     public function delete(Chantier $chantier): void;
+    public function findAllWithSearch(string $search = '', int $page = 1, int $limit = 10): array;
+    public function getTotalWithSearch(string $search = ''): int;
 }
