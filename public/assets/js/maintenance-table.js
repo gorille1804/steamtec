@@ -3,27 +3,27 @@
         "task_mapping": {
             "vidanger_huile_moteur": {
                 "name": "Vidanger l'huile de la pompe *",
-                "pdf_link": "/assets/pdf/maintenance/vidanger_huile_moteur.pdf"
+                "pdf_link": "/public/uploads/documents/E001 Vidange de la pompe.pdf"
             },
             "nettoyer_filtre_air": {
                 "name": "Nettoyer filtre entrée pompe",
-                "pdf_link": "/assets/pdf/maintenance/nettoyer_filtre_air.pdf"
+                "pdf_link": "/public/uploads/documents/E002 Filtre entrée pompe.pdf"
             },
             "graisser_unite_coupe": {
                 "name": "Changer filtre à carburant",
-                "pdf_link": "/assets/pdf/maintenance/graisser_unite_coupe.pdf"
+                "pdf_link": "/public/uploads/documents/E003 Changer le filtre à carburant.pdf"
             },
             "nettoyer_les_ailettes_moteur": {
                 "name": "Nettoyer les buses de diffusion vapeur",
-                "pdf_link": "/assets/pdf/maintenance/nettoyer_les_ailettes_moteur.pdf"
+                "pdf_link": "/public/uploads/documents/E004 Nettoyer les buses.pdf"
             },
             "controler_pneus_roues": {
                 "name": "Changer les joints de flexibles",
-                "pdf_link": "/assets/pdf/maintenance/controler_pneus_roues.pdf"
+                "pdf_link": "/public/uploads/documents/E005 Changer joint Flexible.pdf"
             },
             "faire_un_nettoyage_de_la_bougie": {
                 "name": "Faire un détartrage de la STEAM_Tec",
-                "pdf_link": "/assets/pdf/maintenance/faire_un_nettoyage_de_la_bougie.pdf"
+                "pdf_link": "/public/uploads/documents/E006 Faire un detartrage.pdf"
             }
         },
         "maintenance_schedule": [
@@ -188,13 +188,9 @@
             console.log('Sélecteur utilisé:', `td[data-hours="${log.hours}"][data-task-name="${log.activity}"]`);
 
             if (cell) {
-                console.log('Marquage de la cellule comme complétée');
-
-                // Marquer la cellule comme complétée
                 cell.classList.add('completed-maintenance');
                 cell.classList.remove('clickable-cell');
 
-                // Afficher la date au lieu de l'icône
                 const date = new Date(log.date);
                 const formattedDate = date.toLocaleDateString('fr-FR', {
                     day: '2-digit',
@@ -202,16 +198,15 @@
                     year: 'numeric'
                 });
 
-                cell.innerHTML = `<span class="maintenance-date">${formattedDate}</span>`;
+                cell.innerHTML = `<span class=\"maintenance-date\">${formattedDate}</span>`;
                 cell.title = `Entretien effectué le ${formattedDate}`;
 
                 // Ajouter les informations du log
                 cell.dataset.maintenanceDate = log.date;
                 cell.dataset.maintenanceLogId = log.id;
 
-                console.log('Cellule marquée avec succès');
-            } else {
-                console.log('Cellule non trouvée pour le log:', log);
+                // Toujours permettre le clic pour ouvrir la popup d'édition (après innerHTML)
+                cell.onclick = function () { showMaintenanceModal(cell); };
             }
         });
 
@@ -489,15 +484,9 @@
 
     function showMaintenanceModal(cell) {
         // Vérifier si la cellule est déjà complétée
-        if (cell.classList.contains('completed-maintenance')) {
-            const maintenanceDate = cell.dataset.maintenanceDate;
-            const message = maintenanceDate
-                ? `Cette tâche d'entretien a déjà été effectuée le ${maintenanceDate}`
-                : 'Cette tâche d\'entretien a déjà été effectuée';
-
-            showErrorMessage(message);
-            return;
-        }
+        const maintenanceDate = cell.dataset.maintenanceDate;
+        const maintenanceLogId = cell.dataset.maintenanceLogId;
+        const maintenanceLogHours = cell.dataset.maintenanceLogHours;
 
         const cellHours = cell.dataset.hours;
         const taskKey = cell.dataset.taskKey;
@@ -508,53 +497,61 @@
         const enteredHours = hoursInput ? parseInt(hoursInput.value) : null;
         const hoursValue = enteredHours && !isNaN(enteredHours) ? enteredHours : cellHours;
 
+        let selectedTaskKeys = [];
+        let forceSingleTask = false;
+        let forceHours = hoursValue;
+        let forceDate = null;
+
+        // Si la cellule contient une date (log existant), n'afficher que la tâche du log
+        if (maintenanceDate && maintenanceLogId) {
+            selectedTaskKeys = [taskKey];
+            forceSingleTask = true;
+            forceHours = maintenanceLogHours || hoursValue;
+            forceDate = maintenanceDate.split('T')[0] || maintenanceDate;
+        } else {
+            // Récupérer les tâches déjà faites pour cette machine et cette échéance
+            let alreadyDoneTaskKeys = [];
+            if (existingMaintenanceLogs && selectedMachineId) {
+                alreadyDoneTaskKeys = existingMaintenanceLogs
+                    .filter(log => log.parcMachineId == selectedMachineId && log.hours == hoursValue)
+                    .map(log => {
+                        const key = Object.keys(maintenanceData.task_mapping).find(k => maintenanceData.task_mapping[k].name === log.activity);
+                        return key || log.activity;
+                    });
+            }
+            if (!alreadyDoneTaskKeys.includes(taskKey)) {
+                alreadyDoneTaskKeys.push(taskKey);
+            }
+            selectedTaskKeys = alreadyDoneTaskKeys;
+        }
+
+        // Générer les boutons toggle pour toutes les tâches sélectionnées
+        generateTaskCheckboxes(selectedTaskKeys, forceSingleTask);
+
         // Remplir les champs du modal
         const maintenanceHoursField = document.getElementById('maintenanceHours');
-
-        if (enteredHours && !isNaN(enteredHours)) {
-            maintenanceHoursField.value = enteredHours;
-            maintenanceHoursField.readOnly = true;
-            maintenanceHoursField.style.backgroundColor = '#f8f9fa';
-            maintenanceHoursField.style.color = '#6c757d';
-        } else {
-            maintenanceHoursField.value = cellHours;
+        if (maintenanceHoursField) {
+            maintenanceHoursField.value = forceHours;
             maintenanceHoursField.readOnly = false;
             maintenanceHoursField.style.backgroundColor = '';
             maintenanceHoursField.style.color = '';
         }
-
-        // Définir la date d'aujourd'hui par défaut
-        document.getElementById('maintenanceDate').value = new Date().toISOString().split('T')[0];
-
-        // Récupérer les tâches déjà faites pour cette machine et cette échéance
-        let alreadyDoneTaskKeys = [];
-        if (existingMaintenanceLogs && selectedMachineId) {
-            alreadyDoneTaskKeys = existingMaintenanceLogs
-                .filter(log => log.parcMachineId == selectedMachineId && log.hours == hoursValue)
-                .map(log => {
-                    // Chercher la clé correspondant à l'activité
-                    const key = Object.keys(maintenanceData.task_mapping).find(k => maintenanceData.task_mapping[k].name === log.activity);
-                    return key || log.activity;
-                });
+        const dateInput = document.getElementById('maintenanceDate');
+        if (dateInput) {
+            dateInput.value = forceDate || new Date().toISOString().split('T')[0];
         }
-        // Ajouter la tâche cliquée si elle n'est pas déjà dedans
-        if (!alreadyDoneTaskKeys.includes(taskKey)) {
-            alreadyDoneTaskKeys.push(taskKey);
-        }
-
-        // Générer les boutons toggle pour toutes les tâches sélectionnées
-        generateTaskCheckboxes(alreadyDoneTaskKeys);
 
         // Supprimer les classes d'erreur
         clearValidationErrors();
 
         // Stocker les données actuelles
         currentModalData = {
-            hours: hoursValue,
+            hours: forceHours,
             taskKey: taskKey,
             taskName: taskName,
             rowIndex: cell.dataset.rowIndex,
-            taskIndex: cell.dataset.taskIndex
+            taskIndex: cell.dataset.taskIndex,
+            logId: maintenanceLogId || null
         };
 
         // Afficher le modal
@@ -562,7 +559,7 @@
         modal.show();
     }
 
-    function generateTaskCheckboxes(selectedTaskKeys) {
+    function generateTaskCheckboxes(selectedTaskKeys, forceSingleTask) {
         const container = document.getElementById('maintenanceTasksContainer');
         const taskKeys = Object.keys(maintenanceData.task_mapping);
 
@@ -575,6 +572,9 @@
         btnGroup.setAttribute('aria-label', "Tâches d'entretien");
 
         taskKeys.forEach(taskKey => {
+            // Si on force l'affichage d'une seule tâche (édition d'un log existant), n'afficher que celle-ci
+            if (forceSingleTask && !selectedTaskKeys.includes(taskKey)) return;
+
             const taskName = maintenanceData.task_mapping[taskKey].name;
             const pdfLink = maintenanceData.task_mapping[taskKey].pdf_link;
             const isSelected = Array.isArray(selectedTaskKeys) && selectedTaskKeys.includes(taskKey);
@@ -587,20 +587,22 @@
             button.setAttribute('data-task-name', taskName);
             button.textContent = taskName;
 
-            // Bouton PDF
-            const pdfButton = document.createElement('a');
-            pdfButton.href = pdfLink;
-            pdfButton.target = '_blank';
-            pdfButton.className = 'btn text-danger ps-1';
-            pdfButton.title = 'Voir la documentation PDF';
-            pdfButton.innerHTML = '<i class="mdi mdi-file-pdf-box"></i>';
-
             // Grouper les deux boutons dans un sous-groupe
             const subGroup = document.createElement('div');
             subGroup.className = 'btn-group me-2 mb-2';
             subGroup.setAttribute('role', 'group');
             subGroup.appendChild(button);
-            subGroup.appendChild(pdfButton);
+
+            // Bouton PDF uniquement si pdfLink existe
+            if (pdfLink) {
+                const pdfButton = document.createElement('a');
+                pdfButton.href = pdfLink;
+                pdfButton.target = '_blank';
+                pdfButton.className = 'btn text-danger ps-1';
+                pdfButton.title = 'Voir la documentation PDF';
+                pdfButton.innerHTML = '<i class="mdi mdi-file-pdf-box"></i>';
+                subGroup.appendChild(pdfButton);
+            }
 
             // Appliquer la couleur si sélectionné
             if (isSelected) {
