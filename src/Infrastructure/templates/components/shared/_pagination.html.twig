@@ -3,7 +3,7 @@
         <ul class="pagination">
             {% if currentPage > 1 %}
                 <li class="page-item">
-                    <a class="page-link" href="{{ path(path, app.request.queryString ? app.request.queryString|parse_str|merge({'page': currentPage - 1}) : {'page': currentPage - 1}) }}" aria-label="Précédent">
+                    <a class="page-link" href="{{ path(path, app.request.query.all|merge({'page': currentPage - 1})) }}" aria-label="Précédent">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
@@ -15,13 +15,13 @@
             
             {% for i in 1..maxPages %}
                 <li class="page-item {% if i == currentPage %}active{% endif %}">
-                    <a class="page-link" href="{{ path(path, app.request.queryString ? app.request.queryString|parse_str|merge({'page': i}) : {'page': i}) }}">{{ i }}</a>
+                    <a class="page-link" href="{{ path(path, app.request.query.all|merge({'page': i})) }}">{{ i }}</a>
                 </li>
             {% endfor %}
             
             {% if currentPage < maxPages %}
                 <li class="page-item">
-                    <a class="page-link" href="{{ path(path, app.request.queryString ? app.request.queryString|parse_str|merge({'page': currentPage + 1}) : {'page': currentPage + 1}) }}" aria-label="Suivant">
+                    <a class="page-link" href="{{ path(path, app.request.query.all|merge({'page': currentPage + 1})) }}" aria-label="Suivant">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
