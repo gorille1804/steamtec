@@ -1,12 +1,12 @@
 (function () {
     const maintenanceData = {
         "task_mapping": {
-            "vidanger_huile_moteur": "Vidanger l'huile de la pompe",
-            "nettoyer_filtre_air": "Nettoyer filtre à air",
-            "graisser_unite_coupe": "Graisser unité de coupe",
-            "nettoyer_les_ailettes_moteur": "Nettoyer les ailettes et le moteur",
-            "controler_pneus_roues": "Contrôler pneus et roues",
-            "faire_un_nettoyage_de_la_bougie": "Faire un nettoyage de la bougie"
+            "vidanger_huile_moteur": "Vidanger l'huile de la pompe *",
+            "nettoyer_filtre_air": "Nettoyer filtre entrée pompe",
+            "graisser_unite_coupe": "Changer filtre à carburant",
+            "nettoyer_les_ailettes_moteur": "Nettoyer les buses de diffusion vapeur",
+            "controler_pneus_roues": "Changer les joints de flexibles",
+            "faire_un_nettoyage_de_la_bougie": "Faire un détartrage de la STEAM_Tec"
         },
         "maintenance_schedule": [
             { "heures": "50", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
@@ -55,10 +55,12 @@
     let selectedMachineName = null;
     let currentModalData = null;
     let existingMaintenanceLogs = []; // Nouvelle variable pour stocker les logs existants
+    // Compteur global pour les requêtes AJAX
+    let activeAjaxRequests = 0;
 
     // Fonctions pour le backdrop de chargement
     function showLoadingBackdrop() {
-        // Créer le backdrop s'il n'existe pas
+        activeAjaxRequests++;
         if (!document.getElementById('loadingBackdrop')) {
             const backdrop = document.createElement('div');
             backdrop.id = 'loadingBackdrop';
@@ -73,35 +75,35 @@
             `;
             document.body.appendChild(backdrop);
         }
-
-        // Afficher le backdrop
-        document.getElementById('loadingBackdrop').style.display = 'flex';
+        // Afficher le backdrop seulement si c'est la première requête
+        if (activeAjaxRequests === 1) {
+            document.getElementById('loadingBackdrop').style.display = 'flex';
+        }
     }
 
     function hideLoadingBackdrop() {
-        const backdrop = document.getElementById('loadingBackdrop');
-        if (backdrop) {
-            backdrop.style.display = 'none';
+        activeAjaxRequests = Math.max(0, activeAjaxRequests - 1);
+        if (activeAjaxRequests === 0) {
+            const backdrop = document.getElementById('loadingBackdrop');
+            if (backdrop) {
+                backdrop.style.display = 'none';
+            }
         }
     }
 
     // Fonction pour récupérer les logs d'entretien existants
     async function fetchExistingMaintenanceLogs(machineId) {
         try {
-            // Afficher le backdrop de chargement
             showLoadingBackdrop();
-
             const response = await fetch(`/dashboard/entretiens/maintenance-table/logs?machineId=${machineId}`, {
                 method: 'GET',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
             });
-
             if (response.ok) {
                 const data = await response.json();
                 if (data.success) {
-                    // Stocker les logs dans une variable globale
                     existingMaintenanceLogs = data.logs;
                     console.log('Logs récupérés:', existingMaintenanceLogs);
                 } else {
@@ -113,7 +115,6 @@
         } catch (error) {
             console.error('Erreur lors de la récupération des logs:', error);
         } finally {
-            // Masquer le backdrop de chargement
             hideLoadingBackdrop();
         }
     }
@@ -508,7 +509,7 @@
         // Définir la date d'aujourd'hui par défaut
         document.getElementById('maintenanceDate').value = new Date().toISOString().split('T')[0];
 
-        // Générer les checkboxes pour toutes les tâches
+        // Générer les boutons toggle pour toutes les tâches
         generateTaskCheckboxes(taskKey);
 
         // Supprimer les classes d'erreur
@@ -534,38 +535,44 @@
 
         container.innerHTML = '';
 
+        // Créer un groupe de boutons toggle
+        const btnGroup = document.createElement('div');
+        btnGroup.className = 'btn-group w-100 flex-wrap';
+        btnGroup.setAttribute('role', 'group');
+        btnGroup.setAttribute('aria-label', "Tâches d'entretien");
+
         taskKeys.forEach(taskKey => {
             const taskName = maintenanceData.task_mapping[taskKey];
             const isSelected = taskKey === selectedTaskKey;
 
-            const taskDiv = document.createElement('div');
-            taskDiv.className = 'form-check mb-2';
-            taskDiv.innerHTML = `
-                <input class="form-check-input" type="checkbox" 
-                       id="task_${taskKey}" 
-                       value="${taskKey}" 
-                       data-task-name="${taskName}"
-                       ${isSelected ? 'checked' : ''}>
-                <label class="form-check-label" for="task_${taskKey}">
-                    ${taskName}
-                </label>
-            `;
-
-            container.appendChild(taskDiv);
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'btn btn-outline-primary mb-2 me-2';
+            button.setAttribute('data-task-key', taskKey);
+            button.setAttribute('data-task-name', taskName);
+            button.textContent = taskName;
+            if (isSelected) {
+                button.classList.add('active');
+            }
+            // Toggle l'état actif au clic
+            button.addEventListener('click', function () {
+                button.classList.toggle('active');
+            });
+            btnGroup.appendChild(button);
         });
+
+        container.appendChild(btnGroup);
     }
 
     function getSelectedTasks() {
         const selectedTasks = [];
-        const checkboxes = document.querySelectorAll('#maintenanceTasksContainer input[type="checkbox"]:checked');
-
-        checkboxes.forEach(checkbox => {
+        const buttons = document.querySelectorAll('#maintenanceTasksContainer .btn.active');
+        buttons.forEach(button => {
             selectedTasks.push({
-                key: checkbox.value,
-                name: checkbox.dataset.taskName
+                key: button.getAttribute('data-task-key'),
+                name: button.getAttribute('data-task-name')
             });
         });
-
         return selectedTasks;
     }
 
@@ -641,22 +648,14 @@
             console.error('Aucune donnée de modal disponible');
             return;
         }
-
-        // Validation du formulaire
         if (!validateForm()) {
             return;
         }
-
-        // Vérifier qu'une machine est sélectionnée
         if (!selectedMachineId) {
             showErrorMessage('Veuillez sélectionner une machine avant d\'enregistrer le log d\'entretien');
             return;
         }
-
-        // Afficher le backdrop de chargement
         showLoadingBackdrop();
-
-        // Récupérer les valeurs du formulaire
         const selectedTasks = getSelectedTasks();
         const formData = {
             hours: document.getElementById('maintenanceHours').value,
@@ -668,12 +667,8 @@
             machineId: selectedMachineId,
             machineName: selectedMachineName
         };
-
-        // Sauvegarder les données nécessaires avant de réinitialiser
         const modalRowIndex = currentModalData.rowIndex;
         const modalTaskIndex = currentModalData.taskIndex;
-
-        // Envoyer les données à l'API Symfony
         fetch('/dashboard/entretiens/maintenance-table/log', {
             method: 'POST',
             headers: {
@@ -686,24 +681,14 @@
                 if (response.ok) {
                     const data = await response.json();
                     if (data.success) {
-                        // Fermer le modal
                         const modal = bootstrap.Modal.getInstance(document.getElementById('maintenanceModal'));
                         modal.hide();
-
-                        // Réinitialiser le formulaire
                         clearValidationErrors();
                         currentModalData = null;
-
-                        // Afficher un message de confirmation
                         showSuccessMessage(data.message);
-
-                        // Mettre à jour les logs existants et re-marquer les cellules
                         await fetchExistingMaintenanceLogs(selectedMachineId);
                         markCompletedMaintenanceCells();
-
-                        // Optionnel : sauvegarder aussi en localStorage pour la persistance côté client
                         saveToLocalStorage(formData, data.logIds);
-
                     } else {
                         showErrorMessage(data.message || 'Erreur lors de la sauvegarde');
                     }
@@ -717,7 +702,6 @@
                 showErrorMessage('Erreur de connexion lors de la sauvegarde du log d\'entretien');
             })
             .finally(() => {
-                // Masquer le backdrop de chargement
                 hideLoadingBackdrop();
             });
     }
