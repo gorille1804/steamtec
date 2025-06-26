@@ -32,6 +32,70 @@ class EntretienLogRepository extends ServiceEntityRepository implements Entretie
         return $this->findOneBy(['id' => $id]);
     }
 
+    public function findAll(): array
+    {
+        return $this->createQueryBuilder('el')
+            ->join('el.parcMachine', 'pm')
+            ->join('pm.user', 'u')
+            ->join('pm.machine', 'm')
+            ->orderBy('el.logDate', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllPaginated(int $page, int $limit): array
+    {
+        $offset = ($page - 1) * $limit;
+        
+        return $this->createQueryBuilder('el')
+            ->join('el.parcMachine', 'pm')
+            ->join('pm.user', 'u')
+            ->join('pm.machine', 'm')
+            ->orderBy('el.logDate', 'DESC')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getTotalCount(): int
+    {
+        return $this->createQueryBuilder('el')
+            ->select('COUNT(el.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function findAllWithSearch(string $search, int $page, int $limit): array
+    {
+        $offset = ($page - 1) * $limit;
+        
+        return $this->createQueryBuilder('el')
+            ->join('el.parcMachine', 'pm')
+            ->join('pm.user', 'u')
+            ->join('pm.machine', 'm')
+            ->where('u.firstname LIKE :search OR u.lastname LIKE :search OR m.nom LIKE :search OR m.numeroIdentification LIKE :search OR el.activite LIKE :search')
+            ->setParameter('search', '%' . $search . '%')
+            ->orderBy('el.logDate', 'DESC')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getTotalCountWithSearch(string $search): int
+    {
+        return $this->createQueryBuilder('el')
+            ->select('COUNT(el.id)')
+            ->join('el.parcMachine', 'pm')
+            ->join('pm.user', 'u')
+            ->join('pm.machine', 'm')
+            ->where('u.firstname LIKE :search OR u.lastname LIKE :search OR m.nom LIKE :search OR m.numeroIdentification LIKE :search OR el.activite LIKE :search')
+            ->setParameter('search', '%' . $search . '%')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     public function findAllByUser(User $user): array
     {
         return $this->createQueryBuilder('el')

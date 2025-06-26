@@ -12,6 +12,11 @@ interface EntretienLogRepositoryInterface
 {
     public function save(EntretienLog $entretienLog): EntretienLog;
     public function findById(EntretienLogId $id): ?EntretienLog;
+    public function findAll(): array;
+    public function findAllPaginated(int $page, int $limit): array;
+    public function findAllWithSearch(string $search, int $page, int $limit): array;
+    public function getTotalCount(): int;
+    public function getTotalCountWithSearch(string $search): int;
     public function findAllByUser(User $user): array;
     public function findAllByMachine(Machine $machine): array;
     public function findAllByUserAndMachine(User $user, Machine $machine): array;

@@ -33,16 +33,30 @@ class HistoriqueController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function entretiens(Request $request): Response
     {
-        /** @var SymfonyUserAdapter $user */
-        $user = $this->getUser();
-        $currentUser = $this->findUserByIdUseCase->__invoke(new UserId($user->getId()));
+        $page = $request->query->getInt('page', 1);
+        $limit = 30;
+        $search = $request->query->get('search', '');
         
-        // Récupérer tous les logs d'entretien de l'utilisateur
-        $entretienLogs = $this->entretienLogRepository->findAllByUser($currentUser);
+        if (!empty($search)) {
+            // Utiliser le service de recherche
+            $entretienLogs = $this->entretienLogRepository->findAllWithSearch($search, $page, $limit);
+            $total = $this->entretienLogRepository->getTotalCountWithSearch($search);
+        } else {
+            // Récupérer tous les logs d'entretien de tous les utilisateurs avec pagination
+            $entretienLogs = $this->entretienLogRepository->findAllPaginated($page, $limit);
+            $total = $this->entretienLogRepository->getTotalCount();
+        }
+        
+        $maxPages = ceil($total / $limit);
         
         return $this->render('admin/historique/entretiens/index.html.twig', [
             'title' => 'Historique des entretiens',
             'entretienLogs' => $entretienLogs,
+            'currentPage' => $page,
+            'maxPages' => $maxPages,
+            'limit' => $limit,
+            'total' => $total,
+            'search' => $search
         ]);
     }
 
@@ -148,6 +162,63 @@ class HistoriqueController extends AbstractController
         });
 
         $filename = 'historique_chantiers_' . date('Ymd_His') . '.xlsx';
+        $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $response->headers->set('Content-Disposition', 'attachment;filename="' . $filename . '"');
+        $response->headers->set('Cache-Control', 'max-age=0');
+
+        return $response;
+    }
+
+    #[Route('/historique/entretiens/export', name: 'app_historique_entretiens_export', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function exportEntretiens(Request $request): StreamedResponse
+    {
+        $search = $request->query->get('search', '');
+        
+        if (!empty($search)) {
+            $entretienLogs = $this->entretienLogRepository->findAllWithSearch($search, 1, 10000);
+        } else {
+            $entretienLogs = $this->entretienLogRepository->findAllPaginated(1, 10000);
+        }
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->fromArray([
+            [
+                'Date',
+                'Utilisateur',
+                'Machine',
+                'Numéro d\'identification',
+                'Volume horaire',
+                'Activité',
+                'Créé le'
+            ]
+        ], null, 'A1');
+
+        $row = 2;
+        foreach ($entretienLogs as $log) {
+            $parcMachine = $log->getParcMachine();
+            $user = $parcMachine->getUser();
+            $machine = $parcMachine->getMachine();
+            
+            $sheet->fromArray([
+                $log->getLogDate()->format('d/m/Y'),
+                $user->getFirstname() . ' ' . $user->getLastname(),
+                $machine->getNom(),
+                $machine->getNumeroIdentification(),
+                $log->getVolumeHoraire() . 'h',
+                $log->getActivite(),
+                $log->getCreatedAt()->format('d/m/Y H:i')
+            ], null, 'A' . $row);
+            $row++;
+        }
+
+        $response = new StreamedResponse(function() use ($spreadsheet) {
+            $writer = new Xlsx($spreadsheet);
+            $writer->save('php://output');
+        });
+
+        $filename = 'historique_entretiens_' . date('Ymd_His') . '.xlsx';
         $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         $response->headers->set('Content-Disposition', 'attachment;filename="' . $filename . '"');
         $response->headers->set('Cache-Control', 'max-age=0');
