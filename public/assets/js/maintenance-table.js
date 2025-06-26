@@ -1,12 +1,30 @@
 (function () {
     const maintenanceData = {
         "task_mapping": {
-            "vidanger_huile_moteur": "Vidanger l'huile de la pompe *",
-            "nettoyer_filtre_air": "Nettoyer filtre entrée pompe",
-            "graisser_unite_coupe": "Changer filtre à carburant",
-            "nettoyer_les_ailettes_moteur": "Nettoyer les buses de diffusion vapeur",
-            "controler_pneus_roues": "Changer les joints de flexibles",
-            "faire_un_nettoyage_de_la_bougie": "Faire un détartrage de la STEAM_Tec"
+            "vidanger_huile_moteur": {
+                "name": "Vidanger l'huile de la pompe *",
+                "pdf_link": "/assets/pdf/maintenance/vidanger_huile_moteur.pdf"
+            },
+            "nettoyer_filtre_air": {
+                "name": "Nettoyer filtre entrée pompe",
+                "pdf_link": "/assets/pdf/maintenance/nettoyer_filtre_air.pdf"
+            },
+            "graisser_unite_coupe": {
+                "name": "Changer filtre à carburant",
+                "pdf_link": "/assets/pdf/maintenance/graisser_unite_coupe.pdf"
+            },
+            "nettoyer_les_ailettes_moteur": {
+                "name": "Nettoyer les buses de diffusion vapeur",
+                "pdf_link": "/assets/pdf/maintenance/nettoyer_les_ailettes_moteur.pdf"
+            },
+            "controler_pneus_roues": {
+                "name": "Changer les joints de flexibles",
+                "pdf_link": "/assets/pdf/maintenance/controler_pneus_roues.pdf"
+            },
+            "faire_un_nettoyage_de_la_bougie": {
+                "name": "Faire un détartrage de la STEAM_Tec",
+                "pdf_link": "/assets/pdf/maintenance/faire_un_nettoyage_de_la_bougie.pdf"
+            }
         },
         "maintenance_schedule": [
             { "heures": "50", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
@@ -149,7 +167,7 @@
             if (!cell) {
                 // Trouver la clé correspondante au nom
                 const taskKey = Object.keys(maintenanceData.task_mapping).find(key =>
-                    maintenanceData.task_mapping[key] === log.activity
+                    maintenanceData.task_mapping[key].name === log.activity
                 );
 
                 if (taskKey) {
@@ -345,7 +363,7 @@
                 // Ajouter des attributs pour identifier la cellule
                 td.dataset.hours = row.heures;
                 td.dataset.taskKey = taskKey;
-                td.dataset.taskName = maintenanceData.task_mapping[taskKey];
+                td.dataset.taskName = maintenanceData.task_mapping[taskKey].name;
                 td.dataset.rowIndex = index;
                 td.dataset.taskIndex = taskIndex;
 
@@ -431,7 +449,7 @@
                 );
 
                 const taskNames = requiredTasks.map(taskKey =>
-                    maintenanceData.task_mapping[taskKey]
+                    maintenanceData.task_mapping[taskKey].name
                 );
 
                 let infoText = `Entretien prévu à ${scheduleHours}h`;
@@ -488,18 +506,17 @@
         // Vérifier si des heures sont saisies dans la zone de texte
         const hoursInput = document.getElementById('machineHours');
         const enteredHours = hoursInput ? parseInt(hoursInput.value) : null;
+        const hoursValue = enteredHours && !isNaN(enteredHours) ? enteredHours : cellHours;
 
         // Remplir les champs du modal
         const maintenanceHoursField = document.getElementById('maintenanceHours');
 
         if (enteredHours && !isNaN(enteredHours)) {
-            // Si des heures sont saisies, utiliser ces heures et rendre le champ en lecture seule
             maintenanceHoursField.value = enteredHours;
             maintenanceHoursField.readOnly = true;
             maintenanceHoursField.style.backgroundColor = '#f8f9fa';
             maintenanceHoursField.style.color = '#6c757d';
         } else {
-            // Sinon, utiliser les heures de la cellule et rendre le champ modifiable
             maintenanceHoursField.value = cellHours;
             maintenanceHoursField.readOnly = false;
             maintenanceHoursField.style.backgroundColor = '';
@@ -509,15 +526,31 @@
         // Définir la date d'aujourd'hui par défaut
         document.getElementById('maintenanceDate').value = new Date().toISOString().split('T')[0];
 
-        // Générer les boutons toggle pour toutes les tâches
-        generateTaskCheckboxes(taskKey);
+        // Récupérer les tâches déjà faites pour cette machine et cette échéance
+        let alreadyDoneTaskKeys = [];
+        if (existingMaintenanceLogs && selectedMachineId) {
+            alreadyDoneTaskKeys = existingMaintenanceLogs
+                .filter(log => log.parcMachineId == selectedMachineId && log.hours == hoursValue)
+                .map(log => {
+                    // Chercher la clé correspondant à l'activité
+                    const key = Object.keys(maintenanceData.task_mapping).find(k => maintenanceData.task_mapping[k].name === log.activity);
+                    return key || log.activity;
+                });
+        }
+        // Ajouter la tâche cliquée si elle n'est pas déjà dedans
+        if (!alreadyDoneTaskKeys.includes(taskKey)) {
+            alreadyDoneTaskKeys.push(taskKey);
+        }
+
+        // Générer les boutons toggle pour toutes les tâches sélectionnées
+        generateTaskCheckboxes(alreadyDoneTaskKeys);
 
         // Supprimer les classes d'erreur
         clearValidationErrors();
 
         // Stocker les données actuelles
         currentModalData = {
-            hours: enteredHours && !isNaN(enteredHours) ? enteredHours : cellHours,
+            hours: hoursValue,
             taskKey: taskKey,
             taskName: taskName,
             rowIndex: cell.dataset.rowIndex,
@@ -529,36 +562,59 @@
         modal.show();
     }
 
-    function generateTaskCheckboxes(selectedTaskKey) {
+    function generateTaskCheckboxes(selectedTaskKeys) {
         const container = document.getElementById('maintenanceTasksContainer');
         const taskKeys = Object.keys(maintenanceData.task_mapping);
 
         container.innerHTML = '';
 
-        // Créer un groupe de boutons toggle
+        // Créer un groupe de boutons toggle avec bordure visible
         const btnGroup = document.createElement('div');
-        btnGroup.className = 'btn-group w-100 flex-wrap';
+        btnGroup.className = 'btn-group w-100 flex-wrap border border-2 rounded border-primary p-1 mb-2';
         btnGroup.setAttribute('role', 'group');
         btnGroup.setAttribute('aria-label', "Tâches d'entretien");
 
         taskKeys.forEach(taskKey => {
-            const taskName = maintenanceData.task_mapping[taskKey];
-            const isSelected = taskKey === selectedTaskKey;
+            const taskName = maintenanceData.task_mapping[taskKey].name;
+            const pdfLink = maintenanceData.task_mapping[taskKey].pdf_link;
+            const isSelected = Array.isArray(selectedTaskKeys) && selectedTaskKeys.includes(taskKey);
 
+            // Bouton de tâche
             const button = document.createElement('button');
             button.type = 'button';
-            button.className = 'btn btn-outline-primary mb-2 me-2';
+            button.className = 'btn border-0 pe-1';
             button.setAttribute('data-task-key', taskKey);
             button.setAttribute('data-task-name', taskName);
             button.textContent = taskName;
+
+            // Bouton PDF
+            const pdfButton = document.createElement('a');
+            pdfButton.href = pdfLink;
+            pdfButton.target = '_blank';
+            pdfButton.className = 'btn text-danger ps-1';
+            pdfButton.title = 'Voir la documentation PDF';
+            pdfButton.innerHTML = '<i class="mdi mdi-file-pdf-box"></i>';
+
+            // Grouper les deux boutons dans un sous-groupe
+            const subGroup = document.createElement('div');
+            subGroup.className = 'btn-group me-2 mb-2';
+            subGroup.setAttribute('role', 'group');
+            subGroup.appendChild(button);
+            subGroup.appendChild(pdfButton);
+
+            // Appliquer la couleur si sélectionné
             if (isSelected) {
-                button.classList.add('active');
+                subGroup.classList.add('bg-primary', 'text-white');
+                button.classList.add('text-white', 'active');
             }
-            // Toggle l'état actif au clic
             button.addEventListener('click', function () {
+                subGroup.classList.toggle('bg-primary');
+                subGroup.classList.toggle('text-white');
+                button.classList.toggle('text-white');
                 button.classList.toggle('active');
             });
-            btnGroup.appendChild(button);
+
+            btnGroup.appendChild(subGroup);
         });
 
         container.appendChild(btnGroup);
