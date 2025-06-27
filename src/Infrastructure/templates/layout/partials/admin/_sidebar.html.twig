@@ -1,0 +1,132 @@
+<ul class="nav">
+
+    <li class="nav-item nav-category">GESTIONS</li>
+    {% if is_granted('ROLE_ADMIN') %}
+    <li class="nav-item">
+        <a class="nav-link" href="{{path('app_dashboard')}}">
+            <i class="mdi mdi-grid-large menu-icon"></i>
+             <span class="menu-title">Dashboard</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link"  href="{{path('app_users')}}" aria-expanded="false" aria-controls="ui-basic">
+            <i class="menu-icon mdi mdi-account-group"></i>
+            <span class="menu-title">Utilisateurs</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{path('app_machines')}}" aria-expanded="false" aria-controls="form-elements">
+            <i class="menu-icon mdi mdi-tractor"></i>
+            <span class="menu-title">Machines</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="collapse" href="#historique" aria-expanded="false" aria-controls="historique">
+            <i class="menu-icon mdi mdi-history"></i>
+            <span class="menu-title">Historique</span>
+            <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="historique">
+            <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('app_historique_entretiens')}}">
+                        <i class="menu-icon mdi mdi-wrench"></i>
+                        <span class="menu-title">Entretiens</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('app_historique_chantiers')}}">
+                        <i class="menu-icon mdi mdi-road-variant"></i>
+                        <span class="menu-title">Chantiers</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+     <li class="nav-item">
+        <a class="nav-link" href="{{path('app_faqs')}}" aria-expanded="false" aria-controls="form-elements">
+            <i class="menu-icon mdi mdi-text"></i>
+            <span class="menu-title">FAQ</span>
+        </a>
+    </li>
+    {% endif %}
+    
+    {% if is_granted('ROLE_USER') %}
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="collapse" href="#documents" aria-expanded="false" aria-controls="documents">
+            <i class="menu-icon mdi mdi-folder-multiple"></i>
+            <span class="menu-title">Documents</span>
+            <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="documents">
+            <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('app_documents_manuels')}}">
+                        <i class="menu-icon mdi mdi-book-open-outline"></i>
+                        <span class="menu-title">Manuels</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('app_documents_guides')}}">
+                        <i class="menu-icon mdi mdi-book-open"></i>
+                        <span class="menu-title">Guides</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="collapse" href="#entretiens" aria-expanded="false" aria-controls="entretiens">
+            <i class="menu-icon mdi mdi-wrench"></i>
+            <span class="menu-title">Entretiens</span>
+            <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="entretiens">
+            <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('app_entretiens_quotidien')}}">
+                        <i class="menu-icon mdi mdi-post"></i>
+                        <span class="menu-title">Activités</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('app_entretiens_regulier')}}">
+                        <i class="menu-icon mdi mdi-application-cog-outline"></i>
+                        <span class="menu-title">Entretien régulier</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('app_entretiens_ponctuel')}}">
+                        <i class="menu-icon mdi mdi-application-cog"></i>
+                        <span class="menu-title">Entretien ponctuel</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('app_entretiens_aides')}}">
+                        <i class="menu-icon mdi mdi-timeline-question"></i>
+                        <span class="menu-title">Aides</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{path('app_parc_machines')}}" aria-controls="form-elements">
+            <i class="menu-icon mdi mdi-desktop-tower"></i>
+            <span class="menu-title">Parc machines</span>
+        </a>
+    </li>
+     <li class="nav-item">
+        <a class="nav-link" href="{{path('app_chantiers')}}" aria-controls="form-elements">
+            <i class="menu-icon mdi mdi-road-variant"></i>
+            <span class="menu-title">Chantier</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{path('app_arbre_de_depannage')}}" aria-controls="form-elements">
+            <i class="menu-icon mdi mdi-file-tree"></i>
+            <span class="menu-title">Dépannage</span>
+        </a>
+    </li>
+    {% endif %}
+</ul>

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>{{ 'chantiers.maintenance_notification_mail.subject'|trans }}</title>
+</head>
+<body>
+    <p>{{ 'chantiers.maintenance_notification_mail.hello'|trans ({'{first_name}': user.getFirstName()}) }}</p>
+    <p>{{ content|nl2br }}</p>
+</body>
+</html>

@@ -1,0 +1,41 @@
+.btn-theme{
+    border-radius: 64px;
+    padding: 8px 24px;
+    border: 1px solid $theme;
+    font-family: "Roboto";
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: $theme;
+    margin-bottom: 16px;
+    transition: .3s;
+    &:hover{
+        background-color: $theme;
+        color: #fff;
+    }
+}
+.btn-theme-primary{
+    background-color: $theme;
+    color: #fff;
+    border-radius: 64px;
+    padding: 8px 24px;
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 16px;
+    transition: .3s;
+    border: 1px solid $theme;
+    &.icone{
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+    &:hover{
+        background-color: #fff;
+        color: $theme;
+        path{
+            stroke: $theme;
+        }
+    }
+}

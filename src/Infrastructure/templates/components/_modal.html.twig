@@ -1,0 +1,21 @@
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteConfirmationModalLabel">{{'components.modal.suppr_confirm_title'|trans}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{{'components.modal.suppr_confirm_text'|trans}}  {{context}} <span id="name"></span> ?</p>
+                    <p class="text-danger">{{'components.modal.suppr_confirm_message'|trans}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'form.button.cancel'|trans}}</button>
+                    <form id="deleteForm" method="POST" action="" style="display: inline;">
+                        <input type="hidden" name="_token" id="csrfToken" value="">
+                        <button type="submit" class="btn btn-danger">{{'form.button.delete'|trans}}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+</div>

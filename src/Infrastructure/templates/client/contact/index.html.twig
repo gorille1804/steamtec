@@ -1,0 +1,134 @@
+{% extends "layout/frontend.layout.html.twig" %}
+{% block content %}
+	<div class="content_page_contact">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 content_contact_droite">
+					<h2>Vous avez des questions<br/>
+						ou avez besoin d'aide ?</h2>
+					<div class="row">
+						<div class="col-md-6 content_info_contact">
+							<div class="content_icone">
+								<svg xmlns="http://www.w3.org/2000/svg" width="32" height="26" viewbox="0 0 32 26" fill="none">
+									<path d="M29.3334 5C29.3334 3.53333 28.1334 2.33333 26.6667 2.33333H5.33335C3.86669 2.33333 2.66669 3.53333 2.66669 5M29.3334 5V21C29.3334 22.4667 28.1334 23.6667 26.6667 23.6667H5.33335C3.86669 23.6667 2.66669 22.4667 2.66669 21V5M29.3334 5L16 14.3333L2.66669 5" stroke="#F5F6FB" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+								</svg>
+							</div>
+							<h3>Email</h3>
+							<p>Écrivez-nous à tout moment</p>
+							<p>
+								<a href="mailto:contact@steamtec.fr">contact@steamtec.fr</a>
+							</p>
+						</div>
+						<div class="col-md-6 content_info_contact">
+							<div class="content_icone">
+								<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewbox="0 0 32 32" fill="none">
+									<path d="M29.3333 22.56V26.56C29.3349 26.9313 29.2588 27.2989 29.11 27.6391C28.9613 27.9794 28.7431 28.2848 28.4695 28.5358C28.1958 28.7869 27.8728 28.978 27.521 29.0969C27.1692 29.2159 26.7965 29.2601 26.4267 29.2267C22.3238 28.7809 18.3827 27.3789 14.92 25.1333C11.6985 23.0862 8.96713 20.3549 6.92001 17.1333C4.66665 13.6549 3.26434 9.69466 2.82668 5.57333C2.79336 5.20462 2.83718 4.83301 2.95535 4.48217C3.07351 4.13132 3.26344 3.80892 3.51303 3.5355C3.76263 3.26207 4.06642 3.04361 4.40507 2.89403C4.74372 2.74445 5.1098 2.66702 5.48001 2.66667H9.48001C10.1271 2.6603 10.7544 2.88944 11.245 3.31138C11.7357 3.73332 12.0561 4.31926 12.1467 4.96C12.3155 6.24009 12.6286 7.49697 13.08 8.70667C13.2594 9.1839 13.2982 9.70255 13.1919 10.2012C13.0855 10.6998 12.8385 11.1575 12.48 11.52L10.7867 13.2133C12.6848 16.5514 15.4486 19.3153 18.7867 21.2133L20.48 19.52C20.8425 19.1615 21.3002 18.9145 21.7988 18.8081C22.2975 18.7018 22.8161 18.7406 23.2933 18.92C24.503 19.3714 25.7599 19.6845 27.04 19.8533C27.6877 19.9447 28.2792 20.2709 28.7021 20.77C29.1249 21.269 29.3496 21.9061 29.3333 22.56Z" stroke="#F5F6FB" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+								</svg>
+							</div>
+							<h3>Téléphone</h3>
+							<p>Appelez-nous pour plus d'infos</p>
+							<p class="phone">
+								<a href="tel:0329091578">03 29 09 15 78</a>
+								-
+								<a href="tel:0686716696">06 86 71 66 96</a>
+							</p>
+						</div>
+						<div class="col-md-6 content_info_contact">
+							<div class="content_icone">
+								<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewbox="0 0 32 32" fill="none">
+									<path d="M16 8V16L21.3334 18.6667M29.3334 16C29.3334 23.3638 23.3638 29.3333 16 29.3333C8.63622 29.3333 2.66669 23.3638 2.66669 16C2.66669 8.6362 8.63622 2.66666 16 2.66666C23.3638 2.66666 29.3334 8.6362 29.3334 16Z" stroke="#F5F6FB" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+								</svg>
+							</div>
+							<h3>Heures d'ouverture</h3>
+							<p>Lundi - Vendredi : 8h30 - 18h00</p>
+						</div>
+						<div class="col-md-6 content_info_contact">
+							<div class="content_icone">
+								<svg xmlns="http://www.w3.org/2000/svg" width="28" height="32" viewbox="0 0 28 32" fill="none">
+									<path d="M26 13.3333C26 22.6667 14 30.6667 14 30.6667C14 30.6667 2 22.6667 2 13.3333C2 10.1507 3.26428 7.09849 5.51472 4.84805C7.76516 2.59762 10.8174 1.33334 14 1.33334C17.1826 1.33334 20.2348 2.59762 22.4853 4.84805C24.7357 7.09849 26 10.1507 26 13.3333Z" stroke="#F5F6FB" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+									<path d="M14 17.3333C16.2091 17.3333 18 15.5425 18 13.3333C18 11.1242 16.2091 9.33334 14 9.33334C11.7909 9.33334 10 11.1242 10 13.3333C10 15.5425 11.7909 17.3333 14 17.3333Z" stroke="#F5F6FB" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+								</svg>
+							</div>
+							<h3>ENTECH sarl</h3>
+							<p>ZA du Moulin 88140 Bulgnéville, France</p>
+						</div>
+					</div>
+					<div class="content_map">
+						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2658.579434980714!2d5.8231773753240725!3d48.21471614578925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47933654ee055e49%3A0xa28a7cd350d263fe!2sZA%20du%20Moulin%2C%2088140%20Bulgn%C3%A9ville%2C%20France!5e0!3m2!1sen!2smg!4v1741873816062!5m2!1sen!2smg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+					</div>
+				</div>
+				<div class="col-md-6 content_contact_gauche">
+					<div class="content_formulaire_contact">
+						<h2>Laissez-nous un message</h2>
+						{{ form_start(form) }}
+						<fieldset class="row">
+							<div class="col-md-6">{{ form_row(form.nom) }}</div>
+							<div class="col-md-6">{{ form_row(form.prenom) }}</div>
+						</fieldset>
+						<fieldset class="row">
+							<div class="col-md-12">{{ form_row(form.societe) }}</div>
+						</fieldset>
+						<fieldset class="row">
+							<div class="col-md-12">{{ form_row(form.email) }}</div>
+						</fieldset>
+						<fieldset class="row">
+							<div class="col-md-12">
+								{{ form_row(form.phone) }}
+								{% if form_errors(form.phone) %}
+									<div class="invalid-feedback d-block">
+										{{ form_errors(form.phone) }}
+									</div>
+								{% endif %}
+							</div>
+						</fieldset>
+						<fieldset class="row">
+							<div class="col-md-12">{{ form_row(form.message) }}</div>
+						</fieldset>
+						<fieldset class="d-flex justify-content-center">
+							<div class="col-md-12">{{ form_row(form.submit) }}</div>
+						</fieldset>
+						<div class="d-none">
+							{{ form_row(form.type) }}
+						</div>
+						{{ form_end(form) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		const form = document.querySelector('form[name="contact"]'); // adapte le name si besoin
+		if (!form) return;
+		const phoneInput = form.querySelector('input[name$="[phone]"]');
+		const errorDivId = 'phone-error-message';
+
+		form.addEventListener('submit', function (e) {
+			// Supprime l'ancien message d'erreur s'il existe
+			let oldError = document.getElementById(errorDivId);
+			if (oldError) oldError.remove();
+
+			const phoneValue = phoneInput.value.trim();
+			const phonePattern = /^\+?[0-9\s\-\(\)]+$/;
+
+			if (phoneValue.length > 0 && !phonePattern.test(phoneValue)) {
+				e.preventDefault();
+
+				// Crée le message d'erreur
+				const errorDiv = document.createElement('div');
+				errorDiv.id = errorDivId;
+				errorDiv.className = 'invalid-feedback d-block';
+				errorDiv.textContent = 'Veuillez renseigner un numéro de téléphone valide.';
+
+				// Ajoute le message juste après le champ téléphone
+				phoneInput.parentNode.appendChild(errorDiv);
+
+				// Ajoute la classe Bootstrap d'erreur
+				phoneInput.classList.add('is-invalid');
+			} else {
+				phoneInput.classList.remove('is-invalid');
+			}
+		});
+	});
+	</script>
+{% endblock %}

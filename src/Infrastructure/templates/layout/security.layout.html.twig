@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steamtec</title>
+    {% if app.request.headers.get('User-Agent') matches '/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i' %}
+        <link rel="manifest" href="{{ asset('manifest.json') }}">
+    {% endif %}
+    <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">  
+    <link rel="stylesheet" href="{{ asset('assets/plugins/jquery/jquery-ui.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/plugins/jquery/jquery-ui.theme.min.css') }}"/>
+    <link rel="stylesheet" href="{{asset('assets/css/security.css')}}">
+    {% block stylesheets %}
+      {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+</head>
+<body>
+    <div class="d-flex align-items-center justify-content-center">
+        <div class="container security-container">
+            <div class="row login-container mx-auto" style="max-width: 900px;">
+                <div class="col-md-6 gradient-left">
+                    Welcome Back!
+                </div>
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+    <script src="{{ asset('assets/plugins/bootstrap/js/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jquery/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jquery/jquery-ui.min.js') }}"></script>
+    {% block script %}
+      {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</body>
+</html>

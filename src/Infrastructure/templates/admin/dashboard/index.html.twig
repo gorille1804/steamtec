@@ -1,0 +1,206 @@
+{% extends "layout/dashboard.layout.html.twig" %}
+{% block title %} dashboard{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+        <div class="home-tab">
+            <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active ps-0" id="home-tab" data-bs-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Vue d'ensemble</a>
+                </li>
+            </ul>
+            <div>
+                <div class="btn-wrapper">
+                     <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Export</a>
+                </div>
+            </div>
+            </div>
+            <div class="tab-content tab-content-basic">
+            <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
+               {% if is_granted('ROLE_ADMIN') %}
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4 grid-margin stretch-card">
+                            <div class="card bg-primary card-rounded">
+                                <div class="card-body pb-0">
+                                    <a href="{{path('app_users')}}" class="deco-none">
+                                        <h4 class="card-title card-title-dash text-white mb-4">Nombre des utilisateurs</h4>
+                                    </a>
+                                    <div class="row">
+                                    <div class="col-sm-4">
+                                        <p class="status-summary-ight-white mb-1">valeur exacte</p>
+                                        <h2 class="text-info">{{dahsboradData.usersCount}}</h2>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="status-summary-chart-wrapper pb-4">
+                                        <canvas id="status-summary"></canvas>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-lg-8 d-flex flex-column">
+                            <div class="row flex-grow">
+                                <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card">
+                                <div class="card card-rounded">
+                                    <div class="card-body">
+                                    <div class="d-sm-flex justify-content-between align-items-start">
+                                        <div>
+                                            <h4 class="card-title card-title-dash">Nombre d'utilisateurs inscrits au fil du temps</h4>
+                                            <h5 class="card-subtitle card-subtitle-dash">Évolution des inscriptions depuis le début</h5>
+                                        </div>
+                                        <div id="performanceLine-legend"></div>
+                                    </div>
+                                    <div class="chartjs-wrapper mt-4">
+                                        <canvas id="performanceLine" width=""></canvas>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4 grid-margin stretch-card">
+                            <div class="card bg-primary card-rounded">
+                                <div class="card-body pb-0">
+                                    <a href="{{path('app_machines')}}" class="deco-none">
+                                        <h4 class="card-title card-title-dash text-white mb-4">Nombre des machines</h4>
+                                    </a>
+                                    <div class="row">
+                                    <div class="col-sm-4">
+                                        <p class="status-summary-ight-white mb-1">valeur exacte</p>
+                                        <h2 class="text-info">{{dahsboradData.machinesCount}}</h2>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="status-summary-chart-wrapper pb-4">
+                                        <canvas id="status-summary"></canvas>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-lg-8 d-flex flex-column">
+                            <div class="row flex-grow">
+                                <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card">
+                                <div class="card card-rounded">
+                                    <div class="card-body">
+                                    <div class="d-sm-flex justify-content-between align-items-start">
+                                        <div>
+                                            <h4 class="card-title card-title-dash">Nombre de machine créer au fil du temps</h4>
+                                            <h5 class="card-subtitle card-subtitle-dash">Évolution d'enregistation depuis le début</h5>
+                                        </div>
+                                        <div id="performanceLineMachine-legend"></div>
+                                    </div>
+                                    <div class="chartjs-wrapper mt-4">
+                                        <canvas id="performanceLineMachine" width=""></canvas>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                {% endif %}
+                {% if is_granted('ROLE_USER') %}
+                     <div class="row">
+                        <div class="col-md-6 col-lg-4 grid-margin stretch-card">
+                            <div class="card bg-primary card-rounded">
+                            <div class="card-body pb-0">
+                                <h4 class="card-title card-title-dash text-white mb-4">Nombre des machines</h4>
+                                <div class="row">
+                                <div class="col-sm-4">
+                                    <p class="status-summary-ight-white mb-1">valeur exacte</p>
+                                    <h2 class="text-info">{{dahsboradData.parcsCount}}</h2>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="status-summary-chart-wrapper pb-4">
+                                    <canvas id="status-summary"></canvas>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                         <div class="col-lg-6 col-lg-8 d-flex flex-column">
+                            <div class="row flex-grow">
+                                <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card">
+                                <div class="card card-rounded">
+                                    <div class="card-body">
+                                    <div class="d-sm-flex justify-content-between align-items-start">
+                                        <div>
+                                            <h4 class="card-title card-title-dash">Nombre parc machine crééer  au fil du temps</h4>
+                                            <h5 class="card-subtitle card-subtitle-dash">Évolution des création depuis le début</h5>
+                                        </div>
+                                        <div id="performanceLineParc-legend"></div>
+                                    </div>
+                                    <div class="chartjs-wrapper mt-4">
+                                        <canvas id="performanceLineParc" width=""></canvas>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% for parc in dahsboradData.parcs %}
+                            {% set parcLenght = dahsboradData.parcs|length %}
+                            <div class="col-md-{{parcLenght == 1 ? "12" : parcLenght == 2 ? "6" : "3"  }} col-lg-{{parcLenght == 1 ? "12" : parcLenght == 2 ? "6" : "4"  }} grid-margin stretch-card">
+                                <div class="card bg-primary card-rounded">
+                                    <div class="card-body pb-0">
+                                        <h4 class="card-title card-title-dash text-white mb-4">{{parc.machine.nom ~ " " ~ parc.machine.numeroIdentification}}</h4>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <p class="status-summary-ight-white mb-1">Heure total</p>
+                                                <h2 class="text-info">{{parc.tempUsage}}</h2>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p class="status-summary-ight-white mb-1">Heure en cours</p>
+                                                <h2 class="text-info">{{parc.currentHourUse}}</h2>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p class="status-summary-ight-white mb-1">Seuil</p>
+                                                <h2 class="text-info">{{parc.machine.seuilMaintenance}}</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+               {% endif %}
+               
+               
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}
+    {% block script %}
+    {% if is_granted('ROLE_ADMIN') %}
+            <script>    
+                var userChartData = {
+                    formattedDates: {{ dahsboradData.userChart.formattedDates|raw }},
+                    userCounts: {{ dahsboradData.userChart.userCounts|raw }},
+                    cumulativeData: {{ dahsboradData.userChart.cumulativeData|raw }}
+                };
+                var machineChartData = {
+                    formattedDates: {{ dahsboradData.machineChart.formattedDates|raw }},
+                    machineCounts: {{ dahsboradData.machineChart.machineCounts|raw }},
+                    cumulativeData: {{ dahsboradData.machineChart.cumulativeData|raw }}
+                };
+            </script>
+            <script src="{{ asset('assets/js/dashboard.js') }}"></script>
+    {% endif %}
+    {% if is_granted('ROLE_USER') %}
+        <script>    
+            var parcChart = {
+                formattedDates: {{ dahsboradData.parcChart.formattedDates|raw }},
+                parcCounts: {{ dahsboradData.parcChart.parcCounts|raw }},
+                cumulativeData: {{ dahsboradData.parcChart.cumulativeData|raw }}
+            }
+        </script>
+        <script src="{{ asset('assets/js/userDashboard.js') }}"></script>
+    {% endif %}
+{% endblock %}

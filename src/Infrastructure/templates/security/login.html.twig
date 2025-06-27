@@ -1,0 +1,72 @@
+{% extends 'layout/frontend.layout.html.twig' %}
+
+{% block stylesheets %}
+    {# Include any additional stylesheets here #}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block content %}
+<div class="content_page_login">
+    <div class="container">
+    <div class="col-md-6 login-form">
+        <h2 class="mb-4">{{'users.login.title'|trans}}</h2>
+        {% for flash in app.flashes('error') %}
+            <div class="alert alert-danger">
+                {{ flash }}
+            </div>
+        {% endfor %}
+        {% for flash in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ flash }}
+            </div>
+        {% endfor %}
+        {{ form_start(form) }}
+            <div class="mt-2">
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email) }}
+                {% if form_errors(form.email) %}
+                    <div class="invalid-feedback d-block">
+                        {{ form_errors(form.email) }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="mt-2">
+                {{ form_label(form.password) }}
+                <div class="position-relative">
+                    {{ form_widget(form.password) }}
+                    <i class="fa fa-eye-slash password-toggle" aria-hidden="true" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+                </div>
+                {% if form_errors(form.password) %}
+                    <div class="invalid-feedback d-block">
+                        {{ form_errors(form.password) }}
+                    </div>
+                {% endif %}
+            </div>
+            {{ form_row(form.login) }}
+             <div class="mt-2 mb-3 d-flex justify-content-center">
+                <a href="{{ path('app_forgot_password') }}" class="lien_password">{{'users.login.form.submit.forgot_password'|trans}}</a>
+            </div>
+        {{ form_end(form) }}
+    </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+   $(document).ready(function () {
+    const button = $('.password-toggle');
+    $(button).click(function (e) { 
+        e.preventDefault();
+        const form = $('#authentication_form_password');
+        if (form.attr('type') === 'text') {
+            form.attr('type', 'password');
+            $(this).removeClass('fa-eye').addClass('fa-eye-slash');
+        } else {
+            form.attr('type', 'text');
+            $(this).removeClass('fa-eye-slash').addClass('fa-eye');
+        }
+    });
+});
+</script>
+{% endblock %}

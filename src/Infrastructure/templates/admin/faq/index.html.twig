@@ -1,0 +1,117 @@
+{% extends 'layout/dashboard.layout.html.twig' %}
+{% block title %}{{'FAQs.index.title'|trans}}{% endblock %}
+
+{% block content %}
+    <div class="row flex-grow">
+        <div class="col-md-12">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card card-rounded">
+                <div class="card-body">
+                    <div class="d-sm-flex justify-content-between align-items-start">
+                        <div>
+                            <h2 class="card-title card-title-dash">{{'FAQs.index.title_h2'|trans}}</h2>
+                        </div>
+                        <div>
+                            <a href="{{path('app_faqs_create')}}" class="btn btn-primary btn-md text-white mb-0 me-0" type="button">
+                                <i class="mdi mdi-plus"></i> {{'FAQs.index.btn_create_new'|trans}}
+                            </a>
+                        </div>
+                    </div>
+                    
+                    {% if faqs is empty %}
+                        <div class="mt-3 text-center">
+                            <p>No FAQs available at the moment.</p>
+                        </div>
+                    {% else %}
+                        <div class="table-responsive mt-1">
+                            <table class="table select-table">
+                                <thead>
+                                    <tr>
+                                        <th>{{'FAQs.index.question'|trans}}</th>
+                                        <th>{{'FAQs.index.answer'|trans}}</th>
+                                        <th>{{'FAQs.index.action'|trans}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for faq in faqs %} 
+                                    <tr>
+                                        <td>
+                                            {{ faq.question }}
+                                        </td>
+                                        <td>
+                                            {{ faq.answer|nl2br }}
+                                        </td>
+                                        <td class="py-1">
+                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                <a href="{{path('app_faqs_update', {'faq':faq.id})}}" class="btn btn-warning btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="{{'FAQs.index.action_update_title'|trans}}">
+                                                    <i class="mdi mdi-pencil"></i>
+                                                </a>
+                                                <a href="{{ path('app_faqs_update_status', {'faq':faq.id}) }}" 
+                                                    class="btn btn-{{ faq.isActive ? 'secondary' : 'success' }} btn-sm" 
+                                                    type="button" 
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top" 
+                                                    title="{{faq.isActive ? 'FAQs.index.action_desactive_title'|trans : 'FAQs.index.action_active_title'|trans}}">
+                                                    <i class="mdi mdi-toggle-switch"></i>  
+                                                </a>
+</a>
+
+                                                <button type="button" 
+                                                    class="btn btn-danger btn-sm delete-faq-btn" 
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" title="{{'FAQs.index.action_delete_title'|trans}}"
+                                                    data-faq-id="{{ faq.id }}"
+                                                    data-faq-question="{{ faq.question }}"
+                                                >
+                                                    <i class="mdi mdi-delete"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% if maxPages is defined and maxPages > 1 %}
+                            {% include "components/shared/_pagination.html.twig" with { 'maxPages': maxPages, 'path':'app_faqs' } %}
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <!-- Delete Confirmation Modal -->
+{% include "components/_modal.html.twig" with {'context': 'FAQs.index.contexte'|trans} %}
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof jQuery !== 'undefined') {
+                $('.delete-faq-btn').click(function() {
+                    var faqId = $(this).data('faq-id');
+                    var faqQuestion = $(this).data('faq-question');
+                    $('#name').text(faqQuestion);
+                    $('#deleteForm').attr('action', "{{path('app_faqs_delete', {'faq': 'FAQID'})}}".replace('FAQID', faqId));
+                    $('#deleteConfirmationModal').modal('show');
+                });
+                $('.btn-secondary').click(function() {
+                    $('#deleteConfirmationModal').modal('hide');
+                });
+                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+                var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl)
+                });
+            } else {
+                console.error('jQuery is not loaded!');
+            }
+        });
+    </script>
+{% endblock %}

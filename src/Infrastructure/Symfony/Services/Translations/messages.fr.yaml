@@ -1,0 +1,415 @@
+navbars:
+    app_title: "Steamtec"
+    hello: "Bonjour"
+    sign_out: "Se déconnecter"
+    my_profil: "Mon profil"
+    trap.enter: "Appuyez sur Entrée"
+    trap.escape: "Appuyez sur Échap"
+
+footers:
+    app_name: "Steamtec application"
+    app_copyright: "Copyright © 2025. All rights reserved."
+    app_reaction: "lol."
+
+components:
+    modal:
+        suppr_confirm_title: "Confirmation de suppression"
+        suppr_confirm_text: "Êtes-vous sûr de vouloir supprimer "
+        suppr_confirm_message: "Cette action est irréversible."
+
+
+form:
+    button:
+        delete: "Supprimer"
+        cancel: "Annuler"
+
+parc_machines:
+    index:
+        title: "Machines"
+        select_machine: "Sélectionnez une machine"
+        list_machine: "Liste de machines"
+        num_id: "Numéro d'identification"
+        name: "Nom"
+        brand: "Marque"
+        maintenance_threshold: "Seuil de maintenance"
+        actions: "Actions"
+        suppr_confirm_title: "Confirmation de suppression"
+        suppr_confirm_text: "Êtes-vous sûr de vouloir supprimer la machine"
+        suppr_confirm_message: "Cette action est irréversible."
+
+    form:
+        machine:
+            label: "Machine"
+            placeholder: "Sélectionner un machine"
+        submit: "Ajouter dans mon parc"
+
+    message:
+        create_succes: "Machine ajoutée dans le parc"
+        create_error: "Erreur lors d'ajout de machine dans le parc"
+        delete_succes: "Machine supprimé avec succès"
+        delete_error: "Erreur lors de la suppression de la machine"
+
+push_notifications:
+    message:
+        delete_succes: "Notification supprimé avec succès"
+        delete_error: "Erreur lors de la suppression de la notification"
+
+chantiers:
+    index:
+        title: "Chantiers"
+        contexte: "le chantier"
+        list_chantiers: "Chantiers"
+        btn_create_new: "Nouveau chantier"
+        name: "Nom"
+        description: "Description"
+        machine: "Machines"
+        date_creation: "Créé le"
+        actions: "Actions"
+        search:
+            placeholder: "Rechercher dans tous les champs..."
+            label: "Rechercher"
+            clear: "Effacer la recherche"
+            info: "Recherche pour :"
+  
+    form:
+        machine_serial:
+            label: "Machine utilisée"
+        name:
+            label: "Nom du chantier"
+            placeholder: "Nom du chantier"
+        chantier_date:
+            label: "Date du chantier"
+        surface:
+            label: "Surface (m²)"
+        duration:
+            label: "Durée (heures)"
+        surface_types:
+            label: "Type de surface"
+        materials:
+            label: "Matériaux"
+        encrassement:
+            label: "Niveau d'encrassement"
+        vetuste:
+            label: "État de vétusté"
+        commentaire:
+            label: "Commentaire"
+        rendement:
+            label: "Rendement (m²/h)"
+        description:
+            label: "Description"
+            placeholder: "Description"
+        machine:
+            label: "Machines"
+            placeholder: "Sélectionner un machine"
+            instruction: "Sélectionnez une ou plusieurs machines pour ce chantier"
+        submit:
+            create: "Créer le chantier"
+            update: "Mettre à jour"
+            cancel: "Retour"
+        title:
+            update: "Modification"
+            create: "Nouveau"
+            title: "chantier"
+
+    maintenance_notification_mail:
+        subject: "Notification de maintenance - %machine_name%"
+        hello: "Bonjour {first_name},"
+        instruction: "Nous vous informons que vous avez atteint un palier d'entretien pour votre machine <strong>{nom_machine}</strong>. Afin de garantir la continuité de son bon fonctionnement, nous vous invitons à consulter le tableau ci-joint et à prendre les mesures nécessaires."
+        availability: "Nous restons à votre disposition pour toute question ou précision supplémentaire."
+        thanks: "Cordialement,"
+
+    messages:
+        create_succes: "Nouveau chantier créé"
+        update_succes: "Chantier modifié"
+        delete_succes: "Chantier supprimé avec succès"
+        delete_error: "Erreur lors de la suppression de la chantier"
+        create_journal_succes: "Activité(s) enregistrée(s)"
+        error_token: "Token CSRF invalide."
+        error_alredy_exist: "Le chantier %name% existe déjà"
+
+    shows:
+        title: "Détails chantier"
+        list_redirection: "Retour à la liste"
+        btn_update: "Modifier"
+        informations:
+            title: "Informations Générales"
+            name: "Nom:"
+            description: "Description:"
+            creation: "Créé le:"
+            modification: "Modifier le:"
+        machines:
+            title: "Machines Assignées"
+            name: "Nom"
+            brand: "Marque"
+            num_id: "Numéro d'identification"
+            ficheTechnique: "Fiche technique"
+        histories:
+            title: "Historique des Activités"
+            new_journal: "Ajouter un journal"
+            date: "Date"
+            machine: "Machine"
+            duration: "Durée"
+            creation: "Créé le"
+            empty: "Aucune activité enregistrée"
+        modals:
+            title: "Ajouter un journal d'utilisation"
+            machine: "Machine"
+            duration: "Durée (heures)"
+            forms:
+                log_date:
+                    label: "Date du journal"
+                    empty: "La date ne peut pas être vide"
+                    date_futur_validation: "La date ne peut pas être dans le futur"
+                parc_machine:
+                    label: "Machine"
+                duration:
+                    label: "Durée (heures)"   
+                    duration_validation: "La durée doit être positive"
+                save: "Enregistrer"
+
+              
+users:
+    index:
+        title: "Utilisateurs"
+        contexte: "l'utilisateur"
+        list: "Utilisateurs"
+        btn_create_new: "Ajouter un nouveau client"
+        client: "Client"
+        mail: "Email"
+        society: "Société"
+        phone: "Téléphone"
+        action: "Actions"
+  
+    form:
+        email:
+            label: "Email"
+            empty: "L'email ne peut pas être vide"
+            validation: "L'email n'est pas valide"
+        firstname:
+            label: "Prénom"
+            empty: "Le prénom ne peut pas être vide"
+        lastname:
+            label: "Nom"
+            empty: "Le nom ne peut pas être vide"
+        phone:
+            label: "Téléphone"
+            empty: "Le téléphone ne peut pas être vide"
+            validation: "Numéro de téléphone invalide"
+        socity:
+            label: "Société"
+            empty: "La société ne peut pas être vide"
+        role:
+            label: "Rôles"
+            empty: "Au moins un rôle doit être sélectionné"
+            choice:
+                user: "Utilisateur"
+                admin: "Administrateur"
+        submit:
+            create: "Créer l'utilisateur"
+            update: "Mettre à jour"
+            cancel: "Retour"
+        title:
+            update: "Modification"
+            create: "Nouveau"
+            title: "utilisateur"
+
+    reset_passwords:
+        title: "Réinitialisation de votre mot de passe"
+        hello: "Bonjour"
+        text: "Vous avez demandé la réinitialisation de votre mot de passe. Cliquez sur le bouton ci-dessous pour choisir un nouveau mot de passe :"
+        link: "Réinitialiser mon mot de passe"
+        duration: "Ce lien expirera dans 1 heures."
+        info: "Si vous n'avez pas demandé cette réinitialisation, ignorez cet e-mail."
+        thanks: "Merci,"
+        reaction: "L'équipe LOL"
+        instruction: "Veuillez saisir votre adresse e-mail pour réinitialiser votre mot de passe."
+        form:
+            instruction: "Veuillez entrer votre nouveau mot de passe."
+            suggestion: |
+                Pour renforcer la sécurité de votre compte, nous vous recommandons d'utiliser un mot de passe fort contenant :
+                Au moins 8 caractères
+                Une combinaison de majuscules et minuscules
+                Au moins un chiffre (0-9)
+                Au moins un caractère spécial (!@#$%^&*...)
+                Exemple : M0n!SuperPwd@2024
+            password:
+                label: "Nouveau mot de passe"
+                placeholder: "Entrez votre nouveau mot de passe"
+            password_confirmation:
+                label: "Confirmer le mot de passe"
+                placeholder: "Confirmez votre nouveau mot de passe"
+            submit:
+                update: "Changer le mot de passe"
+                cancel: "Retour à la connexion"
+    
+    create_passwords:
+        title: "Création de votre mot de passe"
+        hello: "Bonjour"
+        text: "Votre compte a bien été créé. Pour sécuriser votre accès, veuillez définir votre mot de passe en cliquant sur le bouton ci-dessous :"
+        link: "Créer mon mot de passe"
+        duration: "Notez que ce lien expirera dans 1 heure."
+        info: "Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet e-mail en toute sécurité."
+        thanks: "Merci de votre confiance,"
+        reaction: "L'équipe Entech"
+
+    forgot_password:
+        title: "Mot de passe oublié?"
+        instruction: "Veuillez saisir votre adresse e-mail pour réinitialiser votre mot de passe."
+        form:
+            email:
+                label: "Email utilisateur"
+                placeholder: "nomutilisateur@email.com"
+            submit:
+                update: "Réinitialiser le mot de passe"
+                cancel: "Retour à la connexion"
+    login:
+        title: "Connectez-vous à votre espace personnel"
+        instruction: "Veuillez saisir votre adresse e-mail pour réinitialiser votre mot de passe."
+        form:
+            email:
+                label: "Email utilisateur"
+                placeholder: "nomutilisateur@email.com"
+            password:
+                label: "Mot de passe"
+            submit:
+                login: "Se connecter"
+                forgot_password: "Mots de passe oublié?"
+   
+    messages:
+        create_succes: "Utilisateur créé avec succès"
+        create_error: "Erreur lors de la création de l'utilisateur"
+        update_succes: "Utilisateur mis à jour avec succès"
+        update_error: "Erreur lors de la mise à jour de l'utilisateur"
+        delete_succes: "Utilisateur supprimé avec succès"
+        delete_error: "Erreur lors de la suppression de l'utilisateur"
+        error_token: "Token CSRF invalide."
+        reset_password_succes: "Email de Creation  de mot de passe envoyé avec succès"
+        reset_password_error: "Erreur lors de l'envoi de l'email deCreation de mot de passe"
+        send_mail_succes: "Un email de confirmation vous a été envoyé"
+        update_password_succes: "Votre mot de passe a ete mis a jour"
+        login_error: "Une erreur inattendue s'est produite. Veuillez réessayer"
+        auth_faillure: "L'email ou le mot de passe que vous avez saisi est incorrect"
+
+
+machines:
+    index:
+        title: "Machines"
+        contexte: "la machine"
+        list: "Machines"
+        btn_create_new: "Ajouter une nouvelle machine"
+        num_id: "Numéro d'identification"
+        name: "Nom"
+        brand: "Marque"
+        seuil_maintenance: "Seuil de maintenance"
+        action: "Actions"
+        action_update_title: "Modifier"
+        action_delete_title: "Supprimer"
+        action_download_title: "Télecharger le fiche technique"
+  
+    form:
+        num_id:
+            label: "Numéro d'identification"
+            placeholder: "Entrez le numéro d'identification"
+        name:
+            label: "Nom de la machine"
+            placeholder: "Entrez le nom de la machine"
+        brand:
+            label: "Marque"
+            placeholder: "Entrez la marque de la machine"
+        seuil_maintenance:
+            label: "Seuil de maintenance (heures)"
+            placeholder : "Seuil de maintenance en heures"
+        file:
+            label: "Téléverser un fichier"
+        submit:
+            create: "Créer la machine"
+            update: "Mettre à jour"
+            cancel: "Retour"
+        title:
+            update: "Modification"
+            create: "Nouvel"
+            title: "machine"
+        update_swal:
+            title: 'Êtes-vous sûr ?'
+            text: 'Vous allez modifier cette machine.'
+            confirmButtonText: 'Oui, modifier!'
+            cancelButtonText: 'Non, annuler'
+      
+    messages:
+        create_succes: "Machine créé avec succès"
+        create_error: "Erreur lors de la création de Machine"
+        update_succes: "Machine mis à jour avec succès"
+        update_error: "Erreur lors de la mise à jour de la machine"
+        delete_succes: "Machine supprimé avec succès"
+        delete_error: "Erreur lors de la suppression de la machine"
+        error_download: "Aucun fichier trouvé."
+
+profils:
+    index:
+        title: "Profile"
+
+    form:
+        firstname: 
+            label: "Prénom"
+            empty: "Le prénom ne peut pas être vide"
+        lastname:
+            label: "Nom"
+            empty: "Le nom ne peut pas être vide"
+        phone:
+            label: "Téléphone"
+            empty: "Le téléphone ne peut pas être vide"
+            validation: "Numéro de téléphone invalide"
+        socity:
+            label: "Société"
+            empty: "La société ne peut pas être vide"
+        submit:
+            update: "Mettre à jour"
+
+    messages:
+        update_succes: "Profil mis à jour"
+
+
+FAQs:
+    index:
+        title: "FAQs"
+        title_h2: "Questions fréquentes"
+        btn_create_new : "Ajouter une nouvel question"
+        question: "Question"
+        answer: "Reponse"
+        action: "Actions"
+        contexte: "cette FAQ:"
+        action_update_title: "Modifier"
+        action_delete_title: "Supprimer"
+        action_active_title: "Activer"
+        action_desactive_title: "Desactiver"
+
+    form:
+        question:
+            label: "Question"
+            empty: "Entrez la question s'il vous plaits"
+        answer:
+            label: "Reponse"
+            empty: "Entrez la reponse s'il vous plaits"
+        active:
+            label: "Activer"
+        submit:
+            create: "Créer"
+            update: "Mettre à jour"
+            cancel: "Annuler"
+            return: "Retour"
+        title:
+            update: "Modification"
+            create: "Nouvel"
+            title: "Question Fréquente"
+
+    messages:
+        create_succes: "Question fréquente ajoutée"
+        create_error: "Erreur lors de la création de la Question fréquente"
+        update_succes: "Question fréquente mise à jour avec succès"
+        update_error: "Erreur lors de la mise à jour de la Question fréquente"
+        delete_succes: "Question fréquente supprimée"
+        delete_error: "Erreur lors de la suppression de la Question fréquente"
+
+decisiontree:
+    index:
+        title: "Arbre de dépannage"

@@ -1,0 +1,18 @@
+{% extends "layout/dashboard.layout.html.twig" %}
+{% block title %} Arbre de Dépannage {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/admin/decisiontree/decision-tree.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="row flex-grow">
+    <div class="col-md-12">
+        <div id="decision-tree-breadcrumb" class="mb-3"></div>
+        <div id="decision-tree-app" data-json-url="{{ asset('assets/data/decision-tree.json') }}"></div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="{{ asset('assets/js/decision-tree.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'layout/dashboard.layout.html.twig' %}
+{% block title %}Categories{% endblock %}
+{% block content %}
+<h1>Categories</h1>
+<a href="{{ path('app_dt_category_create') }}">Create New Category</a>
+<table>
+    <thead>
+        <tr><th>Name</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+    {% for category in categories %}
+        <tr>
+            <td>{{ category.name }}</td>
+            <td>
+                <a href="{{ path('app_dt_category_edit', {category: category.id}) }}">Edit</a>
+                <form method="post" action="{{ path('app_dt_category_delete', {category: category.id}) }}" style="display:inline-block">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+    {% else %}
+        <tr><td colspan="2">No categories found.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

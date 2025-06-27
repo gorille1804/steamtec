@@ -1,0 +1,7 @@
+  .notification-item.unread {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  #notificationModal{
+    z-index: 2000 !important;
+  }

@@ -1,0 +1,66 @@
+@media (max-width:1280px) {
+    .content_bloc_image_nettoyage .content_liste_text_droite_entete_accueil,
+    .content_titre_et_lien_gamme{
+        flex-flow: row wrap;
+        li{
+            min-width: 240px;
+        }
+    }
+    .content_liste_application_nettoyage_inner li{
+        padding: 40px 15px;
+    }
+    .bloc_entete_accueil .col-md-5 .content_text_entete {
+        font-size: 50px;
+        line-height: 100%;
+    }
+    .content_liste_text_droite_entete_accueil {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: end;
+        height: 100%;
+        gap: 15px;
+        li{
+            position: static
+        }
+    }
+    .content_bloc_nettoyage_right img{
+        max-width: 100%;
+    }
+}
+@media (max-width:992px) {
+    .content_page_contact{
+        padding: 20px 15px;
+    }
+}
+@media (max-width:767px) {
+    .content_liste_text_droite_entete_accueil {
+
+        align-items: center;
+        padding: 0 15px 15px;
+    }
+    .content_entete_bloc_avantage{
+       
+        margin-top: 20px;
+        display: flex ;
+        justify-content: center;
+        span{
+            position: static;
+        }
+    }
+    .content_decouvrir_gamme .owl-nav{
+        justify-content: space-between;
+        padding: 0 20px;
+    }
+    .content_solution_nettoyage .content_liste_nettoyage{
+        flex-direction: column;
+        gap: 40px
+    }
+    .content_solution_nettoyage .content_liste_nettoyage .content_image_nettoyage{
+        max-width: 280px;
+        margin: auto;
+    }
+    .content_bloc_nettoyage{
+        padding: 20px 15px;
+    }
+}

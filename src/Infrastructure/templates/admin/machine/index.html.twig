@@ -1,0 +1,120 @@
+{% extends "layout/dashboard.layout.html.twig" %}
+{% block title %} {{'machines.index.title'|trans}} {% endblock %}
+
+{% block content %}
+    <div class="row flex-grow">
+        <div class="col-md-12">
+            {% for type, messages in {'success': 'alert-success', 'info': 'alert-primary', 'error': 'alert-danger'} %}
+                {% for message in app.flashes(type) %}
+                    <div class="alert {{ messages }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+        </div>
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card card-rounded">
+                <div class="card-body">
+                    <div class="d-sm-flex justify-content-between align-items-start">
+                        <div>
+                            <h2 class="card-title card-title-dash">{{'machines.index.title'|trans}}</h2>
+                        </div>
+                        <div>
+                            <a  href="{{path('app_create_machine')}}" class="btn btn-primary btn-md text-white mb-0 me-0" type="button">
+                                <i class="mdi mdi-account-plus"></i> {{'machines.index.btn_create_new'|trans}}
+                            </a>
+                        </div>
+                    </div>
+                    <div class="table-responsive mt-1">
+                        <table class="table select-table">
+                            <thead>
+                                <tr>
+                                    <th>{{'machines.index.num_id'|trans}}</th>
+                                    <th>{{'machines.index.name'|trans}}</th>
+                                    <th>{{'machines.index.brand'|trans}}</th>
+                                    <th>{{'machines.index.seuil_maintenance'|trans}}</th>
+                                    <th>{{'machines.index.action'|trans}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for machine in machines %} 
+                                <tr>
+                                    <td>
+                                        {{machine.numeroIdentification}}
+                                    </td>
+                                    <td>
+                                       {{machine.nom}}
+                                    </td>
+                                    <td>
+                                      {{machine.marque}}  
+                                    </td>
+                                    <td>
+                                      {{machine.seuilMaintenance}}  
+                                    </td>
+                                     <td class="py-1">
+                                        <div class="btn-group" role="group">
+                                            <a
+                                               href="{{ path('app_update_machine', {'machine': machine.id}) }}"
+                                               class="btn btn-warning btn-sm" 
+                                               title='{{'machines.index.action_update_title'|trans}}'>
+                                                <i class="mdi mdi-pencil"></i>
+                                            </a>
+                                            {% if machine.ficheTechnique is defined and
+                                                  machine.ficheTechnique is not null and
+                                                  machine.ficheTechnique.id is not null 
+                                            %}
+                                                <a
+                                                href="{{ path('document_download', {'document': machine.ficheTechnique.id}) }}"
+                                                class="btn btn-dark btn-sm" 
+                                                title='{{'machines.index.action_download_title'|trans}}'>
+                                                    <i class="mdi mdi-download"></i>
+                                                </a>
+                                            {% endif %}
+                                            <button type="button" 
+                                                    class="btn btn-danger btn-sm delete-machine-btn" 
+                                                    title='{{'machines.index.action_delete_title'|trans}}'
+                                                    data-machine-id="{{ machine.id }}"
+                                                    data-machine-name="{{ machine.nom}}"
+                                            >
+                                                <i class="mdi mdi-delete"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% if maxPages is defined and maxPages > 1 %}
+                        {% include "components/shared/_pagination.html.twig" with { 'maxPages': maxPages, 'path':'app_machines' } %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+{% include "components/_modal.html.twig" with {'context': 'machines.index.contexte'|trans} %}
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof jQuery !== 'undefined') {
+                $('.delete-machine-btn').click(function() {
+                    var machineId = $(this).data('machine-id');
+                    var machineName = $(this).data('machine-name');
+                    $('#name').text(machineName);
+                    $('#deleteForm').attr('action', "{{path('app_delete_machine', {'machine': 'MACHINEID'})}}".replace('MACHINEID', machineId));
+                    $('#deleteConfirmationModal').modal('show');
+                });
+                $('.btn-secondary').click(function() {
+                    $('#deleteConfirmationModal').modal('hide');
+                });
+            } else {
+                console.error('jQuery is not loaded!');
+            }
+        });
+    </script>
+{% endblock %}

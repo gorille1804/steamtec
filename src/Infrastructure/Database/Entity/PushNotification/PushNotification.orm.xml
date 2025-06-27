@@ -1,0 +1,17 @@
+<!-- config/doctrine/Chantier.orm.xml -->
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+
+    <entity name="Domain\PushNotification\Data\Model\PushNotification" table="push_notifications">
+        <id name="id" type="pushNotificationId" column="id" />
+        <many-to-one field="receiver" target-entity="Domain\User\Data\Model\User">
+            <join-column name="receiver" referenced-column-name="id" nullable="false"/>
+        </many-to-one>
+        <field name="type" type="enumMaintenanceNotification" length="180" nullable="false" />
+        <field name="message" type="string" length="255" nullable="false" />
+        <field name="status" type="boolean" length="180" nullable="false" />
+        <field name="createdAt" type="datetime" />
+    </entity>
+</doctrine-mapping>

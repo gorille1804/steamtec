@@ -1,0 +1,882 @@
+.alert-animated {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7);
+    }
+
+    50% {
+        transform: scale(0.98);
+        box-shadow: 0 0 0 10px rgba(255, 193, 7, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 1px rgba(255, 193, 7, 0);
+    }
+}
+
+/* Styles pour le tableau de maintenance */
+.maintenance-table {
+    font-size: 0.9rem;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.maintenance-table th {
+    font-weight: 600;
+    text-align: center;
+    vertical-align: middle;
+    padding: 12px 8px;
+    white-space: normal;
+    /* Permet le retour à la ligne */
+    word-wrap: normal;
+        word-break: keep-all;
+    /* Coupe les mots si nécessaire */
+}
+
+.maintenance-table td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px 8px;
+}
+
+.maintenance-table .hours-cell {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.maintenance-table .task-required {
+    color: #155724;
+}
+
+.maintenance-table .task-not-required {
+    color: #6c757d;
+}
+
+.maintenance-table .task-icon {
+    font-size: 1.2rem;
+}
+
+.maintenance-table .task-icon.required {
+    color: #28a745;
+}
+
+.maintenance-table .task-icon.not-required {
+    color: #6c757d;
+}
+
+/* Styles pour la ligne surlignée */
+.maintenance-table .highlighted-row {
+    /* background-color est maintenant appliqué aux cellules <td> */
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.3);
+    animation: highlightPulse 2s ease-in-out;
+    position: relative;
+}
+
+.maintenance-table tr.highlighted-row>td {
+    background-color: #fff3cd !important;
+}
+
+.maintenance-table tr.highlighted-row>td:first-child {
+    border-left: 4px solid #ffc107;
+}
+
+.maintenance-table .highlighted-row td:first-child::before {
+    content: '\F040A';
+    /* Unicode for mdi-play icon */
+    font-family: "Material Design Icons";
+    position: absolute;
+    left: -5px;
+    /* Adjust position to be outside the cell */
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    /* Make it bigger */
+    color: #ffc107;
+    /* Match the border color */
+    animation: cursorBounce 1s ease-in-out infinite;
+}
+
+@keyframes highlightPulse {
+    0% {
+        background-color: #fff3cd;
+        transform: scale(1);
+    }
+
+    50% {
+        background-color: #ffeaa7;
+        transform: scale(1.02);
+    }
+
+    100% {
+        background-color: #fff3cd;
+        transform: scale(1);
+    }
+}
+
+@keyframes cursorBounce {
+
+    0%,
+    100% {
+        transform: translateY(-50%) scale(1);
+    }
+
+    50% {
+        transform: translateY(-50%) scale(1.2);
+    }
+}
+
+/* Styles pour la zone de saisie des heures */
+.form-label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+.form-label i {
+    margin-right: 0.5rem;
+}
+
+.input-group .form-control {
+    border-right: none;
+}
+
+.input-group .input-group-text {
+    background-color: #f8f9fa;
+    border-left: none;
+    color: #6c757d;
+}
+
+.input-group .btn {
+    border-left: none;
+    transition: all 0.3s ease;
+}
+
+.input-group .btn:hover {
+    background-color: #007bff;
+    color: white;
+    transform: translateY(-1px);
+}
+
+/* Styles pour l'alerte d'information */
+#hoursInfo {
+    border-left: 4px solid #17a2b8;
+    margin-top: 1rem;
+}
+
+#hoursInfo i {
+    margin-right: 0.5rem;
+}
+
+/* Responsive pour la zone de saisie */
+@media (max-width: 768px) {
+    .input-group {
+        flex-direction: column;
+    }
+
+    .input-group .form-control,
+    .input-group .input-group-text,
+    .input-group .btn {
+        border-radius: 0.375rem !important;
+        margin-bottom: 0.5rem;
+    }
+
+    .input-group .btn {
+        width: 100%;
+    }
+}
+/* Styles pour les en-têtes figées */
+.table-responsive {
+    max-height: 75vh;
+    /* Hauteur maximale avant que le défilement n'apparaisse */
+    overflow-y: auto;
+    /* Active le défilement vertical */
+    overflow-x: hidden;
+    /* Désactive le défilement horizontal par défaut (pour desktop) */
+}
+
+.maintenance-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: #212529;
+    /* Couleur de .table-dark pour éviter la transparence */
+}
+
+/* Pour les écrans plus petits (mode responsive) */
+@media (max-width: 992px) {
+    .table-responsive {
+        overflow-x: auto;
+        /* Réactive le défilement horizontal */
+    }
+
+    .maintenance-table {
+        width: auto;
+        /* Permet au tableau de dépasser la largeur de l'écran */
+        table-layout: auto;
+    }
+
+    .maintenance-table th {
+        white-space: nowrap;
+        /* Empêche le retour à la ligne des en-têtes */
+    }
+
+    .maintenance-table .hours-cell {
+        position: sticky;
+        left: 0;
+        z-index: 1;
+    }
+
+    /* Style pour le coin supérieur gauche qui est doublement figé */
+    .maintenance-table thead th:first-child {
+        left: 0;
+        z-index: 3;
+    }
+}
+/* Styles pour les cellules cliquables */
+.clickable-cell {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.clickable-cell:hover {
+    background-color: rgba(0, 123, 255, 0.1) !important;
+    transform: scale(1.05);
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+}
+
+.clickable-cell:active {
+    transform: scale(0.98);
+}
+
+.clickable-cell::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.clickable-cell:hover::after {
+    opacity: 1;
+}
+
+/* Styles pour le modal d'entretien */
+#maintenanceModal .modal-content {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+#maintenanceModal .modal-header {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    border-radius: 15px 15px 0 0;
+    border-bottom: none;
+}
+
+#maintenanceModal .modal-title {
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+#maintenanceModal .btn-close {
+    filter: invert(1);
+    opacity: 0.8;
+}
+
+#maintenanceModal .btn-close:hover {
+    opacity: 1;
+}
+
+#maintenanceModal .form-label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+#maintenanceModal .form-control,
+#maintenanceModal .form-select {
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+#maintenanceModal .form-control:focus,
+#maintenanceModal .form-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+#maintenanceModal .form-control[readonly] {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+#maintenanceModal .modal-footer {
+    border-top: 1px solid #dee2e6;
+    padding: 1rem 1.5rem;
+}
+
+#maintenanceModal .btn {
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 0.5rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+#maintenanceModal .btn-primary {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    border: none;
+}
+
+#maintenanceModal .btn-primary:hover {
+    background: linear-gradient(135deg, #0056b3, #004085);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
+}
+
+#maintenanceModal .btn-secondary {
+    background: linear-gradient(135deg, #6c757d, #545b62);
+    border: none;
+}
+
+#maintenanceModal .btn-secondary:hover {
+    background: linear-gradient(135deg, #545b62, #3d4449);
+    transform: translateY(-2px);
+}
+
+/* Animation d'entrée pour le modal */
+#maintenanceModal.fade .modal-dialog {
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+}
+
+#maintenanceModal.show .modal-dialog {
+    transform: scale(1);
+}
+
+/* Styles pour les champs obligatoires */
+#maintenanceModal .form-label.required::after {
+    content: ' *';
+    color: #dc3545;
+}
+
+/* Styles pour les messages de validation */
+#maintenanceModal .form-control.is-invalid {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+#maintenanceModal .invalid-feedback {
+    display: block;
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* Responsive pour le modal */
+@media (max-width: 768px) {
+    #maintenanceModal .modal-dialog {
+        margin: 0.5rem;
+        max-width: calc(100% - 1rem);
+    }
+
+    #maintenanceModal .modal-body {
+        padding: 1rem;
+    }
+
+    #maintenanceModal .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    #maintenanceModal .col-md-6 {
+        padding-left: 0;
+        padding-right: 0;
+        margin-bottom: 1rem;
+    }
+}
+
+/* Styles pour le container des tâches */
+#maintenanceTasksContainer {
+    max-height: 200px;
+    overflow-y: auto;
+    transition: border-color 0.3s ease;
+}
+
+#maintenanceTasksContainer .form-check {
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+#maintenanceTasksContainer .form-check:hover {
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+#maintenanceTasksContainer .form-check-input:checked {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+#maintenanceTasksContainer .form-check-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+#maintenanceTasksContainer .form-check-label {
+    cursor: pointer;
+    font-weight: 500;
+    color: #495057;
+    margin-left: 0.5rem;
+}
+
+#maintenanceTasksContainer .form-check-label:hover {
+    color: #007bff;
+}
+
+/* Animation pour les checkboxes */
+#maintenanceTasksContainer .form-check-input:checked+.form-check-label {
+    color: #007bff;
+    font-weight: 600;
+}
+
+/* Style pour l'erreur de validation des tâches */
+#maintenanceTasksContainer.invalid {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+/* Styles pour la sélection de machine */
+#machineSelect {
+    transition: all 0.3s ease;
+    border: 2px solid #e9ecef;
+}
+
+#machineSelect:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+#machineSelect.is-valid {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+#machineSelect.is-invalid {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+/* Animation pour l'apparition des sections */
+#hoursSection,
+#maintenanceTableSection {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Styles pour les options du select */
+#machineSelect option {
+    padding: 8px;
+    font-weight: 500;
+}
+
+#machineSelect option:first-child {
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Responsive pour la sélection de machine */
+@media (max-width: 768px) {
+    #machineSelect {
+        font-size: 16px;
+        /* Évite le zoom sur iOS */
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* Styles pour les cellules d'entretien complétées */
+.completed-maintenance {
+    background-color: #d4edda !important;
+    border-color: #c3e6cb !important;
+    position: relative;
+    cursor: not-allowed !important;
+}
+
+.completed-maintenance:hover {
+    background-color: #d4edda !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.completed-maintenance::after {
+    content: none !important;
+}
+
+.completed-maintenance .maintenance-date {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #155724;
+    padding: 2px;
+    border-radius: 4px;
+    display: inline-block;
+    text-align: center;
+    min-width: 60px;
+}
+
+.completed-maintenance .task-icon {
+    color: #28a745 !important;
+    font-size: 1.3rem;
+    animation: completedPulse 2s ease-in-out infinite;
+}
+
+@keyframes completedPulse {
+    0%,
+        100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1.1);
+    }
+}
+/* Styles pour le backdrop et loader AJAX */
+.ajax-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    transition: opacity 0.3s ease-in-out;
+}
+
+.ajax-backdrop.fade {
+    opacity: 0;
+}
+
+.ajax-backdrop.show {
+    opacity: 1;
+}
+
+.ajax-loader {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    min-width: 200px;
+    animation: loaderSlideIn 0.3s ease-out;
+}
+
+.ajax-loader .spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.3rem;
+    border-color: #007bff;
+    border-right-color: transparent;
+    animation: spinner-border 0.75s linear infinite;
+}
+
+.ajax-loader .loader-text {
+    margin-top: 1rem;
+    color: #495057;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+@keyframes loaderSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Amélioration du backdrop modal existant */
+.modal-backdrop {
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    transition: opacity 0.3s ease-in-out;
+}
+
+.modal-backdrop.show {
+    opacity: 0.6 !important;
+}
+
+/* Styles pour les boutons désactivés pendant le chargement */
+.btn:disabled,
+.btn.loading {
+    cursor: not-allowed;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.btn.loading .spinner-border {
+    width: 1rem;
+    height: 1rem;
+    border-width: 0.15rem;
+    margin-right: 0.5rem;
+}
+
+/* Animation pour les éléments qui se chargent */
+.loading-fade {
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.loading-fade.loaded {
+    opacity: 1;
+}
+
+/* Styles pour les messages de chargement inline */
+.inline-loader {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #6c757d;
+    font-size: 0.875rem;
+}
+
+.inline-loader .spinner-border {
+    width: 1rem;
+    height: 1rem;
+    border-width: 0.15rem;
+}
+
+/* Responsive pour le loader AJAX */
+@media (max-width: 768px) {
+    .ajax-loader {
+        margin: 1rem;
+        padding: 1.5rem;
+        min-width: 150px;
+    }
+
+    .ajax-loader .spinner-border {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .ajax-loader .loader-text {
+        font-size: 0.9rem;
+    }
+}
+
+/* Styles pour éviter le scroll pendant le chargement */
+body.loading {
+    overflow: hidden;
+}
+
+/* Animation de pulsation pour les éléments en cours de chargement */
+.loading-pulse {
+    animation: loadingPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes loadingPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Styles pour les notifications de chargement */
+.loading-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 123, 255, 0.9);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    animation: slideInRight 0.3s ease-out;
+}
+
+.loading-notification .spinner-border {
+    width: 1rem;
+    height: 1rem;
+    border-width: 0.15rem;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Styles pour les indicateurs de progression */
+.progress-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: rgba(0, 123, 255, 0.2);
+    z-index: 10001;
+}
+
+.progress-indicator .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    width: 0%;
+    transition: width 0.3s ease;
+    animation: progressPulse 2s ease-in-out infinite;
+}
+
+@keyframes progressPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* Styles pour les boutons avec état de chargement */
+.btn-loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: loadingShimmer 1.5s infinite;
+}
+
+@keyframes loadingShimmer {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+/* Styles pour les formulaires en cours de soumission */
+.form-loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.form-loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.form-loading::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2rem;
+    height: 2rem;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    z-index: 11;
+}
+
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+/* Loader AJAX global pour le backdrop */
+.loading-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s;
+}
+
+.loading-backdrop .loading-spinner {
+    background: #fff;
+    border-radius: 12px;
+    padding: 2rem 2.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    text-align: center;
+}

@@ -1,0 +1,102 @@
+{% extends "layout/frontend.layout.html.twig" %}
+
+{% block title %}A propos de nous{% endblock %}
+
+{% block content %}  
+    <div class="about">
+        <div class="sub_title">
+            <div class="container content">
+                <div class="item">
+                    <div class="title_logo">
+                        <img src="{{ asset('assets/images/plante_about.png') }}" alt="Nos locaux" class="img-fluid rounded">
+                    </div>
+                    <h1 class="fs-40">Qui sommes-nous ?</h1>
+                </div>
+                <div class="item fs-18 fw-600 align-items-start">
+                    <p> Laissez-vous séduire par ENTECH, fabricant français de solutions éco-responsables efficaces de nettoyage et de désherbage,
+                     spécialistes de la vapeur depuis plus de 20 ans.</p>
+                    <div class="content_bloc_telecharger_fichier_nettoyage">
+                        <a href="{{ asset('uploads/brochure-commerciale.pdf') }}" class="btn_telecharger_fichier" download>
+                            <span class="icon_download">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 16 16" fill="none">
+                                    <path d="M8 12L3 7L4.4 5.55L7 8.15V0H9V8.15L11.6 5.55L13 7L8 12ZM0 16V11H2V14H14V11H16V16H0Z" fill="currentColor"/>
+                                </svg>
+                            </span>
+                            <span class="text_download">Télécharger la brochure commerciale</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="video">
+            <div class="container d-flex justify-content-center align-items-center flex-column gap-3">
+                <div class="video-container">
+                    <iframe width="1045" height="588"
+                        src="https://www.youtube.com/embed/55vfutOtnOg"
+                        title="Présentation ENTECH et STEAM_Tec" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin" 
+                        allowfullscreen>
+                     </iframe>
+                </div>
+                 <button class="btn btn-theme">Historique</button>
+            </div>
+        </div>
+        <div class="desc fs-16 fw-400 roboto">
+            <div class="item">
+                <div class="container content">
+                     <h3 class="fs-32 fw-700 mb-5">ENTECH depuis 2003</h3>
+                    <p>Depuis 2003, la société ENTECH, implantée dans les Vosges, conçoit et fabrique son matériel à eau chaude et 
+                    vapeur d'eau dans ses ateliers et le distribue sur toute la France. La <span class="fw-700 fst-italic">STEAM_Tec</span> est une solution propre, écologique, 
+                    curative et polyvalente permettant de nettoyer et de désherber grâce à de l'eau chaude ou de la vapeur basse pression.
+                    Ses solutions sont basées sur un générateur de vapeur configurable en pression et température 
+                    pour s'adapter aux différentes surfaces de travail</p>
+
+                    <p>À l'heure où la prise de conscience écologique est plus que nécessaire,
+                    ENTECH propose des matériels à eau chaude ou vapeur performants permettant de 
+                    répondre aux attentes et aux besoins de ses clients de plus en plus soucieux de l'impact environnemental.
+                    Reprise en mai 2023 par 2 jeunes entrepreneurs dynamiques, après 1 an de formation dans 
+                    l'entreprise, ils entendent maintenir Entech comme leader français du marché du nettoyage 
+                    vapeur basse pression et acteur important du désherbage alternatif.</p>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="img">
+                    <img src="{{ asset('assets/images/inovant.jpg') }}" alt="Nos locaux" class="img-fluid rounded">
+                </div>
+                <div class="before-img">
+                    <div class="content container">
+                        <h3 class="fs-32 fw-700 mb-5">Une société innovante</h3>
+                        <p>Avec plus de 20 ans d'expérience dans le nettoyage et le désherbage sans produit chimique,
+                        de nombreux utilisateurs nous ont déjà fait confiance : sociétés de nettoyage, sociétés dans 
+                        le bâtiment (couvreurs, peintres, aérogommeurs …), collectivités, paysagistes et ateliers 
+                        d'insertion. Au plus proche de ses clients, la société ENTECH n'a de cesse d'améliorer ses matériels à 
+                        vapeur d'eau et eau chaude de façon à répondre à leurs attentes de plus en plus exigeantes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item story">
+                <div class="content container">
+                    <h3 class="fs-32 fw-700 mb-5">Notre histoire commune</h3>
+                    <h4 class="fs-24 fw-700 mb-3">ENTECH : une reprise née d'une collaboration peu conventionnelle</h4>
+                    <p>On pourrait croire que les grandes histoires entrepreneuriales naissent autour d'un café ou d'une salle de réunion. Celle de la reprise d'ENTECH a commencé… derrière un écran, au sein d'un univers virtuel.</p>
+                    <p>C'est là que Sylvain et Damien se rencontrent pour la première fois. D'abord simples partenaires de jeu, ils apprennent à coopérer, à se faire confiance et à résoudre ensemble des situations complexes — à distance, sans jamais s'être serré la main.
+                    Au fil du temps, leur complémentarité devient évidente. Ce qui n'était qu'une collaboration ludique révèle un potentiel bien plus large : celui d'un véritable partenariat entrepreneurial.</p>
+                    <p>La reprise d'ENTECH n'est donc pas un coup de hasard, mais l'aboutissement logique d'une relation construite sur l'écoute, l'adaptabilité et l'efficacité. Ils n'ont peut-être pas commencé dans un bureau, mais ils ont appris à travailler ensemble bien avant de se lancer.</p>
+                    <p>Aujourd'hui, Sylvain et Damien écrivent un nouveau chapitre d'ENTECH, guidés par une vision commune et une certitude : quand la confiance précède le projet, les fondations sont déjà solides.</p>
+                </div>
+            </div>
+            
+            {% include "client/apropos/content/customers.html.twig" %}
+            {% include "client/apropos/content/valeur.html.twig" %}
+        
+        </div>
+        <div class="bottom-content">
+            <p class="fs-24 fw-400 roboto">Les forces de la société ENTECH sont sa réactivité, son savoir-faire perfectionné par 2 décennies de développement et l'accompagnement de ses clients dans leur activité.</p>
+        </div>
+        
+    </div>
+{% endblock %}

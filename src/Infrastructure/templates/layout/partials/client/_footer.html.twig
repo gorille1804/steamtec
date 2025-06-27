@@ -1,0 +1,27 @@
+<footer class="container-fluid">
+    <!-- First Section -->
+    <div class="row py-5 bg-light section_footer_top">
+        <!-- Logo Block -->
+        <div class="col-md-12 text-center mb-4 content_footer_logo">
+            <div class="footer-logo">
+                <img src="{{ asset('assets/images/logo_footer.png') }}" alt="Steamtec Logo" class="img-fluid" style="max-width: 200px;">
+                <a href="https://www.grandest.fr/" target="_blank">
+                    <img src="{{ asset('assets/images/grand_est_transparent.png') }}" alt="Grand Est" class="img-fluid" style="max-width: 400px;">
+                </a>
+            </div>
+        </div>
+        {% include "layout/partials/client/_contact_social.html.twig" %}
+    </div>
+
+    <!-- Second Section -->
+    <div class="row py-4 bg-dark text-white section_footer_bottom">
+        <div class="col-md-12 text-center mb-3 mb-md-0">
+            <ul class="list-unstyled liste_droit_reserve">
+                <li>&copy; {{ "now"|date("Y") }} Steamtec. Tous droits réservés.</li>
+                <li><a href="#" class="text-white text-decoration-none">Politique de confidentialité</a></li>
+                <li><a href="#" class="text-white text-decoration-none">Conditions générales de vente</a></li>
+                <li><a href="#" class="text-white text-decoration-none">Paramètres des cookies</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>

@@ -3,6 +3,8 @@ imports:
 doctrine:
     dbal:
         url: '%env(resolve:DATABASE_URL)%'
+        mapping_types:
+            enum: string
 
         # IMPORTANT: You MUST configure your server version,
         # either here or in the DATABASE_URL env var (see .env file)
@@ -10,6 +12,22 @@ doctrine:
 
         profiling_collect_backtrace: '%kernel.debug%'
         use_savepoints: true
+        types:
+            userId: Infrastructure\Database\FieldType\UserIdType
+            machineId: Infrastructure\Database\FieldType\MachineIdType
+            chantierId: Infrastructure\Database\FieldType\ChantierIdType
+            chantierMachineId: Infrastructure\Database\FieldType\ChantierMachineIdType
+            parcMachineId: Infrastructure\Database\FieldType\ParcMachineIdType
+            machineLogId: Infrastructure\Database\FieldType\MachineLogIdType
+            entretienLogId: Infrastructure\Database\FieldType\EntretienLogIdType
+            documentId: Infrastructure\Database\FieldType\DocumentIdType
+            faqId: Infrastructure\Database\FieldType\FaqIdType
+            maintenanceNotificationId: Infrastructure\Database\FieldType\MaintenanceNotificationIdType
+            enumMaintenanceNotification: Infrastructure\Database\FieldType\EnumMaintenanceNotificationType
+            pushNotificationId: Infrastructure\Database\FieldType\PushNotificationIdType
+            categoryId: Infrastructure\Database\FieldType\CategoryIdType
+            problemTypeId: Infrastructure\Database\FieldType\ProblemTypeIdType
+            diagnosticStepId: Infrastructure\Database\FieldType\DiagnosticStepIdType
     orm:
         auto_generate_proxy_classes: true
         default_entity_manager: default
@@ -23,6 +41,11 @@ doctrine:
                 validate_xml_mapping: true
                 naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
                 auto_mapping: true
+                dql:
+                    datetime_functions:
+                        date_format: DoctrineExtensions\Query\Mysql\DateFormat
+                        date: DoctrineExtensions\Query\Mysql\Date
+                        TIMESTAMPDIFF: DoctrineExtensions\Query\Mysql\TimestampDiff
                 
 when@test:
     doctrine:

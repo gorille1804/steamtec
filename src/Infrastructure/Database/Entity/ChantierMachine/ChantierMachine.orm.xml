@@ -1,0 +1,16 @@
+<!-- config/doctrine/User.orm.xml -->
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+                  
+    <entity name="Domain\Chantier\Data\Model\ChantierMachine\ChantierMachine" table="chantier_machines">
+        <id name="id" type="chantierMachineId" column="id" />
+         <many-to-one field="parcMachine" target-entity="Domain\ParcMachine\Data\Model\ParcMachine">
+            <join-column name="parc_machine_id" referenced-column-name="id"/>
+        </many-to-one> 
+         <many-to-one field="chantier" target-entity="Domain\Chantier\Data\Model\Chantier\Chantier" inversed-by="chantierMachines">
+            <join-column name="chantier_id" referenced-column-name="id"/>
+        </many-to-one>
+    </entity>
+</doctrine-mapping>

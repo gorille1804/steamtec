@@ -1,0 +1,71 @@
+# Ã‰tape 1 : Construction des assets front-end avec Node.js
+# FROM node:18-bullseye as node-builder
+
+
+# WORKDIR /app
+# COPY package.json package-lock.json ./
+# RUN npm install
+# COPY . .
+# RUN npm run build
+
+
+# Ã‰tape 2 : Image PHP avec Apache
+FROM php:8.2.16-apache-bullseye
+
+# Installation des dÃ©pendances systÃ¨mes
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    libicu-dev \
+    libzip-dev \
+    && docker-php-ext-install \
+    pdo_mysql \
+    intl \
+    zip \
+    opcache
+
+# Installation de Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Configuration d'Apache
+COPY apache.conf /etc/apache2/sites-available/000-default.conf
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+RUN a2enmod rewrite
+
+# Configuration du rÃ©pertoire de travail
+WORKDIR /var/www/html
+
+# Copie des fichiers de l'application
+COPY . .
+
+# folder for session
+RUN mkdir -p var/sessions/dev var/sessions/test
+RUN chmod -R 777 var/sessions
+
+# Copier uniquement les assets gÃ©nÃ©rÃ©s par Node.js
+# COPY --from=node-builder /app/public/build public/build
+
+# Ajouter l'utilisateur www-data si nÃ©cessaire
+RUN chown -R www-data:www-data .
+#RUN useradd -r -u 33 -g www-data www-data
+
+# Passer Ã  l'utilisateur www-data
+USER www-data
+
+# Installation des dÃ©pendances et gÃ©nÃ©ration de l'autoload
+RUN composer install --optimize-autoloader
+RUN composer dump-autoload --optimize
+
+# Lancer la migration
+RUN php bin/console doctrine:migrations:migrate --no-interaction
+
+# Donner les permissions avant le cache:clear
+RUN chmod -R 777 var/cache var/log
+
+# Configuration du mode prod et des permissions
+ENV APP_ENV=dev
+ENV APP_DEBUG=1
+
+# DÃ©marrage d'Apache avec les logs visibles
+CMD ["apache2-foreground"]
+

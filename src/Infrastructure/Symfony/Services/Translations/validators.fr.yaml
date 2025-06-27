@@ -1,0 +1,54 @@
+users:           
+    form:
+        email:
+            empty: "L'email ne peut pas être vide"
+            validation: "L'email n'est pas valide"
+        firstname:
+            empty: "Le prénom ne peut pas être vide"
+        lastname:
+            empty: "Le nom ne peut pas être vide"
+        phone:
+            empty: "Le téléphone ne peut pas être vide"
+            validation: "Numéro de téléphone invalide"
+        socity:
+            empty: "La société ne peut pas être vide"
+        role:
+            empty: "Au moins un rôle doit être sélectionné"
+        
+    reset_passwords:
+        form:
+            password:
+                empty: "Veuillez entrer un mot de passe"
+                validation: "Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial (@$!%*?&)"
+                min: "Votre mot de passe doit contenir au moins {{ limit }} caractères"
+            password_confirmation:
+                empty: "Veuillez confirmer votre mot de passe"
+                not_equals: "La confirmation du mot de passe ne correspond pas"
+    login:
+        form:
+            email:
+                empty: "Veuillez entrer un adresse email"
+                validation: "Veuillez entrer une adresse e-mail valide"   
+            password:
+                empty: "Veuillez entrer un mot de passe"
+                min: "Votre mot de passe doit contenir au moins {{ limit }} caractères"
+
+  
+profils:
+    form:
+        firstname: 
+            empty: "Le prénom ne peut pas être vide"
+        lastname:
+            empty: "Le nom ne peut pas être vide"
+        phone:
+            empty: "Le téléphone ne peut pas être vide"
+            validation: "Numéro de téléphone invalide"
+        socity:
+            empty: "La société ne peut pas être vide"
+
+FAQs:
+    form:
+        question:
+            empty: "Entrez la question s'il vous plaits"
+        answer:
+            empty: "Entrez la reponse s'il vous plaits"

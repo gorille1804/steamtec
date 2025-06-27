@@ -1,0 +1,68 @@
+{% extends "layout/dashboard.layout.html.twig" %}
+{% block title %} {{'profils.index.title'|trans}} {{app.user.firstname}}{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h3>{{'profils.index.title'|trans}} {{app.user.firstname}}</h3>
+            </div>
+            <div class="col-md-12">
+                {% for flash in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ flash }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        {% if form_errors(form) %}
+            <div class="alert alert-danger">
+                {{ form_errors(form) }}
+            </div>
+        {% endif %}
+        
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form_label(form.firstname) }}
+                {{ form_widget(form.firstname) }}
+                {% if form_errors(form.firstname) %}
+                    <div class="invalid-feedback d-block">
+                        {{ form_errors(form.firstname) }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form_label(form.lastname) }}
+                {{ form_widget(form.lastname) }}
+                {% if form_errors(form.lastname) %}
+                    <div class="invalid-feedback d-block">
+                        {{ form_errors(form.lastname) }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-md-12 mb-3">
+                {{ form_label(form.phone) }}
+                {{ form_widget(form.phone) }}
+                {% if form_errors(form.phone) %}
+                    <div class="invalid-feedback d-block">
+                        {{ form_errors(form.phone) }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-md-12 mb-3">
+                {{ form_label(form.socity) }}
+                {{ form_widget(form.socity) }}
+                {% if form_errors(form.socity) %}
+                    <div class="invalid-feedback d-block">
+                        {{ form_errors(form.socity) }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-12">
+                {{ form_widget(form.update) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

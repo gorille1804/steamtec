@@ -9,3 +9,69 @@ doctrine:
                         dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/User'
                         prefix: 'Domain\User\Data\Model'
                         alias: User
+                    Machine:
+                        type: xml
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/Machine'
+                        prefix: 'Domain\Machine\Data\Model'
+                        alias: Machine
+                    Chantier:
+                        type: xml
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/Chantier'
+                        prefix: 'Domain\Chantier\Data\Model\Chantier'
+                        alias: Chantier
+                    ChantierMachine:
+                        type: xml
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/ChantierMachine'
+                        prefix: 'Domain\Chantier\Data\Model\ChantierMachine'
+                        alias: ChantierMachine
+                    ParcMachine:
+                        type: xml
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/ParcMachine'
+                        prefix: 'Domain\ParcMachine\Data\Model'
+                        alias: ChantierMachine
+                    MachineLog:
+                        type: xml
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/MachineLog'
+                        prefix: 'Domain\MachineLog\Data\Model'
+                        alias: MachineLog
+                    EntretienLog:
+                        type: xml
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/EntretienLog'
+                        prefix: 'Domain\Entretien\Data\Model'
+                        alias: EntretienLog
+                    Document:
+                        type: xml
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/Document'
+                        prefix: 'Domain\Document\Data\Model'
+                        alias: Document
+                    faq:
+                        type: xml
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/Faq'
+                        prefix: 'Domain\Faq\Data\Model'
+                        alias: faq
+                    maintenanceNotification:
+                        type: xml
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/MaintenanceNotification'
+                        prefix: 'Domain\MaintenanceNotification\Data\Model'
+                        alias: MaintenanceNotification
+                    PushNotification:
+                        type: xml
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/PushNotification'
+                        prefix: 'Domain\PushNotification\Data\Model'
+                        alias: PushNotification
+                    DecisionTree:
+                        type: xml
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Infrastructure/Database/Entity/DecisionTree'
+                        prefix: 'Domain\DecisionTree\Data\Model'
+                        alias: DecisionTree

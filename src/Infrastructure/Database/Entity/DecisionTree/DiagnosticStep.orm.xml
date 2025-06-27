@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+
+    <entity name="Domain\DecisionTree\Data\Model\DiagnosticStep" table="diagnostic_step">
+        <id name="id" type="diagnosticStepId" column="id"/>
+        <field name="problemTypeId" type="problemTypeId" column="problem_type_id" nullable="false"/>
+        <field name="stepType" type="string" column="step_type" nullable="true" enum-type="Domain\DecisionTree\Data\Enum\DiagnosticStepType"/>
+        <field name="parentStepId" type="diagnosticStepId" column="parent_step_id" nullable="true"/>
+        <field name="nextStepOKId" type="diagnosticStepId" column="next_step_ok_id" nullable="true"/>
+        <field name="nextStepKOId" type="diagnosticStepId" column="next_step_ko_id" nullable="true"/>
+        <field name="description" type="text" nullable="false"/>
+        <field name="needsTechnicalDoc" type="boolean" column="needs_technical_doc" nullable="false"/>
+        <field name="stepOrder" type="integer" column="step_order" nullable="false"/>
+        <field name="goTo" type="integer" column="go_to" nullable="true"/>
+        <field name="page" type="integer" column="page" nullable="true"/>
+    </entity>
+</doctrine-mapping>

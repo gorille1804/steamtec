@@ -1,0 +1,29 @@
+<!-- config/doctrine/Chantier.orm.xml -->
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+                  
+    <entity name="Domain\Chantier\Data\Model\Chantier\Chantier" table="chantiers">
+        <id name="id" type="chantierId" column="id" />
+        <field name="name" type="string" length="180" unique="true" />
+        <field name="description" type="text" nullable="true" />
+        <field name="machineSerialNumber" type="string" length="255" />
+        <field name="chantierDate" type="datetime" />
+        <field name="surface" type="decimal" precision="10" scale="2" />
+        <field name="duration" type="decimal" precision="5" scale="1" />
+        <field name="rendement" type="decimal" precision="10" scale="2" />
+        <field name="surfaceTypes" type="string" length="50" />
+        <field name="materials" type="json" />
+        <field name="encrassementLevel" type="integer" />
+        <field name="vetusteLevel" type="integer" />
+        <field name="commentaire" type="text" nullable="true" />
+         <many-to-one field="user" target-entity="Domain\User\Data\Model\User">
+            <join-column name="user_id" referenced-column-name="id"/>
+        </many-to-one>   
+        <field name="createdAt" type="datetime" />
+        <field name="updatedAt" type="datetime" nullable="true" />
+        <one-to-many field="chantierMachines" target-entity="Domain\Chantier\Data\Model\ChantierMachine\ChantierMachine" mapped-by="chantier" />
+        <one-to-many field="machineLogs" target-entity="Domain\MachineLog\Data\Model\MachineLog" mapped-by="chantier" />
+    </entity>
+</doctrine-mapping>

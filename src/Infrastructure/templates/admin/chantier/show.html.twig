@@ -1,0 +1,231 @@
+{% extends "layout/dashboard.layout.html.twig" %}
+{% block title %} {{'chantiers.shows.title'|trans}} {{chantier.name}}{% endblock %}
+{% block content %}
+    <div class="row flex-grow">
+        <div class="col-md-12">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card card-rounded">
+                <div class="card-body">
+                    <div class="d-sm-flex justify-content-between align-items-start">
+                        <div>
+                            <h2 class="card-title card-title-dash">{{'chantiers.shows.title'|trans}}</h2>
+                        </div>
+                        <div>
+                            <a href="{{ path('app_chantiers') }}" class="btn btn-secondary btn-sm text-white mb-0 me-0">
+                                <i class="mdi mdi-arrow-left"></i> {{'chantiers.shows.list_redirection'|trans}}
+                            </a>
+                            <a href="{{ path('app_chantier_edit', {'chantier': chantier.id}) }}" class="btn btn-warning btn-sm text-white mb-0 me-0">
+                                <i class="mdi mdi-pencil"></i> {{'chantiers.shows.btn_update'|trans}}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title-dash">{{'chantiers.shows.informations.title'|trans}}</h4>
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless">
+                                                <tbody>
+                                                    <tr>
+                                                        <th style="width: 30%">Nom:</th>
+                                                        <td>{{ chantier.name }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>{{'chantiers.shows.informations.creation'|trans}}</th>
+                                                        <td>{{ chantier.createdAt|date('d-m-Y:H:m') }}</td>
+                                                    </tr>
+                                                     <tr>
+                                                        <th>{{'chantiers.shows.informations.modification'|trans}}</th>
+                                                        <td>{{ chantier.updatedAt|date('d-m-Y:H:m') }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title-dash">{{'chantiers.shows.machines.title'|trans}}</h4>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{{'chantiers.shows.machines.name'|trans}}</th>
+                                                        <th>{{'chantiers.shows.machines.brand'|trans}}</th>
+                                                        <th>{{'chantiers.shows.machines.num_id'|trans}}</th>
+                                                        {% if machine.ficheTechnique is defined and machine.ficheTechnique is not null and machine.ficheTechnique.id is not null %}
+                                                            <th>{{'chantiers.shows.machines.ficheTechnique'|trans}}</th>
+                                                        {% endif %}
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for parc in chantier.chantierMachines %}
+                                                    {% set machine = parc.parcMachine.machine %}
+                                                        <tr>
+                                                            <td>{{ machine.nom }}</td>
+                                                            <td>{{ machine.marque }}</td>
+                                                            <td>{{ machine.numeroIdentification }}</td>
+                                                            {% if machine.ficheTechnique is defined and machine.ficheTechnique is not null and machine.ficheTechnique.id is not null %}
+                                                            <td colspan="2">
+                                                                <a href="{{path('document_download',{'document':machine.ficheTechnique.id})}}" class="btn btn-dark btn-sm text-white mb-0 me-0">
+                                                                    <i class="mdi mdi-download"></i>
+                                                                </a>
+                                                                <a href="{{path('document_show',{'document':machine.ficheTechnique.id})}}" target="_blank" class="btn btn-primary btn-sm text-white mb-0 me-0">
+                                                                    <i class="mdi mdi-eye"></i> 
+                                                                </a>
+                                                            </td>
+                                                            {% endif %}
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Additional Details Section -->
+                       <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h4 class="card-title-dash">{{'chantiers.shows.histories.title'|trans}}</h4>
+                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#logMachineModal">
+                                                <i class="mdi mdi-plus"></i> {{'chantiers.shows.histories.new_journal'|trans}}
+                                            </button>
+                                        </div>
+                                        <table class="table table-striped mt-3">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{'chantiers.shows.histories.date'|trans}}</th>
+                                                    <th>{{'chantiers.shows.histories.machine'|trans}}</th>
+                                                    <th>{{'chantiers.shows.histories.duration'|trans}}</th>
+                                                    <th>{{'chantiers.shows.histories.creation'|trans}}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% if chantier.machineLogs is defined and chantier.machineLogs|length > 0 %}
+                                                    {% for activity in chantier.machineLogs %}
+                                                        <tr>
+                                                            <td>{{ activity.logDate|date('d-m-Y') }}</td>
+                                                            <td>{{ activity.parcMachine.machine.nom }}</td>
+                                                            <td>{{ activity.duration ~ ' h' }}</td>
+                                                            <td>{{ activity.createdAt|date('d-m-Y') }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <tr>
+                                                        <td colspan="4" class="text-muted text-center">{{'chantiers.shows.histories.empty'|trans}}</td>
+                                                    </tr>
+                                                {% endif %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="logMachineModal" tabindex="-1" aria-labelledby="logMachineModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-md">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="logMachineModalLabel">{{'chantiers.shows.modals.title'|trans}}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {{ form_start(machineLogForm) }}
+                                        {{ form_row(machineLogForm.logDate) }}
+
+                                        <div class="table-responsive mt-3">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{{'chantiers.shows.modals.machine'|trans}}</th>
+                                                        <th>{{'chantiers.shows.modals.duration'|trans}}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for parcMachine in chantier.chantierMachines %}
+                                                        <tr>
+                                                            <td>
+                                                                {{ parcMachine.parcMachine.machine.nom }} 
+                                                                ({{ parcMachine.parcMachine.machine.numeroIdentification }})
+                                                                <input type="hidden" class="machine-id" value="{{ parcMachine.parcMachine.id }}">
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" class="form-control duration-input" 
+                                                                    min="0" step="0.1" value="0">
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div id="logs-container" data-prototype="{{ form_widget(machineLogForm.logs.vars.prototype)|e('html_attr') }}" style="display: none;">
+                                            {# Les entrées de formulaire seront insérées dynamiquement ici #}
+                                        </div>
+
+                                        {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN') %}
+                                            {{ form_widget(machineLogForm.save) }}
+                                        {% endif %}
+                                        {{ form_end(machineLogForm) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+   <script>
+$(document).ready(function() {
+    const $form = $('#logMachineModal form');
+    const $logsContainer = $('#logs-container');
+    const logsPrototype = $logsContainer.data('prototype');
+    let logsIndex = 0;
+    $form.on('submit', function(event) {
+        event.preventDefault();
+        $logsContainer.empty();
+        $('.duration-input').each(function() {
+            const duration = parseFloat($(this).val());
+            if (duration > 0) {
+                const $row = $(this).closest('tr');
+                const machineId = $row.find('.machine-id').val();
+                let newForm = logsPrototype.replace(/__name__/g, logsIndex);
+                const $newFormElement = $(newForm);
+                $logsContainer.append($newFormElement);
+                const $parcMachineSelect = $newFormElement.find('select[name$="[parcMachine]"]');
+                const $durationInput = $newFormElement.find('input[name$="[duration]"]');
+                $parcMachineSelect.find('option').each(function() {
+                    if ($(this).val() == machineId) {
+                        $(this).prop('selected', true);
+                        return false; 
+                    }
+                });
+                $durationInput.val(duration);
+                
+                logsIndex++;
+            }
+        });
+        $form[0].submit();
+    });
+});
+</script>
+
+{% endblock %}

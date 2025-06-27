@@ -1,8 +1,33 @@
+parameters:
+    appUrl: '%env(APP_URL)%'
+    appEnv: '%env(APP_ENV)%'
+    secretKey: '%env(APP_SECRET)%'
+    algorithm: '%env(APP_ALGORITHM)%'
+    noReplyEmail: '%env(NO_REPLY_EMAIL)%'
+    mailerService: '%env(MAILER_SERVICE)%'
+    publicDirectory: '%kernel.project_dir%/public'
+    maintenanceNotificationFile: '%kernel.project_dir%/public/uploads/maintenance_machine/ELEC_ENTRETIEN_REGULIER_PONCTUEL.pdf'
+
+
 services:
     _defaults:
         autowire: true
         autoconfigure: true
 
+        bind:
+            $appUrl: '%appUrl%'
+            $appEnv: '%appEnv%'
+            $secretKey: '%secretKey%'
+            $algorithm: '%algorithm%'
+            $noReplyEmail: '%noReplyEmail%'
+            $mailerService: '%mailerService%'
+            $publicDirectory: '%publicDirectory%'
+            $maintenanceNotificationFile: '%maintenanceNotificationFile%'
+
+    Infrastructure\Symfony\Services\Email\DefaultEmailSender:
+        arguments:
+            $mailer: '@Symfony\Component\Mailer\MailerInterface'
+            $twig: '@Twig\Environment'
     Domain\:
         resource: '../src/Domain/'
         exclude:
@@ -26,7 +51,36 @@ services:
 
     Domain\User\Gateway\PasswordHasherInterface:
         alias: Infrastructure\Symfony\Security\SymfonyPasswordHasher
-
     Infrastructure\Symfony\Security\SymfonyPasswordHasher:
         arguments: 
             $symfonyPasswordHasher: '@Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface'
+    Domain\User\Gateway\AuthenticationManagerInterface:
+        class: Infrastructure\Symfony\Security\SymfonyAuthenticationManager
+        arguments:
+            $userAuthenticator: '@Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface'
+            $authenticator: '@Infrastructure\Symfony\Security\FormLoginAuthenticator'
+    Infrastructure\Symfony\Services\Email\EmailSenderInterface: '@Infrastructure\Symfony\Services\Email\DefaultEmailSender'
+    Infrastructure\Symfony\Services\File\SymfonyFileStorageService:
+        arguments:
+            $uploadDir: '%kernel.project_dir%/public/uploads'
+            $publicDir: '/uploads'
+    Domain\Shared\Service\File\FileStorageServiceInterface:
+        alias: Infrastructure\Symfony\Services\File\SymfonyFileStorageService
+    Domain\Document\Service\DocumentDownloaderInterface:
+        class: Infrastructure\Symfony\Services\Document\SymfonyDocumentDownloader
+    Domain\Document\Service\DocumentDeleteInterface:
+        class: Infrastructure\Symfony\Services\Document\SymfonyDocumentDownloader
+    Infrastructure\Event\RedirectAuthenticatedUserListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }   
+
+    
+
+    Infrastructure\Database\Fixture\UsersFixture:
+        tags: ['doctrine.fixture.orm']
+    Infrastructure\Database\Fixture\MachinesFixture:
+        tags: ['doctrine.fixture.orm']
+        
+    Infrastructure\Command\:
+        resource: '../src/Infrastructure/Command/*'
+        tags: ['console.command']

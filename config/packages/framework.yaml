@@ -1,15 +1,15 @@
-# see https://symfony.com/doc/current/reference/configuration/framework.html
+# config/packages/framework.yaml
 framework:
     secret: '%env(APP_SECRET)%'
-
-    # Note that the session will be started ONLY if you read or write from it.
     session: true
+    csrf_protection:
+        enabled: false
 
-    #esi: true
-    #fragments: true
 
 when@test:
     framework:
         test: true
         session:
             storage_factory_id: session.storage.factory.mock_file
+            handler_id: session.handler.mock_file
+            save_path: '%kernel.project_dir%/var/sessions/test'

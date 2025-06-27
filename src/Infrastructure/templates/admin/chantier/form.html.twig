@@ -1,0 +1,314 @@
+<style>
+#materials-toggle-group,
+.btn-group[aria-label="Type de surface"],
+.btn-group[aria-label="Niveau d'encrassement"],
+.btn-group[aria-label="Etat de vétusté"] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+#materials-toggle-group label,
+.btn-group label {
+    min-width: 120px;
+    text-align: center;
+    white-space: normal;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem !important;
+    margin: 0.1rem 0.2rem;
+    border: 1.5px solid #2340b5;
+    background: #fff;
+    color: #2340b5;
+    transition: background 0.2s, color 0.2s;
+}
+
+#materials-toggle-group input[type="checkbox"]:checked + label,
+.btn-group input[type="radio"]:checked + label {
+    background: #2340b5 !important;
+    color: #fff !important;
+    border-color: #2340b5 !important;
+}
+
+.form-control {
+    font-size: 0.95rem;
+    padding: 0.35rem 0.7rem;
+    height: 2rem;
+}
+
+.form-label {
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+}
+
+@media (max-width: 600px) {
+    #materials-toggle-group label,
+    .btn-group label {
+        min-width: 90px;
+        font-size: 0.9rem;
+        padding: 0.4rem 0.5rem;
+    }
+    .form-control {
+        font-size: 0.85rem;
+        padding: 0.25rem 0.4rem;
+        height: 1.7rem;
+    }
+    .form-label {
+        font-size: 0.85rem;
+    }
+}
+</style>
+
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="fom-group mb-2">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name, {'attr': {'readonly': is_granted('ROLE_ADMIN') ? 'readonly' : false}}) }}
+                {{ form_errors(form.name) }}
+                {% if form_errors(form.name) %}
+                    <div class="invalid-feedback d-block">
+                        {{ form_errors(form.name) }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="fom-group mb-2">
+                {{ form_label(form.chantierDate) }}
+                {{ form_widget(form.chantierDate, {'attr': {'readonly': is_granted('ROLE_ADMIN') ? 'readonly' : false}}) }}
+                {{ form_errors(form.chantierDate) }}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="fom-group mb-2">
+                {{ form_label(form.machineSerialNumber) }}
+                {{ form_widget(form.machineSerialNumber, {'attr': {'readonly': is_granted('ROLE_ADMIN') ? 'readonly' : false}}) }}
+                {{ form_errors(form.machineSerialNumber) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="fom-group mb-2">
+                {{ form_label(form.surfaceTypes) }}
+                <div class="btn-group w-100 mb-2" role="group" aria-label="Type de surface">
+                    {% for choice in form.surfaceTypes %}
+                        {{ form_widget(choice, {
+                            attr: {
+                                class: 'btn-check',
+                                autocomplete: 'off',
+                                disabled: is_granted('ROLE_ADMIN') ? 'disabled' : false
+                            }
+                        }) }}
+                        <label class="btn btn-primary btn-sm" for="{{ choice.vars.id }}">
+                            {{ choice.vars.label }}
+                        </label>
+                    {% endfor %}
+                </div>
+                {{ form_errors(form.surfaceTypes) }}
+            </div>
+            <div class="fom-group mb-2">
+                {{ form_label(form.materials) }}
+                <div id="materials-toggle-group" class="btn-group w-100 mb-2" role="group" aria-label="Matériaux"></div>
+                {{ form_widget(form.materials, {'value': form.materials.vars.value is iterable ? form.materials.vars.value|json_encode : form.materials.vars.value }) }}
+                {{ form_errors(form.materials) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="fom-group mb-2">
+                {{ form_label(form.encrassementLevel) }}
+                <div class="btn-group w-100 mb-2" role="group" aria-label="Niveau d'encrassement">
+                    {% for choice in form.encrassementLevel %}
+                        {{ form_widget(choice, {
+                            attr: {
+                                class: 'btn-check',
+                                autocomplete: 'off',
+                                disabled: is_granted('ROLE_ADMIN') ? 'disabled' : false
+                            }
+                        }) }}
+                        <label class="btn btn-primary btn-sm" for="{{ choice.vars.id }}">
+                            {{ choice.vars.label }}
+                        </label>
+                    {% endfor %}
+                </div>
+                {{ form_errors(form.encrassementLevel) }}
+            </div>
+            <div class="fom-group mb-2">
+                {{ form_label(form.vetusteLevel) }}
+                <div class="btn-group w-100 mb-2" role="group" aria-label="Etat de vétusté">
+                    {% for choice in form.vetusteLevel %}
+                        {{ form_widget(choice, {
+                            attr: {
+                                class: 'btn-check',
+                                autocomplete: 'off',
+                                disabled: is_granted('ROLE_ADMIN') ? 'disabled' : false
+                            }
+                        }) }}
+                        <label class="btn btn-primary btn-sm" for="{{ choice.vars.id }}">
+                            {{ choice.vars.label }}
+                        </label>
+                    {% endfor %}
+                </div>
+                {{ form_errors(form.vetusteLevel) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="fom-group mb-2 col">
+                {{ form_label(form.surface) }}
+                {{ form_widget(form.surface, {'attr': {'readonly': is_granted('ROLE_ADMIN') ? 'readonly' : false}}) }}
+                {{ form_errors(form.surface) }}
+            </div>
+            <div class="fom-group mb-2 col">
+                {{ form_label(form.duration) }}
+                {{ form_widget(form.duration, {'attr': {'readonly': is_granted('ROLE_ADMIN') ? 'readonly' : false}}) }}
+                {{ form_errors(form.duration) }}
+            </div>
+            <div class="fom-group mb-2 col">
+                {{ form_label(form.rendement) }}
+                {{ form_widget(form.rendement, {'attr': {'readonly': is_granted('ROLE_ADMIN') ? 'readonly' : false}}) }}
+                {{ form_errors(form.rendement) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="fom-group mb-2">
+                {{ form_label(form.commentaire) }}
+                {{ form_widget(form.commentaire, {'attr': {'readonly': is_granted('ROLE_ADMIN') ? 'readonly' : false}}) }}
+                {{ form_errors(form.commentaire) }}
+            </div>
+        </div>
+    </div>
+
+    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary w-auto ' ~ (is_granted('ROLE_ADMIN') ? 'd-none' : '')}}) }}
+{{ form_end(form) }}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Vérifier si l'utilisateur est admin
+    const isAdmin = {{ is_granted('ROLE_ADMIN') ? 'true' : 'false' }};
+    
+    const surfaceField = document.querySelector('#{{ form.surface.vars.id }}');
+    const durationField = document.querySelector('#{{ form.duration.vars.id }}');
+    const rendementField = document.querySelector('#{{ form.rendement.vars.id }}');
+    const surfaceTypeRadios = document.getElementsByName('{{ form.surfaceTypes.vars.full_name }}');
+    const materialsHiddenField = document.querySelector('#{{ form.materials.vars.id }}');
+    const materialsToggleGroup = document.getElementById('materials-toggle-group');
+    
+    // Définition des matériaux par type de surface
+    const materialsBySurfaceType = {
+        'TOIT': [
+            'TUILE CIMENT',
+            'TUILE TERRE CUITE',
+            'PIERRE NATURELLE',
+            'AUTRES'
+        ],
+        'MUR': [
+            'ENDUIT',
+            'PIERRE NATURELLE',
+            'BARDAGE BOIS',
+            'BARDAGE METAL',
+            'AUTRES'
+        ],
+        'SOL': [
+            'BOIS',
+            'PIERRE NATURELLE',
+            'AUTRES'
+        ],
+        'AUTRES': [
+            'AUTRES'
+        ]
+    };
+    
+    function calculateRendement() {
+        const surface = parseFloat(surfaceField.value) || 0;
+        const duration = parseFloat(durationField.value) || 0;
+        
+        if (duration > 0) {
+            const rendement = surface / duration;
+            rendementField.value = rendement.toFixed(2) + ' m²/h';
+        } else {
+            rendementField.value = '';
+        }
+    }
+    
+    function getSelectedSurfaceType() {
+        let selected = null;
+        surfaceTypeRadios.forEach ? surfaceTypeRadios.forEach(radio => { if (radio.checked) selected = radio.value; }) : Array.from(surfaceTypeRadios).forEach(radio => { if (radio.checked) selected = radio.value; });
+        return selected;
+    }
+
+    function updateMaterials() {
+        const selectedSurfaceType = getSelectedSurfaceType();
+        // Vider le groupe de boutons
+        materialsToggleGroup.innerHTML = '';
+        // Ne pas vider le champ caché ici, pour conserver la sélection précédente
+        if (selectedSurfaceType && materialsBySurfaceType[selectedSurfaceType]) {
+            materialsBySurfaceType[selectedSurfaceType].forEach((material, idx) => {
+                const inputId = 'material-toggle-' + idx;
+                const input = document.createElement('input');
+                input.type = 'checkbox';
+                input.className = 'btn-check';
+                input.name = 'materials-toggle';
+                input.id = inputId;
+                input.value = material;
+                input.autocomplete = 'off';
+                // Désactiver les checkboxes pour les admins
+                if (isAdmin) {
+                    input.disabled = true;
+                } else {
+                    input.addEventListener('change', updateHiddenField);
+                }
+                const label = document.createElement('label');
+                label.className = 'btn btn-outline-primary btn-sm';
+                label.setAttribute('for', inputId);
+                label.textContent = material;
+                materialsToggleGroup.appendChild(input);
+                materialsToggleGroup.appendChild(label);
+            });
+        }
+        checkExistingMaterials();
+    }
+    
+    function checkExistingMaterials() {
+        let existing = materialsHiddenField.value;
+        try {
+            existing = JSON.parse(existing);
+        } catch (e) {
+            existing = [];
+        }
+        if (!Array.isArray(existing)) existing = [];
+        Array.from(materialsToggleGroup.querySelectorAll('input[type="checkbox"]')).forEach(input => {
+            input.checked = existing.includes(input.value);
+        });
+        updateHiddenField();
+    }
+    
+    function updateHiddenField() {
+        const checkedBoxes = materialsToggleGroup.querySelectorAll('input[type="checkbox"]:checked');
+        const selectedValues = Array.from(checkedBoxes).map(input => input.value);
+        materialsHiddenField.value = JSON.stringify(selectedValues);
+    }
+    
+    // N'ajouter les écouteurs d'événements que si l'utilisateur n'est pas admin
+    if (!isAdmin) {
+        surfaceField.addEventListener('input', calculateRendement);
+        durationField.addEventListener('input', calculateRendement);
+        // Ajoute l'écouteur sur chaque radio
+        Array.from(surfaceTypeRadios).forEach(radio => {
+            radio.addEventListener('change', updateMaterials);
+        });
+    }
+    
+    // Calculer le rendement au chargement de la page
+    calculateRendement();
+    
+    // Mettre à jour les matériaux au chargement de la page
+    updateMaterials();
+    checkExistingMaterials();
+});
+</script>

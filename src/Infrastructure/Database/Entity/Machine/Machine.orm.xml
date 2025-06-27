@@ -1,0 +1,18 @@
+<!-- config/doctrine/Machine.orm.xml -->
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+                  
+    <entity name="Domain\Machine\Data\Model\Machine" table="machine">
+        <id name="id" type="machineId" column="id"/>
+        <field name="numeroIdentification" type="string" length="255" unique="true"/>
+        <field name="nom" type="string" length="255"/>
+        <field name="marque" type="string" length="255"/>
+        <field name="seuilMaintenance" type="integer"/>
+        <field name="createdAt" type="datetime" /> 
+        <many-to-one field="ficheTechnique" target-entity="Domain\Document\Data\Model\Document">
+            <join-column name="ficheTechnique" referenced-column-name="id"/>
+        </many-to-one>
+    </entity>
+</doctrine-mapping>
