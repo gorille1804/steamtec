@@ -19,17 +19,17 @@ final class Version20250327120000 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        // Ajout des nouveaux champs à la table chantiers
-        $this->addSql('ALTER TABLE chantiers ADD machine_serial_number VARCHAR(255) NOT NULL');
-        $this->addSql('ALTER TABLE chantiers ADD chantier_date DATETIME NOT NULL');
-        $this->addSql('ALTER TABLE chantiers ADD surface DECIMAL(10,2) NOT NULL');
-        $this->addSql('ALTER TABLE chantiers ADD duration DECIMAL(5,1) NOT NULL');
-        $this->addSql('ALTER TABLE chantiers ADD rendement DECIMAL(10,2) NOT NULL');
-        $this->addSql('ALTER TABLE chantiers ADD surface_types VARCHAR(50) NOT NULL');
-        $this->addSql('ALTER TABLE chantiers ADD materials JSON NOT NULL');
-        $this->addSql('ALTER TABLE chantiers ADD encrassement_level INT NOT NULL');
-        $this->addSql('ALTER TABLE chantiers ADD vetuste_level INT NOT NULL');
-        $this->addSql('ALTER TABLE chantiers ADD commentaire LONGTEXT DEFAULT NULL');
+        // Ajout des nouveaux champs à la table chantiers avec vérification d'existence
+        $this->addSql('ALTER TABLE chantiers ADD COLUMN IF NOT EXISTS machine_serial_number VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE chantiers ADD COLUMN IF NOT EXISTS chantier_date DATETIME NOT NULL');
+        $this->addSql('ALTER TABLE chantiers ADD COLUMN IF NOT EXISTS surface DECIMAL(10,2) NOT NULL');
+        $this->addSql('ALTER TABLE chantiers ADD COLUMN IF NOT EXISTS duration DECIMAL(5,1) NOT NULL');
+        $this->addSql('ALTER TABLE chantiers ADD COLUMN IF NOT EXISTS rendement DECIMAL(10,2) NOT NULL');
+        $this->addSql('ALTER TABLE chantiers ADD COLUMN IF NOT EXISTS surface_types VARCHAR(50) NOT NULL');
+        $this->addSql('ALTER TABLE chantiers ADD COLUMN IF NOT EXISTS materials JSON NOT NULL');
+        $this->addSql('ALTER TABLE chantiers ADD COLUMN IF NOT EXISTS encrassement_level INT NOT NULL');
+        $this->addSql('ALTER TABLE chantiers ADD COLUMN IF NOT EXISTS vetuste_level INT NOT NULL');
+        $this->addSql('ALTER TABLE chantiers ADD COLUMN IF NOT EXISTS commentaire LONGTEXT DEFAULT NULL');
     }
 
     public function down(Schema $schema): void
