@@ -112,3 +112,37 @@
 .breadcrumb-action-badge {
     background-color: #d38218;
 }
+
+/* Styles pour le diagramme Mermaid */
+.mermaid {
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.mermaid svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Responsive pour le diagramme */
+@media (max-width: 768px) {
+    .mermaid {
+        font-size: 0.8em;
+    }
+    
+    .mermaid svg {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+}
+
+/* Styles pour la carte du diagramme */
+.card .card-header h5 {
+    color: #333;
+    font-weight: 600;
+}
+
+.card .card-header i {
+    margin-right: 0.5rem;
+    color: #007bff;
+}

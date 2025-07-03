@@ -53,6 +53,105 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Fonction pour générer un flowchart Mermaid à partir d'un problème
+    function generateMermaidFlowchart(rootId, elements) {
+        const visited = new Set();
+        const flowchart = [];
+        const nodeCounter = { count: 0 };
+        const idMap = new Map(); // Map pour associer les IDs originaux aux IDs sécurisés
+        
+        function getSafeNodeId(originalId) {
+            if (!idMap.has(originalId)) {
+                idMap.set(originalId, `node_${nodeCounter.count++}`);
+            }
+            return idMap.get(originalId);
+        }
+        
+        function addNode(nodeId, nodeType, nodeTitle) {
+            if (visited.has(nodeId)) return;
+            visited.add(nodeId);
+            
+            let nodeStyle = '';
+            switch (nodeType) {
+                case 'probleme':
+                    nodeStyle = ':::probleme';
+                    break;
+                case 'etat':
+                case 'symptome':
+                    nodeStyle = ':::etat';
+                    break;
+                case 'verif':
+                    nodeStyle = ':::verif';
+                    break;
+                case 'action':
+                    nodeStyle = ':::action';
+                    break;
+            }
+            
+            // Échapper les caractères spéciaux pour Mermaid et limiter la longueur
+            const escapedTitle = nodeTitle
+                .replace(/[^\w\s\-]/g, ' ')
+                .replace(/\s+/g, ' ')
+                .trim()
+                .substring(0, 50);
+            
+            const safeId = getSafeNodeId(nodeId);
+            flowchart.push(`    ${safeId}["${escapedTitle}"]${nodeStyle}`);
+            return safeId;
+        }
+        
+        function addConnection(fromSafeId, toSafeId, label = '') {
+            if (label) {
+                flowchart.push(`    ${fromSafeId} -->|${label}| ${toSafeId}`);
+            } else {
+                flowchart.push(`    ${fromSafeId} --> ${toSafeId}`);
+            }
+        }
+        
+        function traverseNode(nodeId, parentSafeId = null) {
+            const node = elements.find(e => e.id === nodeId);
+            if (!node || visited.has(nodeId)) return null;
+            
+            const safeId = addNode(nodeId, node.type, node.title);
+            
+            // Ajouter la connexion avec le parent si fourni
+            if (parentSafeId) {
+                addConnection(parentSafeId, safeId);
+            }
+            
+            // Traiter les connexions selon le type de nœud
+            if (node.type === 'verif') {
+                if (node.next_ok) {
+                    const nextOkSafeId = getSafeNodeId(node.next_ok);
+                    traverseNode(node.next_ok, safeId);
+                    addConnection(safeId, nextOkSafeId, 'OK');
+                }
+                if (node.next_ko) {
+                    const nextKoSafeId = getSafeNodeId(node.next_ko);
+                    traverseNode(node.next_ko, safeId);
+                    addConnection(safeId, nextKoSafeId, 'KO');
+                }
+            } else if (node.next) {
+                if (Array.isArray(node.next)) {
+                    node.next.forEach(nextId => {
+                        traverseNode(nextId, safeId);
+                    });
+                } else {
+                    traverseNode(node.next, safeId);
+                }
+            }
+            
+            return safeId;
+        }
+        
+        // Correction : toujours partir du noeud racine (état, symptôme, action, etc.)
+        traverseNode(rootId, null);
+        
+        if (flowchart.length === 0) return '';
+        
+        return `%%{ init: { "flowchart": { "curve": "stepAfter" } } }%%\nflowchart TD\n${flowchart.join('\n')}\n\nclassDef probleme fill:#ff9999,stroke:#333,stroke-width:2px,color:#000\nclassDef etat fill:#99ccff,stroke:#333,stroke-width:2px,color:#000\nclassDef verif fill:#ffff99,stroke:#333,stroke-width:2px,color:#000\nclassDef action fill:#99ff99,stroke:#333,stroke-width:2px,color:#000`;
+    }
+
     console.log('Fetching JSON data from:', jsonUrl);
     fetch(jsonUrl)
         .then(response => {
@@ -167,7 +266,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 <button class="btn btn-outline-info" onclick="window.goBackStep()">Retour</button>
             </div>
             <div class="row">
-                <div id="problem-details" class="col-12"></div>
+                <div id="problem-flowchart" class="col-12"></div>
+                <div id="problem-steps" class="col-12"></div>
             </div>`;
 
         // Charger la page PDF si nécessaire
@@ -177,19 +277,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Afficher tous les états enfants du problème
         const etats = elements.filter(e => (e.parent === problemId) && (e.type === 'etat' || e.type === 'symptome'));
-        const detailsDiv = document.getElementById('problem-details');
+        const flowchartDiv = document.getElementById('problem-flowchart');
+        const stepsDiv = document.getElementById('problem-steps');
+        
+        // Nettoyer le flowchart (il sera affiché dans showStep)
+        flowchartDiv.innerHTML = '';
+        
         if (etats.length > 1) {
             let html = '<div class="mb-2">Veuillez sélectionner l\'état correspondant :</div><ul>';
             etats.forEach(etat => {
                 html += `<li><button class="btn btn-outline-primary mb-2" onclick="window.showStep('${etat.id}')">${etat.title}</button></li>`;
             });
             html += '</ul>';
-            detailsDiv.innerHTML = html;
-            window.showStep = (id) => showStep(id, elements, detailsDiv, true);
+            stepsDiv.innerHTML = html;
+            window.showStep = (id) => showStep(id, elements, stepsDiv, true);
         } else if (etats.length === 1) {
-            showStep(etats[0].id, elements, detailsDiv, true);
+            showStep(etats[0].id, elements, stepsDiv, true);
         } else {
-            detailsDiv.innerHTML = '<em>Aucune étape détaillée pour ce problème.</em>';
+            stepsDiv.innerHTML = '<em>Aucune étape détaillée pour ce problème.</em>';
         }
         window.showCategories = showCategories;
     }
@@ -202,6 +307,49 @@ document.addEventListener('DOMContentLoaded', function () {
             navigationStack.push({ id: stepId, label: step.title });
         }
         updateBreadcrumb();
+
+        // Affichage du flowchart si c'est un état/symptôme de premier niveau
+        const flowchartDiv = document.getElementById('problem-flowchart');
+        if (flowchartDiv) {
+            // On nettoie le flowchart
+            flowchartDiv.innerHTML = '';
+            // On affiche le flowchart uniquement si le parent est un problème
+            const parent = elements.find(e => e.id === step.parent);
+            if (parent && parent.type === 'probleme' && (step.type === 'etat' || step.type === 'symptome')) {
+                const flowchart = generateMermaidFlowchart(stepId, elements);
+                if (flowchart) {
+                    const flowchartContainer = document.createElement('div');
+                    flowchartContainer.className = 'mb-4';
+                    flowchartContainer.innerHTML = `
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="mdi mdi-flowchart"></i> Diagramme de flux du diagnostic</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mermaid">
+                                    ${flowchart}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    flowchartDiv.appendChild(flowchartContainer);
+                    if (typeof mermaid !== 'undefined') {
+                        mermaid.initialize({ 
+                            startOnLoad: false,
+                            theme: 'default',
+                            flowchart: {
+                                useMaxWidth: true,
+                                htmlLabels: true
+                            }
+                        });
+                        setTimeout(() => {
+                            mermaid.init();
+                        }, 100);
+                    }
+                }
+            }
+        }
+
         // Si l'étape possède un next qui pointe vers un problème, rediriger automatiquement
         if (step.next && elements.find(e => e.id === step.next && e.type === 'probleme')) {
             const nextProblem = elements.find(e => e.id === step.next && e.type === 'probleme');
