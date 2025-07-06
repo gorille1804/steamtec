@@ -391,7 +391,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (codePre && codeContainer) {
                         console.log('[DEBUG] Code Mermaid généré :', flowchart);
                         codePre.textContent = flowchart;
-                        codeContainer.style.display = 'block';
+                        //codeContainer.style.display = 'block';
                     }
                     if (typeof mermaid !== 'undefined') {
                         mermaid.initialize({ 
