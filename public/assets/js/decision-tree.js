@@ -50,15 +50,41 @@ document.addEventListener('DOMContentLoaded', function () {
                     break;
             }
             
-            // Échapper les caractères spéciaux pour Mermaid et limiter la longueur
-            const escapedTitle = nodeTitle
-                .replace(/[^\w\s\-]/g, ' ')
-                .replace(/\s+/g, ' ')
-                .trim()
-                .substring(0, 50);
+            // Préparer le titre pour Mermaid en préservant les caractères spéciaux
+            // et en ajoutant des retours à la ligne pour les textes longs
+            let processedTitle = nodeTitle
+                .replace(/"/g, '\\"') // Échapper les guillemets doubles
+                .replace(/\n/g, '<br/>') // Convertir les retours à la ligne existants
+                .trim();
+
+            // Ajouter des retours à la ligne pour les textes longs (tous les 40 caractères environ)
+            if (processedTitle.length > 40) {
+                const words = processedTitle.split(' ');
+                let lines = [];
+                let currentLine = '';
+
+                words.forEach(word => {
+                    if ((currentLine + ' ' + word).length > 40 && currentLine.length > 0) {
+                        lines.push(currentLine.trim());
+                        currentLine = word;
+                    } else {
+                        currentLine += (currentLine ? ' ' : '') + word;
+                    }
+                });
+                if (currentLine) {
+                    lines.push(currentLine.trim());
+                }
+
+                processedTitle = lines.join('<br/>');
+            }
+
+            // Limiter la longueur totale à 200 caractères
+            if (processedTitle.length > 200) {
+                processedTitle = processedTitle.substring(0, 197) + '...';
+            }
             
             const safeId = getSafeNodeId(nodeId);
-            flowchart.push(`    ${safeId}["${escapedTitle}"]${nodeStyle}`);
+            flowchart.push(`    ${safeId}["${processedTitle}"]${nodeStyle}`);
             return safeId;
         }
         
@@ -307,17 +333,58 @@ document.addEventListener('DOMContentLoaded', function () {
                     flowchartContainer.className = 'mb-4';
                     flowchartContainer.innerHTML = `
                         <div class="card">
-                            <div class="card-header">
+                            <div class="card-header d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0"><i class="mdi mdi-flowchart"></i> Diagramme de flux du diagnostic</h5>
+                                <div class="btn-group" role="group" aria-label="Contrôles de zoom">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="window.zoomOut()" title="Zoom arrière">
+                                        <i class="mdi mdi-magnify-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="window.resetZoom()" title="Zoom normal">
+                                        <i class="mdi mdi-magnify"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="window.zoomIn()" title="Zoom avant">
+                                        <i class="mdi mdi-magnify-plus"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <div class="mermaid">
-                                    ${flowchart}
+                            <div class="card-body p-0">
+                                <div class="mermaid-zoom-container">
+                                    <div class="mermaid" id="mermaid-flowchart">
+                                        ${flowchart}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     `;
                     flowchartDiv.appendChild(flowchartContainer);
+                    // Injection du CSS pour la zone de zoom (une seule fois)
+                    if (!document.getElementById('mermaid-zoom-style')) {
+                        const style = document.createElement('style');
+                        style.id = 'mermaid-zoom-style';
+                        style.innerHTML = `
+                            .mermaid-zoom-container {
+                                width: 100%;
+                                height: calc(100vh - 210px); /* Ajuster 210px selon la hauteur de la barre de navigation/breadcrumbs */
+                                overflow: auto;
+                                overflow-x: auto;
+                                /* display: flex; */
+                                /* align-items: center; */
+                                /* justify-content: center; */
+                                background: #fff;
+                            }
+                            .mermaid-zoom-container .mermaid {
+                                margin: 0;
+                                display: block;
+                            }
+                            @media (max-width: 900px) {
+                                .mermaid-zoom-container {
+                                    height: calc(100vh - 100px);
+                                    padding: 10px 4px 10px 4px;
+                                }
+                            }
+                        `;
+                        document.head.appendChild(style);
+                    }
                     // Afficher le code Mermaid sous le diagramme
                     const codePre = document.getElementById('mermaid-code');
                     const codeContainer = document.getElementById('mermaid-code-container');
@@ -333,10 +400,72 @@ document.addEventListener('DOMContentLoaded', function () {
                             flowchart: {
                                 useMaxWidth: true,
                                 htmlLabels: true
+                            },
+                            zoom: {
+                                enabled: true,
+                                scale: 1
                             }
                         });
+
+                        // Variables globales pour le zoom
+                        window.currentZoom = 1;
+                        window.minZoom = 0.5;
+                        window.maxZoom = 3;
+
+                        // Fonctions de zoom
+                        window.zoomIn = function () {
+                            if (window.currentZoom < window.maxZoom) {
+                                window.currentZoom = Math.min(window.currentZoom * 1.2, window.maxZoom);
+                                applyZoom();
+                            }
+                        };
+
+                        window.zoomOut = function () {
+                            if (window.currentZoom > window.minZoom) {
+                                window.currentZoom = Math.max(window.currentZoom / 1.2, window.minZoom);
+                                applyZoom();
+                            }
+                        };
+
+                        window.resetZoom = function () {
+                            window.currentZoom = 1;
+                            applyZoom();
+                        };
+
+                        function applyZoom() {
+                            const container = document.querySelector('.mermaid-zoom-container');
+                            const svg = document.querySelector('#mermaid-flowchart svg');
+                            if (svg && container) {
+                                // Mémoriser le centre visible avant zoom
+                                const prevScrollLeft = container.scrollLeft;
+                                const prevScrollTop = container.scrollTop;
+                                const prevWidth = svg.clientWidth * (1 / window.currentZoom);
+                                const prevHeight = svg.clientHeight * (1 / window.currentZoom);
+                                const containerWidth = container.clientWidth;
+                                const containerHeight = container.clientHeight;
+                                const relX = (prevScrollLeft + containerWidth / 2) / prevWidth;
+                                const relY = (prevScrollTop + containerHeight / 2) / prevHeight;
+
+                                svg.style.transform = `scale(${window.currentZoom})`;
+                                svg.style.transformOrigin = 'top left';
+                                svg.style.transition = 'transform 0.3s ease';
+
+                                // Appliquer le scroll pour garder la même zone visible
+                                setTimeout(() => {
+                                    const newWidth = svg.clientWidth * window.currentZoom;
+                                    const newHeight = svg.clientHeight * window.currentZoom;
+                                    container.scrollLeft = newWidth * relX - containerWidth / 2;
+                                    container.scrollTop = newHeight * relY - containerHeight / 2;
+                                }, 10);
+                            }
+                        }
+
                         setTimeout(() => {
                             mermaid.init();
+                            // Appliquer le zoom initial après le rendu
+                            setTimeout(() => {
+                                applyZoom();
+                            }, 200);
                         }, 100);
                     }
                 }
