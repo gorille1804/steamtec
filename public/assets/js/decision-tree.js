@@ -89,30 +89,38 @@ document.addEventListener('DOMContentLoaded', function () {
             
             // Traiter les connexions selon le type de nœud
             if (node.type === 'verif' && (node.next_ok || node.next_ko)) {
-                // Pour les vérifs avec OK/KO, toujours utiliser un cercle de jonction
-                const circleId = addCircleNode();
-                flowchart.push(`    ${safeId} --> ${circleId}`);
+                let fromID = safeId;
+                if (node.next_ok && node.next_ko) {
+                    // Pour les vérifs avec OK/KO, toujours utiliser un cercle de jonction
+                    const circleId = addCircleNode();
+                    flowchart.push(`    ${safeId} --> ${circleId}`);
+                    fromID = circleId;
+                }
 
-            // Branche OK (à gauche)
+                // Branche OK (à gauche)
                 if (node.next_ok) {
                     const nextOkSafeId = getSafeNodeId(node.next_ok);
-                    flowchart.push(`    ${circleId} --OK--> ${nextOkSafeId}`);
+                    flowchart.push(`    ${fromID} --OK--> ${nextOkSafeId}`);
                     traverseNode(node.next_ok, null);
                 }
                 // Branche KO (à droite)
                 if (node.next_ko) {
                     const nextKoSafeId = getSafeNodeId(node.next_ko);
-                    flowchart.push(`    ${circleId} --KO--> ${nextKoSafeId}`);
+                    flowchart.push(`    ${fromID} --KO--> ${nextKoSafeId}`);
                     traverseNode(node.next_ko, null);
                 }
             } else if (node.next) {
                 if (Array.isArray(node.next)) {
-                    // Pour les nœuds avec plusieurs next, utiliser un cercle de jonction
-                    const circleId = addCircleNode();
-                    flowchart.push(`    ${safeId} --> ${circleId}`);
+                    let fromID = safeId;
+                    if (node.next.length > 1) {
+                        // Pour les nœuds avec plusieurs next, utiliser un cercle de jonction
+                        const circleId = addCircleNode();
+                        flowchart.push(`    ${safeId} --> ${circleId}`);
+                        fromID = circleId;
+                    }
                     node.next.forEach((nextId, index) => {
                         const nextSafeId = getSafeNodeId(nextId);
-                        flowchart.push(`    ${circleId} --> ${nextSafeId}`);
+                        flowchart.push(`    ${fromID} --> ${nextSafeId}`);
                         traverseNode(nextId, null);
                     });
                 } else {
