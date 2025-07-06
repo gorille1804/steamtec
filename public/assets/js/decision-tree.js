@@ -12,46 +12,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let navigationStack = [];
     let elements = [];
-    let pdfDoc = null;
-    let currentPage = 1;
 
-    // Charger PDF.js
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-    // Fonction pour charger et afficher une page PDF
-    async function loadPDFPage(pdfUrl, pageNumber, canvasContainer) {
-        try {
-            if (!pdfDoc) {
-                pdfDoc = await pdfjsLib.getDocument(pdfUrl).promise;
-            }
-
-            const page = await pdfDoc.getPage(pageNumber);
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
-
-            // Calculer le ratio pour que le PDF s'adapte à la largeur du conteneur
-            const containerWidth = canvasContainer.clientWidth;
-            const viewport = page.getViewport({ scale: 1 });
-            const scale = containerWidth / viewport.width;
-            const scaledViewport = page.getViewport({ scale: scale });
-
-            canvas.width = scaledViewport.width;
-            canvas.height = scaledViewport.height;
-
-            // Rendre la page sur le canvas
-            await page.render({
-                canvasContext: context,
-                viewport: scaledViewport
-            }).promise;
-
-            // Vider le conteneur et ajouter le canvas
-            canvasContainer.innerHTML = '';
-            canvasContainer.appendChild(canvas);
-
-        } catch (error) {
-            console.error('Erreur lors du chargement du PDF:', error);
-        }
-    }
 
     // Fonction pour générer un flowchart Mermaid à partir d'un problème
     function generateMermaidFlowchart(rootId, elements) {
@@ -108,6 +70,12 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
         
+        function addCircleNode() {
+            const circleId = `n${Math.random().toString(36).substr(2, 9)}`;
+            flowchart.push(`    ${circleId}(( ))`);
+            return circleId;
+        }
+
         function traverseNode(nodeId, parentSafeId = null) {
             const node = elements.find(e => e.id === nodeId);
             if (!node || visited.has(nodeId)) return null;
@@ -120,23 +88,35 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             
             // Traiter les connexions selon le type de nœud
-            if (node.type === 'verif') {
+            if (node.type === 'verif' && (node.next_ok || node.next_ko)) {
+                // Pour les vérifs avec OK/KO, toujours utiliser un cercle de jonction
+                const circleId = addCircleNode();
+                flowchart.push(`    ${safeId} --> ${circleId}`);
+
+            // Branche OK (à gauche)
                 if (node.next_ok) {
                     const nextOkSafeId = getSafeNodeId(node.next_ok);
-                    traverseNode(node.next_ok, safeId);
-                    addConnection(safeId, nextOkSafeId, 'OK');
+                    flowchart.push(`    ${circleId} --OK--> ${nextOkSafeId}`);
+                    traverseNode(node.next_ok, null);
                 }
+                // Branche KO (à droite)
                 if (node.next_ko) {
                     const nextKoSafeId = getSafeNodeId(node.next_ko);
-                    traverseNode(node.next_ko, safeId);
-                    addConnection(safeId, nextKoSafeId, 'KO');
+                    flowchart.push(`    ${circleId} --KO--> ${nextKoSafeId}`);
+                    traverseNode(node.next_ko, null);
                 }
             } else if (node.next) {
                 if (Array.isArray(node.next)) {
-                    node.next.forEach(nextId => {
-                        traverseNode(nextId, safeId);
+                    // Pour les nœuds avec plusieurs next, utiliser un cercle de jonction
+                    const circleId = addCircleNode();
+                    flowchart.push(`    ${safeId} --> ${circleId}`);
+                    node.next.forEach((nextId, index) => {
+                        const nextSafeId = getSafeNodeId(nextId);
+                        flowchart.push(`    ${circleId} --> ${nextSafeId}`);
+                        traverseNode(nextId, null);
                     });
                 } else {
+                    // Liaison directe pour un seul next
                     traverseNode(node.next, safeId);
                 }
             }
@@ -268,12 +248,8 @@ document.addEventListener('DOMContentLoaded', function () {
             <div class="row">
                 <div id="problem-flowchart" class="col-12"></div>
                 <div id="problem-steps" class="col-12"></div>
-            </div>`;
+            </div>`;    
 
-        // Charger la page PDF si nécessaire
-        if (problem && problem.page) {
-            loadPDFPage('/uploads/ARBRE_DE_DEPANNAGE.pdf', problem.page, document.getElementById('pdf-container'));
-        }
 
         // Afficher tous les états enfants du problème
         const etats = elements.filter(e => (e.parent === problemId) && (e.type === 'etat' || e.type === 'symptome'));
@@ -301,6 +277,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function showStep(stepId, elements, container, pushNav = true) {
         const step = elements.find(e => e.id === stepId);
+        console.log('[DEBUG] showStep appelé avec :', stepId, step ? step.type : 'inconnu');
         if (!step) return;
         if (pushNav) {
             navigationStack = navigationStack.slice(0, navigationStack.length); // garder tout l'historique
@@ -333,6 +310,14 @@ document.addEventListener('DOMContentLoaded', function () {
                         </div>
                     `;
                     flowchartDiv.appendChild(flowchartContainer);
+                    // Afficher le code Mermaid sous le diagramme
+                    const codePre = document.getElementById('mermaid-code');
+                    const codeContainer = document.getElementById('mermaid-code-container');
+                    if (codePre && codeContainer) {
+                        console.log('[DEBUG] Code Mermaid généré :', flowchart);
+                        codePre.textContent = flowchart;
+                        codeContainer.style.display = 'block';
+                    }
                     if (typeof mermaid !== 'undefined') {
                         mermaid.initialize({ 
                             startOnLoad: false,

@@ -11,9 +11,16 @@
     <div class="col-md-12">
         <div id="decision-tree-breadcrumb" class="mb-3"></div>
         <div id="decision-tree-app" data-json-url="{{ asset('assets/data/decision-tree.json') }}"></div>
+        <div id="mermaid-code-container" class="mt-3" style="display:none;">
+            <h6>Code Mermaid généré</h6>
+            <pre id="mermaid-code" style="background:#222;color:#fff;padding:1em;border-radius:6px;overflow:auto;"></pre>
+        </div>
+        <div id="mermaid-json-container" class="mt-3" style="display:none;">
+            <h6>JSON(s) utilisés</h6>
+            <pre id="mermaid-json" style="background:#222;color:#fff;padding:1em;border-radius:6px;overflow:auto;"></pre>
+        </div>
     </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
 <script src="{{ asset('assets/js/decision-tree.js') }}"></script>
 {% endblock %}
