@@ -49,20 +49,28 @@ document.addEventListener('DOMContentLoaded', function () {
                     nodeStyle = ':::action';
                     break;
             }
-            
+            // Chercher le document PDF si besoin
+            let docLink = null;
+            if ((nodeType === 'action' || nodeType === 'verif')) {
+                const node = elements.find(e => e.id === nodeId);
+                if (node && node.usedoc === true) {
+                    const docFile = findDepannageDoc(nodeTitle);
+                    if (docFile) {
+                        docLink = `/uploads/documents/depannage/${encodeURIComponent(docFile)}`;
+                    }
+                }
+            }
             // Préparer le titre pour Mermaid en préservant les caractères spéciaux
             // et en ajoutant des retours à la ligne pour les textes longs
             let processedTitle = nodeTitle
-                .replace(/"/g, '\\"') // Échapper les guillemets doubles
+                .replace(/"/g, '\"') // Échapper les guillemets doubles
                 .replace(/\n/g, '<br/>') // Convertir les retours à la ligne existants
                 .trim();
-
             // Ajouter des retours à la ligne pour les textes longs (tous les 40 caractères environ)
             if (processedTitle.length > 40) {
                 const words = processedTitle.split(' ');
                 let lines = [];
                 let currentLine = '';
-
                 words.forEach(word => {
                     if ((currentLine + ' ' + word).length > 40 && currentLine.length > 0) {
                         lines.push(currentLine.trim());
@@ -74,15 +82,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (currentLine) {
                     lines.push(currentLine.trim());
                 }
-
                 processedTitle = lines.join('<br/>');
             }
-
             // Limiter la longueur totale à 200 caractères
             if (processedTitle.length > 200) {
                 processedTitle = processedTitle.substring(0, 197) + '...';
             }
-            
+            // Si docLink existe, rendre le label cliquable
+            if (docLink) {
+                processedTitle = `<a href=\"${docLink}\" target=\"_blank\">${processedTitle}</a>`;
+                nodeStyle = ':::document';
+            }
             const safeId = getSafeNodeId(nodeId);
             flowchart.push(`    ${safeId}["${processedTitle}"]${nodeStyle}`);
             return safeId;
@@ -102,6 +112,22 @@ document.addEventListener('DOMContentLoaded', function () {
             return circleId;
         }
 
+        function addImageNode(imageUrl, parentSafeId) {
+            // Crée un noeud image Mermaid (rectangle avec icône ou nom de fichier)
+            const imageNodeId = `img_${Math.random().toString(36).substr(2, 9)}`;
+            // On affiche le nom du fichier image (ou une icône)
+            let label = imageUrl ? `<img src='${imageUrl}' style='width:32px;height:auto;vertical-align:middle;'/>` : 'Image';
+            // Si Mermaid ne supporte pas <img>, on affiche juste le nom du fichier
+            if (!imageUrl.match(/\.(jpg|jpeg|png|gif|webp|svg)$/i)) {
+                label = imageUrl;
+            }
+            flowchart.push(`    ${imageNodeId}["${label}"]:::image`);
+            if (parentSafeId) {
+                flowchart.push(`    ${parentSafeId} --> ${imageNodeId}`);
+            }
+            return imageNodeId;
+        }
+
         function traverseNode(nodeId, parentSafeId = null) {
             const node = elements.find(e => e.id === nodeId);
             if (!node || visited.has(nodeId)) return null;
@@ -116,10 +142,14 @@ document.addEventListener('DOMContentLoaded', function () {
             // Traiter les connexions selon le type de nœud
             if (node.type === 'verif' && (node.next_ok || node.next_ko)) {
                 let fromID = safeId;
+                // Ajout gestion image : si le noeud verif a une image, on insère un noeud image juste après
+                if (node.image) {
+                    fromID = addImageNode(node.image, safeId);
+                }
                 if (node.next_ok && node.next_ko) {
                     // Pour les vérifs avec OK/KO, toujours utiliser un cercle de jonction
                     const circleId = addCircleNode();
-                    flowchart.push(`    ${safeId} --> ${circleId}`);
+                    flowchart.push(`    ${fromID} --> ${circleId}`);
                     fromID = circleId;
                 }
 
@@ -163,7 +193,44 @@ document.addEventListener('DOMContentLoaded', function () {
         
         if (flowchart.length === 0) return '';
         
-        return `%%{ init: { "flowchart": { "curve": "stepAfter" } } }%%\nflowchart TD\n${flowchart.join('\n')}\n\nclassDef probleme fill:#ff9999,stroke:#333,stroke-width:2px,color:#000\nclassDef etat fill:#99ccff,stroke:#333,stroke-width:2px,color:#000\nclassDef verif fill:#ffff99,stroke:#333,stroke-width:2px,color:#000\nclassDef action fill:#99ff99,stroke:#333,stroke-width:2px,color:#000`;
+        return `%%{ init: { "flowchart": { "curve": "stepAfter" } } }%%\nflowchart TD\n${flowchart.join('\n')}\n\nclassDef probleme fill:#ff9999,stroke:#333,stroke-width:2px,color:#000\nclassDef etat fill:#99ccff,stroke:#333,stroke-width:2px,color:#000\nclassDef verif fill:#ffff99,stroke:#333,stroke-width:2px,color:#000\nclassDef action fill:#99ff99,stroke:#333,stroke-width:2px,color:#000\nclassDef image fill:#fff,stroke:#333,stroke-width:2px,color:#000,stroke-dasharray: 5 5\nclassDef document fill:#ff9999,stroke:#333,stroke-width:1px,color:#fff`;
+    }
+
+    // Liste des documents PDF disponibles pour les fiches techniques (à synchroniser avec le dossier uploads/documents/depannage/)
+    const DEPANNAGE_DOCS = [
+        "DT001 CHANGER LA SONDE ELECTRONIQUE.pdf",
+        "DT005 REMPLACE LE PROGRAMMATEUR.pdf",
+        "DT006 CHANGER LA POMPE ANTICALCAIRE.pdf",
+        "DT013 CHANGER LA VANNE BY-PASS.pdf",
+        "DT014 VERIF ETAT CABLAGE BOITIER ELEC POMPE + ENCLENCHEMENT CONTACTEUR.pdf",
+        "DT018 NETTOYER ET VERIFIER LE BRULEUR.pdf",
+        "DT019 CHANGER LA POMPE A GASOIL.pdf",
+        "DT020 VERIFIER SI BRULEUR EST ALIMENTE EN CARBURANT.pdf",
+        "DT021 CHANGER LELECTROVANNE.pdf",
+        "DT022 TESTER FONCTIONNEMENT BOBINE D'ELECTROVANNE.pdf",
+        "DT030  CHANGER  LA SONDE DE DEBIT.pdf",
+        "DT032 VERIF  BON POSITION SONDE ELECTRONIQUE.pdf",
+        "D002 VERIFIER CABLAGE SONDE ELECTRO.pdf",
+        "D003 VERIFIER CABLAGE PHASE NEUTRE PROG.pdf",
+        "D007 VERIFIER CABLAGE POMPE ANTICALC.pdf",
+        "D008 DEMONTER CLAPETS.pdf",
+        "D009 NETTOYER L'ACCESSOIRE BOUCHE.pdf",
+        "D011 REALISER UN DETARTRAGE DE LA MACHINE.pdf",
+        "D012 CHANGER CLAPET RACCORD DE SORTIE.pdf",
+        "D015 VERIFIER LE FILTRE CARBURANT.pdf",
+        "D016 CHANGER LE FILTRE A CARBURANT.pdf",
+        "D017 VERIFIER CHANGER FILTRE INT POMPE GASOIL.pdf",
+        "D023 VERIF BON BRANCHEMENT ARMOIRE ELEC ELECTROVANNE.pdf",
+        "D024 VERIF BON BRANCHEMENT ARMOIRE ELEC DE ALLUM CHAUDIERE.pdf",
+        "D025 VERIF  BOBINE ET ELECTRODES BIEN BRANCHEES + ETAT DES CABLES.pdf",
+        "D028 VERIF BRANCHEMENT PROG ET VOYANT VERT.pdf",
+        "D031  SEPARER MECANIQUEMENT SONDE MECA.pdf"
+    ];
+
+    function findDepannageDoc(title) {
+        // On cherche un fichier dont le nom commence par le titre (en ignorant la casse et les espaces)
+        const normalizedTitle = title.trim().toLowerCase().replace(/\s+/g, ' ');
+        return DEPANNAGE_DOCS.find(file => file.toLowerCase().replace(/\s+/g, ' ').startsWith(normalizedTitle));
     }
 
     console.log('Fetching JSON data from:', jsonUrl);
@@ -462,8 +529,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         setTimeout(() => {
                             mermaid.init();
-                            // Appliquer le zoom initial après le rendu
+                            // Patch : forcer tous les liens du diagramme à s’ouvrir dans un nouvel onglet
                             setTimeout(() => {
+                                const mermaidDiv = document.getElementById('mermaid-flowchart');
+                                if (mermaidDiv) {
+                                    const links = mermaidDiv.querySelectorAll('a');
+                                    links.forEach(link => {
+                                        link.setAttribute('target', '_blank');
+                                        link.setAttribute('rel', 'noopener noreferrer');
+                                    });
+                                }
                                 applyZoom();
                             }, 200);
                         }, 100);
