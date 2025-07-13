@@ -279,9 +279,10 @@ class EntretienController extends AbstractController
                         $selectedParcMachine,
                         new \DateTime($data['date']),
                         (int) $data['hours'],
-                        $task['name'],
+                        $task['key'],
                         new \DateTimeImmutable(),
-                        null
+                        null,
+                        isset($data['isYear']) ? (bool)$data['isYear'] : false // Ajout du flag année/heure
                     );
                     
                     $savedLog = $this->entretienLogRepository->save($entretienLog);
@@ -359,7 +360,12 @@ class EntretienController extends AbstractController
             foreach ($logs as $log) {
                 $parcMachine = $log->getParcMachine();
                 $machine = $parcMachine->getMachine();
-                
+                // Déduire le nombre d'années à partir du planning si possible
+                $annees = null;
+                $planning = [700 => 1, 1400 => 2, 2100 => 3, 2800 => 4, 3500 => 5, 4200 => 6]; // Adapter si besoin
+                if (isset($planning[$log->getVolumeHoraire()])) {
+                    $annees = $planning[$log->getVolumeHoraire()];
+                }
                 $logsData[] = [
                     'id' => $log->getId()->getValue(),
                     'parcMachineId' => $parcMachine->getId()->getValue(),
@@ -368,8 +374,10 @@ class EntretienController extends AbstractController
                     'machineNumber' => $machine->getNumeroIdentification(),
                     'date' => $log->getLogDate()->format('Y-m-d'),
                     'hours' => $log->getVolumeHoraire(),
+                    'annees' => $annees,
                     'activity' => $log->getActivite(),
-                    'createdAt' => $log->getCreatedAt()->format('Y-m-d H:i:s')
+                    'createdAt' => $log->getCreatedAt()->format('Y-m-d H:i:s'),
+                    'isYear' => method_exists($log, 'isYear') ? $log->isYear() : false
                 ];
             }
 
