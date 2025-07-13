@@ -89,7 +89,19 @@
                         <div class="row mt-1" id="hoursSection" style="display: none;">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="machineHours" class="form-label">
+                                    <label class="form-label d-flex align-items-center mb-2">
+                                        <i class="mdi mdi-tune-vertical text-primary me-2"></i>
+                                        Mode de recherche
+                                    </label>
+                                    <div class="btn-group mb-2" role="group" aria-label="Mode de recherche">
+                                        <input type="radio" class="btn-check" name="modeToggle" id="modeHeures" autocomplete="off" checked>
+                                        <label class="btn btn-sm btn-outline-primary" for="modeHeures" id="modeHeuresLabel">Heures</label>
+
+                                        <input type="radio" class="btn-check" name="modeToggle" id="modeAnnees" autocomplete="off">
+                                        <label class="btn btn-sm btn-outline-primary" for="modeAnnees" id="modeAnneesLabel">Années</label>
+                                    </div>
+                                    <br>
+                                    <label for="machineHours" class="form-label" id="machineHoursLabel">
                                         <i class="mdi mdi-clock-outline text-primary"></i>
                                         Nombre d'heures de la machine
                                     </label>
@@ -103,7 +115,7 @@
                                                max="5000"
                                                step="50">
                                     </div>
-                                    <small class="form-text text-muted">
+                                    <small class="form-text text-muted" id="machineHoursHelp">
                                         Entrez le nombre d'heures pour voir la ligne correspondante dans le tableau
                                     </small>
                                 </div>
