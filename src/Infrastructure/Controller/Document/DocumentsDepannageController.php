@@ -25,7 +25,7 @@ use Infrastructure\Symfony\Security\SymfonyUserAdapter;
 #[Route('/dashboard')]
 class DocumentsDepannageController extends AbstractController
 {
-    #[Route('/depannage/aides', name: 'app_depannage_aides', methods: ['GET'])]
+    #[Route('/depannage/fiches-aides', name: 'app_depannage_aides', methods: ['GET'])]
     #[IsGranted(New MultiplyRolesExpression(RoleEnum::ADMIN, RoleEnum::USER))]
     public function fichesAide(Request $request): Response
     {

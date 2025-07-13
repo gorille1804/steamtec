@@ -117,6 +117,47 @@ class EntretienController extends AbstractController
         ]);
     }
 
+    #[Route('/entretiens/aides-techniques', name: 'app_entretiens_aides_techniques', methods: ['GET'])]
+    #[IsGranted(New MultiplyRolesExpression(RoleEnum::ADMIN, RoleEnum::USER))]
+    public function aidesTechniques(Request $request): Response
+    {
+        // Récupérer les documents PDF qui commencent par "E0"
+        $documentsPath = $this->getParameter('kernel.project_dir') . '/public/uploads/documents';
+        $documents = [];
+        
+        if (is_dir($documentsPath)) {
+            $files = scandir($documentsPath);
+            foreach ($files as $file) {
+                if (is_file($documentsPath . '/' . $file) && 
+                    pathinfo($file, PATHINFO_EXTENSION) === 'pdf' && 
+                    str_starts_with($file, 'ET')) {
+                    
+                    // Extraire le numéro et le titre du document
+                    $filename = pathinfo($file, PATHINFO_FILENAME);
+                    $number = substr($filename, 0, 4); // ET001, ET002, etc.
+                    $title = substr($filename, 4); // Le reste du nom
+                    
+                    $documents[] = [
+                        'filename' => $file,
+                        'number' => $number,
+                        'title' => trim($title),
+                        'path' => 'uploads/documents/' . $file
+                    ];
+                }
+            }
+            
+            // Trier les documents par numéro
+            usort($documents, function($a, $b) {
+                return strcmp($a['number'], $b['number']);
+            });
+        }
+        
+        return $this->render('admin/entretien/aides/index.html.twig', [
+            'title' => 'Liste des aides à l\'entretien pour techniciens',
+            'documents' => $documents,
+        ]);
+    }
+
     #[Route('/entretiens/log/create', name: 'app_entretien_log_create', methods: ['POST'])]
     #[IsGranted(New MultiplyRolesExpression(RoleEnum::ADMIN, RoleEnum::USER))]
     public function createLog(Request $request): JsonResponse
