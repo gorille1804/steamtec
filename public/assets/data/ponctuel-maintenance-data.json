@@ -1,0 +1,151 @@
+{
+  "task_mapping": {
+    "changer_buses_accessoires": {
+      "name": "Changer les buses des accessoires",
+      "pdf_link": "/public/uploads/documents/E007 Changer les buses.pdf"
+    },
+    "changer_filtre_alimentation_eau": {
+      "name": "Changer Filtre alimentation en eau",
+      "pdf_link": "/public/uploads/documents/E008 Changer le filtre alimentation Eau.pdf"
+    },
+    "changer_sonde_debit": {
+      "name": "Changer la sonde débit *"
+    },
+    "changer_clapets_pompe": {
+      "name": "Changer les Clapets de pompe *"
+    },
+    "changer_vanne_regulation": {
+      "name": "Changer la vanne de régulation *"
+    },
+    "changer_clapet_raccord_sortie": {
+      "name": "Changer le clapet du raccord de sortie *"
+    },
+    "joints_piston": {
+      "name": "Joints de piston *"
+    },
+    "verifier_cables_electrodes": {
+      "name": "Vérifier les câbles et capuchons d'électrodes",
+      "pdf_link": "/public/uploads/documents/E009 VERIFIER CABLES ET CAPUCHONS ELECTRODES.pdf"
+    },
+    "nettoyer_bruleur": {
+      "name": "Nettoyer le brûleur *"
+    },
+    "changer_bruleur": {
+      "name": "Changer le brûleur *"
+    },
+    "verifier_filtre_carburant": {
+      "name": "Vérifier le filtre à carburant interne de la pompe à fuel *",
+      "pdf_link": "/public/uploads/documents/E010 VERIFIER FILTRE INTERNE POMPE GASOIL.pdf"
+    },
+    "changer_pompe_fuel": {
+      "name": "Changer la pompe à FUEL *"
+    },
+    "verifier_cablage_electrique": {
+      "name": "Vérifier l'intégrité du câblage électrique et les serrages sur l'ensemble de la machine *"
+    }
+  },
+  "maintenance_schedule": [
+    {
+      "heures": "700",
+      "annees": "1",
+      "changer_buses_accessoires": true,
+      "changer_filtre_alimentation_eau": true,
+      "changer_sonde_debit": true,
+      "changer_clapets_pompe": false,
+      "changer_vanne_regulation": false,
+      "changer_clapet_raccord_sortie": true,
+      "joints_piston": false,
+      "verifier_cables_electrodes": true,
+      "nettoyer_bruleur": true,
+      "changer_bruleur": false,
+      "verifier_filtre_carburant": true,
+      "changer_pompe_fuel": false,
+      "verifier_cablage_electrique": false
+    },
+    {
+      "heures": "1400",
+      "annees": "2",
+      "changer_buses_accessoires": true,
+      "changer_filtre_alimentation_eau": true,
+      "changer_sonde_debit": true,
+      "changer_clapets_pompe": false,
+      "changer_vanne_regulation": false,
+      "changer_clapet_raccord_sortie": true,
+      "joints_piston": false,
+      "verifier_cables_electrodes": true,
+      "nettoyer_bruleur": true,
+      "changer_bruleur": false,
+      "verifier_filtre_carburant": true,
+      "changer_pompe_fuel": false,
+      "verifier_cablage_electrique": false
+    },
+    {
+      "heures": "2100",
+      "annees": "3",
+      "changer_buses_accessoires": true,
+      "changer_filtre_alimentation_eau": true,
+      "changer_sonde_debit": true,
+      "changer_clapets_pompe": true,
+      "changer_vanne_regulation": true,
+      "changer_clapet_raccord_sortie": true,
+      "joints_piston": true,
+      "verifier_cables_electrodes": true,
+      "nettoyer_bruleur": false,
+      "changer_bruleur": true,
+      "verifier_filtre_carburant": false,
+      "changer_pompe_fuel": true,
+      "verifier_cablage_electrique": true
+    },
+    {
+      "heures": "2800",
+      "annees": "4",
+      "changer_buses_accessoires": true,
+      "changer_filtre_alimentation_eau": true,
+      "changer_sonde_debit": true,
+      "changer_clapets_pompe": false,
+      "changer_vanne_regulation": false,
+      "changer_clapet_raccord_sortie": true,
+      "joints_piston": false,
+      "verifier_cables_electrodes": true,
+      "nettoyer_bruleur": true,
+      "changer_bruleur": false,
+      "verifier_filtre_carburant": true,
+      "changer_pompe_fuel": false,
+      "verifier_cablage_electrique": false
+    },
+    {
+      "heures": "3500",
+      "annees": "5",
+      "changer_buses_accessoires": true,
+      "changer_filtre_alimentation_eau": true,
+      "changer_sonde_debit": true,
+      "changer_clapets_pompe": false,
+      "changer_vanne_regulation": false,
+      "changer_clapet_raccord_sortie": true,
+      "joints_piston": false,
+      "verifier_cables_electrodes": true,
+      "nettoyer_bruleur": true,
+      "changer_bruleur": false,
+      "verifier_filtre_carburant": true,
+      "changer_pompe_fuel": false,
+      "verifier_cablage_electrique": false
+    },
+    {
+      "heures": "4200",
+      "annees": "6",
+      "changer_buses_accessoires": true,
+      "changer_filtre_alimentation_eau": true,
+      "changer_sonde_debit": true,
+      "changer_clapets_pompe": true,
+      "changer_vanne_regulation": true,
+      "changer_clapet_raccord_sortie": true,
+      "joints_piston": true,
+      "verifier_cables_electrodes": true,
+      "nettoyer_bruleur": false,
+      "changer_bruleur": true,
+      "verifier_filtre_carburant": false,
+      "changer_pompe_fuel": true,
+      "verifier_cablage_electrique": true
+    }
+  ]
+} 

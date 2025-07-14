@@ -47,6 +47,27 @@ class HistoriqueController extends AbstractController
             $total = $this->entretienLogRepository->getTotalCount();
         }
         
+        // Charger les fichiers JSON de maintenance
+        $ponctuelPath = $this->getParameter('kernel.project_dir') . '/public/assets/data/ponctuel-maintenance-data.json';
+        $tablePath = $this->getParameter('kernel.project_dir') . '/public/assets/data/maintenance-table-data.json';
+        $ponctuelData = file_exists($ponctuelPath) ? json_decode(file_get_contents($ponctuelPath), true) : [];
+        $tableData = file_exists($tablePath) ? json_decode(file_get_contents($tablePath), true) : [];
+        $taskMapping = [];
+        if (isset($ponctuelData['task_mapping'])) {
+            $taskMapping = array_merge($taskMapping, $ponctuelData['task_mapping']);
+        }
+        if (isset($tableData['task_mapping'])) {
+            $taskMapping = array_merge($taskMapping, $tableData['task_mapping']);
+        }
+
+        // Enrichir chaque log avec le nom lisible de l'activité
+        foreach ($entretienLogs as $log) {
+            $activiteKey = $log->getActivite();
+            $activiteLabel = $taskMapping[$activiteKey]['name'] ?? $activiteKey;
+            // Ajout dynamique d'une propriété pour la vue
+            $log->activiteLabel = $activiteLabel;
+        }
+        
         $maxPages = ceil($total / $limit);
         
         return $this->render('admin/historique/entretiens/index.html.twig', [
@@ -181,6 +202,19 @@ class HistoriqueController extends AbstractController
             $entretienLogs = $this->entretienLogRepository->findAllPaginated(1, 10000);
         }
 
+        // Charger les fichiers JSON de maintenance
+        $ponctuelPath = $this->getParameter('kernel.project_dir') . '/public/assets/data/ponctuel-maintenance-data.json';
+        $tablePath = $this->getParameter('kernel.project_dir') . '/public/assets/data/maintenance-table-data.json';
+        $ponctuelData = file_exists($ponctuelPath) ? json_decode(file_get_contents($ponctuelPath), true) : [];
+        $tableData = file_exists($tablePath) ? json_decode(file_get_contents($tablePath), true) : [];
+        $taskMapping = [];
+        if (isset($ponctuelData['task_mapping'])) {
+            $taskMapping = array_merge($taskMapping, $ponctuelData['task_mapping']);
+        }
+        if (isset($tableData['task_mapping'])) {
+            $taskMapping = array_merge($taskMapping, $tableData['task_mapping']);
+        }
+
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([
@@ -189,7 +223,7 @@ class HistoriqueController extends AbstractController
                 'Utilisateur',
                 'Machine',
                 'Numéro d\'identification',
-                'Volume horaire',
+                'Volume',
                 'Activité',
                 'Créé le'
             ]
@@ -200,14 +234,18 @@ class HistoriqueController extends AbstractController
             $parcMachine = $log->getParcMachine();
             $user = $parcMachine->getUser();
             $machine = $parcMachine->getMachine();
+
+            // Correspondance activité : clé technique -> nom lisible
+            $activiteKey = $log->getActivite();
+            $activiteLabel = $taskMapping[$activiteKey]['name'] ?? $activiteKey;
             
             $sheet->fromArray([
                 $log->getLogDate()->format('d/m/Y'),
                 $user->getFirstname() . ' ' . $user->getLastname(),
                 $machine->getNom(),
                 $machine->getNumeroIdentification(),
-                $log->getVolumeHoraire() . 'h',
-                $log->getActivite(),
+                $log->getVolumeHoraire() . ($log->isYear() ? ' an' . ($log->getVolumeHoraire() > 1 ? 's' : '') : ' h'),
+                $activiteLabel,
                 $log->getCreatedAt()->format('d/m/Y H:i')
             ], null, 'A' . $row);
             $row++;
