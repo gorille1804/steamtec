@@ -145,7 +145,7 @@
                     year: 'numeric'
                 });
 
-                cell.innerHTML = `<span class=\"maintenance-date\">${formattedDate}</span>`;
+                cell.innerHTML = `<span class="maintenance-date">${formattedDate}</span>`;
                 cell.title = `Entretien effectué le ${formattedDate}`;
 
                 // Ajouter les informations du log
