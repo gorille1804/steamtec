@@ -107,6 +107,12 @@
                         <span class="menu-title">Aides</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('app_entretiens_aides_techniques')}}">
+                        <i class="menu-icon mdi mdi-timeline-question-outline"></i>
+                        <span class="menu-title">Doc. pour techniciens</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </li>
@@ -123,10 +129,33 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{{path('app_arbre_de_depannage')}}" aria-controls="form-elements">
-            <i class="menu-icon mdi mdi-file-tree"></i>
+        <a class="nav-link" data-bs-toggle="collapse" href="#depannage" aria-expanded="false" aria-controls="depannage">
+            <i class="menu-icon mdi mdi-fire-off"></i>
             <span class="menu-title">Dépannage</span>
+            <i class="menu-arrow"></i>
         </a>
+        <div class="collapse" id="depannage">
+            <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('app_arbre_de_depannage')}}" aria-controls="form-elements">
+                        <i class="menu-icon mdi mdi-file-tree"></i>
+                        <span class="menu-title">Arbre</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('app_depannage_aides')}}">
+                        <i class="menu-icon mdi mdi-file"></i>
+                        <span class="menu-title">Fiches d'aide</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('app_depannage_documents_techniciens')}}">
+                        <i class="menu-icon mdi mdi-file-alert-outline"></i>
+                        <span class="menu-title">Doc. pour techniciens</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </li>
     {% endif %}
 </ul>

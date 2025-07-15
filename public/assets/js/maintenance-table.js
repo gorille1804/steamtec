@@ -1,70 +1,17 @@
 (function () {
-    const maintenanceData = {
-        "task_mapping": {
-            "vidanger_huile_moteur": {
-                "name": "Vidanger l'huile de la pompe *",
-                "pdf_link": "/public/uploads/documents/E001 Vidange de la pompe.pdf"
-            },
-            "nettoyer_filtre_air": {
-                "name": "Nettoyer filtre entrée pompe",
-                "pdf_link": "/public/uploads/documents/E002 Filtre entrée pompe.pdf"
-            },
-            "graisser_unite_coupe": {
-                "name": "Changer filtre à carburant",
-                "pdf_link": "/public/uploads/documents/E003 Changer le filtre à carburant.pdf"
-            },
-            "nettoyer_les_ailettes_moteur": {
-                "name": "Nettoyer les buses de diffusion vapeur",
-                "pdf_link": "/public/uploads/documents/E004 Nettoyer les buses.pdf"
-            },
-            "controler_pneus_roues": {
-                "name": "Changer les joints de flexibles",
-                "pdf_link": "/public/uploads/documents/E005 Changer joint Flexible.pdf"
-            },
-            "faire_un_nettoyage_de_la_bougie": {
-                "name": "Faire un détartrage de la STEAM_Tec",
-                "pdf_link": "/public/uploads/documents/E006 Faire un detartrage.pdf"
-            }
-        },
-        "maintenance_schedule": [
-            { "heures": "50", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "100", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "200", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "300", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "400", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": true },
-            { "heures": "500", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "600", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "700", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "800", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": true },
-            { "heures": "900", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "1000", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "1100", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "1200", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": true },
-            { "heures": "1300", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "1400", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "1500", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "1600", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": true },
-            { "heures": "1700", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "1800", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "1900", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "2000", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": true },
-            { "heures": "2100", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "2200", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "2300", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "2400", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": true },
-            { "heures": "2500", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "2600", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "2700", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "2800", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": true },
-            { "heures": "2900", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "3000", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "3100", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "3200", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": true },
-            { "heures": "3300", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "3400", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false },
-            { "heures": "3500", "vidanger_huile_moteur": true, "nettoyer_filtre_air": true, "graisser_unite_coupe": true, "nettoyer_les_ailettes_moteur": true, "controler_pneus_roues": true, "faire_un_nettoyage_de_la_bougie": false }
-        ]
-    };
+    let maintenanceData = null;
+
+    fetch('/assets/data/maintenance-table-data.json')
+        .then(response => response.json())
+        .then(data => {
+            maintenanceData = data;
+            document.addEventListener('DOMContentLoaded', function () {
+                initializeMachineSelection && initializeMachineSelection();
+                initializeEventListeners && initializeEventListeners();
+                generateMaintenanceTable && generateMaintenanceTable();
+                // ... autres initialisations si besoin
+            });
+        });
 
     // Variables globales
     let currentHighlightedRow = null;
@@ -198,7 +145,7 @@
                     year: 'numeric'
                 });
 
-                cell.innerHTML = `<span class=\"maintenance-date\">${formattedDate}</span>`;
+                cell.innerHTML = `<span class="maintenance-date">${formattedDate}</span>`;
                 cell.title = `Entretien effectué le ${formattedDate}`;
 
                 // Ajouter les informations du log

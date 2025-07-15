@@ -117,6 +117,47 @@ class EntretienController extends AbstractController
         ]);
     }
 
+    #[Route('/entretiens/aides-techniques', name: 'app_entretiens_aides_techniques', methods: ['GET'])]
+    #[IsGranted(New MultiplyRolesExpression(RoleEnum::ADMIN, RoleEnum::USER))]
+    public function aidesTechniques(Request $request): Response
+    {
+        // Récupérer les documents PDF qui commencent par "E0"
+        $documentsPath = $this->getParameter('kernel.project_dir') . '/public/uploads/documents';
+        $documents = [];
+        
+        if (is_dir($documentsPath)) {
+            $files = scandir($documentsPath);
+            foreach ($files as $file) {
+                if (is_file($documentsPath . '/' . $file) && 
+                    pathinfo($file, PATHINFO_EXTENSION) === 'pdf' && 
+                    str_starts_with($file, 'ET')) {
+                    
+                    // Extraire le numéro et le titre du document
+                    $filename = pathinfo($file, PATHINFO_FILENAME);
+                    $number = substr($filename, 0, 4); // ET001, ET002, etc.
+                    $title = substr($filename, 4); // Le reste du nom
+                    
+                    $documents[] = [
+                        'filename' => $file,
+                        'number' => $number,
+                        'title' => trim($title),
+                        'path' => 'uploads/documents/' . $file
+                    ];
+                }
+            }
+            
+            // Trier les documents par numéro
+            usort($documents, function($a, $b) {
+                return strcmp($a['number'], $b['number']);
+            });
+        }
+        
+        return $this->render('admin/entretien/aides/index.html.twig', [
+            'title' => 'Liste des aides à l\'entretien pour techniciens',
+            'documents' => $documents,
+        ]);
+    }
+
     #[Route('/entretiens/log/create', name: 'app_entretien_log_create', methods: ['POST'])]
     #[IsGranted(New MultiplyRolesExpression(RoleEnum::ADMIN, RoleEnum::USER))]
     public function createLog(Request $request): JsonResponse
@@ -238,9 +279,10 @@ class EntretienController extends AbstractController
                         $selectedParcMachine,
                         new \DateTime($data['date']),
                         (int) $data['hours'],
-                        $task['name'],
+                        $task['key'],
                         new \DateTimeImmutable(),
-                        null
+                        null,
+                        isset($data['isYear']) ? (bool)$data['isYear'] : false // Ajout du flag année/heure
                     );
                     
                     $savedLog = $this->entretienLogRepository->save($entretienLog);
@@ -318,7 +360,12 @@ class EntretienController extends AbstractController
             foreach ($logs as $log) {
                 $parcMachine = $log->getParcMachine();
                 $machine = $parcMachine->getMachine();
-                
+                // Déduire le nombre d'années à partir du planning si possible
+                $annees = null;
+                $planning = [700 => 1, 1400 => 2, 2100 => 3, 2800 => 4, 3500 => 5, 4200 => 6]; // Adapter si besoin
+                if (isset($planning[$log->getVolumeHoraire()])) {
+                    $annees = $planning[$log->getVolumeHoraire()];
+                }
                 $logsData[] = [
                     'id' => $log->getId()->getValue(),
                     'parcMachineId' => $parcMachine->getId()->getValue(),
@@ -327,8 +374,10 @@ class EntretienController extends AbstractController
                     'machineNumber' => $machine->getNumeroIdentification(),
                     'date' => $log->getLogDate()->format('Y-m-d'),
                     'hours' => $log->getVolumeHoraire(),
+                    'annees' => $annees,
                     'activity' => $log->getActivite(),
-                    'createdAt' => $log->getCreatedAt()->format('Y-m-d H:i:s')
+                    'createdAt' => $log->getCreatedAt()->format('Y-m-d H:i:s'),
+                    'isYear' => method_exists($log, 'isYear') ? $log->isYear() : false
                 ];
             }
 

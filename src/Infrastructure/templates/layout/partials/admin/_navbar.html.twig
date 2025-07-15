@@ -64,7 +64,17 @@
 
     // Charger les notifications dès le chargement de la page
     fetch('{{ path('app_push_notification') }}')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          // Gérer les erreurs HTTP (403, 404, 500, etc.)
+          if (res.status === 403) {
+            console.warn('⚠️ Accès refusé aux notifications - utilisateur non authentifié');
+            throw new Error('Access denied');
+          }
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then(data => {
         notifications = data;
         updateUnreadCount();
@@ -99,9 +109,25 @@
               </div>
             </div>
           `).join('');
+        }
+      })
+      .catch(error => {
+        console.error('Erreur lors de la récupération des notifications:', error);
+        
+        // Gérer l'affichage selon le type d'erreur
+        if (error.message === 'Access denied') {
+          // Utilisateur non authentifié - cacher le bouton notifications
+          countSpan.style.display = 'none';
+          list.innerHTML = '<p class="dropdown-item text-center text-muted">Connectez-vous pour voir vos notifications</p>';
+        } else {
+          // Autres erreurs - afficher un message générique
+          countSpan.style.display = 'none';
+          list.innerHTML = '<p class="dropdown-item text-center text-danger">Erreur de chargement des notifications</p>';
+        }
+      });
 
-          // === Action: Afficher les détails d'une notification
-          document.querySelectorAll('.notification-item').forEach(item => {
+        // === Action: Afficher les détails d'une notification
+        document.querySelectorAll('.notification-item').forEach(item => {
             item.addEventListener('click', function () {
               const id = this.dataset.id;
               const notif = notifications.find(n => n.id.value === id);
@@ -117,7 +143,10 @@
               })
               .then(response => {
                 if (!response.ok) {
-                  throw new Error("Erreur lors de la mise à jour du statut");
+                  if (response.status === 403) {
+                    throw new Error('Access denied - authentication required');
+                  }
+                  throw new Error(`Erreur lors de la mise à jour du statut: ${response.status}`);
                 }
                 const notifItem = this.closest('.notification-item');
                 notifItem.classList.remove('unread');
@@ -126,7 +155,14 @@
                 if (notif) notif.status = true;
                 updateUnreadCount();
               })
-              .catch(err => console.error(err));
+              .catch(err => {
+                console.error('Erreur de mise à jour de notification:', err);
+                if (err.message.includes('Access denied')) {
+                  alert('Session expirée. Veuillez vous reconnecter.');
+                } else {
+                  alert('Erreur lors de la mise à jour de la notification.');
+                }
+              });
               }
               // Affichage de la modale
               const modalBody = document.getElementById('notification-modal-body');
@@ -160,7 +196,10 @@
                 })
                 .then(res => {
                   if (!res.ok) {
-                    throw new Error('Erreur lors de la suppression');
+                    if (res.status === 403) {
+                      throw new Error('Access denied - authentication required');
+                    }
+                    throw new Error(`Erreur lors de la suppression: ${res.status}`);
                   }
 
                   // Supprime l'élément du DOM
@@ -174,8 +213,12 @@
                   updateUnreadCount();
                 })
                 .catch(err => {
-                  console.error(err);
-                  alert("Échec de la suppression");
+                  console.error('Erreur de suppression de notification:', err);
+                  if (err.message.includes('Access denied')) {
+                    alert('Session expirée. Veuillez vous reconnecter.');
+                  } else {
+                    alert("Échec de la suppression de la notification.");
+                  }
                 });
             });
           });
@@ -202,7 +245,10 @@
               })
               .then(response => {
                 if (!response.ok) {
-                  throw new Error("Erreur lors de la mise à jour du statut");
+                  if (response.status === 403) {
+                    throw new Error('Access denied - authentication required');
+                  }
+                  throw new Error(`Erreur lors de la mise à jour du statut: ${response.status}`);
                 }
 
                 notif.status = newStatus;
@@ -218,7 +264,14 @@
                 // Met à jour le texte du bouton
                 this.textContent = newStatus ? "Marquer comme non lue" : "Marquer comme lue";
               })
-              .catch(err => console.error(err));
+              .catch(err => {
+                console.error('Erreur de mise à jour de notification:', err);
+                if (err.message.includes('Access denied')) {
+                  alert('Session expirée. Veuillez vous reconnecter.');
+                } else {
+                  alert('Erreur lors de la mise à jour de la notification.');
+                }
+              });
             });
           });
 
@@ -226,16 +279,11 @@
           document.querySelectorAll('.btn-dropdown').forEach(btn => {
             btn.addEventListener('click', function(e) {
               e.stopPropagation();
+                          });
             });
-          });
         }
-      })
-      .catch(err => {
-        console.error('Erreur lors de la récupération des notifications:', err);
-        list.innerHTML = '<p class="dropdown-item text-center text-danger">Erreur de chargement</p>';
-      });
 
-    // Afficher ou masquer la liste
+      // Afficher ou masquer la liste
     btn.addEventListener('click', function (e) {
       e.preventDefault();
       list.style.display = (list.style.display === 'none' || list.style.display === '') ? 'block' : 'none';

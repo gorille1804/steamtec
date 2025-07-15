@@ -104,11 +104,10 @@
                                     <tr>
                                         <th>Date</th>
                                         <th>Utilisateur</th>
-                                        <th>Machine</th>
-                                        <th>Numéro d'identification</th>
-                                        <th>Volume horaire</th>
+                                        <th>Machine / Identification</th>
+                                        <th class="text-center">Volume</th>
                                         <th>Activité</th>
-                                        <th>Créé le</th>
+                                        <th>Créée le</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -126,17 +125,23 @@
                                             </td>
                                             <td>
                                                 <strong>{{ log.parcMachine.machine.nom }}</strong>
-                                            </td>
-                                            <td>
                                                 <code>{{ log.parcMachine.machine.numeroIdentification }}</code>
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 <span class="badge badge-info">
-                                                    {{ log.volumeHoraire }}h
+                                                    {% set volume = log.volumeHoraire|number_format(0, ',', ' ') %}
+                                                    {% set unite = ' h' %}
+                                                    {% if log.isYear %}
+                                                        {% set unite = 'an' %}
+                                                        {% if volume > 1 %}
+                                                            {% set unite = 'ans' %}
+                                                        {% endif %}
+                                                    {% endif %}
+                                                    {{ volume }} {{ unite }}
                                                 </span>
                                             </td>
                                             <td>
-                                                <span class="text-muted">{{ log.activite }}</span>
+                                                <span class="text-muted">{{ log.activiteLabel }}</span>
                                             </td>
                                             <td>
                                                 <small class="text-muted">

@@ -10,6 +10,7 @@
         <field name="logDate" type="datetime" />
         <field name="volumeHoraire" type="integer" />
         <field name="activite" type="text" />
+        <field name="isYear" type="boolean" column="is_year" nullable="true" />
         <field name="createdAt" type="datetime" />
         <field name="updatedAt" type="datetime" nullable="true" />
     </entity>

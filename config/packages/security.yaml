@@ -1,4 +1,8 @@
 security:
+    # Hiérarchie des rôles : ROLE_ADMIN hérite automatiquement de ROLE_USER
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+        
     password_hashers:
         Infrastructure\Symfony\Security\SecurityUser:
             algorithm: auto

@@ -29,7 +29,7 @@ class PushNotificationController extends AbstractController
     ){}
 
     #[Route('/pushNotifications', name: 'app_push_notification', methods: ['GET'])]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_USER or ROLE_ADMIN')]
     public function index(): JsonResponse
     {
         /** @var SymfonyUserAdapter $user */
@@ -41,7 +41,7 @@ class PushNotificationController extends AbstractController
 
 
     #[Route('/pushNotifications/{pushNotification}/update', name: 'app_update_push_notification', methods:['POST'])]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_USER or ROLE_ADMIN')]
     public function updateStatusPushNotification(PushNotification $pushNotification): JsonResponse
     {
         try {
@@ -53,7 +53,7 @@ class PushNotificationController extends AbstractController
     }
 
     #[Route('/pushNotifications/{pushNotification}/delete', name: 'app_delete_push_notification', methods:['POST'])]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_USER or ROLE_ADMIN')]
     public function deletePushNotification(PushNotification $pushNotification): void
     {
         try {

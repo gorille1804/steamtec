@@ -15,6 +15,7 @@ class EntretienLog
         public string $activite,
         public \DateTimeInterface $createdAt,
         public ?\DateTimeInterface $updatedAt = null,
+        public bool $isYear = false // Ajouté pour la périodicité
     ) {}
 
     public function getId(): EntretienLogId
@@ -60,5 +61,10 @@ class EntretienLog
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
+    }
+
+    public function isYear(): bool
+    {
+        return isset($this->isYear) ? (bool)$this->isYear : false;
     }
 } 
