@@ -247,7 +247,7 @@ users:
         hello: "Bonjour"
         text: "Votre compte a bien été créé. Pour sécuriser votre accès, veuillez définir votre mot de passe en cliquant sur le bouton ci-dessous :"
         link: "Créer mon mot de passe"
-        duration: "Notez que ce lien expirera dans 1 heure."
+        duration: "Notez que ce lien expirera dans 24 heure."
         info: "Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet e-mail en toute sécurité."
         thanks: "Merci de votre confiance,"
         reaction: "L'équipe Entech"

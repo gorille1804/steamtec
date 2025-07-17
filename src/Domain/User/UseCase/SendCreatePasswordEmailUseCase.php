@@ -17,7 +17,7 @@ class SendCreatePasswordEmailUseCase implements SendCreatePasswordEmailUseCaseIn
     public function __invoke(User $user, string $templatePath): void
     {
        
-        $token = $this->tokenService->generateToken($user->getId()->getValue(), 60);
+        $token = $this->tokenService->generateToken($user->getId()->getValue(), 1440);
 
         $resetLink = sprintf('%s/reset-password/%s', $this->appUrl, $token);
         $this->emailService->sendEmail(
