@@ -37,6 +37,17 @@
     height: 2rem;
 }
 
+/* Ensure numeric inputs are properly styled */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .form-label {
     font-size: 0.95rem;
     margin-bottom: 0.2rem;
@@ -161,12 +172,30 @@
         <div class="col-md-6">
             <div class="fom-group mb-2 col">
                 {{ form_label(form.surface) }}
-                {{ form_widget(form.surface, {'attr': {'readonly': is_granted('ROLE_ADMIN') ? 'readonly' : false}}) }}
+                {{ form_widget(form.surface, {'attr': {
+                    'readonly': is_granted('ROLE_ADMIN') ? 'readonly' : false,
+                    'type': 'number',
+                    'min': '0',
+                    'step': '0.01',
+                    'inputmode': 'decimal',
+                    'pattern': '[0-9]*[.,]?[0-9]+',
+                    'oninput': 'this.value = this.value.replace(/[^0-9.,]/g, "").replace(/,/g, ".")',
+                    'onkeypress': 'return (event.charCode >= 48 && event.charCode <= 57) || event.charCode === 44 || event.charCode === 46 || event.charCode === 8 || event.charCode === 9'
+                }}) }}
                 {{ form_errors(form.surface) }}
             </div>
             <div class="fom-group mb-2 col">
                 {{ form_label(form.duration) }}
-                {{ form_widget(form.duration, {'attr': {'readonly': is_granted('ROLE_ADMIN') ? 'readonly' : false}}) }}
+                {{ form_widget(form.duration, {'attr': {
+                    'readonly': is_granted('ROLE_ADMIN') ? 'readonly' : false,
+                    'type': 'number',
+                    'min': '0',
+                    'step': '0.1',
+                    'inputmode': 'decimal',
+                    'pattern': '[0-9]*[.,]?[0-9]+',
+                    'oninput': 'this.value = this.value.replace(/[^0-9.,]/g, "").replace(/,/g, ".")',
+                    'onkeypress': 'return (event.charCode >= 48 && event.charCode <= 57) || event.charCode === 44 || event.charCode === 46 || event.charCode === 8 || event.charCode === 9'
+                }}) }}
                 {{ form_errors(form.duration) }}
             </div>
             <div class="fom-group mb-2 col">
@@ -298,6 +327,37 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!isAdmin) {
         surfaceField.addEventListener('input', calculateRendement);
         durationField.addEventListener('input', calculateRendement);
+        
+        // Additional numeric validation for surface field
+        surfaceField.addEventListener('input', function(e) {
+            let value = e.target.value;
+            // Remove any non-numeric characters except comma and dot
+            value = value.replace(/[^0-9.,]/g, '');
+            // Replace comma with dot for consistency
+            value = value.replace(/,/g, '.');
+            // Ensure only one decimal separator
+            const parts = value.split('.');
+            if (parts.length > 2) {
+                value = parts[0] + '.' + parts.slice(1).join('');
+            }
+            e.target.value = value;
+        });
+        
+        // Additional numeric validation for duration field
+        durationField.addEventListener('input', function(e) {
+            let value = e.target.value;
+            // Remove any non-numeric characters except comma and dot
+            value = value.replace(/[^0-9.,]/g, '');
+            // Replace comma with dot for consistency
+            value = value.replace(/,/g, '.');
+            // Ensure only one decimal separator
+            const parts = value.split('.');
+            if (parts.length > 2) {
+                value = parts[0] + '.' + parts.slice(1).join('');
+            }
+            e.target.value = value;
+        });
+        
         // Ajoute l'écouteur sur chaque radio
         Array.from(surfaceTypeRadios).forEach(radio => {
             radio.addEventListener('change', updateMaterials);
