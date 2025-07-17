@@ -243,6 +243,7 @@
                                 <div id="maintenanceTasksContainer" class="border rounded p-3 bg-light">
                                     <!-- Les tâches seront générées dynamiquement ici -->
                                 </div>
+                                <i>Sélectionner les activités réalisées</i>
                             </div>
                         </div>
                         <div class="modal-footer">
