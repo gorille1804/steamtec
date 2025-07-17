@@ -51,7 +51,7 @@
     </li>
     {% endif %}
     
-    {% if is_granted('ROLE_USER') %}
+    {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN') %}
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#documents" aria-expanded="false" aria-controls="documents">
             <i class="menu-icon mdi mdi-folder-multiple"></i>

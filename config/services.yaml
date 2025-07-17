@@ -34,6 +34,7 @@ services:
             - '../src/Domain/*/Data/Model'
             - '../src/Domain/*/Data/Enum'
             - '../src/Domain/*/Test'
+            - '../src/Domain/*/Data/ValueObject'  # Ajoutez cette ligne
 
     Infrastructure\:
         resource: '../src/Infrastructure/'
@@ -67,9 +68,9 @@ services:
     Domain\Shared\Service\File\FileStorageServiceInterface:
         alias: Infrastructure\Symfony\Services\File\SymfonyFileStorageService
     Domain\Document\Service\DocumentDownloaderInterface:
-        class: Infrastructure\Symfony\Services\Document\SymfonyDocumentDownloader
+        class: Infrastructure\Symfony\Services\File\SymfonyDocumentDownloader
     Domain\Document\Service\DocumentDeleteInterface:
-        class: Infrastructure\Symfony\Services\Document\SymfonyDocumentDownloader
+        class: Infrastructure\Symfony\Services\File\SymfonyDocumentDownloader
     Infrastructure\Event\RedirectAuthenticatedUserListener:
         tags:
             - { name: kernel.event_listener, event: kernel.request }   

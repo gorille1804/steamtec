@@ -332,7 +332,7 @@ if (document.readyState === 'loading') {
 }
 
 // Extension pour la synchronisation en arrière-plan
-if (offlineManager) {
+if (offlineManager && 'serviceWorker' in navigator) {
     // Écouter les messages du service worker
     navigator.serviceWorker.addEventListener('message', event => {
         const { type, timestamp } = event.data;

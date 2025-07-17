@@ -1,0 +1,18 @@
+RewriteEngine On
+
+# Redirection de la racine directement vers public/index.php
+RewriteRule ^/?$ public/index.php [L]
+
+# Ne pas réécrire les fichiers qui existent déjà
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# Assets et fichiers statiques
+RewriteRule ^assets/(.*)$ public/assets/$1 [L]
+RewriteRule ^favicon\.ico$ public/favicon.ico [L]
+RewriteRule ^(.*\.(css|js|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot|map|json))$ public/$1 [L]
+
+RewriteRule ^uploads/(.*)$ public/uploads/$1 [L]
+
+# Toutes les autres routes vers Symfony
+RewriteRule ^(.*)$ public/index.php [QSA,L]

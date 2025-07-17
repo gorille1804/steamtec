@@ -1,6 +1,6 @@
 <?php
 
-namespace Infrastructure\Symfony\Services\Document;
+namespace Infrastructure\Symfony\Services\File;
 
 use Domain\Document\Service\DocumentDownloaderInterface;
 use Domain\Document\Data\Model\Document;

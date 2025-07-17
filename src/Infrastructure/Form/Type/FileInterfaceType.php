@@ -1,6 +1,6 @@
 <?php
 
-namespace Infrastructure\Symfony\Form\Type;
+namespace Infrastructure\Form\Type;
 
 use Domain\Shared\Data\ObjectValue\FileInterface;
 use Infrastructure\Symfony\Services\File\SymfonyFileAdapter;

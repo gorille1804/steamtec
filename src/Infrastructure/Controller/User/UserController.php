@@ -134,7 +134,7 @@ class UserController extends AbstractController
             $this->sendCreatePasswordEmailUseCase->__invoke($user, 'email/security/create_password.html.twig');
             $this->addFlash('success',  $this->translator->trans('users.messages.reset_password_succes'));
         } catch (\Exception $e) {
-            $this->addFlash('error', $this->translator->trans('users.messages.reset_password_error'));
+            $this->addFlash('error', $this->translator->trans('users.messages.reset_password_error') . ' ' . $e->getMessage());
         }
         return $this->redirectToRoute('app_users');
     }

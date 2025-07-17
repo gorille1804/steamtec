@@ -4,7 +4,7 @@ namespace Infrastructure\Controller\Contact;
 
 use Domain\Contact\Data\Contract\ContactRequest;
 use Domain\Contact\UseCase\SendContactMailUseCaseInterface;
-use Infrastructure\Form\Contact\ContactType;
+use Infrastructure\Form\Contact\ContactFormType as ContactType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

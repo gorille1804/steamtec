@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Domain\Contact\Data\Contract\ContactRequest as ContractContactRequest;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class ContactType extends AbstractType
+class ContactFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

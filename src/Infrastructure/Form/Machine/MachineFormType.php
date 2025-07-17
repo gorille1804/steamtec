@@ -3,7 +3,7 @@
 namespace Infrastructure\Form\Machine;
 
 use Domain\Machine\Data\Contract\CreateMachineRequest;
-use Infrastructure\Symfony\Form\Type\FileInterfaceType;
+use Infrastructure\Form\Type\FileInterfaceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType; // Correct TextType import
 use Symfony\Component\Form\FormBuilderInterface;

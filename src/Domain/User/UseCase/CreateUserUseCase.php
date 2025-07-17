@@ -18,8 +18,17 @@ class CreateUserUseCase implements CreateUserUseCaseInterface
     {
         $user = UserFactory::make($request);	
         $user =  $this->repository->save($user);
-        //send create password email
-        $this->sendCreatePasswordEmailUseCase->__invoke($user, 'email/security/create_password.html.twig');
+        
+        try {
+            //send create password email
+            $this->sendCreatePasswordEmailUseCase->__invoke($user, 'email/security/create_password.html.twig');
+        } catch (\Exception $e) {
+            // Log email error but don't fail user creation
+            error_log('Email sending failed during user creation: ' . $e->getMessage());
+            // You can uncomment the line below to fail user creation if email is critical
+            throw new \Exception('Failed to send welcome email: ' . $e->getMessage());
+        }
+        
         return $user;
     }   
 }
