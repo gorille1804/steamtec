@@ -384,6 +384,357 @@
       "type": "action",
       "title": "APPELER LE SAV 0681676430",
       "parent": "verif15"
+    },
+    {
+      "id": "prob6",
+      "type": "probleme",
+      "title": "PAS DE PRESSION AU MANO (LA POMPE NE TOURNE PAS) ALORS QU'ON APPUIE SUR LA GACHETTE",
+      "parent": "cate2"
+    },
+    {
+      "id": "etat7",
+      "type": "etat",
+      "title": "LE PROGRAMMATEUR EST ALLUME (S'il est éteint, c'est un autre problème, retournez à l'accueil)",
+      "parent": "prob6",
+      "next": [
+        "verif16"
+      ]
+    },
+    {
+      "id": "verif16",
+      "type": "verif",
+      "title": "VERIFIER QUE L'INTERRUPTEUR DE LA POMPE EST SUR \"I\"",
+      "parent": "etat7",
+      "next_ok": "etat8",
+      "next_ko": "action25",
+      "image": "/assets/images/arbres/inpompe.png"
+    },
+    {
+      "id": "action25",
+      "type": "action",
+      "title": "REENCLANCHER L'INTERRUPTEUR DE LA POMPE SUR 'I' si le problème revient, appeler le SAV 0681676430",
+      "parent": "verif16"
+    },
+    {
+      "id": "etat8",
+      "type": "etat",
+      "title": "AUCUN DEBIT DETECTE",
+      "parent": "prob6",
+      "next": [
+        "verif17"
+      ]
+    },
+    {
+      "id": "verif17",
+      "type": "verif",
+      "title": "QUELLE EST LA CONFIGURATION DE L'ALIMENTATION EN EAU ? EST-CE SUR CITERNE ?",
+      "parent": "etat8",
+      "next_ko": "verif18",
+      "next_ok": "verif19"
+    },
+    {
+      "id": "verif18",
+      "type": "verif",
+      "title": "EN DIRECTE : AVEC BAC ANTICALCAIRE ?",
+      "parent": "etat8",
+      "next_ok": "etat10",
+      "next_ko": "etat11"
+    },
+    {
+      "id": "verif19",
+      "type": "verif",
+      "title": "VERIFIER QUE LA CITERNE N'EST PAS A PLUS DE 3M DE LA MACHINE ET AU MEME NIVEAU",
+      "parent": "etat8",
+      "next_ok": "verif20",
+      "next_ko": "action26"
+    },
+    {
+      "id": "action26",
+      "type": "action",
+      "title": "RAPPROCHER LA CITERNE ET/OU LA METTRE AU MEME NIVEAU QUE LA MACHINE",
+      "parent": "verif19"
+    },
+    {
+      "id": "verif20",
+      "type": "verif",
+      "title": "VERIFIER LE NIVEAU D'EAU DANS LA CITERNE",
+      "parent": "etat8",
+      "next_ok": "verif21",
+      "next_ko": "action27"
+    },
+    {
+      "id": "action27",
+      "type": "action",
+      "title": "REMPLIR LA CITERNE",
+      "parent": "verif20"
+    },
+    {
+      "id": "verif21",
+      "type": "verif",
+      "title": "VERIFIER LE FONCTIONNEMENT EN ALIMENTATION DIRECTE (SUR ROBINET)",
+      "parent": "etat8",
+      "next_ok": "action28",
+      "next_ko": "verif25"
+    },
+    {
+      "id": "action28",
+      "type": "action",
+      "title": "TRAVAILLER EN DIRECT TEMPORAIREMENT, MAIS PREVOIR DE ...",
+      "parent": "verif21",
+      "next": [
+        "verif22"
+      ]
+    },
+    {
+      "id": "verif22",
+      "type": "verif",
+      "title": "VERIFIER QUE LA SORTIE DE LA CITERNE N'EST PAS BOUCHEE OU ROBINET FERME (EN DECONNECTANT LE TUYAU)",
+      "parent": "etat8",
+      "next_ok": "verif23",
+      "next_ko": "action29"
+    },
+    {
+      "id": "action29",
+      "type": "action",
+      "title": "NETTOYER LA SORTIE DE LA CITERNE OU OUVRIR LE ROBINET",
+      "parent": "verif22"
+    },
+    {
+      "id": "verif23",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE BLANC ENTRE LA CITERNE ET LA MACHINE",
+      "parent": "etat8",
+      "next_ok": "verif24",
+      "next_ko": "action30"
+    },
+    {
+      "id": "action30",
+      "type": "action",
+      "title": "NETTOYER OU CHANGER LE FILTRE",
+      "parent": "verif23"
+    },
+    {
+      "id": "verif24",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE POINT BAS ENTRE LA CITERNE ET LA MACHINE",
+      "parent": "etat8",
+      "next_ok": "action32",
+      "next_ko": "action31"
+    },
+    {
+      "id": "action31",
+      "type": "action",
+      "title": "ELIMINER LE POINT BAS",
+      "parent": "verif24"
+    },
+    {
+      "id": "action32",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "verif24"
+    },
+    {
+      "id": "verif25",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE BLANC ENTREE MACHINE",
+      "parent": "etat8",
+      "next_ok": "verif26",
+      "next_ko": "action33",
+      "image": "/assets/images/arbres/filtreblanc.png"
+    },
+    {
+      "id": "action33",
+      "type": "action",
+      "title": "NETTOYER OU CHANGER LE FILTRE",
+      "parent": "verif25"
+    },
+    {
+      "id": "verif26",
+      "type": "verif",
+      "title": "VERIFIER LE FILTRE ENTREE POMPE (COUVERCLE VERT)",
+      "parent": "etat8",
+      "next_ok": "verif27",
+      "next_ko": "action34",
+      "image": "/assets/images/arbres/filtrecouverclepompe.png"
+    },
+    {
+      "id": "action34",
+      "type": "action",
+      "title": "NETTOYER LE FILTRE",
+      "parent": "verif26"
+    },
+    {
+      "id": "verif27",
+      "type": "verif",
+      "title": "VERIFIER L'OUVERTURE DU ROBINET VAPEUR",
+      "parent": "etat8",
+      "next_ok": "verif28",
+      "next_ko": "action35"
+    },
+    {
+      "id": "action35",
+      "type": "action",
+      "title": "OUVRIR LE ROBINET",
+      "parent": "verif27"
+    },
+    {
+      "id": "verif28",
+      "type": "verif",
+      "title": "VERIFIER LA SORTIE D'EAU (MÊME FAIBLE) EN SORTIE D'ACCESSOIRE",
+      "parent": "etat8",
+      "next_ok": "etat9",
+      "next_ko": "action36"
+    },
+    {
+      "id": "action36",
+      "type": "action",
+      "title": "NETTOYER LA BUSE DE L'ACCESSOIRE OU CHANGER  D'ACCESSOIRE",
+      "parent": "verif28"
+    },
+    {
+      "id": "etat9",
+      "type": "etat",
+      "title": "PROBLEME ELECTRIQUE",
+      "parent": "etat8",
+      "next": [
+        "verif29"
+      ]
+    },
+    {
+      "id": "verif29",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU/DES CONDENSATEURS",
+      "parent": "etat9",
+      "next_ok": "action37",
+      "image": "/assets/images/arbres/condensateur.png"
+    },
+    {
+      "id": "action37",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "verif29"
+    },
+    {
+      "id": "etat10",
+      "type": "etat",
+      "title": "PAS DE PRESSION AU MANO (LA POMPE NE TOURNE PAS) ALORS QU'ON APPUIE SUR LA GACHETTE et je suis alimenté en direct sans bac anticalcaire",
+      "parent": "prob6",
+      "next": [
+        "verif30"
+      ]
+    },
+    {
+      "id": "etat11",
+      "type": "etat",
+      "title": "PAS DE PRESSION AU MANO (LA POMPE NE TOURNE PAS) ALORS QU'ON APPUIE SUR LA GACHETTE et je suis alimenté en direct avec bac anticalcaire",
+      "parent": "prob6"
+    },
+    {
+      "id": "verif30",
+      "type": "verif",
+      "title": "VERIFIER L'OUVERTURE DU ROBINET D'ALIMENTATION",
+      "parent": "etat10",
+      "next_ok": "verif31",
+      "next_ko": "action38"
+    },
+    {
+      "id": "action38",
+      "type": "action",
+      "title": "OUVRIR LE ROBINET",
+      "parent": "verif30"
+    },
+    {
+      "id": "verif31",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE PLI DANS LE TUYAU D'ALIMENTATION",
+      "parent": "etat10",
+      "next_ko": "action39",
+      "next_ok": "verif32"
+    },
+    {
+      "id": "action39",
+      "type": "action",
+      "title": "DEROULER LE TUYAU SANS PLIS",
+      "parent": "verif31"
+    },
+    {
+      "id": "verif32",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE BLANC ENTREE MACHINE",
+      "parent": "etat10",
+      "next_ko": "action40",
+      "image": "/assets/images/arbres/filtreblanc.png"
+    },
+    {
+      "id": "action40",
+      "type": "action",
+      "title": "NETTOYER OU CHANGER LE FILTRE",
+      "parent": "verif32"
+    },
+    {
+      "id": "verif33",
+      "type": "verif",
+      "title": "VERIFIER LE FILTRE ENTREE POMPE (COUVERCLE VERT)",
+      "parent": "etat10",
+      "next_ko": "action41",
+      "image": "/assets/images/arbres/filtrecouverclepompe.png"
+    },
+    {
+      "id": "action41",
+      "type": "action",
+      "title": "NETTOYER LE FILTRE",
+      "parent": "verif33"
+    },
+    {
+      "id": "verif34",
+      "type": "verif",
+      "title": "VERIFIER L'OUVERTURE DU ROBINET VAPEUR",
+      "parent": "etat10",
+      "next_ok": "verif35",
+      "next_ko": "action42"
+    },
+    {
+      "id": "action42",
+      "type": "action",
+      "title": "OUVRIR LE ROBINET",
+      "parent": "verif34"
+    },
+    {
+      "id": "verif35",
+      "type": "verif",
+      "title": "VERIFIER LA SORTIE D'EAU (MÊME FAIBLE) EN SORTIE D'ACCESSOIRE ",
+      "parent": "etat10",
+      "next_ok": "etat12",
+      "next_ko": "action43"
+    },
+    {
+      "id": "action43",
+      "type": "action",
+      "title": "NETTOYER LA BUSE DE L'ACCESSOIRE OU CHANGER D'ACCESSOIRE",
+      "parent": "verif35"
+    },
+    {
+      "id": "etat12",
+      "type": "etat",
+      "title": "PROBLEME ELECTRIQUE",
+      "parent": "verif35",
+      "next": [
+        "verif36"
+      ]
+    },
+    {
+      "id": "verif36",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU/DES CONDENSATEURS",
+      "parent": "etat12",
+      "next_ok": "action44",
+      "image": "/assets/images/arbres/condensateur.png"
+    },
+    {
+      "id": "action44",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "verif36"
     }
   ]
 }
