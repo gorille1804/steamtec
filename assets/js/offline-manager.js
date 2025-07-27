@@ -7,13 +7,60 @@ class OfflineManager {
     constructor() {
         this.isOnline = navigator.onLine;
         this.indicator = null;
+        this.isPWA = this.detectPWA();
         this.init();
     }
 
+    /**
+     * Détecte si l'application est en mode PWA (installée)
+     */
+    detectPWA() {
+        // Vérifier si l'app est installée (mode standalone)
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+            window.navigator.standalone === true;
+
+        // Vérifier si on est sur une route nécessitant une connexion
+        const currentPath = window.location.pathname;
+        const requiresOnlineRoutes = [
+            '/dashboard',
+            '/dashboard/',
+            '/dashboard/users',
+            '/dashboard/machines',
+            '/dashboard/chantiers',
+            '/dashboard/entretiens',
+            '/dashboard/profile',
+            '/dashboard/arbre-de-depannage',
+            '/dashboard/documents',
+            '/dashboard/parc-machine',
+            '/dashboard/user-machine',
+            '/dashboard/historique',
+            '/dashboard/configuration',
+            '/dashboard/about',
+            '/dashboard/accessoire',
+            '/dashboard/desherbage',
+            '/dashboard/nettoyage',
+            '/dashboard/contact',
+            '/dashboard/societe'
+        ];
+
+        const isOnlineOnlyRoute = requiresOnlineRoutes.some(route => currentPath.startsWith(route));
+
+        // Afficher l'indicateur seulement si PWA OU route nécessitant une connexion
+        return isStandalone || isOnlineOnlyRoute;
+    }
+
     init() {
-        this.createOfflineIndicator();
-        this.bindEvents();
-        this.updateNetworkStatus();
+        // Ne créer l'indicateur que si on est en mode PWA ou sur une route nécessitant une connexion
+        if (this.isPWA) {
+            console.log('📱 Mode PWA détecté - Indicateur réseau activé');
+            this.createOfflineIndicator();
+            this.bindEvents();
+            this.updateNetworkStatus();
+        } else {
+            console.log('🌐 Mode navigateur détecté - Indicateur réseau désactivé');
+            // Toujours écouter les événements réseau pour les logs, mais sans affichage
+            this.bindEventsOnly();
+        }
     }
 
     /**
@@ -48,7 +95,7 @@ class OfflineManager {
     }
 
     /**
-     * Lie les événements de détection réseau
+     * Lie les événements de détection réseau avec indicateur visuel
      */
     bindEvents() {
         window.addEventListener('online', () => {
@@ -61,6 +108,26 @@ class OfflineManager {
             console.log('🔴 Connexion perdue - Mode offline activé');
             this.isOnline = false;
             this.showOfflineStatus();
+        });
+
+        // Vérification périodique (optionnelle)
+        setInterval(() => {
+            this.checkConnection();
+        }, 30000); // Toutes les 30 secondes
+    }
+
+    /**
+     * Lie les événements de détection réseau sans indicateur visuel (mode navigateur)
+     */
+    bindEventsOnly() {
+        window.addEventListener('online', () => {
+            console.log('🟢 Connexion rétablie (mode navigateur)');
+            this.isOnline = true;
+        });
+
+        window.addEventListener('offline', () => {
+            console.log('🔴 Connexion perdue (mode navigateur)');
+            this.isOnline = false;
         });
 
         // Vérification périodique (optionnelle)
@@ -104,7 +171,7 @@ class OfflineManager {
         }
     }
 
-    /**
+        /**
      * Affiche l'état offline
      */
     showOfflineStatus() {
@@ -118,12 +185,111 @@ class OfflineManager {
         
         this.indicator.className = 'network-status-indicator offline visible';
         
+        // Vérifier si on est sur une route nécessitant une connexion
+        if (!this.isOnline) {
+            this.checkOnlineOnlyRoute();
+        }
+
         // Auto-masquer après 5 secondes
         setTimeout(() => {
-            if (!this.isOnline) {
+            if (!this.isOnline && this.indicator) {
                 this.indicator.classList.add('minimized');
             }
         }, 5000);
+    }
+
+    /**
+     * Vérifie si on est sur une route nécessitant une connexion internet
+     */
+    checkOnlineOnlyRoute() {
+        const currentPath = window.location.pathname;
+
+        // Utiliser la configuration centralisée si disponible
+        if (window.PWA_CONFIG) {
+            if (window.PWA_CONFIG.requiresOnlineConnection(currentPath)) {
+                console.log('🌐 Route nécessitant une connexion détectée en mode offline');
+                this.showOnlineOnlyRouteWarning();
+            }
+        } else {
+            // Fallback avec la liste locale
+            const onlineOnlyRoutes = [
+                '/dashboard',
+                '/dashboard/',
+                '/dashboard/users',
+                '/dashboard/machines',
+                '/dashboard/chantiers',
+                '/dashboard/entretiens',
+                '/dashboard/profile',
+                '/dashboard/arbre-de-depannage',
+                '/dashboard/documents',
+                '/dashboard/parc-machine',
+                '/dashboard/user-machine',
+                '/dashboard/historique',
+                '/dashboard/configuration',
+                '/dashboard/about',
+                '/dashboard/accessoire',
+                '/dashboard/desherbage',
+                '/dashboard/nettoyage',
+                '/dashboard/contact',
+                '/dashboard/societe'
+            ];
+
+            const isOnlineOnlyRoute = onlineOnlyRoutes.some(route => currentPath.startsWith(route));
+
+            if (isOnlineOnlyRoute) {
+                console.log('🌐 Route nécessitant une connexion détectée en mode offline');
+                this.showOnlineOnlyRouteWarning();
+            }
+        }
+    }
+
+    /**
+     * Affiche un avertissement pour les routes nécessitant une connexion
+     */
+    showOnlineOnlyRouteWarning() {
+        const warningElement = document.createElement('div');
+        warningElement.className = 'online-only-warning';
+        warningElement.innerHTML = `
+            <div class="online-only-warning-content">
+                <i class="mdi mdi-wifi-off"></i>
+                <div class="warning-text">
+                    <strong>Connexion Internet Requise</strong>
+                    <p>Cette page nécessite une connexion internet pour fonctionner correctement.</p>
+                </div>
+                <button class="warning-close" aria-label="Fermer">
+                    <i class="mdi mdi-close"></i>
+                </button>
+            </div>
+        `;
+
+        document.body.appendChild(warningElement);
+
+        // Afficher avec animation
+        setTimeout(() => {
+            warningElement.classList.add('visible');
+        }, 100);
+
+        // Gestionnaire de fermeture
+        warningElement.querySelector('.warning-close').addEventListener('click', () => {
+            warningElement.classList.remove('visible');
+            setTimeout(() => {
+                if (warningElement.parentNode) {
+                    warningElement.parentNode.removeChild(warningElement);
+                }
+            }, 300);
+        });
+
+        // Auto-fermeture après 10 secondes
+        setTimeout(() => {
+            if (warningElement.parentNode) {
+                warningElement.classList.remove('visible');
+                setTimeout(() => {
+                    if (warningElement.parentNode) {
+                        warningElement.parentNode.removeChild(warningElement);
+                    }
+                }, 300);
+            }
+        }, 10000);
     }
 
     /**
@@ -192,8 +358,26 @@ class OfflineManager {
     getNetworkStatus() {
         return {
             isOnline: this.isOnline,
+            isPWA: this.isPWA,
             lastCheck: new Date().toISOString()
         };
+    }
+
+    /**
+     * Met à jour l'état PWA et active l'indicateur si nécessaire
+     */
+    updatePWAStatus() {
+        const wasPWA = this.isPWA;
+        this.isPWA = this.detectPWA();
+
+        // Si on passe en mode PWA et qu'il n'y avait pas d'indicateur
+        if (this.isPWA && !wasPWA && !this.indicator) {
+            console.log('📱 Passage en mode PWA - Activation de l\'indicateur réseau');
+            this.createOfflineIndicator();
+            this.updateNetworkStatus();
+        }
+
+        return this.isPWA;
     }
 }
 
@@ -202,7 +386,7 @@ const offlineStyles = `
 <style id="offline-manager-styles">
 .network-status-indicator {
     position: fixed;
-    top: 20px;
+    top: -20px;
     right: 20px;
     z-index: 10000;
     background: rgba(255, 255, 255, 0.95);
@@ -287,6 +471,73 @@ const offlineStyles = `
 .offline-error-toast.visible {
     transform: translateX(-50%) translateY(0);
     opacity: 1;
+}
+
+/* Styles pour l'avertissement des routes nécessitant une connexion */
+.online-only-warning {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background: white;
+    border: 2px solid #dc3545;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    z-index: 10000;
+    opacity: 0;
+    transition: all 0.3s ease;
+    max-width: 400px;
+    width: 90%;
+}
+
+.online-only-warning.visible {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+.online-only-warning-content {
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.online-only-warning-content i {
+    font-size: 48px;
+    color: #dc3545;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.warning-text strong {
+    color: #dc3545;
+    font-size: 18px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.warning-text p {
+    color: #6c757d;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.warning-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.warning-close:hover {
+    background-color: #f8f9fa;
+    color: #dc3545;
 }
 
 .offline-error-content {
@@ -482,4 +733,12 @@ window.triggerBackgroundSync = (tag) => {
     if (offlineManager && offlineManager.triggerBackgroundSync) {
         offlineManager.triggerBackgroundSync(tag);
     }
+};
+
+// Fonction pour mettre à jour l'état PWA
+window.updatePWAStatus = () => {
+    if (offlineManager) {
+        return offlineManager.updatePWAStatus();
+    }
+    return false;
 }; 

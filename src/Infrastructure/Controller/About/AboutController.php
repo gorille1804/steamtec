@@ -14,7 +14,7 @@ class AboutController extends AbstractController
         private readonly TranslatorInterface $translator,
     ) {}
 
-    #[Route('/about-us', name: 'app_about', methods: ['GET'])]
+    #[Route('/societe', name: 'app_about', methods: ['GET'])]
     public function index(Request $request): Response
     {
         return $this->render('client/apropos/index.html.twig', [

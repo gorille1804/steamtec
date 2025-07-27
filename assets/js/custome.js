@@ -13,13 +13,15 @@ $(document).ready(function() {
             }, 100);
         });
         
-        $('.config-link-wrapper').on('click', function() {
-            const targetId = $(this).attr('data-target');
+        $('.config_lik_group p a').on('click', function (e) {
+            e.preventDefault();
+            const targetId = $(this).attr('href');
             console.log(`Config link clicked with target: ${targetId}`);
             
-            const correspondingButton = $(`button[data-bs-target="${targetId}"]`);
+            const correspondingButton = $('button[data-bs-target="' + targetId + '"]');
+            console.log("correspondingButton", 'button[data-bs-target="' + targetId + '"]');
             if (correspondingButton.length) {
-                correspondingButton.click();
+                correspondingButton.trigger('click');
                 
                 setTimeout(() => {
                     $('.header-navigations')[0].scrollIntoView({
@@ -28,9 +30,7 @@ $(document).ready(function() {
                 }, 150);
             }
         });
-        
-        $('.config-link-wrapper').css('cursor', 'pointer');
-        
+
         setTimeout(function() {
             initPagination();
         }, 200);

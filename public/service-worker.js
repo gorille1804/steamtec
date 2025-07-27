@@ -4,6 +4,50 @@ const IMAGES_CACHE_NAME = `steamtec-images-v${CACHE_VERSION}`;
 const DOCUMENTS_CACHE_NAME = `steamtec-documents-v${CACHE_VERSION}`;
 const appUrl = self.location.origin; // Récupère automatiquement l'URL de l'application
 
+// Configuration des routes qui nécessitent une connexion internet
+const ONLINE_ONLY_ROUTES = [
+    '/dashboard',
+    '/dashboard/',
+    '/dashboard/users',
+    '/dashboard/machines',
+    '/dashboard/chantiers',
+    '/dashboard/entretiens',
+    '/dashboard/profile',
+    '/dashboard/arbre-de-depannage',
+    '/dashboard/documents',
+    '/dashboard/parc-machine',
+    '/dashboard/user-machine',
+    '/dashboard/historique',
+    '/dashboard/historique/entretiens',
+    '/dashboard/historique/chantiers',
+    '/dashboard/configuration',
+    '/dashboard/about',
+    '/dashboard/accessoire',
+    '/dashboard/desherbage',
+    '/dashboard/nettoyage',
+    '/dashboard/contact',
+    '/dashboard/societe'
+];
+
+// Fonction pour vérifier si une route nécessite une connexion
+function requiresOnlineConnection(url) {
+    const pathname = new URL(url).pathname;
+    return ONLINE_ONLY_ROUTES.some(route => pathname.startsWith(route));
+}
+
+// Fonction pour obtenir la stratégie de cache pour une route
+function getCacheStrategy(url) {
+    const pathname = new URL(url).pathname;
+
+    if (requiresOnlineConnection(url)) {
+        return 'online-only';
+    } else if (pathname === '/' || pathname.startsWith('/login') || pathname.startsWith('/forgot-password') || pathname.startsWith('/reset-password')) {
+        return 'offline-capable';
+    } else {
+        return 'cache-first';
+    }
+}
+
 // Configuration du cache des médias
 const CACHE_STRATEGIES = {
     images: {
@@ -36,11 +80,8 @@ async function getManifest() {
 async function cacheFiles() {
     const manifest = await getManifest();
     return [
-        // Pages critiques
+        // Pages critiques (seulement les pages publiques)
         "/",
-        "/dashboard",
-        "/dashboard/chantiers",
-        "/dashboard/arbre-de-depannage",
         "/manifest.json",
 
         // Assets JS/CSS principaux
@@ -373,10 +414,21 @@ self.addEventListener("fetch", (event) => {
                 // Stratégie Network First pour les données JSON et API
                 else if (url.pathname.includes('/data/') ||
                     url.pathname.includes('/api/') ||
-                    url.pathname.includes('/dashboard/') ||
                     url.pathname.endsWith('.json')) {
 
                     return await networkFirst(event.request);
+                }
+
+                // Routes qui nécessitent une connexion internet - pas de cache
+                else if (getCacheStrategy(url.href) === 'online-only') {
+                    console.log(`🌐 Route nécessitant une connexion: ${url.pathname}`);
+                    return await fetch(event.request);
+                }
+
+                // Routes qui peuvent fonctionner en mode offline
+                else if (getCacheStrategy(url.href) === 'offline-capable') {
+                    console.log(`📱 Route compatible offline: ${url.pathname}`);
+                    return await staleWhileRevalidate(event.request);
                 }
 
                 // Stratégie Stale While Revalidate pour les pages HTML
@@ -393,7 +445,45 @@ self.addEventListener("fetch", (event) => {
             } catch (error) {
                 // Gestion des erreurs selon le type de requête
 
-                // Pour les pages de navigation, rediriger vers la page offline
+                // Pour les routes qui nécessitent une connexion, afficher une erreur spécifique
+                if (getCacheStrategy(event.request.url) === 'online-only') {
+                    console.log(`❌ Erreur de connexion pour route nécessitant internet: ${event.request.url}`);
+                    return new Response(`
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <title>Connexion requise</title>
+                            <meta charset="utf-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1">
+                            <style>
+                                body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+                                .error-container { max-width: 500px; margin: 0 auto; }
+                                .error-icon { font-size: 64px; color: #dc3545; }
+                                .error-title { color: #dc3545; margin: 20px 0; }
+                                .error-message { color: #6c757d; margin: 20px 0; }
+                                .btn { display: inline-block; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; }
+                            </style>
+                        </head>
+                        <body>
+                            <div class="error-container">
+                                <div class="error-icon">🌐</div>
+                                <h1 class="error-title">Connexion Internet Requise</h1>
+                                <p class="error-message">Cette page nécessite une connexion internet pour fonctionner correctement.</p>
+                                <p class="error-message">Veuillez vérifier votre connexion et réessayer.</p>
+                                <a href="/" class="btn">Retour à l'accueil</a>
+                            </div>
+                        </body>
+                        </html>
+                    `, {
+                        status: 503,
+                        statusText: 'Service Unavailable',
+                        headers: new Headers({
+                            'Content-Type': 'text/html; charset=utf-8'
+                        })
+                    });
+                }
+
+                // Pour les autres pages de navigation, rediriger vers la page offline
                 if (event.request.mode === 'navigate' ||
                     event.request.headers.get('accept')?.includes('text/html')) {
 

@@ -355,18 +355,34 @@ class IndexedDBManager {
             const stores = ['documents', 'maintenance_history', 'machine_images', 'chantier_details'];
 
             for (const storeName of stores) {
-                const transaction = this.db.transaction([storeName], 'readonly');
-                const store = transaction.objectStore('store');
-                const count = await this.promisifyRequest(store.count());
-                stats[storeName] = { count };
+                try {
+                    // Vérifier si l'object store existe avant de l'utiliser
+                    if (this.db.objectStoreNames.contains(storeName)) {
+                        const transaction = this.db.transaction([storeName], 'readonly');
+                        const store = transaction.objectStore(storeName);
+                        const count = await this.promisifyRequest(store.count());
+                        stats[storeName] = { count };
+                    } else {
+                        console.warn(`⚠️ Object store '${storeName}' n'existe pas`);
+                        stats[storeName] = { count: 0, error: 'Store non existant' };
+                    }
+                } catch (storeError) {
+                    console.warn(`⚠️ Erreur accès object store '${storeName}':`, storeError);
+                    stats[storeName] = { count: 0, error: storeError.message };
+                }
             }
 
             // Estimation de la taille (approximative)
-            if ('estimate' in navigator.storage) {
-                const estimate = await navigator.storage.estimate();
-                stats.quota = estimate.quota;
-                stats.usage = estimate.usage;
-                stats.usagePercentage = ((estimate.usage / estimate.quota) * 100).toFixed(2);
+            try {
+                if ('estimate' in navigator.storage) {
+                    const estimate = await navigator.storage.estimate();
+                    stats.quota = estimate.quota;
+                    stats.usage = estimate.usage;
+                    stats.usagePercentage = ((estimate.usage / estimate.quota) * 100).toFixed(2);
+                }
+            } catch (storageError) {
+                console.warn('⚠️ Impossible de récupérer les statistiques de stockage:', storageError);
+                stats.storageError = storageError.message;
             }
 
             return stats;
@@ -405,6 +421,30 @@ class IndexedDBManager {
             console.log('📚 IndexedDB fermé');
         }
     }
+
+    /**
+     * Réinitialisation complète de la base de données
+     */
+    async resetDatabase() {
+        try {
+            console.log('🔄 Réinitialisation de la base de données IndexedDB...');
+
+            // Fermer la connexion actuelle
+            this.close();
+
+            // Supprimer la base de données existante
+            await this.promisifyRequest(indexedDB.deleteDatabase(this.dbName));
+
+            // Réinitialiser
+            await this.init();
+
+            console.log('✅ Base de données IndexedDB réinitialisée avec succès');
+            return true;
+        } catch (error) {
+            console.error('❌ Erreur réinitialisation IndexedDB:', error);
+            throw error;
+        }
+    }
 }
 
 // Instance globale
@@ -428,6 +468,14 @@ window.storeMachineImage = async (machineId, imageFile, type) => {
 
 window.getMachineImages = async (machineId) => {
     return await indexedDBManager.getMachineImages(machineId);
+};
+
+window.resetIndexedDB = async () => {
+    return await indexedDBManager.resetDatabase();
+};
+
+window.getIndexedDBStats = async () => {
+    return await indexedDBManager.getStorageStats();
 };
 
 console.log('💾 IndexedDB Manager initialisé'); 

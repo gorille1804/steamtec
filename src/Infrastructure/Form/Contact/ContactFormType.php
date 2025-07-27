@@ -15,7 +15,9 @@ class ContactFormType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class)
-            ->add('prenom', TextType::class)
+            ->add('prenom', TextType::class, [
+                'label' => 'Prénom',
+                ])
             ->add('societe', TextType::class, [
                 'label' => 'Nom de la structure',
                 'constraints' => [

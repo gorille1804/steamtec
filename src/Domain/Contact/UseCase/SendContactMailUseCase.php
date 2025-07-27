@@ -21,13 +21,14 @@ class SendContactMailUseCase implements SendContactMailUseCaseInterface
                 'prenom' => $request->prenom,
                 'societe' => $request->societe,
                 'email' => $request->email,
-                'phone' => $request->phone,
+                'phone' => $request->phone ?? '',
                 'type' => $request->type,
                 'message' => $request->message,
             ],
             'Message de contact',
-            $this->noReplyEmail,
-            [$this->noReplyEmail],
+            $request->email,
+            //$this->noReplyEmail,
+            ['contact@steamtec.fr'],
         );
     }
 }

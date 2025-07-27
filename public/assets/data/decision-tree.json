@@ -627,7 +627,10 @@
       "id": "etat11",
       "type": "etat",
       "title": "PAS DE PRESSION AU MANO (LA POMPE NE TOURNE PAS) ALORS QU'ON APPUIE SUR LA GACHETTE et je suis alimenté en direct avec bac anticalcaire",
-      "parent": "prob6"
+      "parent": "prob6",
+      "next": [
+        "verif37"
+      ]
     },
     {
       "id": "verif30",
@@ -735,6 +738,157 @@
       "type": "action",
       "title": "Appeler le SAV 0681676430",
       "parent": "verif36"
+    },
+    {
+      "id": "verif37",
+      "type": "verif",
+      "title": "VERIFIER L'OUVERTURE DU ROBINET D'ALIMENTATION",
+      "parent": "etat11",
+      "next_ok": "verif38",
+      "next_ko": "action45"
+    },
+    {
+      "id": "action45",
+      "type": "action",
+      "title": "OUVRIR LE ROBINET",
+      "parent": "verif37"
+    },
+    {
+      "id": "verif38",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE PLI DANS LE TUYAU D'ALIMENTATION ",
+      "parent": "etat11",
+      "next_ok": "verif39",
+      "next_ko": "action46"
+    },
+    {
+      "id": "action46",
+      "type": "action",
+      "title": "DEROULER LE TUYAU SANS PLIS",
+      "parent": "verif38"
+    },
+    {
+      "id": "verif39",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE BLANC ENTREE MACHINE",
+      "parent": "etat11",
+      "next_ok": "verif40",
+      "next_ko": "action47",
+      "image": "/assets/images/arbres/filtreblanc.png"
+    },
+    {
+      "id": "action47",
+      "type": "action",
+      "title": "NETTOYER OU CHANGER LE FILTRE",
+      "parent": "verif39"
+    },
+    {
+      "id": "verif40",
+      "type": "verif",
+      "title": "VERIFIER LE BON FONCTIONNEMENT DU FLOTTEUR",
+      "parent": "etat11",
+      "next_ok": "verif41",
+      "next_ko": "action48"
+    },
+    {
+      "id": "action48",
+      "type": "action",
+      "title": "CHANGER LES ELEMENTS DEFECTUEUX",
+      "parent": "verif40"
+    },
+    {
+      "id": "verif41",
+      "type": "verif",
+      "title": "VERIFIER QUE L'ENTREE DU BAC N'EST PAS BOUCHEE",
+      "parent": "etat11",
+      "next_ok": "verif42",
+      "next_ko": "action49"
+    },
+    {
+      "id": "action49",
+      "type": "action",
+      "title": "NETTOYER L'ENTREE DU BAC",
+      "parent": "verif41"
+    },
+    {
+      "id": "verif42",
+      "type": "verif",
+      "title": "VERIFIER QUE LA SORTIE DU BAC N'EST PAS BOUCHEE",
+      "parent": "etat11",
+      "next_ok": "verif43",
+      "next_ko": "action50"
+    },
+    {
+      "id": "action50",
+      "type": "action",
+      "title": "NETTOYER LA SORTIE DU BAC",
+      "parent": "verif42"
+    },
+    {
+      "id": "verif43",
+      "type": "verif",
+      "title": "VERIFIER LE FILTRE ENTREE POMPE (COUVERCLE VERT)",
+      "parent": "etat11",
+      "next_ok": "verif44",
+      "next_ko": "action51",
+      "image": "/assets/images/arbres/filtrecouverclepompe.png"
+    },
+    {
+      "id": "action51",
+      "type": "action",
+      "title": "NETTOYER LE FILTRE",
+      "parent": "verif43"
+    },
+    {
+      "id": "verif44",
+      "type": "verif",
+      "title": "VERIFIER L'OUVERTURE DU ROBINET VAPEUR",
+      "parent": "etat11",
+      "next_ok": "verif45",
+      "next_ko": "action52"
+    },
+    {
+      "id": "action52",
+      "type": "action",
+      "title": "OUVRIR LE ROBINET",
+      "parent": "verif44"
+    },
+    {
+      "id": "verif45",
+      "type": "verif",
+      "title": "VERIFIER LA SORTIE D'EAU (MÊME FAIBLE) EN SORTIE D'ACCESSOIRE ",
+      "parent": "etat11",
+      "next_ok": "etat13",
+      "next_ko": "action53"
+    },
+    {
+      "id": "action53",
+      "type": "action",
+      "title": "NETTOYER LA BUSE DE L'ACCESSOIRE OU CHANGER D'ACCESSOIRE",
+      "parent": "verif45"
+    },
+    {
+      "id": "etat13",
+      "type": "etat",
+      "title": "PROBLEME ELECTRIQUE",
+      "parent": "verif45",
+      "next": [
+        "verif46"
+      ]
+    },
+    {
+      "id": "verif46",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU/DES CONDENSATEURS",
+      "parent": "etat13",
+      "next_ok": "action54",
+      "image": "/assets/images/arbres/condensateur.png"
+    },
+    {
+      "id": "action54",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "verif46"
     }
   ]
 }

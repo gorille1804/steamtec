@@ -1,7 +1,9 @@
 import './bootstrap.js';
 import './js/custome.js';
+import './js/pwa-config.js';
 import './js/offline-manager.js';
 import './js/local-storage-manager.js';
+import './js/test-indexeddb.js';
 import './js/indexeddb-manager.js';
 import './js/cache-optimizer.js';
 /*
@@ -37,30 +39,44 @@ function isAppInstalled() {
         window.navigator.standalone === true;
 }
 
-// Vérifier si le navigateur supporte les notifications et Service Workers
-if ("serviceWorker" in navigator && "Notification" in window) {
-    console.log("📢 Service Worker détecté !");
-    
-    // N'enregistrer le Service Worker que sur mobile
-    if (isMobileDevice()) {
-        navigator.serviceWorker.register("/service-worker.js")
-            .then(registration => {
-                registration.update();
-                console.log("✅ Service Worker enregistré :", registration);
-                demanderPermissionNotification();
+// Fonction pour enregistrer le service worker
+function registerServiceWorker() {
+    if ("serviceWorker" in navigator && "Notification" in window) {
+        console.log("📢 Service Worker détecté !");
 
-                // Gérer l'installation PWA après l'enregistrement du service worker
-                setTimeout(() => {
-                    gererInstallationPWA();
-                }, 2000); // Attendre 2 secondes pour que tout soit initialisé
-            })
-            .catch(error => console.error("❌ Erreur d'enregistrement du Service Worker :", error));
+        // N'enregistrer le Service Worker que sur mobile
+        if (isMobileDevice()) {
+            // Utiliser la configuration centralisée PWA
+            const currentPath = window.location.pathname;
+            const isOnline = navigator.onLine;
+
+            if (window.PWA_CONFIG && !window.PWA_CONFIG.shouldRegisterServiceWorker(currentPath, isOnline)) {
+                console.log("🌐 Route nécessitant une connexion détectée en mode offline - Service Worker désactivé");
+                return;
+            }
+
+            navigator.serviceWorker.register("/service-worker.js")
+                .then(registration => {
+                    registration.update();
+                    console.log("✅ Service Worker enregistré :", registration);
+                    demanderPermissionNotification();
+
+                    // Gérer l'installation PWA après l'enregistrement du service worker
+                    setTimeout(() => {
+                        gererInstallationPWA();
+                    }, 2000); // Attendre 2 secondes pour que tout soit initialisé
+                })
+                .catch(error => console.error("❌ Erreur d'enregistrement du Service Worker :", error));
+        } else {
+            console.log("ℹ️ Service Worker non enregistré car appareil desktop détecté");
+        }
     } else {
-        console.log("ℹ️ Service Worker non enregistré car appareil desktop détecté");
+        console.warn("🚨 Notifications ou Service Workers non supportés sur ce navigateur.");
     }
-} else {
-    console.warn("🚨 Notifications ou Service Workers non supportés sur ce navigateur.");
 }
+
+// Appeler la fonction d'enregistrement du service worker
+registerServiceWorker();
 
 // Demande de permission pour les notifications
 function demanderPermissionNotification() {
@@ -208,6 +224,13 @@ async function installerPWA() {
 
         // Marquer comme installé pour éviter de redemander
         localStorage.setItem('pwa-installed', 'true');
+
+        // Mettre à jour l'état PWA pour activer l'indicateur réseau
+        setTimeout(() => {
+            if (window.updatePWAStatus) {
+                window.updatePWAStatus();
+            }
+        }, 1000);
     } else {
         console.log('❌ L\'utilisateur a refusé l\'installation');
         afficherNotificationInstallation('Installation annulée', 'info');
@@ -259,6 +282,13 @@ window.addEventListener('appinstalled', (evt) => {
     afficherNotificationInstallation('🎉 SteamTec ajouté à votre écran d\'accueil !', 'success');
     localStorage.setItem('pwa-installed', 'true');
     fermerBanniere();
+
+    // Mettre à jour l'état PWA pour activer l'indicateur réseau
+    setTimeout(() => {
+        if (window.updatePWAStatus) {
+            window.updatePWAStatus();
+        }
+    }, 1000);
 });
 
 // ==================== FONCTIONS DEBUG PWA (pour développement) ====================

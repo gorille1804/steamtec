@@ -7,7 +7,7 @@ class ContactRequest
     public string $prenom;
     public string $societe;
     public string $email;
-    public string $phone;
+    public ?string $phone;
     public string $type;
     public string $message;
 }
