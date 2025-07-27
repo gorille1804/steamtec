@@ -38,10 +38,6 @@
                     <ul class="config_lik_group">
                         <ul class="config_lik_group">
                         <li class="d-flex">
-                            <strong>Besoin d'autonomie ? <span class="icon_arrow"></span></strong>
-                            <p>Nous vous proposons des <a href="#groupes-el" class="text-black">groupes électrogènes</a> et <a href="#citernes" class="text-black">des citernes</a></p>
-                        </li>
-                        <li class="d-flex">
                             <strong>Besoin de mobilité et de disponibilité du véhicule ? <span class="icon_arrow"></span></strong>
                             <p>Nous vous proposons des <a href="#montage-roues" class="text-black">montages sur roues</a>, sur <a href="#montage-remorque" class="text-black">remorques</a></p>
                         </li>
@@ -49,6 +45,10 @@
                             <strong>Besoin de maniabilité seul ? <span class="icon_arrow"></span></strong>
                             <p>Nous vous proposons des <a href="#montage-remorque" class="text-black">montages sur remorques</a>, sur <a href="#chassis" class="text-black">châssis escamotable</a></p>
                         </li class="d-flex">
+                        <li class="d-flex">
+                            <strong>Besoin d'autonomie ? <span class="icon_arrow"></span></strong>
+                            <p>Nous vous proposons des <a href="#groupes-el" class="text-black">groupes électrogènes</a> et <a href="#citernes" class="text-black">des citernes</a></p>
+                        </li>
                         <li class="d-flex">
                             <strong>Un besoin spécifique ? <span class="icon_arrow"></span></strong>
                             <p><a href="#specifique" class="text-black">Nous consulter pour l'étudier, exemples de montages particuliers</a></p>
@@ -62,13 +62,7 @@
     <div class="container header-navigations">
         <ul class="nav nav-pills nav-fill border-bottom-0" id="tab-nav" role="tablist">
             <li class="nav-item">
-                <button class="nav-link active btn btn-theme" id="link-groupes-el" data-bs-toggle="tab" data-bs-target="#groupes-el" type="button" role="tab" aria-controls="groupes-el" aria-selected="true">Groupes électrogènes</button>
-            </li>
-            <li class="nav-item">
-                <button class="nav-link btn btn-theme"  id="link-citernes" data-bs-toggle="tab" data-bs-target="#citernes" type="button" role="tab" aria-controls="citernes" aria-selected="false">Citernes, cuves à eau</button>
-            </li>
-            <li class="nav-item">
-                <button class="nav-link btn btn-theme" id="link-montage-roues" data-bs-toggle="tab" data-bs-target="#montage-roues" type="button" role="tab" aria-controls="montage-roues" aria-selected="false">Montages sur roues</button>
+                <button class="nav-link active btn btn-theme" id="link-montage-roues" data-bs-toggle="tab" data-bs-target="#montage-roues" type="button" role="tab" aria-controls="montage-roues" aria-selected="false">Montages sur roues</button>
             </li>
             <li class="nav-item">
                 <button class="nav-link btn btn-theme" id="link-montage-remorque" data-bs-toggle="tab" data-bs-target="#montage-remorque" type="button" role="tab" aria-controls="montage-remorque" aria-selected="false">Montages sur remorque</button>
@@ -77,12 +71,17 @@
                 <button class="nav-link btn btn-theme" id="link-chassis" data-bs-toggle="tab" data-bs-target="#chassis" type="button" role="tab" aria-controls="chassis" aria-selected="false">Châssis escamotable</button>
             </li>
             <li class="nav-item">
+                <button class="nav-link btn btn-theme" id="link-groupes-el" data-bs-toggle="tab" data-bs-target="#groupes-el" type="button" role="tab" aria-controls="groupes-el" aria-selected="true">Groupes électrogènes</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link btn btn-theme"  id="link-citernes" data-bs-toggle="tab" data-bs-target="#citernes" type="button" role="tab" aria-controls="citernes" aria-selected="false">Citernes, cuves à eau</button>
+            </li>
+            <li class="nav-item">
                 <button class="nav-link btn btn-theme" id="link-specifique" data-bs-toggle="tab" data-bs-target="#specifique" type="button" role="tab" aria-controls="specifique" aria-selected="false">Besoins spécifiques</button>
             </li>
         </ul>
         <div class="tab-content border-0" id="myTabContent">
-          
-            <div class="tab-pane fade show active" id="groupes-el" role="tabpanel" aria-labelledby="link-groupes-el" tabindex="0">
+            <div class="tab-pane fade" id="groupes-el" role="tabpanel" aria-labelledby="link-groupes-el" tabindex="0">
                 <div class="sm-container text-center">
                     <h2 class="fs-32 fw-700 roboto">Groupes électrogènes</h2>
                     <p class="fs-18 fw-400 lh-150 roboto">Nous avons un partenariat avec Benza pour vous proposer des groupes électrogènes adaptés à l’utilisation intensive de votre <span class="fw-700 fst-italic">STEAM_Tec</span> en essence ou en Diesel et de différentes puissances.</p>
@@ -100,7 +99,7 @@
                     {% include "client/configuration/products/citerne.html.twig" %}
                 </div>
             </div>
-            <div class="tab-pane fade" id="montage-roues" role="tabpanel" aria-labelledby="link-montage-roues" tabindex="0">
+            <div class="tab-pane fade show active" id="montage-roues" role="tabpanel" aria-labelledby="link-montage-roues" tabindex="0">
                 <div class="sm-container text-center">
                     <h2 class="fs-32 fw-700 roboto">Montages sur roues</h2>
                     <p class="fs-18 fw-400 lh-150 roboto">En fonction de votre besoin, nous pouvons adapter le type de roues : gonflables, directionnelles, avec freins ...</p>
