@@ -1,0 +1,21 @@
+/* Correction du défilement des ancres avec header fixe */
+html {
+  scroll-padding-top: 120px; /* Ajusté pour la hauteur du header + marge */
+}
+
+/* Alternative pour les navigateurs plus anciens */
+[id] {
+  scroll-margin-top: 120px; /* Ajusté pour la hauteur du header + marge */
+}
+
+/* Pour les sections spécifiques de nettoyage */
+#avantage_methode,
+#nettoyage_toiture,
+#nettoyage_facade,
+#nettoyage_sol,
+#nettoyage_monument,
+#nettoyage_bois,
+#autre_application {
+  scroll-margin-top: 120px;
+  scroll-padding-top: 120px;
+} 
