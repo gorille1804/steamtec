@@ -7,17 +7,24 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Infrastructure\Symfony\Service\SeoService;
 
 class AboutController extends AbstractController
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
+        private readonly SeoService $seoService
     ) {}
 
     #[Route('/societe', name: 'app_about', methods: ['GET'])]
     public function index(Request $request): Response
     {
+        $seoMeta = $this->seoService->getMetaForPage('about');
+        $structuredData = $this->seoService->getOrganizationStructuredData();
+
         return $this->render('client/apropos/index.html.twig', [
+            'seo_meta' => $seoMeta,
+            'structured_data' => $structuredData,
         ]);
     }
 }

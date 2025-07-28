@@ -1,0 +1,32 @@
+User-agent: *
+Allow: /
+
+# Pages publiques importantes
+Allow: /
+Allow: /societe
+Allow: /configuration
+Allow: /contact
+Allow: /client
+Allow: /nettoyage
+Allow: /desherbage
+Allow: /materiel
+Allow: /accessoire
+Allow: /login
+
+# Bloquer les zones privées
+Disallow: /dashboard/
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_profiler/
+Disallow: /_wdt/
+
+# Bloquer les fichiers sensibles
+Disallow: /*.pdf$
+Disallow: /uploads/documents/
+Disallow: /uploads/maintenance_machine/
+
+# Sitemap
+Sitemap: https://votre-domaine.com/sitemap.xml
+
+# Crawl-delay pour éviter de surcharger le serveur
+Crawl-delay: 1 

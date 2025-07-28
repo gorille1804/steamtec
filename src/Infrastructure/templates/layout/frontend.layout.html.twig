@@ -1,9 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Steamtec | {% block title %}{% endblock %}  </title>
+    
+    {# Meta tags SEO de base #}
+    <title>{% block seo_title %}{{ seo_meta.title|default('SteamTec - Solutions éco-responsables') }}{% endblock %}</title>
+    <meta name="description" content="{% block seo_description %}{{ seo_meta.description|default('ENTECH, fabricant français de solutions éco-responsables de nettoyage et désherbage à la vapeur depuis plus de 20 ans.') }}{% endblock %}">
+    <meta name="keywords" content="{% block seo_keywords %}{{ seo_meta.keywords|default('nettoyage vapeur, désherbage écologique, solutions éco-responsables, ENTECH, fabricant français') }}{% endblock %}">
+    <meta name="author" content="{{ seo_meta.author|default('SteamTec') }}">
+    <meta name="robots" content="{{ seo_meta.robots|default('index, follow') }}">
+    
+    {# Open Graph / Facebook #}
+    <meta property="og:type" content="{{ seo_meta['og:type']|default('website') }}">
+    <meta property="og:url" content="{{ app.request.uri }}">
+    <meta property="og:title" content="{% block og_title %}{{ seo_meta.title|default('SteamTec - Solutions éco-responsables') }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ seo_meta.description|default('ENTECH, fabricant français de solutions éco-responsables de nettoyage et désherbage à la vapeur depuis plus de 20 ans.') }}{% endblock %}">
+    <meta property="og:image" content="{{ seo_meta['og:image']|default(app.request.schemeAndHttpHost ~ asset('assets/images/og-image.jpg')) }}">
+    <meta property="og:site_name" content="{{ seo_meta['og:site_name']|default('SteamTec') }}">
+    <meta property="og:locale" content="fr_FR">
+    
+    {# Twitter Card #}
+    <meta name="twitter:card" content="{{ seo_meta['twitter:card']|default('summary_large_image') }}">
+    <meta name="twitter:site" content="{{ seo_meta['twitter:site']|default('@steamtec') }}">
+    <meta name="twitter:title" content="{% block twitter_title %}{{ seo_meta.title|default('SteamTec - Solutions éco-responsables') }}{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}{{ seo_meta.description|default('ENTECH, fabricant français de solutions éco-responsables de nettoyage et désherbage à la vapeur depuis plus de 20 ans.') }}{% endblock %}">
+    <meta name="twitter:image" content="{{ seo_meta['twitter:image']|default(app.request.schemeAndHttpHost ~ asset('assets/images/twitter-image.jpg')) }}">
+    
+    {# Canonical URL #}
+    <link rel="canonical" href="{{ app.request.uri }}">
+    
+    {# Structured Data JSON-LD #}
+    {% block structured_data %}
+        {% if structured_data is defined %}
+        <script type="application/ld+json">
+            {{ structured_data|json_encode|raw }}
+        </script>
+        {% endif %}
+    {% endblock %}
+    
+    {# Google Analytics #}
+    {% include "layout/partials/seo/_google_analytics.html.twig" %}
+    
     {% if app.request.headers.get('User-Agent') matches '/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i' %}
         <link rel="manifest" href="{{ asset('manifest.json') }}">
     {% endif %}
