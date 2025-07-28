@@ -26,7 +26,7 @@ Disallow: /uploads/documents/
 Disallow: /uploads/maintenance_machine/
 
 # Sitemap
-Sitemap: https://votre-domaine.com/sitemap.xml
+Sitemap: https://steamtec.fr/sitemap.xml
 
 # Crawl-delay pour éviter de surcharger le serveur
 Crawl-delay: 1 

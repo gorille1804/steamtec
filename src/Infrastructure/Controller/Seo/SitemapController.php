@@ -17,7 +17,7 @@ class SitemapController extends AbstractController
     public function index(): Response
     {
         $urls = [];
-        $hostname = $this->getParameter('appUrl') ?? 'https://steamtec.fr';
+        $hostname = 'https://steamtec.fr';
 
         // Pages publiques importantes (selon robots.txt)
         $urls[] = [
@@ -56,13 +56,6 @@ class SitemapController extends AbstractController
         ];
 
         // Nouvelles pages publiques ajoutées dans robots.txt
-        $urls[] = [
-            'loc' => $hostname . '/client',
-            'lastmod' => date('Y-m-d'),
-            'changefreq' => 'monthly',
-            'priority' => '0.7'
-        ];
-
         $urls[] = [
             'loc' => $hostname . '/nettoyage',
             'lastmod' => date('Y-m-d'),
