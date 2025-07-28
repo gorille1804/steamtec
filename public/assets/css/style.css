@@ -35917,6 +35917,9 @@ section h3 {
   color: #fff;
   padding-bottom: 52px;
   margin-top: -60px;
+  display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .content_solution_nettoyage .content_liste_nettoyage li {
@@ -35950,6 +35953,7 @@ section h3 {
   line-height: 24px;
   text-align: center;
   color: #FFFFFF;
+  margin: 0;
 }
 
 .content_solution_nettoyage .content_liste_nettoyage li:first-child .content_image_nettoyage:after {
