@@ -66,6 +66,18 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     {% block stylesheets %}
       {{ encore_entry_link_tags('app') }}
+      <style>
+        /* SEO-friendly hidden h1 - keeps element in normal flow but visually hidden */
+        .seo-friendly {
+            font-size: 0;
+            line-height: 0;
+            color: transparent;
+            margin: 0;
+            padding: 0;
+            height: 0;
+            overflow: hidden;
+        }
+      </style>
     {% endblock %}
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17394086788"></script>
     <script>
