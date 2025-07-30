@@ -889,6 +889,311 @@
       "type": "action",
       "title": "Appeler le SAV 0681676430",
       "parent": "verif46"
+    },
+    {
+      "id": "prob7",
+      "type": "probleme",
+      "title": "IMPOSSIBLE DE REGLER LA PRESSION AU MANO (LA POMPE TOURNE)",
+      "parent": "cate2"
+    },
+    {
+      "id": "etat14",
+      "type": "etat",
+      "title": "IMPOSSIBLE DE MONTER EN PRESSION SORTIE DE POMPE (AU MANO) et le moteur tourne",
+      "parent": "prob7",
+      "next": [
+        "verif47"
+      ]
+    },
+    {
+      "id": "verif47",
+      "type": "verif",
+      "title": "VERIFIER LE REGLAGE DE LA PRESSION (SENS HORAIRE POUR AUGMENTER) ET QUE LA MOLETTE EST BIEN ENCLENCHEE",
+      "parent": "etat14",
+      "next_ok": "verif48",
+      "next_ko": "action55"
+    },
+    {
+      "id": "action55",
+      "type": "action",
+      "title": "MONTER LA PRESSION OU ENCLENCHER LA MOLETTE CORRECTEMENT",
+      "parent": "verif47"
+    },
+    {
+      "id": "verif48",
+      "type": "verif",
+      "title": "TESTER LA PRESSION AVEC UN ACCESSOIRE UNE SEULE BUSE (Calibre maxi 04)",
+      "parent": "etat14",
+      "next_ok": "etat15",
+      "next_ko": "action56"
+    },
+    {
+      "id": "action56",
+      "type": "action",
+      "title": "UTILISER UN SEUL ACCESSOIRE (Pression > 35 bars) ou UNE SEULE BUSE (Calibre max 04) ou rester à une pression max de 35 bars",
+      "parent": "verif48"
+    },
+    {
+      "id": "etat15",
+      "type": "etat",
+      "title": "DEBIT FAIBLE",
+      "parent": "verif48",
+      "next": [
+        "verif49"
+      ]
+    },
+    {
+      "id": "verif49",
+      "type": "verif",
+      "title": "QUELLE EST LA CONFIGURATION DE L'ALIMENTATION EN EAU ? SUR CITERNE ?",
+      "parent": "etat15",
+      "next_ok": "etat16",
+      "next_ko": "verif50"
+    },
+    {
+      "id": "verif50",
+      "type": "verif",
+      "title": "EN DIRECTE SANS BAC ANTICALCAIRE ?",
+      "parent": "etat15"
+    },
+    {
+      "id": "etat16",
+      "type": "etat",
+      "title": "IMPOSSIBLE DE MONTER EN PRESSION SORTIE DE POMPE (AU MANO) et le moteur tourne et je suis alimenté par citerne",
+      "parent": "verif49",
+      "next": [
+        "verif51"
+      ]
+    },
+    {
+      "id": "verif51",
+      "type": "verif",
+      "title": "VERIFIER QUE LA CITERNE N'EST PAS A PLUS DE 3M DE LA MACHINE ET AU MEME NIVEAU",
+      "parent": "etat16",
+      "next_ok": "verif52",
+      "next_ko": "action57"
+    },
+    {
+      "id": "action57",
+      "type": "action",
+      "title": "RAPPROCHER LA CITERNE ET/OU LA METTRE AU MEME NIVEAU QUE LA MACHINE",
+      "parent": "verif51"
+    },
+    {
+      "id": "verif52",
+      "type": "verif",
+      "title": "VERIFIER LE NIVEAU D'EAU DANS LA CITERNE",
+      "parent": "etat16",
+      "next_ok": "verif53",
+      "next_ko": "action58"
+    },
+    {
+      "id": "action58",
+      "type": "action",
+      "title": "REMPLIR LA CITERNE",
+      "parent": "verif52"
+    },
+    {
+      "id": "verif53",
+      "type": "verif",
+      "title": "VERIFIER LE FONCTIONNEMENT EN ALIMENTATION DIRECTE (SUR ROBINET)",
+      "parent": "etat16",
+      "next_ok": "action59",
+      "next_ko": "verif57"
+    },
+    {
+      "id": "action59",
+      "type": "action",
+      "title": "TRAVAILLER EN DIRECT TEMPORAIREMENT, MAIS PREVOIR DE ...",
+      "parent": "verif53",
+      "next": [
+        "verif54"
+      ]
+    },
+    {
+      "id": "verif54",
+      "type": "verif",
+      "title": "VERIFIER QUE LA SORTIE DE LA CITERNE N'EST PAS BOUCHEE OU ROBINET FERME (EN DECONNECTANT LE TUYAU)",
+      "parent": "verif53",
+      "next_ok": "verif55",
+      "next_ko": "action60"
+    },
+    {
+      "id": "action60",
+      "type": "action",
+      "title": "NETTOYER LA SORTIE DE LA CITERNE OU OUVRIR LE ROBINET",
+      "parent": "verif54"
+    },
+    {
+      "id": "verif55",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE BLANC ENTRE LA CITERNE ET LA MACHINE",
+      "parent": "verif53",
+      "next_ok": "verif56",
+      "next_ko": "action61"
+    },
+    {
+      "id": "action61",
+      "type": "action",
+      "title": "NETTOYER OU CHANGER LE FILTRE",
+      "parent": "verif55"
+    },
+    {
+      "id": "verif56",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE POINT BAS ENTRE LA CITERNE ET LA MACHINE",
+      "parent": "verif53",
+      "next_ok": "action63",
+      "next_ko": "action62"
+    },
+    {
+      "id": "action62",
+      "type": "action",
+      "title": "ELIMINER LE POINT BAS",
+      "parent": "verif56"
+    },
+    {
+      "id": "action63",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "verif56"
+    },
+    {
+      "id": "verif57",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE BLANC ENTREE MACHINE ",
+      "parent": "verif53",
+      "next_ok": "verif58",
+      "next_ko": "action64"
+    },
+    {
+      "id": "action64",
+      "type": "action",
+      "title": "NETTOYER OU CHANGER LE FILTRE",
+      "parent": "verif57"
+    },
+    {
+      "id": "verif58",
+      "type": "verif",
+      "title": "VERIFIER LE FILTRE ENTREE POMPE (COUVERCLE VERT) ",
+      "parent": "verif53",
+      "next_ok": "verif59",
+      "next_ko": "action65"
+    },
+    {
+      "id": "action65",
+      "type": "action",
+      "title": "NETTOYER LE FILTRE",
+      "parent": "verif58"
+    },
+    {
+      "id": "verif59",
+      "type": "verif",
+      "title": "VERIFIER L'OUVERTURE DU ROBINET VAPEUR",
+      "parent": "verif53",
+      "next_ok": "verif60",
+      "next_ko": "action66"
+    },
+    {
+      "id": "action66",
+      "type": "action",
+      "title": "OUVRIR LE ROBINET",
+      "parent": "verif59"
+    },
+    {
+      "id": "verif60",
+      "type": "verif",
+      "title": "VERIFIER LA SORTIE D'EAU (MÊME FAIBLE) EN SORTIE D'ACCESSOIRE",
+      "parent": "verif53",
+      "next_ok": "etat17",
+      "next_ko": "action67"
+    },
+    {
+      "id": "action67",
+      "type": "action",
+      "title": "NETTOYER LA BUSE DE L'ACCESSOIRE OU CHANGER D'ACCESSOIRE",
+      "parent": "verif60"
+    },
+    {
+      "id": "etat17",
+      "type": "etat",
+      "title": "PROBLEME DE PRESSION",
+      "parent": "verif53",
+      "next": [
+        "verif61"
+      ]
+    },
+    {
+      "id": "verif61",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE FUITE (Flexible de pression, mano, pressostat, pompe et chaudière) ",
+      "parent": "etat17",
+      "next_ok": "verif62",
+      "next_ko": "action68"
+    },
+    {
+      "id": "action68",
+      "type": "action",
+      "title": "REPARER LES FUITES",
+      "parent": "verif61"
+    },
+    {
+      "id": "verif62",
+      "type": "verif",
+      "title": "VERIFIER SI LA PRESSSION SORTIE D'ACCESSOIRE CHANGE (RESSENTI) AU REGLAGE DE LA VANNE",
+      "parent": "etat17",
+      "next_ok": "verif63",
+      "next_ko": "verif64"
+    },
+    {
+      "id": "verif63",
+      "type": "verif",
+      "title": "MANO HS",
+      "parent": "etat17",
+      "next_ok": "action70",
+      "next_ko": "action69"
+    },
+    {
+      "id": "verif64",
+      "type": "verif",
+      "title": "CLAPETS COLLES OU BLOQUES PAR UNE IMPURETE ",
+      "parent": "etat17",
+      "next_ok": "action71",
+      "next_ko": "action72"
+    },
+    {
+      "id": "action69",
+      "type": "action",
+      "title": "CHANGER LE MANO",
+      "parent": "verif63"
+    },
+    {
+      "id": "action70",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "verif63"
+    },
+    {
+      "id": "action71",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "verif64"
+    },
+    {
+      "id": "action72",
+      "type": "action",
+      "title": "DEMONTER LES CLAPETS POUR VERIFIER et les manœuvrer délicatement",
+      "parent": "verif64",
+      "next": [
+        "action73"
+      ]
+    },
+    {
+      "id": "action73",
+      "type": "action",
+      "title": "D008",
+      "parent": "verif64",
+      "usedoc": true
     }
   ]
 }
