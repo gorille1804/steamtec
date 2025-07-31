@@ -1,4 +1,4 @@
-const CACHE_VERSION = 7; // Version mise à jour avec tous les CSS et JS
+const CACHE_VERSION = 8; // Version mise à jour pour forcer le nettoyage du cache
 const CACHE_NAME = `steamtec-v${CACHE_VERSION}`;
 const IMAGES_CACHE_NAME = `steamtec-images-v${CACHE_VERSION}`;
 const DOCUMENTS_CACHE_NAME = `steamtec-documents-v${CACHE_VERSION}`;
@@ -193,14 +193,21 @@ async function cacheFiles() {
 self.addEventListener("install", (event) => {
     console.log("📦 Installation du Service Worker...");
     event.waitUntil(
-        cacheFiles().then((urlsToCache) => {
-            return caches.open(CACHE_NAME).then((cache) => {
-                return cache.addAll(urlsToCache).then(() => {
-                    console.log('✅ Tous les fichiers ont été ajoutés au cache');
-                    self.skipWaiting(); // Force l'installation immédiate
-                });
-            });
-        })
+        (async () => {
+            try {
+                // Nettoyer les anciens caches d'abord
+                await cleanOldCaches();
+
+                const urlsToCache = await cacheFiles();
+                const cache = await caches.open(CACHE_NAME);
+                await cache.addAll(urlsToCache);
+
+                console.log('✅ Tous les fichiers ont été ajoutés au cache');
+                self.skipWaiting(); // Force l'installation immédiate
+            } catch (error) {
+                console.error("❌ Erreur lors de l'installation:", error);
+            }
+        })()
     );
 });
 
@@ -323,18 +330,36 @@ function getFileType(url) {
 
 // Cache First Strategy - pour les assets statiques
 async function cacheFirst(request) {
-    const cachedResponse = await caches.match(request);
-    if (cachedResponse) {
-        return cachedResponse;
-    }
-
     try {
+        const cachedResponse = await caches.match(request);
+        if (cachedResponse) {
+            console.log(`📦 Ressource trouvée en cache: ${request.url}`);
+            return cachedResponse;
+        }
+
+        console.log(`🌐 Tentative de récupération depuis le réseau: ${request.url}`);
         const networkResponse = await fetch(request);
-        const cache = await caches.open(CACHE_NAME);
-        cache.put(request, networkResponse.clone());
+
+        if (networkResponse.ok) {
+            const cache = await caches.open(CACHE_NAME);
+            await cache.put(request, networkResponse.clone());
+            console.log(`✅ Ressource mise en cache: ${request.url}`);
+        } else {
+            console.warn(`⚠️ Réponse réseau non OK (${networkResponse.status}): ${request.url}`);
+        }
+
         return networkResponse;
     } catch (error) {
-        throw error;
+        console.error(`❌ Erreur lors de la récupération de ${request.url}:`, error);
+
+        // Essayer de retourner une réponse d'erreur plus informative
+        return new Response(`Ressource non disponible: ${request.url}`, {
+            status: 503,
+            statusText: 'Service Unavailable',
+            headers: new Headers({
+                'Content-Type': 'text/plain'
+            })
+        });
     }
 }
 
@@ -532,6 +557,19 @@ self.addEventListener("activate", (event) => {
         })
     );
 });
+
+// Fonction pour nettoyer les anciens caches
+async function cleanOldCaches() {
+    const cacheNames = await caches.keys();
+    const currentCaches = [CACHE_NAME, IMAGES_CACHE_NAME, DOCUMENTS_CACHE_NAME];
+
+    for (const cacheName of cacheNames) {
+        if (!currentCaches.includes(cacheName)) {
+            console.log(`🗑️ Suppression de l'ancien cache: ${cacheName}`);
+            await caches.delete(cacheName);
+        }
+    }
+}
 
 // 📌 Écoute de la réception d'une notification push (facultatif)
 self.addEventListener("push", event => {
