@@ -5,12 +5,14 @@ use Domain\ParcMachine\Data\Model\ParcMachine;
 use Domain\ParcMachine\Data\ObjectValue\ParcMachineId;
 use Domain\User\Data\Model\User;
 use Domain\User\Data\ObjectValue\UserId;
+use Domain\Machine\Data\Model\Machine;
 
 Interface ParcMachineRepositoryInterface
 {
     public function save(ParcMachine $parcMachine):ParcMachine;
     public function getAll(): array;
     public function findAllByUser(User $user):array;
+    public function findAllByMachine(Machine $machine):array;
     public function findById(ParcMachineId $id):?ParcMachine;
     public function delete(ParcMachine $parcMachine):void;
     public function update(ParcMachine $parcMachine):ParcMachine;

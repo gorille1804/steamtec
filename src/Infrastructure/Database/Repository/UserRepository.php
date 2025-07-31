@@ -27,6 +27,13 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
             ->getResult();
     }
 
+    public function getAllUsers(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function getTotalUsers(): int
     {
         return $this->createQueryBuilder('u')

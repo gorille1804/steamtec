@@ -9,6 +9,7 @@ use Domain\ParcMachine\Gateway\ParcMachineRepositoryInterface;
 use Domain\ParcMachine\Data\ObjectValue\ParcMachineId;
 use Domain\User\Data\Model\User;
 use Domain\User\Data\ObjectValue\UserId;
+use Domain\Machine\Data\Model\Machine;
 
 class ParcMachineRepository extends ServiceEntityRepository implements ParcMachineRepositoryInterface
 {
@@ -39,6 +40,11 @@ class ParcMachineRepository extends ServiceEntityRepository implements ParcMachi
     public function findAllByUser(User $user): array
     {
         return $this->findBy(['user' => $user]);
+    }
+
+    public function findAllByMachine(Machine $machine): array
+    {
+        return $this->findBy(['machine' => $machine]);
     }
     
 

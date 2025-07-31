@@ -17,9 +17,16 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Domain\Machine\Factory\MachineFactory;
 use Domain\Machine\Data\Contract\UpdateMachineRequest;
 use Domain\Machine\Data\Model\Machine;
+use Domain\User\Data\Model\User;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Domain\Machine\UseCase\DeleteMachineUseCaseInterface;
 use Domain\Machine\UseCase\UpdateMachineUseCaseInterface;
+use Domain\ParcMachine\UseCase\FindAllUsersByMachineUseCaseInterface;
+use Domain\ParcMachine\UseCase\AddUserToMachineUseCaseInterface;
+use Domain\ParcMachine\UseCase\RemoveUserFromMachineUseCaseInterface;
+use Domain\User\UseCase\FindAllUsersUseCaseInterface;
+use Domain\User\Data\ObjectValue\UserId;
+use Infrastructure\Form\Machine\AddUserToMachineFormType;
 
 #[Route('/dashboard')]
 class MachineController extends AbstractController
@@ -34,6 +41,10 @@ class MachineController extends AbstractController
         private readonly UploadDocumentUseCaseInterface $uploadDocumentUseCase,
         private readonly DownloadDocumentUseCaseInterface $downloadDocumentUseCase,
         private readonly TranslatorInterface $translator,
+        private readonly FindAllUsersByMachineUseCaseInterface $findAllUsersByMachineUseCase,
+        private readonly AddUserToMachineUseCaseInterface $addUserToMachineUseCase,
+        private readonly RemoveUserFromMachineUseCaseInterface $removeUserFromMachineUseCase,
+        private readonly FindAllUsersUseCaseInterface $findAllUsersUseCase,
     ){}
 
     #[Route('/machines', name: 'app_machines')]
@@ -115,10 +126,45 @@ class MachineController extends AbstractController
             }
         }
 
+        // Récupérer les utilisateurs affectés à cette machine
+        $assignedUsers = $this->findAllUsersByMachineUseCase->__invoke($machine);
+        
+        // Récupérer tous les utilisateurs disponibles
+        $allUsers = $this->findAllUsersUseCase->__invoke();
+        
+        // Filtrer les utilisateurs non affectés
+        $assignedUserIds = array_map(function($user) {
+            return $user->getId()->getValue();
+        }, $assignedUsers);
+        
+        $availableUsers = array_filter($allUsers, function($user) use ($assignedUserIds) {
+            return !in_array($user->getId()->getValue(), $assignedUserIds);
+        });
+
+        // Créer le formulaire d'ajout d'utilisateur
+        $addUserForm = $this->createForm(AddUserToMachineFormType::class, null, [
+            'available_users' => $availableUsers,
+        ]);
+
+        $addUserForm->handleRequest($request);
+
+        if ($addUserForm->isSubmitted() && $addUserForm->isValid()) {
+            try {
+                $data = $addUserForm->getData();
+                $this->addUserToMachineUseCase->__invoke($machine, $data['user']);
+                $this->addFlash('success', $this->translator->trans('machines.messages.add_user_success'));
+                return $this->redirectToRoute('app_update_machine', ['machine' => $machine->id->getValue()]);
+            } catch (\Exception $e) {
+                $this->addFlash('error', $this->translator->trans('machines.messages.add_user_error'));
+            }
+        }
+
         return $this->render('admin/machine/create.html.twig', [
             'form' => $form->createView(),
+            'addUserForm' => $addUserForm->createView(),
             'is_edit' => true,
             'machine' => $machine,
+            'assignedUsers' => $assignedUsers,
         ]);
     }
 
@@ -134,6 +180,20 @@ class MachineController extends AbstractController
         }
 
         return $this->redirectToRoute('app_machines');
+    }
+
+    #[Route('/machine/{machine}/remove-user/{user}', name:'app_remove_user_from_machine', methods:['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function removeUser(Machine $machine, User $user): Response
+    {
+        try {
+            $this->removeUserFromMachineUseCase->__invoke($machine, $user);
+            $this->addFlash('success', $this->translator->trans('machines.messages.remove_user_success'));
+        } catch (\Exception $e) {
+            $this->addFlash('error', $this->translator->trans('machines.messages.remove_user_error'));
+        }
+
+        return $this->redirectToRoute('app_update_machine', ['machine' => $machine->id->getValue()]);
     }
 
     #[Route('/machine/{machine}/download', name: 'app_download_machine_fiche_technique', methods: ['GET'])]

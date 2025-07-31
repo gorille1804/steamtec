@@ -80,6 +80,101 @@
                         {{ form_end(form) }}
                     </form>
                     </div>
+
+                    {% if is_edit %}
+                    <div class="mt-4">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="card-title mb-0">
+                                    <i class="mdi mdi-account-multiple"></i>
+                                    {{ 'machines.form.assigned_users.title'|trans }}
+                                </h5>
+                                {% if addUserForm is defined %}
+                                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                                    <i class="mdi mdi-plus"></i>
+                                    {{ 'machines.form.add_user.button'|trans }}
+                                </button>
+                                {% endif %}
+                            </div>
+                            <div class="card-body">
+                                {% if assignedUsers is defined and assignedUsers|length > 0 %}
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>{{ 'machines.form.assigned_users.name'|trans }}</th>
+                                                <th>{{ 'machines.form.assigned_users.email'|trans }}</th>
+                                                <th>{{ 'machines.form.assigned_users.role'|trans }}</th>
+                                                <th>{{ 'machines.form.assigned_users.actions'|trans }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for user in assignedUsers %}
+                                            <tr>
+                                                <td>{{ user.lastname }} {{ user.firstname }}</td>
+                                                <td>{{ user.email }}</td>
+                                                <td>
+                                                    <span class="badge badge-{{ user.roles|first == 'ROLE_ADMIN' ? 'danger' : 'info' }}">
+                                                        {{ user.roles|first == 'ROLE_ADMIN' ? 'Admin' : 'Utilisateur' }}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <form method="post" action="{{ path('app_remove_user_from_machine', {'machine': machine.id, 'user': user.id}) }}" 
+                                                          style="display: inline;" 
+                                                          onsubmit="return confirm('{{ 'machines.form.remove_user.confirm'|trans }}')">
+                                                        <button type="submit" class="btn btn-danger btn-sm" title="{{ 'machines.form.remove_user.title'|trans }}">
+                                                            <i class="mdi mdi-delete"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                {% else %}
+                                <div class="alert alert-info">
+                                    <i class="mdi mdi-information-outline"></i>
+                                    {{ 'machines.form.assigned_users.none'|trans }}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal pour ajouter un utilisateur -->
+                    {% if addUserForm is defined %}
+                    <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addUserModalLabel">
+                                        <i class="mdi mdi-account-plus"></i>
+                                        {{ 'machines.form.add_user.modal_title'|trans }}
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form method="post">
+                                    <div class="modal-body">
+                                        {{ form_widget(addUserForm.user) }}
+                                        {% if form_errors(addUserForm.user) %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form_errors(addUserForm.user) }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            {{ 'machines.form.add_user.cancel'|trans }}
+                                        </button>
+                                        {{ form_widget(addUserForm.add) }}
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endif %}
                 </div>
             </div>
         </div>

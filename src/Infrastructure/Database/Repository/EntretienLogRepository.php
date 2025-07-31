@@ -151,4 +151,16 @@ class EntretienLogRepository extends ServiceEntityRepository implements Entretie
 
         return $entretienLog;
     }
+
+    // Supprimer les logs associés à une parc machine
+    public function deleteByParcMachine(ParcMachine $parcMachine): void
+    {
+        $em = $this->getEntityManager();
+        $em->createQueryBuilder()
+            ->delete(EntretienLog::class, 'el')
+            ->where('el.parcMachine = :parcMachine')
+            ->setParameter('parcMachine', $parcMachine)
+            ->getQuery()
+            ->execute();
+    }
 } 

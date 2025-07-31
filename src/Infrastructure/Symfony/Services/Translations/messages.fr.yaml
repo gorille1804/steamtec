@@ -334,6 +334,24 @@ machines:
             text: 'Vous allez modifier cette machine.'
             confirmButtonText: 'Oui, modifier!'
             cancelButtonText: 'Non, annuler'
+        assigned_users:
+            title: "Utilisateurs affectés à cette machine"
+            name: "Nom"
+            email: "Email"
+            role: "Rôle"
+            actions: "Actions"
+            none: "Aucun utilisateur n'est actuellement affecté à cette machine."
+        add_user:
+            button: "Ajouter un utilisateur"
+            modal_title: "Ajouter un utilisateur à cette machine"
+            user:
+                label: "Sélectionner un utilisateur"
+                placeholder: "Choisissez un utilisateur..."
+            submit: "Ajouter"
+            cancel: "Annuler"
+        remove_user:
+            title: "Retirer l'utilisateur"
+            confirm: "Êtes-vous sûr de vouloir retirer cet utilisateur de cette machine ?"
       
     messages:
         create_succes: "Machine créé avec succès"
@@ -343,6 +361,10 @@ machines:
         delete_succes: "Machine supprimé avec succès"
         delete_error: "Erreur lors de la suppression de la machine"
         error_download: "Aucun fichier trouvé."
+        add_user_success: "Utilisateur ajouté à la machine avec succès"
+        add_user_error: "Erreur lors de l'ajout de l'utilisateur à la machine"
+        remove_user_success: "Utilisateur retiré de la machine avec succès"
+        remove_user_error: "Erreur lors du retrait de l'utilisateur de la machine"
 
 profils:
     index:
