@@ -1194,6 +1194,413 @@
       "title": "D008",
       "parent": "verif64",
       "usedoc": true
+    },
+    {
+      "id": "prob8",
+      "type": "probleme",
+      "title": "PRESSION OK AU MANO MAIS PAS OU PEU DE SORTIE D'EAU AUX ACCESSOIRES",
+      "parent": "cate2"
+    },
+    {
+      "id": "etat18",
+      "type": "etat",
+      "title": "PRESSION OK AU MANO MAIS PAS OU PEU DE SORTIE D'EAU AUX ACCESSOIRES",
+      "parent": "prob8",
+      "next": [
+        "verif65"
+      ]
+    },
+    {
+      "id": "verif65",
+      "type": "verif",
+      "title": "VERIFIER L'OUVERTURE CORRECTE DU ROBINET VAPEUR",
+      "parent": "etat18",
+      "next_ok": "verif66",
+      "next_ko": "action74"
+    },
+    {
+      "id": "action74",
+      "type": "action",
+      "title": "OUVRIR LE ROBINET A FOND",
+      "parent": "verif65"
+    },
+    {
+      "id": "verif66",
+      "type": "verif",
+      "title": "TESTER AVEC UN AUTRE ACCESSOIRE",
+      "parent": "etat18",
+      "next_ok": "verif67",
+      "next_ko": "action75"
+    },
+    {
+      "id": "action75",
+      "type": "action",
+      "title": "NETTOYER L'ACCESSOIRE BOUCHE",
+      "parent": "verif66",
+      "next": [
+        "action76"
+      ]
+    },
+    {
+      "id": "action76",
+      "type": "action",
+      "title": "D009",
+      "parent": "verif66",
+      "usedoc": true
+    },
+    {
+      "id": "verif67",
+      "type": "verif",
+      "title": "TESTER SUR AUTRE ROBINET VAPEUR",
+      "parent": "etat18",
+      "next_ok": "verif68",
+      "next_ko": "action77"
+    },
+    {
+      "id": "action77",
+      "type": "action",
+      "title": "UTILISER CE ROBINET PUIS REALISER UN DETARTRAGE",
+      "parent": "verif67",
+      "next": [
+        "action78"
+      ]
+    },
+    {
+      "id": "action78",
+      "type": "action",
+      "title": "D011",
+      "parent": "verif67",
+      "usedoc": true
+    },
+    {
+      "id": "verif68",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE FUITE IMPORTANTE y compris clapet de décharge",
+      "parent": "etat18",
+      "next_ok": "verif69",
+      "next_ko": "action79"
+    },
+    {
+      "id": "action79",
+      "type": "action",
+      "title": "REPARER LES FUITES",
+      "parent": "verif68"
+    },
+    {
+      "id": "verif69",
+      "type": "verif",
+      "title": "CIRCUT PROBABLEMENT ENTARTRE",
+      "parent": "verif68",
+      "next_ok": "action82",
+      "next_ko": "action80"
+    },
+    {
+      "id": "action80",
+      "type": "action",
+      "title": "REALISER UN DETARTRAGE DE LA MACHINE",
+      "parent": "verif69",
+      "next": [
+        "action81"
+      ]
+    },
+    {
+      "id": "action81",
+      "type": "action",
+      "title": "D011",
+      "parent": "verif69",
+      "usedoc": true
+    },
+    {
+      "id": "action82",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "verif69"
+    },
+    {
+      "id": "prob9",
+      "type": "probleme",
+      "title": "PRESSION SACCADEE OU PULSATOIRE",
+      "parent": "cate2"
+    },
+    {
+      "id": "etat19",
+      "type": "etat",
+      "title": "PRESSION SACCADEE OU PULSATOIRE",
+      "parent": "prob9",
+      "next": [
+        "etat20"
+      ]
+    },
+    {
+      "id": "etat20",
+      "type": "etat",
+      "title": "DEBIT FAIBLE",
+      "parent": "etat19",
+      "next": [
+        "verif70"
+      ]
+    },
+    {
+      "id": "verif70",
+      "type": "verif",
+      "title": "QUELLE EST LA CONFIGURATION DE L'ALIMENTATION EN EAU ? EST-CE SUR CITERNE ?",
+      "parent": "etat20",
+      "next_ok": "etat21",
+      "next_ko": "verif71"
+    },
+    {
+      "id": "verif71",
+      "type": "verif",
+      "title": "EST-CE EN DIRECTE ET SANS BAC ANTICALCAIRE ?",
+      "parent": "verif70"
+    },
+    {
+      "id": "etat21",
+      "type": "etat",
+      "title": "PRESSION SACCADEE OU PULSATOIRE et je suis alimenté par citerne",
+      "parent": "verif70",
+      "next": [
+        "verif72"
+      ]
+    },
+    {
+      "id": "verif72",
+      "type": "verif",
+      "title": "VERIFIER QUE LA CITERNE N'EST PAS A PLUS DE 3M DE LA MACHINE ET AU MEME NIVEAU",
+      "parent": "etat21",
+      "next_ok": "verif73",
+      "next_ko": "action83"
+    },
+    {
+      "id": "action83",
+      "type": "action",
+      "title": "RAPPROCHER LA CITERNE ET/OU LA METTRE AU MEME NIVEAU QUE LA MACHINE",
+      "parent": "verif72"
+    },
+    {
+      "id": "verif73",
+      "type": "verif",
+      "title": "VERIFIER LE NIVEAU D'EAU DANS LA CITERNE",
+      "parent": "verif72",
+      "next_ok": "verif74",
+      "next_ko": "action84"
+    },
+    {
+      "id": "action84",
+      "type": "action",
+      "title": "REMPLIR LA CITERNE",
+      "parent": "verif73"
+    },
+    {
+      "id": "verif74",
+      "type": "verif",
+      "title": "VERIFIER LE FONCTIONNEMENT EN ALIMENTATION DIRECTE (SUR ROBINET)",
+      "parent": "verif72",
+      "next_ok": "action85",
+      "next_ko": "verif78"
+    },
+    {
+      "id": "action85",
+      "type": "action",
+      "title": "TRAVAILLER EN DIRECT \nTEMPORAIREMENT, MAIS PREVOIR \nDE ...",
+      "parent": "verif74",
+      "next": [
+        "verif75"
+      ]
+    },
+    {
+      "id": "verif75",
+      "type": "verif",
+      "title": "VERIFIER QUE LA SORTIE DE LA CITERNE N'EST PAS BOUCHEE OU ROBINET FERME (EN DECONNECTANT LE TUYAU)",
+      "parent": "verif74",
+      "next_ok": "verif76",
+      "next_ko": "action86"
+    },
+    {
+      "id": "action86",
+      "type": "action",
+      "title": "NETTOYER LA SORTIE DE LA CITERNE OU OUVRIR LE ROBINET",
+      "parent": "verif75"
+    },
+    {
+      "id": "verif76",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE BLANC ENTRE LA CITERNE ET LA MACHINE ",
+      "parent": "verif74",
+      "next_ok": "verif77",
+      "next_ko": "action87"
+    },
+    {
+      "id": "action87",
+      "type": "action",
+      "title": "NETTOYER OU CHANGER LE FILTRE",
+      "parent": "verif76"
+    },
+    {
+      "id": "verif77",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE POINT BAS ENTRE LA CITERNE ET LA MACHINE",
+      "parent": "verif74",
+      "next_ok": "action89",
+      "next_ko": "action88"
+    },
+    {
+      "id": "action88",
+      "type": "action",
+      "title": "ELIMINER LE POINT BAS",
+      "parent": "verif77"
+    },
+    {
+      "id": "action89",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "verif77"
+    },
+    {
+      "id": "verif78",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE BLANC ENTREE MACHINE ",
+      "parent": "verif74",
+      "next_ok": "verif79",
+      "next_ko": "action90",
+      "image": "/assets/images/arbres/filtreblanc.png"
+    },
+    {
+      "id": "action90",
+      "type": "action",
+      "title": "NETTOYER OU CHANGER LE FILTRE",
+      "parent": "verif78"
+    },
+    {
+      "id": "verif79",
+      "type": "verif",
+      "title": "VERIFIER LE FILTRE ENTREE POMPE (COUVERCLE VERT) ",
+      "parent": "verif78",
+      "next_ok": "verif80",
+      "next_ko": "action91",
+      "image": "/assets/images/arbres/filtrecouverclepompe.png"
+    },
+    {
+      "id": "action91",
+      "type": "action",
+      "title": "NETTOYER LE FILTRE",
+      "parent": "verif79"
+    },
+    {
+      "id": "verif80",
+      "type": "verif",
+      "title": "VERIFIER SI L'AIGUILLE DU MANO VIBRE",
+      "parent": "verif79",
+      "next_ok": "verif81",
+      "next_ko": "verif82"
+    },
+    {
+      "id": "verif81",
+      "type": "verif",
+      "title": "VERIFIER LES CLAPETS ET LES CHANGER SII BESOIN",
+      "parent": "verif80",
+      "next_ok": "action94",
+      "next_ko": "action92"
+    },
+    {
+      "id": "action92",
+      "type": "action",
+      "title": "DEMONTER LES CLAPETS POUR VERIFIER et les manœuvrer délicatement ou les changer",
+      "parent": "verif81",
+      "next": [
+        "action93"
+      ]
+    },
+    {
+      "id": "action93",
+      "type": "action",
+      "title": "D008",
+      "parent": "verif81",
+      "usedoc": true
+    },
+    {
+      "id": "action94",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "verif81"
+    },
+    {
+      "id": "verif82",
+      "type": "verif",
+      "title": "TESTER AVEC UN AUTRE ACCESSOIRE",
+      "parent": "verif80",
+      "next_ok": "verif83",
+      "next_ko": "action95"
+    },
+    {
+      "id": "action95",
+      "type": "action",
+      "title": "Si OK NETTOYER ACCESSOIRE, ou utiliser l'autre en attendant",
+      "parent": "verif82",
+      "next": [
+        "action96"
+      ]
+    },
+    {
+      "id": "action96",
+      "type": "action",
+      "title": "D009",
+      "parent": "verif82",
+      "usedoc": true
+    },
+    {
+      "id": "verif83",
+      "type": "verif",
+      "title": "TESTER SUR AUTRE ROBINET",
+      "parent": "verif82",
+      "next_ok": "verif84",
+      "next_ko": "action97"
+    },
+    {
+      "id": "action97",
+      "type": "action",
+      "title": "UTILISER CE ROBINET PUIS REALISER UN DETARTRAGE",
+      "parent": "verif83",
+      "next": [
+        "action98"
+      ]
+    },
+    {
+      "id": "action98",
+      "type": "action",
+      "title": "D011",
+      "parent": "action97",
+      "usedoc": true
+    },
+    {
+      "id": "verif84",
+      "type": "verif",
+      "title": "CIRCUT PROBABLEMENT ENTARTRE",
+      "parent": "verif83",
+      "next_ok": "action101",
+      "next_ko": "action99"
+    },
+    {
+      "id": "action99",
+      "type": "action",
+      "title": "REALISER UN DETARTRAGE DE LA MACHINE",
+      "parent": "verif84",
+      "next": [
+        "action100"
+      ]
+    },
+    {
+      "id": "action100",
+      "type": "action",
+      "title": "D011",
+      "parent": "verif84",
+      "usedoc": true
+    },
+    {
+      "id": "action101",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "verif84"
     }
   ]
 }
