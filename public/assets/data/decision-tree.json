@@ -2012,6 +2012,161 @@
       "type": "action",
       "title": "Appeler le SAV 0681676430",
       "parent": "verif105"
+    },
+    {
+      "id": "prob10",
+      "type": "probleme",
+      "title": "LA POMPE NE S'ARRÊTE PAS (1 MINUTE MAX APRES ARRÊT DE LA GACHETTE)",
+      "parent": "cate2"
+    },
+    {
+      "id": "etat24",
+      "type": "etat",
+      "title": "PAS D'ARRÊT DE LA POMPE (1 minute max apprêt relâchement de la gâchette)",
+      "parent": "prob10",
+      "next": [
+        "action133"
+      ]
+    },
+    {
+      "id": "action133",
+      "type": "action",
+      "title": "VERIFIER LE COMPORTEMENT DU MANO A l'ARRET DE LA GACHETTE",
+      "parent": "etat24",
+      "next": [
+        "etat27",
+        "etat26",
+        "etat25"
+      ]
+    },
+    {
+      "id": "etat25",
+      "type": "etat",
+      "title": "Le mano ne redescend pas du tout",
+      "parent": "etat24",
+      "next": [
+        "verif106"
+      ]
+    },
+    {
+      "id": "etat26",
+      "type": "etat",
+      "title": "Le mano redescend rapidement à 0 mais la pompe ne s'arrête pas",
+      "parent": "etat24",
+      "next": [
+        "etat29"
+      ]
+    },
+    {
+      "id": "etat27",
+      "type": "etat",
+      "title": "Le mano redescend tout doucement et pas jusqu'à 0",
+      "parent": "etat24",
+      "next": [
+        "etat30"
+      ]
+    },
+    {
+      "id": "verif106",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE FUITE IMPORTANTE y compris clapet de décharge",
+      "parent": "etat25",
+      "next_ok": "action134",
+      "next_ko": "etat28"
+    },
+    {
+      "id": "action134",
+      "type": "action",
+      "title": "Réparer les fuites",
+      "parent": "verif106"
+    },
+    {
+      "id": "etat28",
+      "type": "etat",
+      "title": "CLAPET DE SORTIE DE POMPE PROBABLEMENT USE",
+      "parent": "verif106",
+      "next": [
+        "action136",
+        "action135"
+      ]
+    },
+    {
+      "id": "action135",
+      "type": "action",
+      "title": "Changer le clapet du raccord de sortie",
+      "parent": "etat28",
+      "next": [
+        "action137"
+      ]
+    },
+    {
+      "id": "action136",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "etat28"
+    },
+    {
+      "id": "action137",
+      "type": "action",
+      "title": "D012",
+      "parent": "etat28",
+      "usedoc": true
+    },
+    {
+      "id": "etat29",
+      "type": "etat",
+      "title": "PRESSOSTAT CÔTE TETE DE POMPE PROBABLEMENT DEFAILLANT",
+      "parent": "etat26",
+      "next": [
+        "action138"
+      ]
+    },
+    {
+      "id": "action138",
+      "type": "action",
+      "title": "APPELER LE SAV POUR CHANGER LE PRESSOSTAT CÔTE TETE DE POMPE (COTE NIVEAU D'HUILE)",
+      "parent": "etat29",
+      "next": [
+        "action140",
+        "action139"
+      ]
+    },
+    {
+      "id": "action139",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "etat29"
+    },
+    {
+      "id": "action140",
+      "type": "action",
+      "title": "D013",
+      "parent": "etat29",
+      "usedoc": true
+    },
+    {
+      "id": "etat30",
+      "type": "etat",
+      "title": "VANNE BY PASS PROBABLEMENT DEFAILLANTE",
+      "parent": "etat27",
+      "next": [
+        "action141"
+      ]
+    },
+    {
+      "id": "action141",
+      "type": "action",
+      "title": "APPELER LE SAV POUR CHANGER LA VANNE BY-PASS",
+      "parent": "etat30",
+      "next": [
+        "action142"
+      ]
+    },
+    {
+      "id": "action142",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "etat30"
     }
   ]
 }
