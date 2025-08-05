@@ -2700,6 +2700,175 @@
       "type": "action",
       "title": "APPELER LE SAV POUR CHANGER CHANGER LA SONDE DE DEBIT 0681676430",
       "parent": "verif126"
+    },
+    {
+      "id": "prob16",
+      "type": "probleme",
+      "title": "LA MACHINE FUME BEAUCOUP",
+      "parent": "cate3"
+    },
+    {
+      "id": "etat40",
+      "type": "etat",
+      "title": "IL Y A EU UN MELANGE DE CARBURANT",
+      "parent": "prob16",
+      "next": [
+        "etat41",
+        "action179"
+      ]
+    },
+    {
+      "id": "action179",
+      "type": "action",
+      "title": "FAIRE UNE VIDANGE COMPLETE DU CIRCUIT, CHANGER LES FILTRES (y compris pompe à fuel), NETTOYER LE BRULEUR",
+      "parent": "etat40"
+    },
+    {
+      "id": "etat41",
+      "type": "etat",
+      "title": "PAS DE MELANGE DE CARBURANT",
+      "parent": "etat40",
+      "next": [
+        "verif127"
+      ]
+    },
+    {
+      "id": "verif127",
+      "type": "verif",
+      "title": "QUEL EST LE TYPE DE FUMEE ? NOIRE ?",
+      "parent": "etat41",
+      "next_ok": "etat43",
+      "next_ko": "etat42"
+    },
+    {
+      "id": "action180",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "etat43"
+    },
+    {
+      "id": "etat42",
+      "type": "etat",
+      "title": "Blanche",
+      "parent": "verif127",
+      "next": [
+        "verif128"
+      ]
+    },
+    {
+      "id": "etat43",
+      "type": "etat",
+      "title": "Noire",
+      "parent": "verif127",
+      "next": [
+        "action180"
+      ]
+    },
+    {
+      "id": "verif128",
+      "type": "verif",
+      "title": "S'ASSURER QU'IL Y A ASSEZ DE CARBURANT",
+      "parent": "etat42",
+      "next_ok": "action182",
+      "next_ko": "action181"
+    },
+    {
+      "id": "action181",
+      "type": "action",
+      "title": "FAIRE LE PLEIN DE CARBURANT",
+      "parent": "verif128"
+    },
+    {
+      "id": "action182",
+      "type": "action",
+      "title": "D015",
+      "parent": "verif128",
+      "next": [
+        "verif129"
+      ],
+      "usedoc": true
+    },
+    {
+      "id": "verif129",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE A CARBURANT",
+      "parent": "verif128",
+      "next_ok": "verif130",
+      "next_ko": "action183"
+    },
+    {
+      "id": "action183",
+      "type": "action",
+      "title": "CHANGER LE FILTRE A CARBURANT",
+      "parent": "verif129",
+      "next": [
+        "action184"
+      ]
+    },
+    {
+      "id": "action184",
+      "type": "action",
+      "title": "D016",
+      "parent": "verif129",
+      "usedoc": true
+    },
+    {
+      "id": "verif130",
+      "type": "verif",
+      "title": "VERIFIER QUE LE ROBINET A CARBURANT EST BIEN OUVERT",
+      "parent": "verif129",
+      "next_ok": "verif131",
+      "next_ko": "action185"
+    },
+    {
+      "id": "action185",
+      "type": "action",
+      "title": "OUVRIR LE ROBINET",
+      "parent": "verif130"
+    },
+    {
+      "id": "verif131",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT ET LE BON BRANCHEMENT DES DURITES",
+      "parent": "verif130",
+      "next_ok": "verif132",
+      "next_ko": "action186"
+    },
+    {
+      "id": "action186",
+      "type": "action",
+      "title": "CHANGER ET/OU REBRANCHER CORRECTEMENT LES DURITES",
+      "parent": "verif131"
+    },
+    {
+      "id": "verif132",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE INTERNE DE LA POMPE A FUEL",
+      "parent": "verif131",
+      "next_ok": "action189",
+      "next_ko": "action187"
+    },
+    {
+      "id": "action187",
+      "type": "action",
+      "title": "NETTOYER ET/OU CHANGER LE FILTRE INTERNE DE LA POMPE A FUEL",
+      "parent": "verif132",
+      "next": [
+        "action188"
+      ]
+    },
+    {
+      "id": "action188",
+      "type": "action",
+      "title": "D017",
+      "parent": "verif132",
+      "usedoc": true
+    },
+    {
+      "id": "action189",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "verif132"
     }
   ]
 }
