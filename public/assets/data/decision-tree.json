@@ -1352,7 +1352,9 @@
       "id": "verif71",
       "type": "verif",
       "title": "EST-CE EN DIRECTE ET SANS BAC ANTICALCAIRE ?",
-      "parent": "verif70"
+      "parent": "verif70",
+      "next_ok": "etat22",
+      "next_ko": "etat23"
     },
     {
       "id": "etat21",
@@ -1601,6 +1603,415 @@
       "type": "action",
       "title": "Appeler le SAV 0681676430",
       "parent": "verif84"
+    },
+    {
+      "id": "etat22",
+      "type": "etat",
+      "title": "PRESSION SACCADEE OU PULSATOIRE et je suis alimenté en direct sans bac anticalcaire",
+      "parent": "verif71",
+      "next": [
+        "verif85"
+      ]
+    },
+    {
+      "id": "verif85",
+      "type": "verif",
+      "title": "VERIFIER L'OUVERTURE DU ROBINET D'ALIMENTATION",
+      "parent": "etat22",
+      "next_ok": "verif86",
+      "next_ko": "action102"
+    },
+    {
+      "id": "action102",
+      "type": "action",
+      "title": "OUVRIR LE ROBINET",
+      "parent": "verif85"
+    },
+    {
+      "id": "verif86",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE PLI DANS LE TUYAU D'ALIMENTATION",
+      "parent": "verif85",
+      "next_ok": "verif87",
+      "next_ko": "action103"
+    },
+    {
+      "id": "action103",
+      "type": "action",
+      "title": "DEROULER LE TUYAU SANS PLIS",
+      "parent": "verif86"
+    },
+    {
+      "id": "verif87",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE BLANC ENTREE MACHINE",
+      "parent": "verif86",
+      "next_ok": "verif88",
+      "next_ko": "action104",
+      "image": "/assets/images/arbres/filtreblanc.png"
+    },
+    {
+      "id": "action104",
+      "type": "action",
+      "title": "NETTOYER OU CHANGER LE FILTRE",
+      "parent": "verif87"
+    },
+    {
+      "id": "verif88",
+      "type": "verif",
+      "title": "VERIFIER LE FILTRE ENTREE POMPE (COUVERCLE VERT)",
+      "parent": "verif87",
+      "next_ok": "verif89",
+      "next_ko": "action105",
+      "image": "/assets/images/arbres/filtrecouverclepompe.png"
+    },
+    {
+      "id": "action105",
+      "type": "action",
+      "title": "NETTOYER LE FILTRE",
+      "parent": "verif88"
+    },
+    {
+      "id": "verif89",
+      "type": "verif",
+      "title": "VERIFIER SI L'AIGUILLE DU MANO VIBRE",
+      "parent": "verif88",
+      "next_ok": "verif93",
+      "next_ko": "verif90"
+    },
+    {
+      "id": "verif90",
+      "type": "verif",
+      "title": "TESTER AVEC UN AUTRE ACCESSOIRE ",
+      "parent": "verif89",
+      "next_ok": "action106",
+      "next_ko": "verif91"
+    },
+    {
+      "id": "action106",
+      "type": "action",
+      "title": "Si OK NETTOYER ACCESSOIRE, ou utiliser l'autre en attendant",
+      "parent": "verif90",
+      "next": [
+        "action107"
+      ]
+    },
+    {
+      "id": "action107",
+      "type": "action",
+      "title": "D009",
+      "parent": "verif90",
+      "usedoc": true
+    },
+    {
+      "id": "verif91",
+      "type": "verif",
+      "title": "TESTER SUR AUTRE ROBINET",
+      "parent": "verif90",
+      "next_ok": "action108",
+      "next_ko": "verif92"
+    },
+    {
+      "id": "action108",
+      "type": "action",
+      "title": "UTILISER CE ROBINET PUIS REALISER UN DETARTRAGE",
+      "parent": "verif91",
+      "next": [
+        "action109"
+      ]
+    },
+    {
+      "id": "action109",
+      "type": "action",
+      "title": "D011",
+      "parent": "verif91",
+      "usedoc": true
+    },
+    {
+      "id": "verif92",
+      "type": "verif",
+      "title": "CIRCUT PROBABLEMENT ENTARTRE",
+      "parent": "verif91",
+      "next_ok": "action110",
+      "next_ko": "action112"
+    },
+    {
+      "id": "action110",
+      "type": "action",
+      "title": "REALISER UN DETARTRAGE DE LA MACHINE",
+      "parent": "verif92",
+      "next": [
+        "action111"
+      ]
+    },
+    {
+      "id": "action111",
+      "type": "action",
+      "title": "D011",
+      "parent": "verif92",
+      "usedoc": true
+    },
+    {
+      "id": "action112",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "verif92"
+    },
+    {
+      "id": "verif93",
+      "type": "verif",
+      "title": "VERIFIER LES CLAPETS ET LES CHANGER SII BESOIN",
+      "parent": "verif89",
+      "next_ok": "verif93",
+      "next_ko": "action115"
+    },
+    {
+      "id": "action113",
+      "type": "action",
+      "title": "DEMONTER LES CLAPETS POUR VERIFIER et les manœuvrer délicatement ou les changer",
+      "parent": "verif93",
+      "next": [
+        "action114"
+      ]
+    },
+    {
+      "id": "action114",
+      "type": "action",
+      "title": "D008",
+      "parent": "verif93",
+      "usedoc": true
+    },
+    {
+      "id": "action115",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "verif93"
+    },
+    {
+      "id": "etat23",
+      "type": "etat",
+      "title": "PRESSION SACCADEE OU PULSATOIRE et je suis alimenté en direct avec bac anticalcaire",
+      "parent": "verif71",
+      "next": [
+        "verif94"
+      ]
+    },
+    {
+      "id": "verif94",
+      "type": "verif",
+      "title": "VERIFIER L'OUVERTURE DU ROBINET D'ALIMENTATION",
+      "parent": "etat23",
+      "next_ok": "verif95",
+      "next_ko": "action116"
+    },
+    {
+      "id": "action116",
+      "type": "action",
+      "title": "OUVRIR LE ROBINET",
+      "parent": "verif94"
+    },
+    {
+      "id": "verif95",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE PLI DANS LE TUYAU D'ALIMENTATION",
+      "parent": "verif94",
+      "next_ok": "verif96",
+      "next_ko": "action117"
+    },
+    {
+      "id": "action117",
+      "type": "action",
+      "title": "DEROULER LE TUYAU SANS PLIS",
+      "parent": "verif95"
+    },
+    {
+      "id": "verif96",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE BLANC ENTREE MACHINE",
+      "parent": "verif95",
+      "next_ok": "verif97",
+      "next_ko": "action118",
+      "image": "/assets/images/arbres/filtreblanc.png"
+    },
+    {
+      "id": "action118",
+      "type": "action",
+      "title": "NETTOYER OU CHANGER LE FILTRE",
+      "parent": "verif96"
+    },
+    {
+      "id": "verif97",
+      "type": "verif",
+      "title": "VERIFIER LE BON FONCTIONNEMENT DU FLOTTEUR",
+      "parent": "verif96",
+      "next_ok": "verif98",
+      "next_ko": "action119"
+    },
+    {
+      "id": "action119",
+      "type": "action",
+      "title": "CHANGER LES ELEMENTS DEFECTUEUX",
+      "parent": "verif97"
+    },
+    {
+      "id": "verif98",
+      "type": "verif",
+      "title": "VERIFIER QUE L'ENTREE DU BAC N'EST PAS BOUCHEE",
+      "parent": "verif97",
+      "next_ok": "verif99",
+      "next_ko": "action120"
+    },
+    {
+      "id": "action120",
+      "type": "action",
+      "title": "NETTOYER L'ENTREE DU BAC",
+      "parent": "verif98"
+    },
+    {
+      "id": "verif99",
+      "type": "verif",
+      "title": "VERIFIER QUE LA SORTIE DU BAC N'EST PAS BOUCHEE",
+      "parent": "verif98",
+      "next_ok": "verif100",
+      "next_ko": "action121",
+      "image": "/assets/images/arbres/filtreblanc.png"
+    },
+    {
+      "id": "action121",
+      "type": "action",
+      "title": "NETTOYER LA SORTIE DU BAC",
+      "parent": "verif99"
+    },
+    {
+      "id": "verif100",
+      "type": "verif",
+      "title": "VERIFIER LE FILTRE ENTREE POMPE (COUVERCLE VERT) ",
+      "parent": "verif99",
+      "next_ok": "verif101",
+      "next_ko": "action122",
+      "image": "/assets/images/arbres/filtrecouverclepompe.png"
+    },
+    {
+      "id": "action122",
+      "type": "action",
+      "title": "NETTOYER LE FILTRE",
+      "parent": "verif100"
+    },
+    {
+      "id": "verif101",
+      "type": "verif",
+      "title": "VERIFIER SI L'AIGUILLE DU MANO VIBRE",
+      "parent": "verif100",
+      "next_ok": "verif105",
+      "next_ko": "verif102"
+    },
+    {
+      "id": "verif102",
+      "type": "verif",
+      "title": "TESTER AVEC UN AUTRE ACCESSOIRE",
+      "parent": "verif101",
+      "next_ok": "action123",
+      "next_ko": "verif103"
+    },
+    {
+      "id": "action123",
+      "type": "action",
+      "title": "Si OK NETTOYER ACCESSOIRE, ou utiliser l'autre en attendant",
+      "parent": "verif102",
+      "next": [
+        "action124"
+      ]
+    },
+    {
+      "id": "action124",
+      "type": "action",
+      "title": "D009",
+      "parent": "verif102",
+      "usedoc": true
+    },
+    {
+      "id": "verif103",
+      "type": "verif",
+      "title": "TESTER SUR AUTRE ROBINET",
+      "parent": "verif102",
+      "next_ok": "action125",
+      "next_ko": "verif104"
+    },
+    {
+      "id": "action125",
+      "type": "action",
+      "title": "UTILISER CE ROBINET PUIS REALISER UN DETARTRAGE",
+      "parent": "verif103",
+      "next": [
+        "action126"
+      ]
+    },
+    {
+      "id": "action126",
+      "type": "action",
+      "title": "D011",
+      "parent": "verif103",
+      "usedoc": true
+    },
+    {
+      "id": "verif104",
+      "type": "verif",
+      "title": "CIRCUT PROBABLEMENT ENTARTRE",
+      "parent": "verif103",
+      "next_ok": "action127",
+      "next_ko": "action129"
+    },
+    {
+      "id": "action127",
+      "type": "action",
+      "title": "REALISER UN DETARTRAGE DE LA MACHINE",
+      "parent": "verif104",
+      "next": [
+        "action128"
+      ]
+    },
+    {
+      "id": "action128",
+      "type": "action",
+      "title": "D011",
+      "parent": "verif104",
+      "usedoc": true
+    },
+    {
+      "id": "action129",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "verif104"
+    },
+    {
+      "id": "verif105",
+      "type": "verif",
+      "title": "VERIFIER LES CLAPETS ET LES CHANGER SII BESOIN",
+      "parent": "verif101",
+      "next_ok": "action130",
+      "next_ko": "action132"
+    },
+    {
+      "id": "action130",
+      "type": "action",
+      "title": "DEMONTER LES CLAPETS POUR VERIFIER et les manœuvrer délicatement ou les changer",
+      "parent": "verif105",
+      "next": [
+        "action131"
+      ]
+    },
+    {
+      "id": "action131",
+      "type": "action",
+      "title": "D008",
+      "parent": "verif105",
+      "usedoc": true
+    },
+    {
+      "id": "action132",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "verif105"
     }
   ]
 }
