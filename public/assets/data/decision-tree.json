@@ -2632,6 +2632,74 @@
       "type": "action",
       "title": "Appelez le SAV 0681676430",
       "parent": "verif124"
+    },
+    {
+      "id": "prob15",
+      "type": "probleme",
+      "title": "LA MACHINE MONTE TROP EN TEMPERATURE",
+      "parent": "cate3"
+    },
+    {
+      "id": "etat38",
+      "type": "etat",
+      "title": "LA MACHINE CHAUFFE TROP",
+      "parent": "prob15",
+      "next": [
+        "etat39"
+      ]
+    },
+    {
+      "id": "etat39",
+      "type": "etat",
+      "title": "Si vous avez un problème de pression, commencez par régler celui-ci, retourner à l'accueil",
+      "parent": "etat38",
+      "next": [
+        "verif125"
+      ]
+    },
+    {
+      "id": "verif125",
+      "type": "verif",
+      "title": "VERIFIER QUE LE VOYANT VERT S'ETEINT QUAND J'ARRETE D'APPUYER SUR LA GACHETTE (EN DESSOUS DE LA CONSIGNE)",
+      "parent": "etat39",
+      "next_ok": "verif126",
+      "next_ko": "action175"
+    },
+    {
+      "id": "action175",
+      "type": "action",
+      "title": "APPELER LE SAV POUR CHANGER L'ELECTROVANNE 0681676430",
+      "parent": "verif125",
+      "next": [
+        "action176"
+      ]
+    },
+    {
+      "id": "action176",
+      "type": "action",
+      "title": "D021",
+      "parent": "verif125",
+      "usedoc": true
+    },
+    {
+      "id": "verif126",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE FUITES",
+      "parent": "verif125",
+      "next_ok": "action178",
+      "next_ko": "action177"
+    },
+    {
+      "id": "action177",
+      "type": "action",
+      "title": "REPARER LES FUITES",
+      "parent": "verif126"
+    },
+    {
+      "id": "action178",
+      "type": "action",
+      "title": "APPELER LE SAV POUR CHANGER CHANGER LA SONDE DE DEBIT 0681676430",
+      "parent": "verif126"
     }
   ]
 }
