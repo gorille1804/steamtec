@@ -2578,6 +2578,60 @@
       "type": "action",
       "title": "Appeler le SAV 0681676430",
       "parent": "verif123"
+    },
+    {
+      "id": "prob14",
+      "type": "probleme",
+      "title": "VOYANT VERT S'ETEINT JUSQU'A UNE TEMPERATURE RELATIVEMENT BASSE",
+      "parent": "cate3"
+    },
+    {
+      "id": "etat36",
+      "type": "etat",
+      "title": "VOYANT VERT S'ETEINT JUSQU'A UNE TEMPERATURE RELATIVEMENT BASSE",
+      "parent": "prob14",
+      "next": [
+        "etat37"
+      ]
+    },
+    {
+      "id": "etat37",
+      "type": "etat",
+      "title": "Si vous avez un problème de pression, commencez par régler celui-ci, retourner à l'accueil",
+      "parent": "etat36",
+      "next": [
+        "action172"
+      ]
+    },
+    {
+      "id": "action172",
+      "type": "action",
+      "title": "D031",
+      "parent": "etat37",
+      "next": [
+        "verif124"
+      ],
+      "usedoc": true
+    },
+    {
+      "id": "verif124",
+      "type": "verif",
+      "title": "FAIRE UN TEST EN SEPARANT MECANIQUEMENT LA SONDE MECANIQUE",
+      "parent": "etat37",
+      "next_ok": "action174",
+      "next_ko": "action173"
+    },
+    {
+      "id": "action173",
+      "type": "action",
+      "title": "Appelez le SAV 0681676430 pour changer le sonde mécanique",
+      "parent": "verif124"
+    },
+    {
+      "id": "action174",
+      "type": "action",
+      "title": "Appelez le SAV 0681676430",
+      "parent": "verif124"
     }
   ]
 }
