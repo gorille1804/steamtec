@@ -2359,6 +2359,225 @@
       "type": "action",
       "title": "Appeler le SAV 0681676430",
       "parent": "verif114"
+    },
+    {
+      "id": "prob12",
+      "type": "probleme",
+      "title": "LA MACHINE NE CHAUFFE PLUS VOYANT VERT RESTE ETEINT",
+      "parent": "cate3"
+    },
+    {
+      "id": "etat32",
+      "type": "etat",
+      "title": "LA MACHINE NE CHAUFFE PLUS (VOYANT VERT RESTE ETEINT)",
+      "parent": "prob12",
+      "next": [
+        "etat33"
+      ]
+    },
+    {
+      "id": "etat33",
+      "type": "etat",
+      "title": "si LE PROGRAMMATEUR EST ETEINT, C'est un autre problème retourner à l'accueil",
+      "parent": "etat32",
+      "next": [
+        "etat34"
+      ]
+    },
+    {
+      "id": "etat34",
+      "type": "etat",
+      "title": "Si vous avez un problème de pression, commencez par régler celui-ci, retourner à l'accueil",
+      "parent": "etat33",
+      "next": [
+        "verif115"
+      ]
+    },
+    {
+      "id": "verif115",
+      "type": "verif",
+      "title": "VERIFIER QU'UNE CONSIGNE DE TEMPERATURE EST BIEN DONNEE ET APPUYER SUR LA GACHETTE",
+      "parent": "etat34",
+      "next_ok": "verif116"
+    },
+    {
+      "id": "verif116",
+      "type": "verif",
+      "title": "VERIFIER LE BRANCHEMENT DU PROGRAMMATEUR ET DU VOYANT VERT",
+      "parent": "verif115",
+      "next_ok": "action160",
+      "next_ko": "action158"
+    },
+    {
+      "id": "action158",
+      "type": "action",
+      "title": "REBRANCHER CORRECTEMENT",
+      "parent": "verif116",
+      "next": [
+        "action159"
+      ]
+    },
+    {
+      "id": "action159",
+      "type": "action",
+      "title": "D028",
+      "parent": "verif116",
+      "usedoc": true
+    },
+    {
+      "id": "action160",
+      "type": "action",
+      "title": "Appeler le SAV pour changer la sonde débit 0681676430",
+      "parent": "verif116"
+    },
+    {
+      "id": "prob13",
+      "type": "probleme",
+      "title": "LA MACHINE NE CHAUFFE PAS ASSEZ",
+      "parent": "cate3"
+    },
+    {
+      "id": "etat35",
+      "type": "etat",
+      "title": "LA MACHINE NE CHAUFFE PAS ASSEZ (VOYANT VERT RESTE ALLUME)",
+      "parent": "prob13",
+      "next": [
+        "verif117"
+      ]
+    },
+    {
+      "id": "verif117",
+      "type": "verif",
+      "title": "SI LA PRESSION EST MAX (60 BARS), VERIFIER L'UTILISATION D'UN SEUL ACCESSOIRE OU UNE SEULE BUSE la machine fonctionne normalement. Si elle atteint : 150°c avec une buse standard ou 140°c avec une buse IMPACT+",
+      "parent": "etat35",
+      "next_ok": "verif118",
+      "next_ko": "action161"
+    },
+    {
+      "id": "action161",
+      "type": "action",
+      "title": "SE METTRE DANS CONDITIONS NORMALES D'UTILISATION",
+      "parent": "verif117"
+    },
+    {
+      "id": "verif118",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE FUITES",
+      "parent": "verif117",
+      "next_ok": "verif119",
+      "next_ko": "action162"
+    },
+    {
+      "id": "action162",
+      "type": "action",
+      "title": "REPARER LES FUITES",
+      "parent": "verif118"
+    },
+    {
+      "id": "verif119",
+      "type": "verif",
+      "title": "S'ASSURER QU'IL Y A ASSEZ DE CARBURANT",
+      "parent": "verif118",
+      "next_ok": "action164",
+      "next_ko": "action163"
+    },
+    {
+      "id": "action163",
+      "type": "action",
+      "title": "FAIRE LE PLEIN DE CARBURANT",
+      "parent": "verif119"
+    },
+    {
+      "id": "action164",
+      "type": "action",
+      "title": "D015",
+      "parent": "verif119",
+      "next": [
+        "verif120"
+      ],
+      "usedoc": true
+    },
+    {
+      "id": "verif120",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE A CARBURANT",
+      "parent": "verif119",
+      "next_ok": "verif121",
+      "next_ko": "action165"
+    },
+    {
+      "id": "action165",
+      "type": "action",
+      "title": "CHANGER LE FILTRE A CARBURANT",
+      "parent": "verif120",
+      "next": [
+        "action166"
+      ]
+    },
+    {
+      "id": "action166",
+      "type": "action",
+      "title": "D016",
+      "parent": "verif120",
+      "usedoc": true
+    },
+    {
+      "id": "verif121",
+      "type": "verif",
+      "title": "VERIFIER QUE LE ROBINET A CARBURANT EST BIEN OUVERT",
+      "parent": "verif120",
+      "next_ok": "verif122",
+      "next_ko": "action167"
+    },
+    {
+      "id": "action167",
+      "type": "action",
+      "title": "OUVRIR LE ROBINET",
+      "parent": "verif121"
+    },
+    {
+      "id": "verif122",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT ET LE BON BRANCHEMENT DES DURITES",
+      "parent": "verif121",
+      "next_ok": "verif123",
+      "next_ko": "action168"
+    },
+    {
+      "id": "action168",
+      "type": "action",
+      "title": "CHANGER ET/OU REBRANCHER CORRECTEMENT LES DURITES",
+      "parent": "verif122"
+    },
+    {
+      "id": "verif123",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE INTERNE DE LA POMPE A GASOIL",
+      "parent": "verif122",
+      "next_ok": "action171",
+      "next_ko": "action169"
+    },
+    {
+      "id": "action169",
+      "type": "action",
+      "title": "NETTOYER ET/OU CHANGER LE FILTRE INTERNE DE LA POMPE A GASOIL",
+      "parent": "verif123",
+      "next": [
+        "action170"
+      ]
+    },
+    {
+      "id": "action170",
+      "type": "action",
+      "title": "D017",
+      "parent": "verif123",
+      "usedoc": true
+    },
+    {
+      "id": "action171",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "verif123"
     }
   ]
 }
