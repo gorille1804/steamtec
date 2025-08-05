@@ -2167,6 +2167,198 @@
       "type": "action",
       "title": "Appeler le SAV 0681676430",
       "parent": "etat30"
+    },
+    {
+      "id": "prob11",
+      "type": "probleme",
+      "title": "LA MACHINE NE CHAUFFE PLUS VOYANT VERT ALLUME",
+      "parent": "cate3"
+    },
+    {
+      "id": "etat31",
+      "type": "etat",
+      "title": "LA MACHINE NE CHAUFFE PLUS (VOYANT VERT ALLUME)",
+      "parent": "prob11",
+      "next": [
+        "verif107"
+      ]
+    },
+    {
+      "id": "verif107",
+      "type": "verif",
+      "title": "S'ASSURER QU'IL Y A ASSEZ DE CARBURANT",
+      "parent": "etat31",
+      "next_ok": "verif108",
+      "next_ko": "action143"
+    },
+    {
+      "id": "action143",
+      "type": "action",
+      "title": "FAIRE LE PLEIN DE CARBURANT",
+      "parent": "verif107"
+    },
+    {
+      "id": "verif108",
+      "type": "verif",
+      "title": "VERIFIER QUE LE ROBINET A CARBURANT EST BIEN OUVERT",
+      "parent": "verif107",
+      "next_ok": "action145",
+      "next_ko": "action144"
+    },
+    {
+      "id": "action144",
+      "type": "action",
+      "title": "OUVRIR LE ROBINET",
+      "parent": "verif108"
+    },
+    {
+      "id": "action145",
+      "type": "action",
+      "title": "D015",
+      "parent": "verif108",
+      "next": [
+        "verif109"
+      ],
+      "usedoc": true
+    },
+    {
+      "id": "verif109",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE A CARBURANT",
+      "parent": "verif108",
+      "next_ok": "verif110",
+      "next_ko": "action146"
+    },
+    {
+      "id": "action146",
+      "type": "action",
+      "title": "CHANGER LE FILTRE A CARBURANT",
+      "parent": "verif109",
+      "next": [
+        "action147"
+      ]
+    },
+    {
+      "id": "action147",
+      "type": "action",
+      "title": "D016",
+      "parent": "verif109",
+      "usedoc": true
+    },
+    {
+      "id": "verif110",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT ET LE BON BRANCHEMENT DES DURITES",
+      "parent": "verif109",
+      "next_ok": "verif111",
+      "next_ko": "action148"
+    },
+    {
+      "id": "action148",
+      "type": "action",
+      "title": "CHANGER ET/OU REBRANCHER CORRECTEMENT LES DURITES",
+      "parent": "verif110"
+    },
+    {
+      "id": "verif111",
+      "type": "verif",
+      "title": "VERIFIER QUE L'ELECTROVANNE EST BIEN BRANCHEE",
+      "parent": "verif110",
+      "next_ok": "verif112",
+      "next_ko": "action149",
+      "image": "/assets/images/arbres/electrovanne.png"
+    },
+    {
+      "id": "action149",
+      "type": "action",
+      "title": "BRANCHER CORRECTEMENT L'ELECTROVANNE",
+      "parent": "verif111"
+    },
+    {
+      "id": "verif112",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE INTERNE DE LA POMPE A FUEL",
+      "parent": "verif111",
+      "next_ok": "verif113",
+      "next_ko": "action150"
+    },
+    {
+      "id": "action150",
+      "type": "action",
+      "title": "NETTOYER ET/OU CHANGER LE FILTRE INTERNE DE LA POMPE A FUEL",
+      "parent": "verif112",
+      "next": [
+        "action151"
+      ]
+    },
+    {
+      "id": "action151",
+      "type": "action",
+      "title": "D017",
+      "parent": "verif112",
+      "usedoc": true
+    },
+    {
+      "id": "verif113",
+      "type": "verif",
+      "title": "VERIFIER QUE LA BOBINE ET LES ELECTRODES SONT BIEN BRANCHEES ET ETAT DES CABLES",
+      "parent": "verif112",
+      "next_ok": "verif114",
+      "next_ko": "action152"
+    },
+    {
+      "id": "action152",
+      "type": "action",
+      "title": "REBRANCHER / CHANGER LES ELEMENTS DEFECTUEUX",
+      "parent": "verif113",
+      "next": [
+        "action153"
+      ]
+    },
+    {
+      "id": "action153",
+      "type": "action",
+      "title": "D025",
+      "parent": "verif113",
+      "usedoc": true
+    },
+    {
+      "id": "verif114",
+      "type": "verif",
+      "title": "VERIFIER LE BON BRANCHEMENT DANS L'ARMOIRE ELECTRIQUE DE L'ALLUMAGE CHAUDIERE et DE L'ELECTROVANNE",
+      "parent": "verif113",
+      "next_ok": "action157",
+      "next_ko": "action154"
+    },
+    {
+      "id": "action154",
+      "type": "action",
+      "title": "REBRANCHER CORRECTEMENT",
+      "parent": "verif114",
+      "next": [
+        "action156",
+        "action155"
+      ]
+    },
+    {
+      "id": "action155",
+      "type": "action",
+      "title": "D023",
+      "parent": "verif114",
+      "usedoc": true
+    },
+    {
+      "id": "action156",
+      "type": "action",
+      "title": "D024",
+      "parent": "verif114",
+      "usedoc": true
+    },
+    {
+      "id": "action157",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "verif114"
     }
   ]
 }
