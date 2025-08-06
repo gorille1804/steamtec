@@ -1,7 +1,7 @@
 {
   "task_mapping": {
     "vidanger_huile_moteur": {
-      "name": "Vidanger l'huile de la pompe *",
+      "name": "Vidanger l'huile de la pompe",
       "pdf_link": "/public/uploads/documents/E001 Vidange de la pompe.pdf"
     },
     "nettoyer_filtre_air": {
