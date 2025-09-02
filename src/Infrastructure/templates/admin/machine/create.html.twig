@@ -39,7 +39,7 @@
                                 {% endif %}
                             </div>
 
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3 d-none">
                                 {{ form_label(form.marque, null, {'label_attr': {'class': 'form-label'}}) }}
                                 {{ form_widget(form.marque, {'attr': {'class': 'form-control'}}) }}
                                 {% if form_errors(form.marque) %}
@@ -49,7 +49,7 @@
                                 {% endif %}
                             </div>
 
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3 d-none">
                                 {{ form_label(form.seuilMaintenance, null, {'label_attr': {'class': 'form-label'}}) }}
                                 {{ form_widget(form.seuilMaintenance, {'attr': {'class': 'form-control'}}) }}
                                 {% if form_errors(form.seuilMaintenance) %}

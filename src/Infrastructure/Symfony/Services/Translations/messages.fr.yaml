@@ -212,6 +212,11 @@ users:
             update: "Modification"
             create: "Nouveau"
             title: "utilisateur"
+        add_machine:
+            machine:
+                label: "Sélectionner une machine"
+                placeholder: "Choisissez une machine..."
+            submit: "Ajouter"
 
     reset_passwords:
         title: "Réinitialisation de votre mot de passe"
@@ -247,7 +252,7 @@ users:
         hello: "Bonjour"
         text: "Votre compte a bien été créé. Pour sécuriser votre accès, veuillez définir votre mot de passe en cliquant sur le bouton ci-dessous :"
         link: "Créer mon mot de passe"
-        duration: "Notez que ce lien expirera dans 1 heure."
+        duration: "Notez que ce lien expirera dans 1 jour."
         info: "Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet e-mail en toute sécurité."
         thanks: "Merci de votre confiance,"
         reaction: "L'équipe Entech"
@@ -289,6 +294,10 @@ users:
         update_password_succes: "Votre mot de passe a ete mis a jour"
         login_error: "Une erreur inattendue s'est produite. Veuillez réessayer"
         auth_faillure: "L'email ou le mot de passe que vous avez saisi est incorrect"
+        add_machine_success: "Machine ajoutée à l'utilisateur avec succès"
+        add_machine_error: "Erreur lors de l'ajout de la machine à l'utilisateur"
+        remove_machine_success: "Machine retirée de l'utilisateur avec succès"
+        remove_machine_error: "Erreur lors du retrait de la machine de l'utilisateur"
 
 
 machines:

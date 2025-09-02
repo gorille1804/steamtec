@@ -58,6 +58,9 @@
                                             <a href="{{path('app_users_update', {'userId':user.id})}}" class="btn btn-warning btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Modifier">
                                                <i class="mdi mdi-pencil"></i>
                                             </a>
+                                            <a href="{{path('app_users_machines', {'user':user.id})}}" class="btn btn-info btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Gérer les machines">
+                                               <i class="mdi mdi-cog"></i>
+                                            </a>
                                             {% if not user.password %}
                                                 <a href="{{path('app_users_reset_password', {'user':user.id})}}" class="btn btn-primary btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Renvoyer l'email de creation mot de passe">
                                                 <i class="mdi mdi-email"></i>

@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return idMap.get(originalId);
         }
         
-        function addNode(nodeId, nodeType, nodeTitle) {
+        function addNode(nodeId, nodeType, nodeTitle, parentNodeType = null) {
             if (visited.has(nodeId)) return;
             visited.add(nodeId);
             
@@ -40,7 +40,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     break;
                 case 'etat':
                 case 'symptome':
-                    nodeStyle = ':::etat';
+                    // Si l'état suit une vérification, utiliser le style spécial
+                    if (parentNodeType === 'verif') {
+                        nodeStyle = ':::etatAfterVerif';
+                    } else {
+                        nodeStyle = ':::etat';
+                    }
                     break;
                 case 'verif':
                     nodeStyle = ':::verif';
@@ -128,11 +133,11 @@ document.addEventListener('DOMContentLoaded', function () {
             return imageNodeId;
         }
 
-        function traverseNode(nodeId, parentSafeId = null) {
+        function traverseNode(nodeId, parentSafeId = null, parentNodeType = null) {
             const node = elements.find(e => e.id === nodeId);
             if (!node || visited.has(nodeId)) return null;
             
-            const safeId = addNode(nodeId, node.type, node.title);
+            const safeId = addNode(nodeId, node.type, node.title, parentNodeType);
             
             // Ajouter la connexion avec le parent si fourni
             if (parentSafeId) {
@@ -157,13 +162,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (node.next_ok) {
                     const nextOkSafeId = getSafeNodeId(node.next_ok);
                     flowchart.push(`    ${fromID} --OK--> ${nextOkSafeId}`);
-                    traverseNode(node.next_ok, null);
+                    traverseNode(node.next_ok, null, 'verif');
                 }
                 // Branche KO (à droite)
                 if (node.next_ko) {
                     const nextKoSafeId = getSafeNodeId(node.next_ko);
                     flowchart.push(`    ${fromID} --KO--> ${nextKoSafeId}`);
-                    traverseNode(node.next_ko, null);
+                    traverseNode(node.next_ko, null, 'verif');
                 }
             } else if (node.next) {
                 if (Array.isArray(node.next)) {
@@ -177,11 +182,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     node.next.forEach((nextId, index) => {
                         const nextSafeId = getSafeNodeId(nextId);
                         flowchart.push(`    ${fromID} --> ${nextSafeId}`);
-                        traverseNode(nextId, null);
+                        traverseNode(nextId, null, node.type);
                     });
                 } else {
                     // Liaison directe pour un seul next
-                    traverseNode(node.next, safeId);
+                    traverseNode(node.next, safeId, node.type);
                 }
             }
             
@@ -189,11 +194,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         
         // Correction : toujours partir du noeud racine (état, symptôme, action, etc.)
-        traverseNode(rootId, null);
+        traverseNode(rootId, null, null);
         
         if (flowchart.length === 0) return '';
         
-        return `%%{ init: { "flowchart": { "curve": "stepAfter" } } }%%\nflowchart TD\n${flowchart.join('\n')}\n\nclassDef probleme fill:#ff9999,stroke:#333,stroke-width:2px,color:#000\nclassDef etat fill:#99ccff,stroke:#333,stroke-width:2px,color:#000\nclassDef verif fill:#ffff99,stroke:#333,stroke-width:2px,color:#000\nclassDef action fill:#99ff99,stroke:#333,stroke-width:2px,color:#000\nclassDef image fill:#fff,stroke:#333,stroke-width:2px,color:#000,stroke-dasharray: 5 5\nclassDef document fill:#ff9999,stroke:#333,stroke-width:1px,color:#fff`;
+        return `%%{ init: { "flowchart": { "curve": "stepAfter" } } }%%\nflowchart TD\n${flowchart.join('\n')}\n\nclassDef probleme fill:#ff9999,stroke:#333,stroke-width:2px,color:#000\nclassDef etat fill:#99ccff,stroke:#333,stroke-width:2px,color:#000\nclassDef etatAfterVerif fill:#1e3a8a,stroke:#333,stroke-width:2px,color:#fff\nclassDef verif fill:#ffff99,stroke:#333,stroke-width:2px,color:#000\nclassDef action fill:#99ff99,stroke:#333,stroke-width:2px,color:#000\nclassDef image fill:#fff,stroke:#333,stroke-width:2px,color:#000,stroke-dasharray: 5 5\nclassDef document fill:#ff9999,stroke:#333,stroke-width:1px,color:#fff`;
     }
 
     // Liste des documents PDF disponibles pour les fiches techniques (à synchroniser avec le dossier uploads/documents/depannage/)
@@ -465,8 +470,10 @@ document.addEventListener('DOMContentLoaded', function () {
                             startOnLoad: false,
                             theme: 'default',
                             flowchart: {
-                                useMaxWidth: true,
-                                htmlLabels: true
+                                useMaxWidth: false,
+                                htmlLabels: true,
+                                width: 100,
+                                height: 100
                             },
                             zoom: {
                                 enabled: true,
@@ -538,6 +545,22 @@ document.addEventListener('DOMContentLoaded', function () {
                                         link.setAttribute('target', '_blank');
                                         link.setAttribute('rel', 'noopener noreferrer');
                                     });
+
+                                    // Empêcher l'auto-réduction d'échelle
+                                    const svg = mermaidDiv.querySelector('svg');
+                                    console.log('[DEBUG] SVG trouvé :', svg);
+                                    if (svg) {
+                                        // Forcer une taille minimale
+                                        const minScale = 1; // Échelle minimale de 80%
+                                        const currentScale = parseFloat(svg.style.transform.replace('scale(', '').replace(')', '')) || 1;
+
+                                        svg.style.transform = `scale(${minScale})`;
+                                        window.currentZoom = minScale;
+
+                                        // Empêcher les modifications automatiques de taille
+                                        svg.style.minWidth = '100%';
+                                        svg.style.minHeight = '100%';
+                                    }
                                 }
                                 applyZoom();
                             }, 200);

@@ -4,6 +4,10 @@ const IMAGES_CACHE_NAME = `steamtec-images-v${CACHE_VERSION}`;
 const DOCUMENTS_CACHE_NAME = `steamtec-documents-v${CACHE_VERSION}`;
 const appUrl = self.location.origin; // Récupère automatiquement l'URL de l'application
 
+// Configuration du cache - mettre à false pour désactiver complètement le cache
+const ENABLE_CACHE = true;
+const ENABLE_AUTO_CACHE = true; // Désactiver la mise en cache automatique des fichiers
+
 // Configuration des routes qui nécessitent une connexion internet
 const ONLINE_ONLY_ROUTES = [
     '/dashboard',
@@ -79,106 +83,60 @@ async function getManifest() {
 // Fonction pour ajouter dynamiquement les fichiers au cache
 async function cacheFiles() {
     const manifest = await getManifest();
-    return [
+
+    // Liste des fichiers à essayer de mettre en cache
+    const filesToTry = [
         // Pages critiques (seulement les pages publiques)
         "/",
         "/manifest.json",
 
-        // Assets JS/CSS principaux
+        // Assets JS/CSS principaux - seulement ceux qui existent
         manifest["build/app.js"] || "/build/app.js",
         manifest["build/app.css"] || "/build/app.css",
         manifest["build/runtime.js"] || "/build/runtime.js",
 
-        // Assets JS/CSS du répertoire assets/
+        // Assets JS/CSS du répertoire assets/ - seulement les plus critiques
         "/assets/app.js",
         "/assets/bootstrap.js",
-        "/assets/js/custome.js",
-        "/assets/js/decision-tree.js",
         "/assets/styles/app.css",
         "/assets/styles/bootstrap.min.css",
 
-        // CSS du répertoire public/assets/css/
+        // CSS du répertoire public/assets/css/ - seulement les principaux
         "/assets/css/main.css",
         "/assets/css/maintenance-table.css",
         "/assets/css/notification.css",
         "/assets/css/style.css",
-        "/assets/css/security.css",
-        "/assets/css/owl.carousel.min.css",
-        "/assets/css/owl.theme.default.css",
 
-        // JS principaux du répertoire public/assets/js/
+        // JS principaux du répertoire public/assets/js/ - seulement les critiques
         "/assets/js/chart.js",
-        "/assets/js/Chart.roundedBarCharts.js",
-        "/assets/js/codemirror.js",
         "/assets/js/offline-manager.js",
         "/assets/js/local-storage-manager.js",
-        "/assets/js/indexeddb-manager.js",
         "/assets/js/cache-optimizer.js",
-        "/assets/js/ponctuel-maintenance-table.js",
-        "/assets/js/maintenance-table.js",
-        "/assets/js/template.js",
         "/assets/js/decision-tree.js",
-        "/assets/js/typeahead.js",
-        "/assets/js/userDashboard.js",
-        "/assets/js/todolist.js",
-        "/assets/js/sweetalert2@11.js",
-        "/assets/js/settings.js",
-        "/assets/js/select2.js",
-        "/assets/js/dashboard.js",
-        "/assets/js/file-upload.js",
-        "/assets/js/filtreAndTriMachineTable.js",
-        "/assets/js/hoverable-collapse.js",
-        "/assets/js/jquery-file-upload.js",
-        "/assets/js/jquery.cookie.js",
-        "/assets/js/off-canvas.js",
-        "/assets/js/owl.carousel.min.js",
 
-        // CSS supplémentaires trouvés dans le répertoire JS
-        "/assets/js/select.dataTables.min.css",
-
-        // Plugins CSS
+        // Plugins CSS essentiels
         "/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.css",
         "/assets/plugins/datatables.net-bs4/dataTables.bootstrap4.css",
         "/assets/plugins/feather/feather.css",
         "/assets/plugins/jquery/jquery-ui.css",
-        "/assets/plugins/pwstabs/jquery.pwstabs.css",
         "/assets/plugins/select2/select2.css",
-        "/assets/plugins/select2-bootstrap-theme/select2-bootstrap.css",
-        "/assets/plugins/css/animate.css",
 
-        // Plugins JS
+        // Plugins JS essentiels
         "/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.js",
-        "/assets/plugins/bootstrap-maxlength/bootstrap-maxlength.js",
         "/assets/plugins/chart.js/Chart.min.js",
-        "/assets/plugins/codemirror/codemirror.js",
-        "/assets/plugins/codemirror/javascript.js",
-        "/assets/plugins/codemirror/xml.js",
-        "/assets/plugins/datatables.net/jquery.dataTables.js",
-        "/assets/plugins/datatables.net-bs4/dataTables.bootstrap4.js",
         "/assets/plugins/jquery/jquery.min.js",
-        "/assets/plugins/jquery/jquery-ui.min.js",
         "/assets/plugins/js/bootstrap.bundle.min.js",
-        "/assets/plugins/progressbar.js/progressbar.min.js",
-        "/assets/plugins/pwstabs/jquery.pwstabs.js",
         "/assets/plugins/select2/select2.js",
-        "/assets/plugins/typeahead.js/typeahead.bundle.js",
-
-        // Autres CSS et JS critiques
-        "/assets/plugins/codemirror/codemirror.css",
-        "/assets/plugins/typicons/src/typicons.css",
 
         // Données JSON critiques pour fonctionnement offline
         "/assets/data/decision-tree.json",
         "/assets/data/maintenance-table-data.json",
         "/assets/data/ponctuel-maintenance-data.json",
 
-        // Images et icônes
-        "assets/images/logo.png",
-        "assets/images/logo.svg",
-        "assets/icons/icon-192x192.png",
-        "assets/icons/icon-512x512.png",
-        "assets/screenshots/screenshot-1.png",
-        "assets/screenshots/screenshot-2.png",
+        // Images et icônes essentielles
+        "/assets/images/logo.png",
+        "/assets/icons/icon-192x192.png",
+        "/assets/icons/icon-512x512.png",
 
         // Documents PDF critiques pour consultation offline
         "/uploads/ARBRE_DE_DEPANNAGE.pdf",
@@ -188,6 +146,31 @@ async function cacheFiles() {
         // Page de fallback offline
         "/offline-fallback.html"
     ];
+
+    // Fonction pour vérifier si un fichier existe
+    async function fileExists(url) {
+        try {
+            const response = await fetch(url, { method: 'HEAD' });
+            return response.ok;
+        } catch (error) {
+            console.warn(`⚠️ Fichier non accessible: ${url}`);
+            return false;
+        }
+    }
+
+    // Filtrer les fichiers qui existent réellement
+    const existingFiles = [];
+    for (const file of filesToTry) {
+        if (await fileExists(file)) {
+            existingFiles.push(file);
+            console.log(`✅ Fichier trouvé: ${file}`);
+        } else {
+            console.log(`❌ Fichier non trouvé: ${file}`);
+        }
+    }
+
+    console.log(`📦 ${existingFiles.length} fichiers seront mis en cache sur ${filesToTry.length} tentés`);
+    return existingFiles;
 }
 // Installation du Service Worker et mise en cache
 self.addEventListener("install", (event) => {
@@ -198,14 +181,31 @@ self.addEventListener("install", (event) => {
                 // Nettoyer les anciens caches d'abord
                 await cleanOldCaches();
 
-                const urlsToCache = await cacheFiles();
-                const cache = await caches.open(CACHE_NAME);
-                await cache.addAll(urlsToCache);
+                if (ENABLE_CACHE && ENABLE_AUTO_CACHE) {
+                    const urlsToCache = await cacheFiles();
+                    const cache = await caches.open(CACHE_NAME);
 
-                console.log('✅ Tous les fichiers ont été ajoutés au cache');
+                    // Ajouter les fichiers un par un pour éviter les erreurs
+                    const cachePromises = urlsToCache.map(async (url) => {
+                        try {
+                            await cache.add(url);
+                            console.log(`✅ Fichier mis en cache: ${url}`);
+                        } catch (error) {
+                            console.warn(`⚠️ Impossible de mettre en cache ${url}:`, error);
+                        }
+                    });
+
+                    await Promise.allSettled(cachePromises);
+                    console.log('✅ Installation du Service Worker terminée');
+                } else {
+                    console.log('📦 Cache désactivé - Service Worker installé sans cache automatique');
+                }
+
                 self.skipWaiting(); // Force l'installation immédiate
             } catch (error) {
                 console.error("❌ Erreur lors de l'installation:", error);
+                // Continuer même en cas d'erreur
+                self.skipWaiting();
             }
         })()
     );
@@ -413,6 +413,11 @@ self.addEventListener("fetch", (event) => {
         return;
     }
 
+    // Si le cache est désactivé, laisser passer toutes les requêtes
+    if (!ENABLE_CACHE) {
+        return;
+    }
+
     event.respondWith(
         (async () => {
             try {
@@ -572,18 +577,18 @@ async function cleanOldCaches() {
 }
 
 // 📌 Écoute de la réception d'une notification push (facultatif)
-self.addEventListener("push", event => {
-    console.log("📩 Notification push reçue !");
-    const options = {
-        body: "Ceci est un message push venant de service worker du steamtech !",
-        icon: 'assets/icons/icon-192x192.png',
-        badge: 'assets/icons/icon-192x192.png',
-        vibrate: [200, 100, 200]
-    };
-    event.waitUntil(
-        self.registration.showNotification("🔔 Steamtech Notification Push", options)
-    );
-});
+// self.addEventListener("push", event => {
+//     console.log("📩 Notification push reçue !");
+//     const options = {
+//         body: "Ceci est un message push venant de service worker du steamtech !",
+//         icon: 'assets/icons/icon-192x192.png',
+//         badge: 'assets/icons/icon-192x192.png',
+//         vibrate: [200, 100, 200]
+//     };
+//     event.waitUntil(
+//         self.registration.showNotification("🔔 Steamtech Notification Push", options)
+//     );
+// });
 
 self.addEventListener("notificationclick", event => {
     event.notification.close();
@@ -699,4 +704,3 @@ self.addEventListener('message', event => {
         });
     }
 });
-

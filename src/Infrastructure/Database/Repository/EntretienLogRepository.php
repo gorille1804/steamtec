@@ -163,4 +163,4 @@ class EntretienLogRepository extends ServiceEntityRepository implements Entretie
             ->getQuery()
             ->execute();
     }
-} 
+}

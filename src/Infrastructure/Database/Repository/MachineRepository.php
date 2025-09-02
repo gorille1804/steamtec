@@ -30,6 +30,13 @@ class MachineRepository extends ServiceEntityRepository implements MachineReposi
             ->getResult();
     }
 
+    public function findAll(): array
+    {
+        return $this->createQueryBuilder('m')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function getTotalMachines(): int
     {
         return $this->createQueryBuilder('m')

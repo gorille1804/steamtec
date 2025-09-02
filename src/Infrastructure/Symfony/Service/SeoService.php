@@ -101,20 +101,20 @@ class SeoService
             'name' => 'SteamTec',
             'url' => 'https://steamtec.fr',
             'logo' => 'https://steamtec.fr/assets/images/logo.png',
-            'description' => 'Fabricant français de solutions éco-responsables de nettoyage et désherbage',
+            'description' => 'Fabricant français de matériel de nettoyage et désherbage à vapeur et eau chaude - ENTECH',
             'address' => [
                 '@type' => 'PostalAddress',
                 'addressCountry' => 'FR',
-                'addressLocality' => 'Votre ville',
-                'postalCode' => '00000',
-                'streetAddress' => 'Votre adresse'
+                'addressLocality' => 'Bulgnéville',
+                'postalCode' => '88140',
+                'streetAddress' => 'ZA DU MOULIN'
             ],
             'contactPoint' => [
                 '@type' => 'ContactPoint',
-                'telephone' => '+33-XX-XX-XX-XX',
+                'telephone' => '+33 (0)3 29 09 15 78',
                 'contactType' => 'customer service',
                 'email' => 'contact@steamtec.fr'
             ]
         ]);
     }
-} 
+}

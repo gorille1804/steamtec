@@ -32,8 +32,8 @@
                                 <tr>
                                     <th>{{'machines.index.num_id'|trans}}</th>
                                     <th>{{'machines.index.name'|trans}}</th>
-                                    <th>{{'machines.index.brand'|trans}}</th>
-                                    <th>{{'machines.index.seuil_maintenance'|trans}}</th>
+                                    <th class="d-none">{{'machines.index.brand'|trans}}</th>
+                                    <th class="d-none">{{'machines.index.seuil_maintenance'|trans}}</th>
                                     <th>{{'machines.index.action'|trans}}</th>
                                 </tr>
                             </thead>
@@ -46,10 +46,10 @@
                                     <td>
                                        {{machine.nom}}
                                     </td>
-                                    <td>
+                                    <td class="d-none">
                                       {{machine.marque}}  
                                     </td>
-                                    <td>
+                                    <td class="d-none">
                                       {{machine.seuilMaintenance}}  
                                     </td>
                                      <td class="py-1">

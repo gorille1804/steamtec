@@ -59,7 +59,7 @@ function registerServiceWorker() {
                 .then(registration => {
                     registration.update();
                     console.log("✅ Service Worker enregistré :", registration);
-                    demanderPermissionNotification();
+                    //demanderPermissionNotification();
 
                     // Gérer l'installation PWA après l'enregistrement du service worker
                     setTimeout(() => {
@@ -79,35 +79,35 @@ function registerServiceWorker() {
 registerServiceWorker();
 
 // Demande de permission pour les notifications
-function demanderPermissionNotification() {
-    if (Notification.permission === "granted") {
-        envoyerNotification();
-    } else if (Notification.permission === "denied") {
-        alert("❌ Notifications bloquées ! Active-les dans les paramètres du navigateur.");
-    } else {
-        Notification.requestPermission().then(permission => {
-            if (permission === "granted") {
-                envoyerNotification();
-            } else {
-                console.warn("⚠️ L'utilisateur a refusé les notifications.");
-            }
-        });
-    }
-}
+// function demanderPermissionNotification() {
+//     if (Notification.permission === "granted") {
+//         envoyerNotification();
+//     } else if (Notification.permission === "denied") {
+//         alert("❌ Notifications bloquées ! Active-les dans les paramètres du navigateur.");
+//     } else {
+//         Notification.requestPermission().then(permission => {
+//             if (permission === "granted") {
+//                 envoyerNotification();
+//             } else {
+//                 console.warn("⚠️ L'utilisateur a refusé les notifications.");
+//             }
+//         });
+//     }
+// }
 
 // Fonction pour envoyer une notification
-function envoyerNotification() {
-    if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.ready.then(registration => {
-            registration.showNotification("🔔 Notification Active !", {
-                body: "le notification depuis l'application steamtech est activé🎉",
-                icon: "assets/icons/icon-192x192.png", // Remplace avec une vraie icône
-                vibrate: [200, 100, 200],
-                tag: "test-notification"
-            });
-        }).catch(error => console.error("❌ Erreur lors de l'affichage de la notification :", error));
-    }
-} 
+// function envoyerNotification() {
+//     if ("serviceWorker" in navigator) {
+//         navigator.serviceWorker.ready.then(registration => {
+//             registration.showNotification("🔔 Notification Active !", {
+//                 body: "le notification depuis l'application steamtech est activé🎉",
+//                 icon: "assets/icons/icon-192x192.png", // Remplace avec une vraie icône
+//                 vibrate: [200, 100, 200],
+//                 tag: "test-notification"
+//             });
+//         }).catch(error => console.error("❌ Erreur lors de l'affichage de la notification :", error));
+//     }
+// } 
 
 // Vérifier le support de 'windowControlsOverlay'
 if ('windowControlsOverlay' in navigator) {
@@ -144,11 +144,18 @@ function gererInstallationPWA() {
     // Vérifier si on doit montrer la bannière d'installation
     const shouldShowBanner = localStorage.getItem('pwa-install-dismissed') !== 'true';
 
-    if (shouldShowBanner && isMobileDevice()) {
+    // Vérifier si la page actuelle nécessite une connexion utilisateur
+    const currentPath = window.location.pathname;
+    const requiresAuth = window.PWA_CONFIG && window.PWA_CONFIG.requiresOnlineConnection(currentPath);
+
+    if (shouldShowBanner && isMobileDevice() && requiresAuth) {
+        console.log('🔐 Page nécessitant une connexion détectée - Affichage du bandeau PWA autorisé');
         // Délai avant d'afficher la bannière pour ne pas être intrusif
         setTimeout(() => {
             afficherBanniereInstallation();
         }, 3000);
+    } else if (!requiresAuth) {
+        console.log('🌐 Page publique détectée - Bandeau PWA désactivé pour cette page');
     }
 }
 

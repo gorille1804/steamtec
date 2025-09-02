@@ -3,7 +3,6 @@ Allow: /
 
 # Pages publiques importantes
 Allow: /
-Allow: /societe
 Allow: /configuration
 Allow: /contact
 Allow: /client

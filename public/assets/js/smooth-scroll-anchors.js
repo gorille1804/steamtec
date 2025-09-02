@@ -58,4 +58,18 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }, 100);
     }
+    
+    // Sélectionne tous les liens de ul.config_lik_group a[href*="#"]
+    const configLinks = document.querySelectorAll('ul.config_lik_group a[href*="#"]');
+    configLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const href = this.getAttribute('href');
+            // Simule le clic sur le bouton button.nav-link dont data-bs-target=href
+            const button = document.querySelector(`button.nav-link[data-bs-target="${href}"]`);
+            if (button) {
+                button.click();
+            }
+        });
+    });
 }); 

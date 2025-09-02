@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5H5MMR0KWE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);} 
+        gtag('js', new Date()); 
+        
+        gtag('config', 'G-5H5MMR0KWE');
+    </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -66,7 +75,7 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     {% block stylesheets %}
       {{ encore_entry_link_tags('app') }}
-      <style>
+        <style>
         /* SEO-friendly hidden h1 - keeps element in normal flow but visually hidden */
         .seo-friendly {
             font-size: 0;

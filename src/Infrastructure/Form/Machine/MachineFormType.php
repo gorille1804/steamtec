@@ -30,10 +30,14 @@ class MachineFormType extends AbstractType
             ->add('marque', TextType::class, [
                 'label' => 'machines.form.brand.label',
                 'attr' => ['placeholder' => 'machines.form.brand.placeholder'],
+                'required' => false,
+                'empty_data' => '_',
             ])
             ->add('seuilMaintenance', IntegerType::class, [
                 'label' => 'machines.form.seuil_maintenance.label',
                 'attr' => ['placeholder' => 'machines.form.seuil_maintenance.placeholder'],
+                'required' => false,
+                'empty_data' => 0,
             ])
             ->add('ficheTechnique', FileInterfaceType::class, [
                 'label' => 'machines.form.file.label',

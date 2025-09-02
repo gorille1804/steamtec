@@ -41,4 +41,11 @@ class DecisionTreeController extends AbstractController
         $json = file_get_contents($jsonPath);
         return new Response($json, 200, ['Content-Type' => 'application/json']);
     }
+
+    #[Route('/arbre-de-depannage/interactif', name: 'decisiontree_interactif')]
+    #[IsGranted('ROLE_USER')]
+    public function interactif(): Response
+    {
+        return $this->render('admin/decisiontree/interactif.html.twig');
+    }
 }

@@ -1,5 +1,14 @@
 RewriteEngine On
 
+<IfModule mod_headers.c>
+    Header always unset X-Robots-Tag
+    Header always set X-Robots-Tag "index, follow"
+</IfModule>
+
+# Redirection vers la version www du site (canonique)
+RewriteCond %{HTTP_HOST} ^steamtec\.fr$ [NC]
+RewriteRule ^(.*)$ https://www.steamtec.fr/$1 [R=301,L]
+
 # Compression Gzip pour améliorer les performances
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/plain
@@ -46,3 +55,9 @@ RewriteRule ^uploads/(.*)$ public/uploads/$1 [L]
 
 # Toutes les autres routes vers Symfony
 RewriteRule ^(.*)$ public/index.php [QSA,L]
+RewriteCond %{HTTP_HOST} ^steamtec\.fr$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.steamtec\.fr$
+RewriteRule ^materiel$ "https\:\/\/www\.steamtec\.fr\/machine" [R=301,L]
+RewriteCond %{HTTP_HOST} ^steamtec\.fr$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.steamtec\.fr$
+RewriteRule ^societe$ "https\:\/\/www\.steamtec\.fr\/about\-us" [R=301,L]

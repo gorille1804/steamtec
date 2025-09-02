@@ -14,6 +14,11 @@ use Domain\User\UseCase\FindAllUserUseCaseInterface;
 use Domain\User\UseCase\FindUserByIdUseCaseInterface;
 use Domain\User\UseCase\SendCreatePasswordEmailUseCaseInterface;
 use Infrastructure\Form\User\UserFormType;
+use Domain\ParcMachine\UseCase\FindAllMachinesByUserUseCaseInterface;
+use Domain\ParcMachine\UseCase\AddMachineToUserUseCaseInterface;
+use Domain\ParcMachine\UseCase\RemoveMachineFromUserUseCaseInterface;
+use Domain\Machine\UseCase\GetAllMachinesUseCaseInterface;
+use Infrastructure\Form\User\AddMachineToUserFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,6 +37,10 @@ class UserController extends AbstractController
         private readonly DeleteUserUseCaseInterface $deleteUseCase,
         private readonly SendCreatePasswordEmailUseCaseInterface $sendCreatePasswordEmailUseCase,
         private readonly TranslatorInterface $translator,
+        private readonly FindAllMachinesByUserUseCaseInterface $findAllMachinesByUserUseCase,
+        private readonly AddMachineToUserUseCaseInterface $addMachineToUserUseCase,
+        private readonly RemoveMachineFromUserUseCaseInterface $removeMachineFromUserUseCase,
+        private readonly GetAllMachinesUseCaseInterface $getAllMachinesUseCase,
     ){}
 
     #[Route('/users', name: 'app_users')]
@@ -137,5 +146,63 @@ class UserController extends AbstractController
             $this->addFlash('error', $this->translator->trans('users.messages.reset_password_error') . ' ' . $e->getMessage());
         }
         return $this->redirectToRoute('app_users');
+    }
+
+    #[Route('/users/{user}/machines', name:'app_users_machines', methods:['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function manageMachines(Request $request, User $user): Response
+    {
+        // Récupérer les machines affectées à cet utilisateur
+        $assignedMachines = $this->findAllMachinesByUserUseCase->__invoke($user);
+        
+        // Récupérer toutes les machines disponibles
+        $allMachines = $this->getAllMachinesUseCase->__invoke();
+        
+        // Filtrer les machines non affectées
+        $assignedMachineIds = array_map(function($machine) {
+            return $machine->getId()->getValue();
+        }, $assignedMachines);
+        
+        $availableMachines = array_filter($allMachines, function($machine) use ($assignedMachineIds) {
+            return !in_array($machine->getId()->getValue(), $assignedMachineIds);
+        });
+
+        // Créer le formulaire d'ajout de machine
+        $addMachineForm = $this->createForm(AddMachineToUserFormType::class, null, [
+            'available_machines' => $availableMachines,
+        ]);
+
+        $addMachineForm->handleRequest($request);
+
+        if ($addMachineForm->isSubmitted() && $addMachineForm->isValid()) {
+            try {
+                $data = $addMachineForm->getData();
+                $this->addMachineToUserUseCase->__invoke($user, $data['machine']);
+                $this->addFlash('success', $this->translator->trans('users.messages.add_machine_success'));
+                return $this->redirectToRoute('app_users_machines', ['user' => $user->id->getValue()]);
+            } catch (\Exception $e) {
+                $this->addFlash('error', $this->translator->trans('users.messages.add_machine_error'));
+            }
+        }
+
+        return $this->render('admin/user/machines.html.twig', [
+            'user' => $user,
+            'assignedMachines' => $assignedMachines,
+            'addMachineForm' => $addMachineForm->createView(),
+        ]);
+    }
+
+    #[Route('/users/{user}/remove-machine/{machine}', name:'app_remove_machine_from_user', methods:['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function removeMachine(User $user, \Domain\Machine\Data\Model\Machine $machine): Response
+    {
+        try {
+            $this->removeMachineFromUserUseCase->__invoke($user, $machine);
+            $this->addFlash('success', $this->translator->trans('users.messages.remove_machine_success'));
+        } catch (\Exception $e) {
+            $this->addFlash('error', $this->translator->trans('users.messages.remove_machine_error'));
+        }
+
+        return $this->redirectToRoute('app_users_machines', ['user' => $user->id->getValue()]);
     }
 }

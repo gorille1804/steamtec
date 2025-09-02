@@ -1,0 +1,101 @@
+{% extends "layout/dashboard.layout.html.twig" %}
+{% block title %} Arbre de Dépannage interactif {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/admin/decisiontree/decision-tree.css') }}">
+    <style>
+        /* Styles personnalisés */
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+            margin-top: 0 !important;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="row flex-grow">
+    <div class="col-md-12">
+        <!-- Onglets -->
+        <ul class="nav nav-tabs" id="decisionTreeTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a href="{{ path('app_arbre_de_depannage') }}" class="nav-link" id="interactive-tab" type="button">
+                    <i class="mdi mdi-format-list-bulleted me-2"></i>Diagramme de flux
+                </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a href="{{ path('decisiontree_interactif') }}" class="nav-link active" id="mermaid-tab" type="button">
+                    <i class="mdi mdi-chart-sankey me-2"></i>Arbre de décision interactif
+                </a>
+            </li>
+        </ul>
+
+        <!-- Contenu des onglets -->
+        <div class="tab-content" id="decisionTreeTabContent">
+            <!-- Onglet interactif -->
+            <div class="tab-pane fade show active" id="interactive" role="tabpanel" aria-labelledby="interactive-tab">
+                <div class="mt-3">
+                    <div id="decision-tree-breadcrumb" class="mb-3"></div>
+                    <div id="app" data-json-url="{{ asset('assets/data/decision-tree.json') }}"></div>
+                </div>
+            </div>
+
+            <!-- Onglet Mermaid -->
+            <div class="tab-pane fade" id="mermaid" role="tabpanel" aria-labelledby="mermaid-tab">
+                <div id="app"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{{ asset('assets/js/tailwindcss.js?t=202507022') }}"></script>
+<script src="{{ asset('assets/js/lucide.js?t=202507022') }}"></script>
+<script>
+    // Définir l'URL du JSON avant le chargement du script principal
+    window.jsonUrl = "{{ asset('assets/data/decision-tree.json') }}";
+    console.log('JSON URL définie:', window.jsonUrl);
+    
+    // Attendre que le DOM soit chargé avant d'initialiser l'application
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM chargé, chargement du script principal...');
+        
+        // Charger le script principal de manière asynchrone
+        const script = document.createElement('script');
+        script.src = "{{ asset('assets/js/decision-tree-interactive.js?t=202507022') }}";
+        script.onload = function() {
+            console.log('Script principal chargé');
+        };
+        script.onerror = function() {
+            console.error('Erreur lors du chargement du script principal');
+        };
+        document.head.appendChild(script);
+    });
+</script>
+{% endblock %}

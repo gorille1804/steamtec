@@ -1,0 +1,235 @@
+/* Styles pour le menu responsive */
+html.no-scroll {
+    overflow: hidden;
+}
+
+html.no-scroll .content-wrapper::after {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+}
+
+@media (min-width: 1280px) {
+    html.no-scroll .content-wrapper::after {
+        z-index: -1;
+    }
+}
+
+.content-wrapper {
+    position: relative;
+}
+
+.content-wrapper::after {
+    position: absolute;
+    content: "";
+    z-index: -1;
+}
+
+.content_header_bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.content_header_bottom .header_responsive {
+    display: flex;
+    gap: 15px;
+    position: relative;
+}
+
+.content_header_bottom .logo {
+    max-width: 200px;
+}
+
+/* Styles responsive */
+@media (max-width: 1280px) {
+    .content_header_bottom .header_responsive {
+        flex-direction: column;
+        gap: 0px;
+        align-items: start;
+        left: -320px;
+        transition: 0.3s;
+        top: 75px;
+        z-index: 2;
+        background: #ffffff;
+        padding: 15px 0;
+        position: absolute;
+        visibility: hidden;
+        width: 320px;
+        height: 89vh;
+        justify-content: space-between;
+        z-index: 100;
+    }
+
+    .content_header_bottom .header_responsive .navbar {
+        width: 100%;
+    }
+
+    .content_header_bottom .header_responsive .navbar a {
+        font-size: 14px;
+    }
+
+    .content_header_bottom .header_responsive .navbar a .btn_caret {
+        position: relative;
+        background-color: #e9e9e9;
+        width: 30px;
+    }
+
+    .content_header_bottom .header_responsive .navbar-nav {
+        flex-direction: column;
+        gap: 10px;
+        align-items: start;
+        width: 100%;
+    }
+
+    .content_header_bottom .header_responsive .navbar-nav .nav-item-custome {
+        width: 100%;
+    }
+
+    .content_header_bottom .header_responsive .navbar-nav .nav-item-custome a {
+        border-bottom: 1px #f3f3f3 solid;
+        width: 100%;
+        padding: 0 15px 5px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .content_header_bottom .btn_toggle_header {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .content_header_bottom.active .header_responsive {
+        visibility: visible !important;
+        left: -12px !important;
+        transition: 0.3s;
+        background-color: red !important; /* Test pour voir si les styles s'appliquent */
+        opacity: 1 !important;
+        display: flex !important;
+    }
+
+    .content_header_bottom.active .header_responsive .sous-menu a {
+        color: #636074 !important;
+        font-weight: 400 !important;
+    }
+
+    .content_header_bottom.active .header_responsive .sous-menu a:hover {
+        color: #60B454 !important;
+    }
+
+    /* Styles pour les sous-menus */
+    body .btn_caret {
+        display: block;
+    }
+
+    header .content_header_bottom .navbar .sous-menu {
+        flex-direction: column;
+        padding: 15px 15px 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out, padding 0.48s ease-in-out;
+        display: flex;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    header .content_header_bottom .navbar .sous-menu a {
+        font-size: 12px;
+        text-decoration: none;
+        border-bottom: 0 !important;
+        white-space: normal;
+        line-height: 15px;
+        padding-bottom: 10px !important;
+    }
+
+    header .content_header_bottom .navbar .sous-menu.active {
+        max-height: 500px;
+        display: flex;
+        opacity: 1;
+        visibility: visible;
+        padding: 15px 15px 0;
+        transition: max-height 0.5s ease-in-out, 
+                    opacity 0.48s ease-in-out,
+                    visibility 0.3s ease-in-out,
+                    padding 0.3s ease-in-out;
+    }
+
+    .content_header_bottom_responsive {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .content_header_bottom_responsive a {
+        font-size: 14px;
+        padding: 4px 15px;
+    }
+}
+
+/* Styles pour le bouton toggle */
+.btn_toggle_header {
+    display: inline-block !important;
+    height: 24px;
+    position: relative;
+    width: 30px;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.btn_toggle_header .hamburger-icon {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.btn_toggle_header .hamburger-icon span {
+    background-color: #249FA8;
+    border-radius: 2px;
+    display: block;
+    height: 3px;
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+}
+
+.content_header_bottom_responsive {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.btn_caret {
+    display: none;
+}
+
+/* Surcharge de la classe d-none de Bootstrap pour le bouton toggle */
+.btn_toggle_header.d-none {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Test: Styles qui s'appliquent toujours pour voir si le menu s'affiche */
+.content_header_bottom.active .header_responsive {
+    visibility: visible !important;
+    left: -12px !important;
+    background-color: red !important;
+    opacity: 1 !important;
+    display: flex !important;
+    position: absolute !important;
+    top: 75px !important;
+    width: 320px !important;
+    height: 89vh !important;
+    z-index: 1000 !important;
+}
