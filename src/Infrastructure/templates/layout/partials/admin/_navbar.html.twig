@@ -5,13 +5,13 @@
             </button>
           </div>
           <div>
-            <a class="navbar-brand brand-logo" href="{{path('app_dashboard')}}">
+            <a class="navbar-brand brand-logo" href="{{ is_granted('ROLE_ADMIN') ? path('app_dashboard') : path('app_chantiers') }}">
               <h2 class="text-bold">{{'navbars.app_title'|trans}}</h2>
             </a>
           </div>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-top navbarright">
-          <a class="navbar-brand brand-logo d-lg-none navbar-brand brand-logo" href="index.html">
+          <a class="navbar-brand brand-logo d-lg-none navbar-brand brand-logo" href="{{ is_granted('ROLE_ADMIN') ? path('app_dashboard') : path('app_chantiers') }}">
             <h2 class="text-bold mb-0">{{'navbars.app_title'|trans}}</h2>
           </a>
           <ul class="navbar-nav">
