@@ -177,26 +177,19 @@
                 // Amélioration de la recherche
                 var searchInput = $('input[name="search"]');
                 var searchForm = searchInput.closest('form');
-                var searchTimeout;
 
-                // Recherche automatique après 500ms d'inactivité
-                searchInput.on('input', function() {
-                    clearTimeout(searchTimeout);
-                    searchTimeout = setTimeout(function() {
-                        searchForm.submit();
-                    }, 500);
-                });
-
-                // Soumission du formulaire avec Entrée
+                // Soumission du formulaire uniquement avec Entrée
                 searchInput.on('keypress', function(e) {
                     if (e.which === 13) {
-                        clearTimeout(searchTimeout);
                         searchForm.submit();
                     }
                 });
 
-                // Focus automatique sur le champ de recherche
+                // Focus automatique sur le champ de recherche et placer le curseur à la fin
                 searchInput.focus();
+                // Placer le curseur à la fin du texte
+                var length = searchInput.val().length;
+                searchInput[0].setSelectionRange(length, length);
             }
         });
     </script>
