@@ -91,4 +91,43 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
         return $result;
     }
     
+    public function searchUsers(string $search, int $page = 1, int $limit = 10): array
+    {
+        $offset = ($page - 1) * $limit;
+        $searchTerm = '%' . $search . '%';
+        
+        return $this->createQueryBuilder('u')
+            ->where('u.firstname LIKE :search')
+            ->orWhere('u.lastname LIKE :search')
+            ->orWhere('u.email LIKE :search')
+            ->orWhere('u.socity LIKE :search')
+            ->orWhere('u.phone LIKE :search')
+            ->orWhere('CONCAT(u.firstname, \' \', u.lastname) LIKE :search')
+            ->orWhere('CONCAT(u.lastname, \' \', u.firstname) LIKE :search')
+            ->setParameter('search', $searchTerm)
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->orderBy('u.firstname', 'ASC')
+            ->addOrderBy('u.lastname', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+    
+    public function getTotalUsersWithSearch(string $search): int
+    {
+        $searchTerm = '%' . $search . '%';
+        
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u.id)')
+            ->where('u.firstname LIKE :search')
+            ->orWhere('u.lastname LIKE :search')
+            ->orWhere('u.email LIKE :search')
+            ->orWhere('u.socity LIKE :search')
+            ->orWhere('u.phone LIKE :search')
+            ->orWhere('CONCAT(u.firstname, \' \', u.lastname) LIKE :search')
+            ->orWhere('CONCAT(u.lastname, \' \', u.firstname) LIKE :search')
+            ->setParameter('search', $searchTerm)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

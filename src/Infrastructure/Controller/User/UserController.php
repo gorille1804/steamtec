@@ -13,6 +13,7 @@ use Domain\User\UseCase\UpdateUserUseCaseInterface;
 use Domain\User\UseCase\FindAllUserUseCaseInterface;
 use Domain\User\UseCase\FindUserByIdUseCaseInterface;
 use Domain\User\UseCase\SendCreatePasswordEmailUseCaseInterface;
+use Domain\User\UseCase\SearchUsersUseCaseInterface;
 use Infrastructure\Form\User\UserFormType;
 use Domain\ParcMachine\UseCase\FindAllMachinesByUserUseCaseInterface;
 use Domain\ParcMachine\UseCase\AddMachineToUserUseCaseInterface;
@@ -41,6 +42,7 @@ class UserController extends AbstractController
         private readonly AddMachineToUserUseCaseInterface $addMachineToUserUseCase,
         private readonly RemoveMachineFromUserUseCaseInterface $removeMachineFromUserUseCase,
         private readonly GetAllMachinesUseCaseInterface $getAllMachinesUseCase,
+        private readonly SearchUsersUseCaseInterface $searchUsersUseCase,
     ){}
 
     #[Route('/users', name: 'app_users')]
@@ -49,16 +51,25 @@ class UserController extends AbstractController
     {
         $page = $request->query->getInt('page', 1);
         $limit = 10;
+        $search = $request->query->get('search', '');
 
-        $users = $this->findAllUserUseCase->__invoke($page, $limit);
-        $totalUsers = $this->findAllUserUseCase->getTotalUsers();
+        if (!empty($search)) {
+            $users = $this->searchUsersUseCase->__invoke($search, $page, $limit);
+            $totalUsers = $this->searchUsersUseCase->getTotalUsersWithSearch($search);
+        } else {
+            $users = $this->findAllUserUseCase->__invoke($page, $limit);
+            $totalUsers = $this->findAllUserUseCase->getTotalUsers();
+        }
+        
         $maxPages = ceil($totalUsers / $limit);
 
         return $this->render('admin/user/index.html.twig', [
             'users' => $users,
             'currentPage' => $page,
             'maxPages' => $maxPages,
-            'limit' => $limit
+            'limit' => $limit,
+            'search' => $search,
+            'totalUsers' => $totalUsers
         ]);
     }
 

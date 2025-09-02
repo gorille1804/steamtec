@@ -69,7 +69,7 @@ chantiers:
             placeholder: "Rechercher dans tous les champs..."
             label: "Rechercher"
             clear: "Effacer la recherche"
-            info: "Recherche pour :"
+            info: "résultat(s) trouvé(s) pour"
   
     form:
         machine_serial:
@@ -179,6 +179,11 @@ users:
         society: "Société"
         phone: "Téléphone"
         action: "Actions"
+        search:
+            placeholder: "Rechercher dans tous les champs..."
+            label: "Rechercher"
+            clear: "Effacer la recherche"
+            info: "résultat(s) trouvé(s) pour"
   
     form:
         email:
