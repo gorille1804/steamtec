@@ -290,7 +290,7 @@ class DiagnosticApp {
                         nodeColor = 'bg-yellow-50 border-yellow-200 text-yellow-700';
                     } else if (previousNode.type === 'action') {
                         nodeColor = 'bg-orange-50 border-orange-200 text-orange-700';
-                    } else if (previousNode.usedoc) {
+                    } else if (previousNode.usedoc || previousNode.doc) {
                         nodeColor = 'bg-red-50 border-red-200 text-red-700';
                     }
 
@@ -337,7 +337,7 @@ class DiagnosticApp {
         } else if (currentNode.type === 'action') {
             currentNodeColor = 'bg-orange-100 border-orange-500 text-orange-800';
             nodeIcon = 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z'; // Settings icon
-        } else if (currentNode.usedoc) {
+        } else if (currentNode.usedoc || currentNode.doc) {
             currentNodeColor = 'bg-red-100 border-red-500 text-red-800';
             nodeIcon = 'M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'; // Document icon
         }
@@ -639,6 +639,36 @@ class DiagnosticApp {
                                     <p class="text-yellow-800 text-lg leading-relaxed">
                                         ${node.title}
                                     </p>
+                                    ${node.doc ? `
+                                        <div class="mt-4 p-3 bg-blue-100 rounded-lg">
+                                            <p class="text-blue-700 text-sm mb-2">
+                                                📋 Consultez la documentation technique pour cette vérification :
+                                            </p>
+                                            ${(() => {
+                                const docFile = findDepannageDoc(node.doc);
+                                if (docFile) {
+                                    return `
+                                                        <a 
+                                                            href="${window.location.origin}/uploads/documents/depannage/${docFile}" 
+                                                            target="_blank"
+                                                            class="inline-flex items-center px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors"
+                                                        >
+                                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                                            </svg>
+                                                            ${docFile}
+                                                        </a>
+                                                    `;
+                                } else {
+                                    return `
+                                                        <div class="text-orange-600 text-sm">
+                                                            ⚠️ Document technique non trouvé pour cette vérification
+                                                        </div>
+                                                    `;
+                                }
+                            })()}
+                                        </div>
+                                    ` : ''}
                                 </div>
                                 <p class="text-gray-600 mb-6">
                                     Effectuez cette vérification et indiquez le résultat.
@@ -715,12 +745,13 @@ class DiagnosticApp {
                 const isVerif = choiceNode && choiceNode.type === 'verif';
                 const isAction = choiceNode && choiceNode.type === 'action';
                 const hasUsedoc = choiceNode && choiceNode.usedoc === true;
+                            const hasDoc = choiceNode && choiceNode.doc === true;
 
                 if (choice.type === 'ok') {
                     buttonClass += " bg-blue-50 hover:bg-blue-100 border-blue-200 hover:border-blue-300 text-blue-800 hover:text-blue-900";
                 } else if (choice.type === 'ko') {
                     buttonClass += " bg-orange-50 hover:bg-orange-100 border-orange-200 hover:border-orange-300 text-orange-800 hover:text-orange-900";
-                } else if (hasUsedoc) {
+                } else if (hasUsedoc || hasDoc) {
                     buttonClass += " bg-red-100 hover:bg-red-200 border-red-300 hover:border-red-400 text-red-900 hover:text-red-950";
                 } else if (isEtat) {
                     buttonClass += " bg-green-50 hover:bg-green-100 border-green-200 hover:border-green-300 text-green-800 hover:text-green-900";

@@ -113,7 +113,8 @@
       "title": "Vérifier le disjoncteur principal de la machine dans coffret électrique",
       "parent": "etat1",
       "next_ok": "action7",
-      "next_ko": "action6"
+      "next_ko": "action6",
+      "image": "/assets/images/arbres/disjoncteur.png"
     },
     {
       "id": "action6",
@@ -132,15 +133,6 @@
       "type": "probleme",
       "title": "PROGRAMMATEUR EN ERREUR (affiche ERR ou symboles)",
       "parent": "cate1"
-    },
-    {
-      "id": "etat2",
-      "type": "etat",
-      "title": "PROGRAMMATEUR ne s'allume plus ou clignote",
-      "parent": "prob3",
-      "next": [
-        "etat3"
-      ]
     },
     {
       "id": "etat3",
@@ -166,7 +158,8 @@
       "title": "VERIFIER LES BRANCHEMENTS PHASE ET NEUTRE SUR LE PROGRAMMATEUR",
       "parent": "etat3",
       "next_ok": "action10",
-      "next_ko": "action9"
+      "next_ko": "action9",
+      "doc": "D003"
     },
     {
       "id": "action9",
@@ -234,7 +227,8 @@
       "title": "VERIFIER LES BRANCHEMENTS DE LA SONDE SUR LE PROGRAMMATEUR",
       "parent": "etat4",
       "next_ok": "action16",
-      "next_ko": "action14"
+      "next_ko": "action14",
+      "doc": "D002"
     },
     {
       "id": "action14",
@@ -265,19 +259,10 @@
       "parent": "cate1"
     },
     {
-      "id": "etat5",
-      "type": "etat",
-      "title": "PAS DE CONSO ANTICALCAIRE",
-      "parent": "prob4",
-      "next": [
-        "verif10"
-      ]
-    },
-    {
       "id": "verif10",
       "type": "verif",
       "title": "VERIFIER SI LA POMPE ANTICALCAIRE TOURNE (vibrations quand la machine est allumée)",
-      "parent": "etat5",
+      "parent": "prob4",
       "next_ok": "verif11",
       "next_ko": "verif12"
     },
@@ -343,19 +328,10 @@
       "parent": "cate1"
     },
     {
-      "id": "etat6",
-      "type": "etat",
-      "title": "DEBORDEMANT DU BAC ANTICALAIRE",
-      "parent": "prob5",
-      "next": [
-        "verif14"
-      ]
-    },
-    {
       "id": "verif14",
       "type": "verif",
       "title": "LA PRESSION DU RESEAU D'EAU EST PEUT-ETRE TROP FORTE",
-      "parent": "etat6",
+      "parent": "prob5",
       "next_ok": "verif15",
       "next_ko": "action22"
     },
@@ -435,7 +411,7 @@
     {
       "id": "verif18",
       "type": "verif",
-      "title": "EN DIRECTE : AVEC BAC ANTICALCAIRE ?",
+      "title": "EN DIRECT : AVEC BAC ANTICALCAIRE ?",
       "parent": "etat8",
       "next_ok": "etat10",
       "next_ko": "etat11"
@@ -897,19 +873,10 @@
       "parent": "cate2"
     },
     {
-      "id": "etat14",
-      "type": "etat",
-      "title": "IMPOSSIBLE DE MONTER EN PRESSION SORTIE DE POMPE (AU MANO) et le moteur tourne",
-      "parent": "prob7",
-      "next": [
-        "verif47"
-      ]
-    },
-    {
       "id": "verif47",
       "type": "verif",
       "title": "VERIFIER LE REGLAGE DE LA PRESSION (SENS HORAIRE POUR AUGMENTER) ET QUE LA MOLETTE EST BIEN ENCLENCHEE",
-      "parent": "etat14",
+      "parent": "prob7",
       "next_ok": "verif48",
       "next_ko": "action55"
     },
@@ -930,7 +897,7 @@
     {
       "id": "action56",
       "type": "action",
-      "title": "UTILISER UN SEUL ACCESSOIRE (Pression > 35 bars) ou UNE SEULE BUSE (Calibre max 04) ou rester à une pression max de 35 bars",
+      "title": "Avec 2 accessoires ou 2 buses (034), vous ne pouvez pas travailler à 60 bars au mano",
       "parent": "verif48"
     },
     {
@@ -953,7 +920,7 @@
     {
       "id": "verif50",
       "type": "verif",
-      "title": "EN DIRECTE SANS BAC ANTICALCAIRE ?",
+      "title": "EN DIRECT SANS BAC ANTICALCAIRE ?",
       "parent": "etat15"
     },
     {
@@ -1202,19 +1169,10 @@
       "parent": "cate2"
     },
     {
-      "id": "etat18",
-      "type": "etat",
-      "title": "PRESSION OK AU MANO MAIS PAS OU PEU DE SORTIE D'EAU AUX ACCESSOIRES",
-      "parent": "prob8",
-      "next": [
-        "verif65"
-      ]
-    },
-    {
       "id": "verif65",
       "type": "verif",
       "title": "VERIFIER L'OUVERTURE CORRECTE DU ROBINET VAPEUR",
-      "parent": "etat18",
+      "parent": "prob8",
       "next_ok": "verif66",
       "next_ko": "action74"
     },
@@ -1323,19 +1281,10 @@
       "parent": "cate2"
     },
     {
-      "id": "etat19",
-      "type": "etat",
-      "title": "PRESSION SACCADEE OU PULSATOIRE",
-      "parent": "prob9",
-      "next": [
-        "etat20"
-      ]
-    },
-    {
       "id": "etat20",
       "type": "etat",
       "title": "DEBIT FAIBLE",
-      "parent": "etat19",
+      "parent": "prob9",
       "next": [
         "verif70"
       ]
@@ -1351,7 +1300,7 @@
     {
       "id": "verif71",
       "type": "verif",
-      "title": "EST-CE EN DIRECTE ET SANS BAC ANTICALCAIRE ?",
+      "title": "EST-CE EN DIRECT ET SANS BAC ANTICALCAIRE ?",
       "parent": "verif70",
       "next_ok": "etat22",
       "next_ko": "etat23"
@@ -2020,19 +1969,10 @@
       "parent": "cate2"
     },
     {
-      "id": "etat24",
-      "type": "etat",
-      "title": "PAS D'ARRÊT DE LA POMPE (1 minute max apprêt relâchement de la gâchette)",
-      "parent": "prob10",
-      "next": [
-        "action133"
-      ]
-    },
-    {
       "id": "action133",
       "type": "action",
       "title": "VERIFIER LE COMPORTEMENT DU MANO A l'ARRET DE LA GACHETTE",
-      "parent": "etat24",
+      "parent": "prob10",
       "next": [
         "etat27",
         "etat26",
@@ -2127,7 +2067,6 @@
       "title": "APPELER LE SAV POUR CHANGER LE PRESSOSTAT CÔTE TETE DE POMPE (COTE NIVEAU D'HUILE)",
       "parent": "etat29",
       "next": [
-        "action140",
         "action139"
       ]
     },
@@ -2136,13 +2075,6 @@
       "type": "action",
       "title": "Appeler le SAV 0681676430",
       "parent": "etat29"
-    },
-    {
-      "id": "action140",
-      "type": "action",
-      "title": "D013",
-      "parent": "etat29",
-      "usedoc": true
     },
     {
       "id": "etat30",
@@ -2175,19 +2107,10 @@
       "parent": "cate3"
     },
     {
-      "id": "etat31",
-      "type": "etat",
-      "title": "LA MACHINE NE CHAUFFE PLUS (VOYANT VERT ALLUME)",
-      "parent": "prob11",
-      "next": [
-        "verif107"
-      ]
-    },
-    {
       "id": "verif107",
       "type": "verif",
       "title": "S'ASSURER QU'IL Y A ASSEZ DE CARBURANT",
-      "parent": "etat31",
+      "parent": "prob11",
       "next_ok": "verif108",
       "next_ko": "action143"
     },
@@ -2202,7 +2125,7 @@
       "type": "verif",
       "title": "VERIFIER QUE LE ROBINET A CARBURANT EST BIEN OUVERT",
       "parent": "verif107",
-      "next_ok": "action145",
+      "next_ok": "verif109",
       "next_ko": "action144"
     },
     {
@@ -2212,22 +2135,13 @@
       "parent": "verif108"
     },
     {
-      "id": "action145",
-      "type": "action",
-      "title": "D015",
-      "parent": "verif108",
-      "next": [
-        "verif109"
-      ],
-      "usedoc": true
-    },
-    {
       "id": "verif109",
       "type": "verif",
       "title": "VERIFIER L'ETAT DU FILTRE A CARBURANT",
       "parent": "verif108",
       "next_ok": "verif110",
-      "next_ko": "action146"
+      "next_ko": "action146",
+      "doc": "D015"
     },
     {
       "id": "action146",
@@ -2367,19 +2281,10 @@
       "parent": "cate3"
     },
     {
-      "id": "etat32",
-      "type": "etat",
-      "title": "LA MACHINE NE CHAUFFE PLUS (VOYANT VERT RESTE ETEINT)",
-      "parent": "prob12",
-      "next": [
-        "etat33"
-      ]
-    },
-    {
       "id": "etat33",
       "type": "etat",
       "title": "si LE PROGRAMMATEUR EST ETEINT, C'est un autre problème retourner à l'accueil",
-      "parent": "etat32",
+      "parent": "prob12",
       "next": [
         "etat34"
       ]
@@ -2478,7 +2383,7 @@
       "type": "verif",
       "title": "S'ASSURER QU'IL Y A ASSEZ DE CARBURANT",
       "parent": "verif118",
-      "next_ok": "action164",
+      "next_ok": "verif120",
       "next_ko": "action163"
     },
     {
@@ -2488,22 +2393,13 @@
       "parent": "verif119"
     },
     {
-      "id": "action164",
-      "type": "action",
-      "title": "D015",
-      "parent": "verif119",
-      "next": [
-        "verif120"
-      ],
-      "usedoc": true
-    },
-    {
       "id": "verif120",
       "type": "verif",
       "title": "VERIFIER L'ETAT DU FILTRE A CARBURANT",
       "parent": "verif119",
       "next_ok": "verif121",
-      "next_ko": "action165"
+      "next_ko": "action165",
+      "doc": "D015"
     },
     {
       "id": "action165",
@@ -2586,32 +2482,13 @@
       "parent": "cate3"
     },
     {
-      "id": "etat36",
-      "type": "etat",
-      "title": "VOYANT VERT S'ETEINT JUSQU'A UNE TEMPERATURE RELATIVEMENT BASSE",
-      "parent": "prob14",
-      "next": [
-        "etat37"
-      ]
-    },
-    {
       "id": "etat37",
       "type": "etat",
       "title": "Si vous avez un problème de pression, commencez par régler celui-ci, retourner à l'accueil",
-      "parent": "etat36",
-      "next": [
-        "action172"
-      ]
-    },
-    {
-      "id": "action172",
-      "type": "action",
-      "title": "D031",
-      "parent": "etat37",
+      "parent": "prob14",
       "next": [
         "verif124"
-      ],
-      "usedoc": true
+      ]
     },
     {
       "id": "verif124",
@@ -2619,7 +2496,8 @@
       "title": "FAIRE UN TEST EN SEPARANT MECANIQUEMENT LA SONDE MECANIQUE",
       "parent": "etat37",
       "next_ok": "action174",
-      "next_ko": "action173"
+      "next_ko": "action173",
+      "doc": "D031"
     },
     {
       "id": "action173",
@@ -2640,19 +2518,10 @@
       "parent": "cate3"
     },
     {
-      "id": "etat38",
-      "type": "etat",
-      "title": "LA MACHINE CHAUFFE TROP",
-      "parent": "prob15",
-      "next": [
-        "etat39"
-      ]
-    },
-    {
       "id": "etat39",
       "type": "etat",
       "title": "Si vous avez un problème de pression, commencez par régler celui-ci, retourner à l'accueil",
-      "parent": "etat38",
+      "parent": "prob15",
       "next": [
         "verif125"
       ]
@@ -2770,7 +2639,7 @@
       "title": "S'ASSURER QU'IL Y A ASSEZ DE CARBURANT",
       "parent": "etat42",
       "next_ok": "action182",
-      "next_ko": "action181"
+      "next_ko": "verif129"
     },
     {
       "id": "action181",
@@ -2779,22 +2648,13 @@
       "parent": "verif128"
     },
     {
-      "id": "action182",
-      "type": "action",
-      "title": "D015",
-      "parent": "verif128",
-      "next": [
-        "verif129"
-      ],
-      "usedoc": true
-    },
-    {
       "id": "verif129",
       "type": "verif",
       "title": "VERIFIER L'ETAT DU FILTRE A CARBURANT",
       "parent": "verif128",
       "next_ok": "verif130",
-      "next_ko": "action183"
+      "next_ko": "action183",
+      "doc": "D015"
     },
     {
       "id": "action183",
