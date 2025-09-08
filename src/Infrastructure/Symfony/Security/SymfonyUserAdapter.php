@@ -62,8 +62,11 @@ class SymfonyUserAdapter implements UserInterface, PasswordAuthenticatedUserInte
     {
         return $this->user->getSocity();
     }
-    
 
+    public function getIsActive(): bool
+    {
+        return $this->user->getIsActive();
+    }
     
     public function eraseCredentials(): void {}
 }

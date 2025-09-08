@@ -14,6 +14,7 @@ use Domain\User\UseCase\FindAllUserUseCaseInterface;
 use Domain\User\UseCase\FindUserByIdUseCaseInterface;
 use Domain\User\UseCase\SendCreatePasswordEmailUseCaseInterface;
 use Domain\User\UseCase\SearchUsersUseCaseInterface;
+use Domain\User\UseCase\ToggleUserStatusUseCaseInterface;
 use Infrastructure\Form\User\UserFormType;
 use Domain\ParcMachine\UseCase\FindAllMachinesByUserUseCaseInterface;
 use Domain\ParcMachine\UseCase\AddMachineToUserUseCaseInterface;
@@ -43,6 +44,7 @@ class UserController extends AbstractController
         private readonly RemoveMachineFromUserUseCaseInterface $removeMachineFromUserUseCase,
         private readonly GetAllMachinesUseCaseInterface $getAllMachinesUseCase,
         private readonly SearchUsersUseCaseInterface $searchUsersUseCase,
+        private readonly ToggleUserStatusUseCaseInterface $toggleUserStatusUseCase,
     ){}
 
     #[Route('/users', name: 'app_users')]
@@ -215,5 +217,19 @@ class UserController extends AbstractController
         }
 
         return $this->redirectToRoute('app_users_machines', ['user' => $user->id->getValue()]);
+    }
+
+    #[Route('/users/{userId}/toggle-status', name:'app_users_toggle_status', methods:['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function toggleStatus(string $userId): Response
+    {
+        try {
+            $this->toggleUserStatusUseCase->__invoke(new UserId($userId));
+            $this->addFlash('success', $this->translator->trans('users.messages.toggle_status_success'));
+        } catch (\Exception $e) {
+            $this->addFlash('error', $this->translator->trans('users.messages.toggle_status_error'));
+        }
+
+        return $this->redirectToRoute('app_users');
     }
 }

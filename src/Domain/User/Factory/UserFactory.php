@@ -21,6 +21,8 @@ class UserFactory
             $request->socity,
             null,
             new \DateTimeImmutable(),
+            null,
+            true // Par défaut, les nouveaux utilisateurs sont actifs
         );
     }
 

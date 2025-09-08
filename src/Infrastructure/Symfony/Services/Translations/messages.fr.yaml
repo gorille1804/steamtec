@@ -178,12 +178,19 @@ users:
         mail: "Email"
         society: "Société"
         phone: "Téléphone"
+        status: "Statut"
         action: "Actions"
         search:
             placeholder: "Rechercher dans tous les champs..."
             label: "Rechercher"
             clear: "Effacer la recherche"
             info: "résultat(s) trouvé(s) pour"
+        statusLbl:
+            active: "Actif"
+            inactive: "Inactif"
+        actionBtn:
+            activate: "Activer l'utilisateur"
+            deactivate: "Désactiver l'utilisateur"
   
     form:
         email:
@@ -298,9 +305,11 @@ users:
         send_mail_succes: "Un email de confirmation vous a été envoyé"
         update_password_succes: "Votre mot de passe a ete mis a jour"
         login_error: "Une erreur inattendue s'est produite. Veuillez réessayer"
-        auth_faillure: "L'email ou le mot de passe que vous avez saisi est incorrect"
+        auth_faillure: "L'email ou le mot de passe que vous avez saisi est incorrect ou que l'utilisateur est inactif"
         add_machine_success: "Machine ajoutée à l'utilisateur avec succès"
         add_machine_error: "Erreur lors de l'ajout de la machine à l'utilisateur"
+        toggle_status_success: "Statut de l'utilisateur modifié avec succès"
+        toggle_status_error: "Erreur lors de la modification du statut de l'utilisateur"
         remove_machine_success: "Machine retirée de l'utilisateur avec succès"
         remove_machine_error: "Erreur lors du retrait de la machine de l'utilisateur"
 

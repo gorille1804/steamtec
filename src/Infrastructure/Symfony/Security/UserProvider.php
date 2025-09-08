@@ -21,6 +21,11 @@ class UserProvider implements UserProviderInterface
             throw new UserNotFoundException('User not found.');
         }
 
+        // Vérifier si l'utilisateur est actif
+        if (!$user->getIsActive()) {
+            throw new UserNotFoundException('User account is disabled.');
+        }
+
         return new SymfonyUserAdapter($user);
     }
 

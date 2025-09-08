@@ -62,6 +62,7 @@
                                     <th>{{'users.index.mail'|trans}}</th>
                                     <th>{{'users.index.society'|trans}}</th>
                                     <th>{{'users.index.phone'|trans}}</th>
+                                    <th>{{'users.index.status'|trans}}</th>
                                     <th>{{'users.index.action'|trans}}</th>
                                 </tr>
                             </thead>
@@ -83,9 +84,16 @@
                                     <td>
                                       {{user.phone}}  
                                     </td>
+                                    <td>
+                                        {% if user.isActive %}
+                                            <span class="badge badge-success">{{'users.index.statusLbl.active'|trans}}</span>
+                                        {% else %}
+                                            <span class="badge badge-danger">{{'users.index.statusLbl.inactive'|trans}}</span>
+                                        {% endif %}
+                                    </td>
                                     
                                     <td class="py-1">
-                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                        <div class="" role="group" aria-label="Basic example">
                                             <a href="{{path('app_users_update', {'userId':user.id})}}" class="btn btn-warning btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Modifier">
                                                <i class="mdi mdi-pencil"></i>
                                             </a>
@@ -97,6 +105,17 @@
                                                 <i class="mdi mdi-email"></i>
                                                 </a>
                                             {% endif %}
+                                            <form method="POST" action="{{path('app_users_toggle_status', {'userId':user.id})}}" style="display: inline;">
+                                                <button type="submit" 
+                                                    class="btn {% if user.isActive %}btn-secondary{% else %}btn-success{% endif %} btn-sm" 
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top" 
+                                                    title="{% if user.isActive %}{{'users.index.actionBtn.deactivate'|trans}}{% else %}{{'users.index.actionBtn.activate'|trans}}{% endif %}"
+                                                    {% if app.user.id == user.id %}disabled{% endif %}
+                                                >
+                                                    <i class="mdi {% if user.isActive %}mdi-account-off{% else %}mdi-account-check{% endif %}"></i>
+                                                </button>
+                                            </form>
                                             <button type="button" 
                                                 class="btn btn-danger btn-sm delete-user-btn" 
                                                 data-bs-toggle="tooltip"

@@ -19,6 +19,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         public ?string $password,
         public \DateTimeInterface $createdAt,
         public ?\DateTimeInterface $updatedAt = null,
+        public bool $isActive = true,
     ) {}
 
     public function getPassword(): ?string
@@ -58,5 +59,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getSocity(): string
     {
         return $this->socity;
+    }
+
+    public function getIsActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): void
+    {
+        $this->isActive = $isActive;
     }
 }
