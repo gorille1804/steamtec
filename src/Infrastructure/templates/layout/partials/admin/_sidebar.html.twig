@@ -158,4 +158,18 @@
         </div>
     </li>
     {% endif %}
+
+    {# Affiche uniquement en mode responsive #}
+    <li class="nav-item d-lg-none">
+        <a class="nav-link" href="{{path('app_profile')}}">
+            <i class="menu-icon mdi mdi-account-outline"></i>
+            <span class="menu-title">{{'navbars.my_profil'|trans}}</span>
+        </a>
+    </li>
+    <li class="nav-item d-lg-none">
+        <a class="nav-link" href="{{path('app_logout')}}">
+            <i class="menu-icon mdi mdi-power"></i>
+            <span class="menu-title">{{'navbars.sign_out'|trans}}</span>
+        </a>
+    </li>
 </ul>
