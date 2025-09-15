@@ -19,7 +19,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         public ?string $password,
         public \DateTimeInterface $createdAt,
         public ?\DateTimeInterface $updatedAt = null,
-        public bool $isActive = true,
+        public bool $active = true,
     ) {}
 
     public function getPassword(): ?string
@@ -61,13 +61,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->socity;
     }
 
-    public function getIsActive(): bool
+    public function isActive(): bool
     {
-        return $this->isActive;
+        // évite l'exception si l'objet a été hydraté sans constructeur
+        return isset($this->active) ? $this->active : false;
+        // équivalent: return $this->active ?? false;  // fonctionne aussi
     }
 
-    public function setIsActive(bool $isActive): void
+    public function setActive(bool $active): void
     {
-        $this->isActive = $isActive;
+        $this->active = $active;
     }
 }

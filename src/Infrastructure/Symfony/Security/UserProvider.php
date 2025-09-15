@@ -22,7 +22,7 @@ class UserProvider implements UserProviderInterface
         }
 
         // Vérifier si l'utilisateur est actif
-        if (!$user->getIsActive()) {
+        if (!$user->isActive()) {
             throw new UserNotFoundException('User account is disabled.');
         }
 
