@@ -218,6 +218,10 @@ users:
                 admin: "Administrateur"
         active:
             label: "Utilisateur actif"
+        force_reset_password:
+            confirm: "Êtes-vous sûr de vouloir forcer la réinitialisation du mot de passe pour cet utilisateur ?"
+            tooltip: "Forcer la réinitialisation du mot de passe"
+            button: "Forcer la réinitialisation"
         submit:
             create: "Créer l'utilisateur"
             update: "Mettre à jour"
