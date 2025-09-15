@@ -642,6 +642,7 @@
       "title": "VERIFIER L'ETAT DU FILTRE BLANC ENTREE MACHINE",
       "parent": "etat10",
       "next_ko": "action40",
+      "next_ok": "verif33",
       "image": "/assets/images/arbres/filtreblanc.png"
     },
     {
@@ -656,6 +657,7 @@
       "title": "VERIFIER LE FILTRE ENTREE POMPE (COUVERCLE VERT)",
       "parent": "etat10",
       "next_ko": "action41",
+      "next_ok": "verif34",
       "image": "/assets/images/arbres/filtrecouverclepompe.png"
     },
     {
@@ -921,6 +923,7 @@
       "id": "verif50",
       "type": "verif",
       "title": "EN DIRECT SANS BAC ANTICALCAIRE ?",
+      "next_ok": "etat44",
       "parent": "etat15"
     },
     {
@@ -1711,7 +1714,7 @@
       "type": "verif",
       "title": "VERIFIER LES CLAPETS ET LES CHANGER SII BESOIN",
       "parent": "verif89",
-      "next_ok": "verif93",
+      "next_ok": "action113",
       "next_ko": "action115"
     },
     {
@@ -2729,6 +2732,188 @@
       "type": "action",
       "title": "Appeler le SAV 0681676430",
       "parent": "verif132"
+    },
+    {
+      "id": "etat44",
+      "type": "etat",
+      "title": "IMPOSSIBLE DE MONTER EN PRESSION SORTIE DE POMPE (AU MANO) et le moteur tourne et je \nsuis alimenté en direct sans bac anticalcaire",
+      "parent": "verif50",
+      "next": [
+        "verif133"
+      ]
+    },
+    {
+      "id": "etat45",
+      "type": "etat",
+      "title": "IMPOSSIBLE DE MONTER EN PRESSION SORTIE DE POMPE (AU MANO) et le moteur tourne et je suis alimenté en direct avec bac anticalcaire",
+      "parent": "verif50"
+    },
+    {
+      "id": "verif133",
+      "type": "verif",
+      "title": "VERIFIER L'OUVERTURE DU ROBINET D'ALIMENTATION",
+      "parent": "etat44",
+      "next_ok": "verif134",
+      "next_ko": "action190"
+    },
+    {
+      "id": "action190",
+      "type": "action",
+      "title": "OUVRIR LE ROBINET",
+      "parent": "verif133"
+    },
+    {
+      "id": "verif134",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE PLI DANS LE TUYAU D'ALIMENTATION ",
+      "parent": "verif133",
+      "next_ok": "verif135",
+      "next_ko": "action191"
+    },
+    {
+      "id": "action191",
+      "type": "action",
+      "title": "DEROULER LE TUYAU SANS PLIS",
+      "parent": "verif134"
+    },
+    {
+      "id": "verif135",
+      "type": "verif",
+      "title": "VERIFIER L'ETAT DU FILTRE BLANC ENTREE MACHINE",
+      "parent": "verif134",
+      "next_ok": "verif136",
+      "next_ko": "action192",
+      "image": "/assets/images/arbres/filtreblanc.png"
+    },
+    {
+      "id": "action192",
+      "type": "action",
+      "title": "NETTOYER OU CHANGER LE FILTRE",
+      "parent": "verif135"
+    },
+    {
+      "id": "verif136",
+      "type": "verif",
+      "title": "VERIFIER LE FILTRE ENTREE POMPE (COUVERCLE VERT) ",
+      "parent": "verif135",
+      "next_ok": "verif137",
+      "next_ko": "action193",
+      "image": "/assets/images/arbres/filtrecouverclepompe.png"
+    },
+    {
+      "id": "action193",
+      "type": "action",
+      "title": "NETTOYER LE FILTRE",
+      "parent": "verif136"
+    },
+    {
+      "id": "verif137",
+      "type": "verif",
+      "title": "VERIFIER L'OUVERTURE DU ROBINET VAPEUR",
+      "parent": "verif136",
+      "next_ok": "verif138",
+      "next_ko": "action194"
+    },
+    {
+      "id": "action194",
+      "type": "action",
+      "title": "OUVRIR LE ROBINET",
+      "parent": "verif137"
+    },
+    {
+      "id": "verif138",
+      "type": "verif",
+      "title": "VERIFIER LA SORTIE D'EAU (MÊME FAIBLE) EN SORTIE D'ACCESSOIRE ",
+      "parent": "verif137",
+      "next_ok": "etat46",
+      "next_ko": "action195"
+    },
+    {
+      "id": "action195",
+      "type": "action",
+      "title": "NETTOYER LA BUSE DE L'ACCESSOIRE OU CHANGER D'ACCESSOIRE",
+      "parent": "verif138"
+    },
+    {
+      "id": "etat46",
+      "type": "etat",
+      "title": "PROBLEME DE PRESSION",
+      "parent": "verif138",
+      "next": [
+        "verif139"
+      ]
+    },
+    {
+      "id": "verif139",
+      "type": "verif",
+      "title": "VERIFIER L'ABSENCE DE FUITE (Flexible de pression, mano, pressostat, pompe et chaudière) ",
+      "parent": "etat46",
+      "next_ok": "verif140",
+      "next_ko": "action196"
+    },
+    {
+      "id": "action196",
+      "type": "action",
+      "title": "REPARER LES FUITES",
+      "parent": "verif139"
+    },
+    {
+      "id": "verif140",
+      "type": "verif",
+      "title": "VERIFIER SI LA PRESSSION SORTIE D'ACCESSOIRE CHANGE (RESSENTI) AU REGLAGE DE LA VANNE",
+      "parent": "verif139",
+      "next_ok": "verif142",
+      "next_ko": "verif141"
+    },
+    {
+      "id": "verif141",
+      "type": "verif",
+      "title": "CLAPETS COLLES OU BLOQUES PAR UNE IMPURETE ",
+      "parent": "verif140",
+      "next_ok": "action199",
+      "next_ko": "action197"
+    },
+    {
+      "id": "action197",
+      "type": "action",
+      "title": "DEMONTER LES CLAPETS POUR VERIFIER et les manœuvrer délicatement",
+      "parent": "verif141",
+      "next": [
+        "action198"
+      ]
+    },
+    {
+      "id": "action198",
+      "type": "action",
+      "title": "D008",
+      "parent": "verif141",
+      "usedoc": true
+    },
+    {
+      "id": "action199",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "verif141"
+    },
+    {
+      "id": "verif142",
+      "type": "verif",
+      "title": "MANO HS",
+      "parent": "verif140",
+      "next_ok": "action200",
+      "next_ko": "action201"
+    },
+    {
+      "id": "action200",
+      "type": "action",
+      "title": "Appeler le SAV 0681676430",
+      "parent": "verif142"
+    },
+    {
+      "id": "action201",
+      "type": "action",
+      "title": "CHANGER LE MANO",
+      "parent": "verif142"
     }
   ]
 }
