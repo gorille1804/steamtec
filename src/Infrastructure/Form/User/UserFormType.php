@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -109,13 +110,28 @@ class UserFormType extends AbstractType
                 'constraints' => [
                     new Assert\NotBlank(['message' => 'users.form.role.empty']),
                 ]
-            ])
-            ->add('save', SubmitType::class, [
-                'label' => $isEdit ? 'users.form.submit.update' : 'users.form.submit.create',
+            ]);
+
+        // Only add active field for editing
+        if ($isEdit) {
+            $builder->add('active', CheckboxType::class, [
+                'label' => 'users.form.active.label',
+                'required' => false,
                 'attr' => [
-                    'class' => 'btn btn-primary w-100 mb-3',
+                    'class' => 'form-check-input',
+                ],
+                'label_attr' => [
+                    'class' => 'form-check-label',
                 ],
             ]);
+        }
+
+        $builder->add('save', SubmitType::class, [
+            'label' => $isEdit ? 'users.form.submit.update' : 'users.form.submit.create',
+            'attr' => [
+                'class' => 'btn btn-primary w-100 mb-3',
+            ],
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

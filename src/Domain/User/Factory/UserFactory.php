@@ -33,6 +33,7 @@ class UserFactory
         $user->phone = $request->phone;
         $user->socity = $request->socity;
         $user->roles = $request->roles;
+        $user->active = $request->active;
         $user->updatedAt = new \DateTimeImmutable();
         return $user;
     }
@@ -46,6 +47,7 @@ class UserFactory
         $formRequest->phone = $user->phone;
         $formRequest->socity = $user->socity;
         $formRequest->roles = $user->roles;
+        $formRequest->active = $user->isActive();
         return $formRequest;	
 
     }	

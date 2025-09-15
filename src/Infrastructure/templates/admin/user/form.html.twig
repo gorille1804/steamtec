@@ -64,6 +64,19 @@
                 </div>
             {% endif %}
         </div>
+        {% if is_edit and form.active is defined %}
+        <div class="col-md-12 mb-3">
+            <div class="form-check">
+                {{ form_widget(form.active, {'attr': {'class': 'form-check-input ms-0'}}) }}
+                {{ form_label(form.active) }}
+            </div>
+            {% if form_errors(form.active) %}
+                <div class="invalid-feedback d-block">
+                    {{ form_errors(form.active) }}
+                </div>
+            {% endif %}
+        </div>
+        {% endif %}
         <div class="col-12">
             <div class="d-flex justify-content-end gap-2">
                 {{ form_widget(form.save) }}

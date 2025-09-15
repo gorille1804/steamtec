@@ -216,6 +216,8 @@ users:
             choice:
                 user: "Utilisateur"
                 admin: "Administrateur"
+        active:
+            label: "Utilisateur actif"
         submit:
             create: "Créer l'utilisateur"
             update: "Mettre à jour"

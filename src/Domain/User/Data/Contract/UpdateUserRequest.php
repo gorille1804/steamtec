@@ -9,4 +9,5 @@ class UpdateUserRequest
     public string $phone;
     public string $socity;
     public array $roles;
+    public bool $active;
 }
