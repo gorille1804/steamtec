@@ -20,7 +20,7 @@ class ToggleUserStatusUseCase implements ToggleUserStatusUseCaseInterface
         }
 
         // Toggle le statut actif
-        $user->setIsActive(!$user->getIsActive());
+        $user->setActive(!$user->isActive());
         
         $this->repository->update($user);
     }
