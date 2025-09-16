@@ -411,7 +411,7 @@
     {
       "id": "verif18",
       "type": "verif",
-      "title": "EN DIRECT : AVEC BAC ANTICALCAIRE ?",
+      "title": "EN DIRECT : AVEC OU SANS BAC ANTICALCAIRE ?",
       "parent": "etat8",
       "next_ok": "etat10",
       "next_ko": "etat11"
@@ -593,7 +593,7 @@
     {
       "id": "etat10",
       "type": "etat",
-      "title": "PAS DE PRESSION AU MANO (LA POMPE NE TOURNE PAS) ALORS QU'ON APPUIE SUR LA GACHETTE et je suis alimenté en direct sans bac anticalcaire",
+      "title": "En direct sans bac anticalcaire",
       "parent": "prob6",
       "next": [
         "verif30"
@@ -602,7 +602,7 @@
     {
       "id": "etat11",
       "type": "etat",
-      "title": "PAS DE PRESSION AU MANO (LA POMPE NE TOURNE PAS) ALORS QU'ON APPUIE SUR LA GACHETTE et je suis alimenté en direct avec bac anticalcaire",
+      "title": "En direct avec bac anticalcaire",
       "parent": "prob6",
       "next": [
         "verif37"
@@ -922,7 +922,7 @@
     {
       "id": "verif50",
       "type": "verif",
-      "title": "EN DIRECT SANS BAC ANTICALCAIRE ?",
+      "title": "EN DIRECT AVEC OU SANS BAC ANTICALCAIRE ?",
       "next_ok": "etat44",
       "next_ko": "etat45",
       "parent": "etat15"
@@ -1561,7 +1561,7 @@
     {
       "id": "etat22",
       "type": "etat",
-      "title": "PRESSION SACCADEE OU PULSATOIRE et je suis alimenté en direct sans bac anticalcaire",
+      "title": "En direct sans bac anticalcaire",
       "parent": "verif71",
       "next": [
         "verif85"
@@ -1745,7 +1745,7 @@
     {
       "id": "etat23",
       "type": "etat",
-      "title": "PRESSION SACCADEE OU PULSATOIRE et je suis alimenté en direct avec bac anticalcaire",
+      "title": "En direct avec bac anticalcaire",
       "parent": "verif71",
       "next": [
         "verif94"
@@ -2740,7 +2740,7 @@
     {
       "id": "etat44",
       "type": "etat",
-      "title": "IMPOSSIBLE DE MONTER EN PRESSION SORTIE DE POMPE (AU MANO) et le moteur tourne et je \nsuis alimenté en direct sans bac anticalcaire",
+      "title": "En direct sans bac anticalcaire",
       "parent": "verif50",
       "next": [
         "verif133"
@@ -2749,7 +2749,7 @@
     {
       "id": "etat45",
       "type": "etat",
-      "title": "IMPOSSIBLE DE MONTER EN PRESSION SORTIE DE POMPE (AU MANO) et le moteur tourne et je suis alimenté en direct avec bac anticalcaire",
+      "title": "En direct avec bac anticalcaire",
       "parent": "verif50",
       "next": [
         "verif143"

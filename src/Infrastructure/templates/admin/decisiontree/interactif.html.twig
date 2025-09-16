@@ -61,9 +61,9 @@
         <div class="tab-content" id="decisionTreeTabContent">
             <!-- Onglet interactif -->
             <div class="tab-pane fade show active" id="interactive" role="tabpanel" aria-labelledby="interactive-tab">
-                <div class="mt-3">
-                    <div id="decision-tree-breadcrumb" class="mb-3"></div>
-                    <div id="app" data-json-url="{{ asset('assets/data/decision-tree.json') }}"></div>
+                <div class="">
+                    <div id="decision-tree-breadcrumb" class=""></div>
+                    <div id="app" data-json-url="{{ asset('assets/data/decision-tree.json') }}?t={{ 'now'|date('U') }}"></div>
                 </div>
             </div>
 
@@ -78,7 +78,7 @@
 <script src="{{ asset('assets/js/lucide.js?t=202507022') }}"></script>
 <script>
     // Définir l'URL du JSON avant le chargement du script principal
-    window.jsonUrl = "{{ asset('assets/data/decision-tree.json') }}";
+    window.jsonUrl = "{{ asset('assets/data/decision-tree.json') }}?t={{ 'now'|date('U') }}";
     console.log('JSON URL définie:', window.jsonUrl);
     
     // Fonction pour envoyer la hauteur à la page parent
@@ -106,7 +106,7 @@
         
         // Charger le script principal de manière asynchrone
         const script = document.createElement('script');
-        script.src = "{{ asset('assets/js/decision-tree-interactive.js?t=202507022') }}";
+        script.src = "{{ asset('assets/js/decision-tree-interactive.js?t=') }}{{ 'now'|date('U') }}";
         script.onload = function() {
             console.log('Script principal chargé');
             // Envoyer la hauteur après le chargement du script

@@ -19,7 +19,7 @@
         /* S'assurer que l'iframe peut scroller même sans scrollbar visible */
         #decision-tree-iframe {
             overflow: auto;
-            height: 300vh;
+            height: 100vh;
         }
     </style>
 {% endblock %}
@@ -28,7 +28,7 @@
 <div class="row flex-grow">
     <div class="col-md-12">
         <!-- Onglet Mermaid -->
-        <iframe id="decision-tree-iframe" src="{{ path('decisiontree_interactif') }}" width="100%" style="border: none; min-height: 400px; overflow: auto;"></iframe>
+        <iframe id="decision-tree-iframe" src="{{ path('decisiontree_interactif') }}?t={{ 'now'|date('U') }}" width="100%" style="border: none; min-height: 400px; overflow: auto;"></iframe>
     </div>
 </div>
 <script>
