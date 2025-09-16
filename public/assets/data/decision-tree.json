@@ -1452,10 +1452,11 @@
     {
       "id": "verif81",
       "type": "verif",
-      "title": "VERIFIER LES CLAPETS ET LES CHANGER SII BESOIN",
+      "title": "VERIFIER LES CLAPETS ET LES CHANGER SI BESOIN",
       "parent": "verif80",
       "next_ok": "action94",
-      "next_ko": "action92"
+      "next_ko": "action92",
+      "doc": "D008"
     },
     {
       "id": "action92",
@@ -1713,10 +1714,11 @@
     {
       "id": "verif93",
       "type": "verif",
-      "title": "VERIFIER LES CLAPETS ET LES CHANGER SII BESOIN",
+      "title": "VERIFIER LES CLAPETS ET LES CHANGER SI BESOIN",
       "parent": "verif89",
       "next_ok": "action113",
-      "next_ko": "action115"
+      "next_ko": "action115",
+      "doc": "D008"
     },
     {
       "id": "action113",
@@ -1939,10 +1941,11 @@
     {
       "id": "verif105",
       "type": "verif",
-      "title": "VERIFIER LES CLAPETS ET LES CHANGER SII BESOIN",
+      "title": "VERIFIER LES CLAPETS ET LES CHANGER SI BESOIN",
       "parent": "verif101",
       "next_ok": "action130",
-      "next_ko": "action132"
+      "next_ko": "action132",
+      "doc": "D008"
     },
     {
       "id": "action130",
