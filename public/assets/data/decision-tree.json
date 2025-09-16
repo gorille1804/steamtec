@@ -2585,13 +2585,11 @@
     },
     {
       "id": "etat40",
-      "type": "etat",
-      "title": "IL Y A EU UN MELANGE DE CARBURANT",
+      "type": "verif",
+      "title": "Y A-T-IL EU UN MELANGE DE CARBURANT ?",
       "parent": "prob16",
-      "next": [
-        "etat41",
-        "action179"
-      ]
+      "next_ko": "etat41",
+      "next_ok": "action179"
     },
     {
       "id": "action179",
