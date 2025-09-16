@@ -244,7 +244,7 @@ users:
         duration: "Ce lien expirera dans 24 heures."
         info: "Si vous n'avez pas demandé cette réinitialisation, ignorez cet e-mail."
         thanks: "Merci,"
-        reaction: "L'équipe LOL"
+        reaction: "L'équipe ENTECH"
         instruction: "Veuillez saisir votre adresse e-mail pour réinitialiser votre mot de passe."
         form:
             instruction: "Veuillez entrer votre nouveau mot de passe."
