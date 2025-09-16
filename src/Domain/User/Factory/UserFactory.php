@@ -28,6 +28,7 @@ class UserFactory
 
     public static function update(User $user, UpdateUserRequest $request): User
     {
+        $user->email = $request->email;
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
         $user->phone = $request->phone;
@@ -42,6 +43,7 @@ class UserFactory
     {
       
         $formRequest = new UpdateUserRequest();
+        $formRequest->email = $user->email;
         $formRequest->firstname = $user->firstname;
         $formRequest->lastname = $user->lastname;
         $formRequest->phone = $user->phone;

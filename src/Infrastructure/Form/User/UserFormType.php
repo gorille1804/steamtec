@@ -20,22 +20,20 @@ class UserFormType extends AbstractType
     {
         $isEdit = $options['is_edit'] ?? false;
 
-        // Only add email field for creation
-        if (!$isEdit) {
-            $builder->add('email', EmailType::class, [
-                'label' => 'users.form.email.label',
-                'attr' => [
-                    'class' => 'form-control',
-                ],
-                'label_attr' => [
-                    'class' => 'form-label',
-                ],
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'users.form.email.empty']),
-                    new Assert\Email(['message' => 'users.form.email.validation']),
-                ]
-            ]);
-        }
+        // Add email field for both creation and editing
+        $builder->add('email', EmailType::class, [
+            'label' => 'users.form.email.label',
+            'attr' => [
+                'class' => 'form-control',
+            ],
+            'label_attr' => [
+                'class' => 'form-label',
+            ],
+            'constraints' => [
+                new Assert\NotBlank(['message' => 'users.form.email.empty']),
+                new Assert\Email(['message' => 'users.form.email.validation']),
+            ]
+        ]);
 
         $builder
             ->add('firstname', TextType::class, [

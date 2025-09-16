@@ -6,17 +6,6 @@
 
 {{ form_start(form) }}
     <div class="row">
-       {% if not is_edit %}
-        <div class="col-md-6 mb-3">
-            {{ form_label(form.email) }}
-            {{ form_widget(form.email) }}
-            {% if form_errors(form.email) %}
-                <div class="invalid-feedback d-block">
-                    {{ form_errors(form.email) }}
-                </div>
-            {% endif %}
-        </div>
-        {% endif %}
         <div class="col-md-6 mb-3">
             {{ form_label(form.firstname) }}
             {{ form_widget(form.firstname) }}
@@ -35,7 +24,16 @@
                 </div>
             {% endif %}
         </div>
-        <div class="col-md-{{is_edit ? '12':'6' }} mb-3">
+        <div class="col-md-6 mb-3">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email) }}
+            {% if form_errors(form.email) %}
+                <div class="invalid-feedback d-block">
+                    {{ form_errors(form.email) }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-md-6 mb-3">
             {{ form_label(form.phone) }}
             {{ form_widget(form.phone) }}
             {% if form_errors(form.phone) %}
