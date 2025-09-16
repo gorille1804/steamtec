@@ -1,63 +1,62 @@
-{% extends "layout/dashboard.layout.html.twig" %}
-{% block title %} Arbre de Dépannage interactif {% endblock %}
+<link rel="stylesheet" href="{{ asset('assets/css/admin/decisiontree/decision-tree.css') }}">
+<style>
+    /* Styles personnalisés */
+    .progress-bar {
+        transition: width 0.3s ease;
+    }
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('assets/css/admin/decisiontree/decision-tree.css') }}">
-    <style>
-        /* Styles personnalisés */
-        .progress-bar {
-            transition: width 0.3s ease;
+    .fade-in {
+        animation: fadeIn 0.3s ease-in;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
         }
 
-        .fade-in {
-            animation: fadeIn 0.3s ease-in;
+        to {
+            opacity: 1;
+            transform: translateY(0);
         }
+    }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
+    .card-hover {
+        transition: all 0.3s ease;
+    }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .card-hover:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
 
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-
-        .card-hover:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .space-y-6 > :not([hidden]) ~ :not([hidden]) {
-            margin-top: 0 !important;
-        }
-    </style>
-{% endblock %}
-
-{% block content %}
+    .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+        margin-top: 0 !important;
+    }
+    
+    /* Masquer la scrollbar du contenu de l'iframe */
+    body::-webkit-scrollbar {
+        display: none; /* masque la scrollbar sur WebKit */
+    }
+    
+    body {
+        scrollbar-width: none; /* masque la scrollbar sur Firefox */
+        -ms-overflow-style: none; /* masque la scrollbar sur IE/Edge */
+        overflow-x: hidden; /* empêche le scroll horizontal */
+        overflow-y: auto; /* permet le scroll vertical */
+    }
+    
+    html {
+        scrollbar-width: none; /* masque la scrollbar sur Firefox */
+        -ms-overflow-style: none; /* masque la scrollbar sur IE/Edge */
+    }
+    
+    html::-webkit-scrollbar {
+        display: none; /* masque la scrollbar sur WebKit */
+    }
+</style>
 <div class="row flex-grow">
     <div class="col-md-12">
-        <!-- Onglets -->
-        <ul class="nav nav-tabs" id="decisionTreeTabs" role="tablist">
-            <li class="nav-item" role="presentation">
-                <a href="{{ path('app_arbre_de_depannage') }}" class="nav-link" id="interactive-tab" type="button">
-                    <i class="mdi mdi-format-list-bulleted me-2"></i>Diagramme de flux
-                </a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a href="{{ path('decisiontree_interactif') }}" class="nav-link active" id="mermaid-tab" type="button">
-                    <i class="mdi mdi-chart-sankey me-2"></i>Arbre de décision interactif
-                </a>
-            </li>
-        </ul>
-
         <!-- Contenu des onglets -->
         <div class="tab-content" id="decisionTreeTabContent">
             <!-- Onglet interactif -->
@@ -82,6 +81,25 @@
     window.jsonUrl = "{{ asset('assets/data/decision-tree.json') }}";
     console.log('JSON URL définie:', window.jsonUrl);
     
+    // Fonction pour envoyer la hauteur à la page parent
+    function sendHeightToParent() {
+        const height = Math.max(
+            document.body.scrollHeight,
+            document.body.offsetHeight,
+            document.documentElement.clientHeight,
+            document.documentElement.scrollHeight,
+            document.documentElement.offsetHeight
+        );
+        
+        // Envoyer la hauteur à la page parent
+        if (window.parent && window.parent !== window) {
+            window.parent.postMessage({
+                type: 'iframe-height',
+                height: height
+            }, '*');
+        }
+    }
+    
     // Attendre que le DOM soit chargé avant d'initialiser l'application
     document.addEventListener('DOMContentLoaded', function() {
         console.log('DOM chargé, chargement du script principal...');
@@ -91,11 +109,31 @@
         script.src = "{{ asset('assets/js/decision-tree-interactive.js?t=202507022') }}";
         script.onload = function() {
             console.log('Script principal chargé');
+            // Envoyer la hauteur après le chargement du script
+            setTimeout(sendHeightToParent, 200);
         };
         script.onerror = function() {
             console.error('Erreur lors du chargement du script principal');
         };
         document.head.appendChild(script);
+        
+        // Envoyer la hauteur initiale
+        setTimeout(sendHeightToParent, 100);
+    });
+    
+    // Observer les changements de taille du contenu
+    if (window.ResizeObserver) {
+        const resizeObserver = new ResizeObserver(function() {
+            sendHeightToParent();
+        });
+        
+        // Observer le body et le document
+        resizeObserver.observe(document.body);
+        resizeObserver.observe(document.documentElement);
+    }
+    
+    // Envoyer la hauteur lors des changements de contenu
+    window.addEventListener('resize', function() {
+        setTimeout(sendHeightToParent, 100);
     });
 </script>
-{% endblock %}
