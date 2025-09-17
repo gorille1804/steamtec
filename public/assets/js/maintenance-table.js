@@ -22,6 +22,8 @@
     let existingMaintenanceLogs = []; // Nouvelle variable pour stocker les logs existants
     // Compteur global pour les requêtes AJAX
     let activeAjaxRequests = 0;
+    // Instance du modal pour une gestion cohérente
+    let maintenanceModalInstance = null;
 
     // Fonctions pour le backdrop de chargement
     function showLoadingBackdrop() {
@@ -54,6 +56,30 @@
                 backdrop.style.display = 'none';
             }
         }
+    }
+
+    // Fonction utilitaire pour nettoyer le backdrop du modal
+    function cleanupModalBackdrop() {
+        // Marquer les backdrops pour suppression forcée
+        const backdrops = document.querySelectorAll('.modal-backdrop');
+        backdrops.forEach(backdrop => {
+            backdrop.classList.add('force-remove');
+            // Supprimer après un court délai pour permettre la transition
+            setTimeout(() => {
+                if (backdrop.parentNode) {
+                    backdrop.remove();
+                }
+            }, 100);
+        });
+
+        // Nettoyer les classes et styles du body
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+
+        // Forcer le nettoyage du style du body
+        document.body.style.removeProperty('overflow');
+        document.body.style.removeProperty('padding-right');
     }
 
     // Fonction pour récupérer les logs d'entretien existants
@@ -258,6 +284,32 @@
         // Ajouter le modal au body si il n'existe pas déjà
         if (!document.getElementById('maintenanceModal')) {
             document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+
+        // Initialiser l'instance du modal si elle n'existe pas
+        if (!maintenanceModalInstance) {
+            const modalElement = document.getElementById('maintenanceModal');
+            if (modalElement) {
+                maintenanceModalInstance = new bootstrap.Modal(modalElement, {
+                    backdrop: true,
+                    keyboard: true,
+                    focus: true
+                });
+
+                // Ajouter des écouteurs d'événements pour nettoyer le backdrop
+                modalElement.addEventListener('hidden.bs.modal', function () {
+                    cleanupModalBackdrop();
+                });
+
+                // Ajouter un écouteur pour le bouton de fermeture
+                modalElement.addEventListener('click', function (e) {
+                    if (e.target.classList.contains('btn-close') ||
+                        e.target.getAttribute('data-bs-dismiss') === 'modal' ||
+                        e.target.classList.contains('btn-secondary')) {
+                        cleanupModalBackdrop();
+                    }
+                });
+            }
         }
     }
 
@@ -502,9 +554,10 @@
             logId: maintenanceLogId || null
         };
 
-        // Afficher le modal
-        const modal = new bootstrap.Modal(document.getElementById('maintenanceModal'));
-        modal.show();
+        // Afficher le modal en utilisant l'instance existante
+        if (maintenanceModalInstance) {
+            maintenanceModalInstance.show();
+        }
     }
 
     function generateTaskCheckboxes(selectedTaskKeys, forceSingleTask) {
@@ -687,8 +740,10 @@
                 if (response.ok) {
                     const data = await response.json();
                     if (data.success) {
-                        const modal = bootstrap.Modal.getInstance(document.getElementById('maintenanceModal'));
-                        modal.hide();
+                        // Fermer le modal en utilisant l'instance existante
+                        if (maintenanceModalInstance) {
+                            maintenanceModalInstance.hide();
+                        }
                         clearValidationErrors();
                         currentModalData = null;
                         showSuccessMessage(data.message);
@@ -709,6 +764,10 @@
             })
             .finally(() => {
                 hideLoadingBackdrop();
+                // Nettoyer le backdrop en cas de problème
+                setTimeout(() => {
+                    cleanupModalBackdrop();
+                }, 100);
             });
     }
 

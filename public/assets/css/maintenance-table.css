@@ -635,12 +635,28 @@
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
     transition: opacity 0.3s ease-in-out;
+    z-index: 1050;
 }
 
 .modal-backdrop.show {
     opacity: 0.6 !important;
 }
 
+.modal-backdrop.fade {
+    opacity: 0;
+}
+
+/* S'assurer que le body est correctement géré */
+body.modal-open {
+    overflow: hidden;
+}
+
+/* Nettoyage forcé du backdrop */
+.modal-backdrop.force-remove {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
 /* Styles pour les boutons désactivés pendant le chargement */
 .btn:disabled,
 .btn.loading {
