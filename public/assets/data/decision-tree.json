@@ -930,7 +930,7 @@
     {
       "id": "etat16",
       "type": "etat",
-      "title": "IMPOSSIBLE DE MONTER EN PRESSION SORTIE DE POMPE (AU MANO) et le moteur tourne et je suis alimenté par citerne",
+      "title": "OUI, JE SUIS ALIMENTE PAR CITERNE",
       "parent": "verif49",
       "next": [
         "verif51"
@@ -3062,8 +3062,8 @@
       "type": "verif",
       "title": "VERIFIER L'ABSENCE DE FUITE (Flexible de pression, mano, pressostat, pompe et chaudière) ",
       "parent": "etat47",
-      "next_ok": "verif154",
-      "next_ko": "verif153"
+      "next_ok": "verif140",
+      "next_ko": "action196"
     },
     {
       "id": "verif153",
