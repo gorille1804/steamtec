@@ -180,6 +180,7 @@
                 var searchInput = $('input[name="search"]');
                 var searchForm = searchInput.closest('form');
                 var searchTimeout;
+                var input = searchInput.get(0); // récupérer l'élément DOM natif
 
                 // Recherche automatique après 500ms d'inactivité
                 searchInput.on('input', function() {
@@ -198,7 +199,9 @@
                 });
 
                 // Focus automatique sur le champ de recherche
-                searchInput.focus().select();
+                searchInput.focus();
+                var length = input.value.length;
+                input.setSelectionRange(length, length);
             } else {
                 console.error('jQuery is not loaded!');
             }
