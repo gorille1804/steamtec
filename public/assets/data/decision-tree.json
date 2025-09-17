@@ -395,7 +395,7 @@
       "id": "etat8",
       "type": "etat",
       "title": "AUCUN DEBIT DETECTE",
-      "parent": "prob6",
+      "parent": "verif16",
       "next": [
         "verif17"
       ]
@@ -594,7 +594,7 @@
       "id": "etat10",
       "type": "etat",
       "title": "En direct sans bac anticalcaire",
-      "parent": "prob6",
+      "parent": "verif18",
       "next": [
         "verif30"
       ]
@@ -603,7 +603,7 @@
       "id": "etat11",
       "type": "etat",
       "title": "En direct avec bac anticalcaire",
-      "parent": "prob6",
+      "parent": "verif18",
       "next": [
         "verif37"
       ]
