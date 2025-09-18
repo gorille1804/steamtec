@@ -56,21 +56,24 @@
                 backdrop.style.display = 'none';
             }
         }
+        cleanupModalBackdrop();
     }
 
     // Fonction utilitaire pour nettoyer le backdrop du modal
     function cleanupModalBackdrop() {
-        // Marquer les backdrops pour suppression forcée
+        // Supprimer tous les backdrops existants
         const backdrops = document.querySelectorAll('.modal-backdrop');
         backdrops.forEach(backdrop => {
-            backdrop.classList.add('force-remove');
-            // Supprimer après un court délai pour permettre la transition
-            setTimeout(() => {
-                if (backdrop.parentNode) {
-                    backdrop.remove();
-                }
-            }, 100);
+            if (backdrop.parentNode) {
+                backdrop.remove();
+            }
         });
+
+        // Supprimer également le backdrop de chargement s'il existe
+        const loadingBackdrop = document.getElementById('loadingBackdrop');
+        if (loadingBackdrop) {
+            loadingBackdrop.remove();
+        }
 
         // Nettoyer les classes et styles du body
         document.body.classList.remove('modal-open');
@@ -80,6 +83,18 @@
         // Forcer le nettoyage du style du body
         document.body.style.removeProperty('overflow');
         document.body.style.removeProperty('padding-right');
+
+        // Forcer le nettoyage des classes CSS
+        document.body.classList.remove('modal-open');
+
+        // Nettoyer également les modals qui pourraient être cachés
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            modal.classList.remove('show');
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
+            modal.removeAttribute('aria-modal');
+        });
     }
 
     // Fonction pour récupérer les logs d'entretien existants
@@ -131,10 +146,24 @@
         machineLogs.forEach(log => {
             console.log('Traitement du log:', log);
 
-            // Essayer de trouver la cellule avec le nom de la tâche
+            // Essayer de trouver la cellule avec le nom de la tâche et les heures exactes
             let cell = document.querySelector(
                 `td[data-hours="${log.hours}"][data-task-name="${log.activity}"]`
             );
+
+            // Si pas trouvé, cherche la cellule avec l'heure la plus proche. Exemple si le log est 350, l'heure la plus proche est 300
+            if (!cell) {
+                cello = findClosestRow(log.hours);
+                console.log('cello >>>>>>> :', cello);
+                console.log(`td[data-hours="${cello.hours}"][data-task-key="${log.activity}"]`);
+                if (cello) {
+                    cell = document.querySelector(
+                        `td[data-hours="${cello.hours}"][data-task-key="${log.activity}"]`
+                    );
+                }
+            }
+
+            console.log('cell >>>>>>> :', cell);
 
             // Si pas trouvé, essayer avec la clé de la tâche
             if (!cell) {
@@ -157,6 +186,48 @@
                 );
             }
 
+            // Si toujours pas trouvé, chercher dans toutes les cellules avec le nom de la tâche
+            if (!cell) {
+                const taskKey = Object.keys(maintenanceData.task_mapping).find(key =>
+                    maintenanceData.task_mapping[key].name === log.activity
+                );
+
+                if (taskKey) {
+                    // Chercher toutes les cellules avec cette tâche et vérifier si les heures correspondent
+                    const allCells = document.querySelectorAll(`td[data-task-key="${taskKey}"]`);
+                    let closestCell = null;
+                    let closestHours = -1;
+                    const logHours = parseInt(log.hours);
+
+                    for (let potentialCell of allCells) {
+                        const cellHours = parseInt(potentialCell.dataset.hours);
+
+                        // Si les heures correspondent exactement
+                        if (cellHours === logHours) {
+                            cell = potentialCell;
+                            break;
+                        }
+
+                        console.log('cellHours:', cellHours);
+                        console.log('logHours:', logHours);
+                        console.log('closestHours:', closestHours);
+                        console.log('cellHours <= logHours:', cellHours <= logHours);
+                        console.log('cellHours > closestHours:', cellHours > closestHours);
+
+                        // Sinon, trouver la ligne la plus proche (la plus élevée qui est inférieure ou égale)
+                        if (cellHours <= logHours && cellHours > closestHours) {
+                            closestCell = potentialCell;
+                            closestHours = cellHours;
+                        }
+                    }
+
+                    // Si aucune correspondance exacte, utiliser la plus proche
+                    if (!cell && closestCell) {
+                        cell = closestCell;
+                    }
+                }
+            }
+
             console.log('Cellule trouvée:', cell);
             console.log('Sélecteur utilisé:', `td[data-hours="${log.hours}"][data-task-name="${log.activity}"]`);
 
@@ -172,14 +243,17 @@
                 });
 
                 cell.innerHTML = `<span class="maintenance-date">${formattedDate}</span>`;
-                cell.title = `Entretien effectué le ${formattedDate}`;
+                cell.title = `Entretien effectué le ${formattedDate} (${log.hours}h)`;
 
                 // Ajouter les informations du log
                 cell.dataset.maintenanceDate = log.date;
                 cell.dataset.maintenanceLogId = log.id;
+                cell.dataset.maintenanceLogHours = log.hours;
 
                 // Toujours permettre le clic pour ouvrir la popup d'édition (après innerHTML)
                 cell.onclick = function () { showMaintenanceModal(cell); };
+            } else {
+                console.warn('Aucune cellule trouvée pour le log:', log);
             }
         });
 
@@ -331,6 +405,7 @@
         console.log('Schedule:', schedule);
         console.log('TaskKeys:', taskKeys);
 
+        // Vider complètement le tableau
         tableBody.innerHTML = '';
 
         schedule.forEach((row, index) => {
@@ -426,6 +501,7 @@
 
         return {
             row: closestRow,
+            hours: closestHours,
             difference: difference
         };
     }
@@ -744,11 +820,20 @@
                         if (maintenanceModalInstance) {
                             maintenanceModalInstance.hide();
                         }
+
+                        // Nettoyer immédiatement le backdrop
+                        cleanupModalBackdrop();
+
                         clearValidationErrors();
                         currentModalData = null;
                         showSuccessMessage(data.message);
                         await fetchExistingMaintenanceLogs(selectedMachineId);
-                        markCompletedMaintenanceCells();
+
+                        // Attendre un court délai puis régénérer le tableau
+                        setTimeout(() => {
+                            generateMaintenanceTable();
+                        }, 100);
+
                         saveToLocalStorage(formData, data.logIds);
                     } else {
                         showErrorMessage(data.message || 'Erreur lors de la sauvegarde');
@@ -764,10 +849,6 @@
             })
             .finally(() => {
                 hideLoadingBackdrop();
-                // Nettoyer le backdrop en cas de problème
-                setTimeout(() => {
-                    cleanupModalBackdrop();
-                }, 100);
             });
     }
 
