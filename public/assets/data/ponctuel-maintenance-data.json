@@ -43,6 +43,10 @@
     "verifier_cablage_electrique": {
       "name": "Vérifier l'intégrité du câblage électrique et les serrages sur l'ensemble de la machine *"
     }
+    ,
+    "changer_condensateur": {
+      "name": "Changer le condensateur de la pompe *"
+    }
   },
   "maintenance_schedule": [
     {
@@ -60,7 +64,8 @@
       "changer_bruleur": false,
       "verifier_filtre_carburant": true,
       "changer_pompe_fuel": false,
-      "verifier_cablage_electrique": false
+      "verifier_cablage_electrique": true,
+      "changer_condensateur": true
     },
     {
       "heures": "1400",
@@ -77,7 +82,8 @@
       "changer_bruleur": false,
       "verifier_filtre_carburant": true,
       "changer_pompe_fuel": false,
-      "verifier_cablage_electrique": false
+      "verifier_cablage_electrique": true,
+      "changer_condensateur": false
     },
     {
       "heures": "2100",
@@ -94,7 +100,8 @@
       "changer_bruleur": true,
       "verifier_filtre_carburant": false,
       "changer_pompe_fuel": true,
-      "verifier_cablage_electrique": true
+      "verifier_cablage_electrique": true,
+      "changer_condensateur": false
     },
     {
       "heures": "2800",
@@ -111,7 +118,8 @@
       "changer_bruleur": false,
       "verifier_filtre_carburant": true,
       "changer_pompe_fuel": false,
-      "verifier_cablage_electrique": false
+      "verifier_cablage_electrique": true,
+      "changer_condensateur": false
     },
     {
       "heures": "3500",
@@ -128,7 +136,8 @@
       "changer_bruleur": false,
       "verifier_filtre_carburant": true,
       "changer_pompe_fuel": false,
-      "verifier_cablage_electrique": false
+      "verifier_cablage_electrique": true,
+      "changer_condensateur": false
     },
     {
       "heures": "4200",
@@ -145,7 +154,8 @@
       "changer_bruleur": true,
       "verifier_filtre_carburant": false,
       "changer_pompe_fuel": true,
-      "verifier_cablage_electrique": true
+      "verifier_cablage_electrique": true,
+      "changer_condensateur": false
     }
   ]
 } 
