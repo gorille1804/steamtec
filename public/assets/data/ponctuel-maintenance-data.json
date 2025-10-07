@@ -83,7 +83,7 @@
       "verifier_filtre_carburant": true,
       "changer_pompe_fuel": false,
       "verifier_cablage_electrique": true,
-      "changer_condensateur": false
+      "changer_condensateur": true
     },
     {
       "heures": "2100",
@@ -101,7 +101,7 @@
       "verifier_filtre_carburant": false,
       "changer_pompe_fuel": true,
       "verifier_cablage_electrique": true,
-      "changer_condensateur": false
+      "changer_condensateur": true
     },
     {
       "heures": "2800",
@@ -119,7 +119,7 @@
       "verifier_filtre_carburant": true,
       "changer_pompe_fuel": false,
       "verifier_cablage_electrique": true,
-      "changer_condensateur": false
+      "changer_condensateur": true
     },
     {
       "heures": "3500",
@@ -137,7 +137,7 @@
       "verifier_filtre_carburant": true,
       "changer_pompe_fuel": false,
       "verifier_cablage_electrique": true,
-      "changer_condensateur": false
+      "changer_condensateur": true
     },
     {
       "heures": "4200",
@@ -155,7 +155,7 @@
       "verifier_filtre_carburant": false,
       "changer_pompe_fuel": true,
       "verifier_cablage_electrique": true,
-      "changer_condensateur": false
+      "changer_condensateur": true
     }
   ]
 } 
