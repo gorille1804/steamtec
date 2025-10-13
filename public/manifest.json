@@ -1,8 +1,8 @@
 {
     "id": "/",
-    "name": "Steamtech application",
-    "short_name": "Steamtech",
-    "description": "Steamtech application dashboard",
+    "name": "Steamtec application",
+    "short_name": "Steamtec",
+    "description": "Steamtec application dashboard",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
