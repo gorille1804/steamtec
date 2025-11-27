@@ -52,16 +52,18 @@ class MachineController extends AbstractController
     public function index(Request $request): Response
     {
         $page = $request->query->getInt('page', 1);
+        $search = $request->query->get('search', '');
         $limit = 10;
-        $machines = $this->findAllUseCase->__invoke($page, $limit);
-        $totalMachine = $this->findAllUseCase->getTotalMachines();
+        $machines = $this->findAllUseCase->__invoke($page, $limit, $search);
+        $totalMachine = $this->findAllUseCase->getTotalMachines($search);
         $maxPages = ceil($totalMachine / $limit);
 
         return $this->render('admin/machine/index.html.twig', [
             'machines' => $machines,
             'currentPage' => $page,
             'maxPages' => $maxPages,
-            'limit' => $limit
+            'limit' => $limit,
+            'search' => $search
         ]);
     }
 

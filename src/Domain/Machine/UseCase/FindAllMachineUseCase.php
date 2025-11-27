@@ -11,14 +11,14 @@ class FindAllMachineUseCase implements FindAllMachineUseCaseInterface
         private readonly MachineRepositoryInterface $repository,
     ){}
 
-    public function __invoke(int $page = 1, int $limit = 10): array
+    public function __invoke(int $page = 1, int $limit = 10, ?string $search = null): array
     {	
-        return $this->repository->getAll($page, $limit);
+        return $this->repository->getAll($page, $limit, $search);
     }   
 
-    public function getTotalMachines(): int
+    public function getTotalMachines(?string $search = null): int
     {
-        return $this->repository->getTotalMachines();
+        return $this->repository->getTotalMachines($search);
     }
 
     public function getAllMachinesRegistrationData(): array

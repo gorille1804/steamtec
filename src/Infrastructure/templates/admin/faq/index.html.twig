@@ -30,24 +30,28 @@
                         </div>
                     {% else %}
                         <div class="table-responsive mt-1">
-                            <table class="table select-table">
+                            <table class="table select-table" style="table-layout: fixed; width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th>{{'FAQs.index.question'|trans}}</th>
-                                        <th>{{'FAQs.index.answer'|trans}}</th>
-                                        <th>{{'FAQs.index.action'|trans}}</th>
+                                        <th style="width: 30%;">{{'FAQs.index.question'|trans}}</th>
+                                        <th style="width: 50%;">{{'FAQs.index.answer'|trans}}</th>
+                                        <th style="width: 20%; min-width: 150px;">{{'FAQs.index.action'|trans}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 {% for faq in faqs %} 
                                     <tr>
-                                        <td>
-                                            {{ faq.question }}
+                                        <td style="word-wrap: break-word; overflow-wrap: break-word; white-space: normal; max-width: 0;">
+                                            <div style="max-height: 150px; overflow-y: auto; word-break: break-word;">
+                                                {{ faq.question }}
+                                            </div>
                                         </td>
-                                        <td>
-                                            {{ faq.answer|nl2br }}
+                                        <td style="word-wrap: break-word; overflow-wrap: break-word; white-space: normal; max-width: 0;">
+                                            <div style="max-height: 150px; overflow-y: auto; word-break: break-word;">
+                                                {{ faq.answer|nl2br }}
+                                            </div>
                                         </td>
-                                        <td class="py-1">
+                                        <td class="py-1" style="white-space: nowrap; width: 20%;">
                                             <div class="btn-group" role="group" aria-label="Basic example">
                                                 <a href="{{path('app_faqs_update', {'faq':faq.id})}}" class="btn btn-warning btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="{{'FAQs.index.action_update_title'|trans}}">
                                                     <i class="mdi mdi-pencil"></i>
@@ -60,7 +64,6 @@
                                                     title="{{faq.isActive ? 'FAQs.index.action_desactive_title'|trans : 'FAQs.index.action_active_title'|trans}}">
                                                     <i class="mdi mdi-toggle-switch"></i>  
                                                 </a>
-</a>
 
                                                 <button type="button" 
                                                     class="btn btn-danger btn-sm delete-faq-btn" 

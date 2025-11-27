@@ -334,6 +334,10 @@ machines:
         action_update_title: "Modifier"
         action_delete_title: "Supprimer"
         action_download_title: "Télecharger le fiche technique"
+        search:
+            placeholder: "Rechercher par numéro ou nom..."
+            button: "Rechercher"
+            clear: "Effacer la recherche"
   
     form:
         num_id:

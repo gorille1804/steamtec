@@ -19,11 +19,19 @@ class MachineRepository extends ServiceEntityRepository implements MachineReposi
         parent::__construct($registry, Machine::class);
     }
     
-    public function getAll(int $page = 1, int $limit = 10): array
+    public function getAll(int $page = 1, int $limit = 10, ?string $search = null): array
     {
         $offset = ($page - 1) * $limit;
+        $queryBuilder = $this->createQueryBuilder('m');
         
-        return $this->createQueryBuilder('m')
+        if ($search !== null && $search !== '') {
+            $queryBuilder
+                ->where('m.numeroIdentification LIKE :search OR m.nom LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+        
+        return $queryBuilder
+            ->orderBy('m.numeroIdentification', 'ASC')
             ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->getQuery()
@@ -33,14 +41,23 @@ class MachineRepository extends ServiceEntityRepository implements MachineReposi
     public function findAll(): array
     {
         return $this->createQueryBuilder('m')
+            ->orderBy('m.numeroIdentification', 'ASC')
             ->getQuery()
             ->getResult();
     }
 
-    public function getTotalMachines(): int
+    public function getTotalMachines(?string $search = null): int
     {
-        return $this->createQueryBuilder('m')
-            ->select('COUNT(m.id)')
+        $queryBuilder = $this->createQueryBuilder('m')
+            ->select('COUNT(m.id)');
+        
+        if ($search !== null && $search !== '') {
+            $queryBuilder
+                ->where('m.numeroIdentification LIKE :search OR m.nom LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+        
+        return $queryBuilder
             ->getQuery()
             ->getSingleScalarResult();
     }
