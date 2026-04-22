@@ -13721,6 +13721,7 @@ fieldset:disabled .btn {
     height: 80vh !important;
   }
 }
+
 .dropdown-header {
   display: block;
   padding: var(--bs-dropdown-header-padding-y) var(--bs-dropdown-header-padding-x);
@@ -32751,6 +32752,7 @@ dl li {
   min-height: calc(100vh - 20px) !important;
   padding-top: 20px !important;
 }
+
 .page-body-wrapper.full-page-wrapper {
   width: 100%;
   min-height: 100vh;
@@ -35471,14 +35473,16 @@ header .content_header_bottom.py-3 {
   padding-bottom: 0 !important;
 
 }
-header{
-  border-bottom: 2px solid  rgba(0, 0, 0, 0.1);
+
+header {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
   position: fixed;
   top: 0;
   z-index: 1000;
   background-color: white;
 }
-header .content_header_bottom.py-3 .col-lg-2{
+
+header .content_header_bottom.py-3 .col-lg-2 {
   padding-right: 0;
 }
 
@@ -35661,8 +35665,9 @@ header .btn_se_connecter:hover {
   background-size: 100% 100%;
   position: relative;
 }
-.bloc_entete_accueil:after{
-  content:"";
+
+.bloc_entete_accueil:after {
+  content: "";
   background: url("../images/bloc_entete_accueil.jpg") no-repeat;
   width: 50%;
   height: 100%;
@@ -35848,6 +35853,7 @@ header .btn_se_connecter:hover {
   top: 499px;
   left: 38px;
 }
+
 .content_solution_nettoyage .content_gauche_nettoyage .content_usage,
 .content_usage {
   border-radius: 64px;
@@ -35918,8 +35924,8 @@ section h3 {
   padding-bottom: 52px;
   margin-top: -60px;
   display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .content_solution_nettoyage .content_liste_nettoyage li {
@@ -35992,10 +35998,11 @@ section h3 {
   border-radius: 24px;
   background: #fff;
 }
-.content_decouvrir_gamme .content_image_gamme{
+
+.content_decouvrir_gamme .content_image_gamme {
   height: 270px;
-  display:flex;
-  align-items:center;
+  display: flex;
+  align-items: center;
   background: #fff;
   overflow-y: hidden;
   border-radius: 24px 24px 0 0;
@@ -36016,11 +36023,12 @@ section h3 {
 .content_decouvrir_gamme .owl-carousel {
   margin-top: 40px;
 }
+
 .content_decouvrir_gamme .content_texte_gamme {
   padding: 24px 5px;
   gap: 10px;
   text-align: center;
-  border-top:1px solid #E4E2DF;
+  border-top: 1px solid #E4E2DF;
   height: 100px;
   display: flex;
   justify-content: center;
@@ -36138,6 +36146,7 @@ section h3 {
   height: 100%;
   object-fit: cover;
 }
+
 .content_liste_fonction .content_image_fonction span {
   padding-top: 8px;
   padding-right: 24px;
@@ -36158,12 +36167,12 @@ section h3 {
 }
 
 .content_adresse_steam_tec {
-  background-size:cover;
+  background-size: cover;
   padding-top: 80px;
   padding-bottom: 80px;
   color: #fff;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
-                    url('../images/professionnel_du_nettoyage_vapeur.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url('../images/professionnel_du_nettoyage_vapeur.jpg');
 }
 
 .content_adresse_steam_tec .col-md-4 {
@@ -36334,7 +36343,8 @@ section h3 {
 }
 
 .content_confiance {
-  display: flex; /* Pour aligner la colonne gauche (logos) avec la droite (témoignages) */
+  display: flex;
+  /* Pour aligner la colonne gauche (logos) avec la droite (témoignages) */
   flex-direction: row;
 }
 
@@ -36366,23 +36376,25 @@ section h3 {
   flex-grow: 1;
 }
 
-.content_confiance .liste_confiance > * {
+.content_confiance .liste_confiance>* {
   flex: 1 1 220px;
   max-width: calc(33.333% - 20px);
 }
+
 /* Responsive : 2 colonnes sur tablette */
 @media (max-width: 1084px) {
-  .content_confiance .liste_confiance > * {
+  .content_confiance .liste_confiance>* {
     max-width: calc(50% - 20px);
   }
 }
 
 /* Responsive : 1 colonne sur mobile */
 @media (max-width: 991px) {
-  .content_confiance .liste_confiance > * {
+  .content_confiance .liste_confiance>* {
     max-width: 100%;
   }
 }
+
 @media (max-width: 763px) {
   .content_confiance {
     flex-direction: column;
@@ -36400,7 +36412,8 @@ section h3 {
     grid-template-columns: 1fr;
   }
 }
-.content_confiance .liste_confiance li{
+
+.content_confiance .liste_confiance li {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36409,6 +36422,7 @@ section h3 {
   height: 125px;
   width: 100%;
 }
+
 .content_confiance .liste_confiance li a {
   display: block;
   height: 100%;
@@ -37061,6 +37075,17 @@ section h3 {
   color: #000000;
 }
 
+.content_faire_confiance,
+.content_page_machine .content_bloc_force_machine {
+  background: #FFF;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.content_page_machine .content_bloc_force_machine.odd {
+  background: #F5F6FB !important;
+}
+
 .content_page_machine .content_bloc_force_machine .col-md-7 {
   padding-top: 72px;
   padding-bottom: 72px;
@@ -37112,12 +37137,6 @@ section h3 {
   justify-content: center;
   position: absolute;
   left: 0;
-}
-
-.content_faire_confiance {
-  background: #F5F6FB;
-  padding-top: 40px;
-  padding-bottom: 40px;
 }
 
 .content_faire_confiance h3 {
@@ -37255,7 +37274,8 @@ section h3 {
   color: #636074;
   margin-bottom: 24px;
 }
-@media(max-width:767px){
+
+@media(max-width:767px) {
   .bloc_entete_accueil:after {
     content: "";
     background: url(../images/bloc_entete_accueil.jpg) no-repeat;
@@ -37268,5 +37288,5 @@ section h3 {
     background-size: 100% 100%;
     border-radius: 20rem 0 0 20rem;
     bottom: 0;
-}
+  }
 }
